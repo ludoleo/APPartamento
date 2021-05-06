@@ -6,4 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".Modificainfopersonali">
 
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="405dp"
+        android:layout_height="166dp"
+        android:text="Riporta alla pagina di info studente"
+        android:textSize="30sp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
