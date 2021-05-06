@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".PrenotazioneActivity"></activity>
+        <activity android:name=".PrenotazionePaypalActivity"></activity>
+        <activity android:name=".PrenotazioneActivity" />
         <activity android:name=".ProfiloCasa" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">

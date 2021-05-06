@@ -6,18 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class ProfiloCasa extends AppCompatActivity {
+public class PrenotazionePaypalActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profilo_casa);
-        initUI();
+        setContentView(R.layout.activity_prenotazione_paypal);
     }
-    private void initUI() {
-    }
-
-    public void prenota(View view) {
+    public void back(View view) {
         Intent intent = new Intent(this, PrenotazioneActivity.class);
         startActivity(intent);
     }

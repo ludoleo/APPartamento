@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="etichetta1">Nome</string>
-
+    <string name="annulla">Annulla</string>
+    <string name="conferma">Conferma</string>
+    <string name="indietro">indietro</string>
 </resources>
