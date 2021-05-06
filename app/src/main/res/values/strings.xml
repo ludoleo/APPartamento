@@ -1,7 +1,28 @@
 <resources>
     <string name="app_name">My Application</string>
+
     <string name="etichetta1">Nome</string>
     <string name="annulla">Annulla</string>
     <string name="conferma">Conferma</string>
     <string name="indietro">indietro</string>
+
+    <string name="etichetta12">Profilo Utente</string>
+    <string name="etichetta2">Nome</string>
+    <string name="etichetta3">Cognome</string>
+    <string name="etichetta4">Hobby</string>
+    <string name="etichetta5">Lingue</string>
+    <string name="etichetta6">Informazioni personali</string>
+    <string name="Bottone1">Recensioni </string>
+    <string name="Bottone2">Modifica Profilo</string>
+    <string name="Etichetta7">Recensioni</string>
+    <string name="Bottone3">INFORMAZIONI PERSONALI </string>
+    <string name="Bottone4">GESTIONE DELLE NOTIFICHE </string>
+    <string name="Bottone5">PUBBLICA NUOVO ANNUNCIO </string>
+    <string name="Bottone6">PROPONI ESPERIENZA </string>
+    <string name="Bottone7">CENTRO ASSISTENZA</string>
+    <string name="etichetta9">Impostazioni Account</string>
+    <string name="etichetta10">Gestione Alloggio</string>
+    <string name="etichetta11">Assistenza</string>
+
+
 </resources>

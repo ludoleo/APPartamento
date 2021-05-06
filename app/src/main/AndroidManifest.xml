@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".PrenotazionePaypalActivity"></activity>
+        <activity android:name=".ProponiEsperieza"></activity>
+        <activity android:name=".Annuncio" />
+        <activity android:name=".Modificainfopersonali" />
+        <activity android:name=".Notifiche" />
+        <activity android:name=".Assistenza" />
+        <activity android:name=".PrenotazionePaypalActivity" />
         <activity android:name=".PrenotazioneActivity" />
         <activity android:name=".ProfiloCasa" />
         <activity android:name=".RegisterActivity" />
