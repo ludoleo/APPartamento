@@ -21,7 +21,7 @@ public class ProfiloUtente extends AppCompatActivity {
         recensioni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ProfiloUtente.this,Recensioniutente.class);
+                Intent i = new Intent(ProfiloUtente.this, RecensioniUtente.class);
                 startActivity(i);
             }
         });
@@ -30,7 +30,7 @@ public class ProfiloUtente extends AppCompatActivity {
         modifica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a = new Intent(ProfiloUtente.this,Modificaprofilo.class);
+                Intent a = new Intent(ProfiloUtente.this, ModificaProfilo.class);
                 startActivity(a);
             }
     });

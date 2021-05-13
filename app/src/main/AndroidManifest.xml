@@ -11,7 +11,7 @@
         android:theme="@style/Theme.MyApplication">
         <activity android:name=".ProponiEsperieza"></activity>
         <activity android:name=".Annuncio" />
-        <activity android:name=".Modificainfopersonali" />
+        <activity android:name=".ModificaInfoPersonali" />
         <activity android:name=".Notifiche" />
         <activity android:name=".Assistenza" />
         <activity android:name=".PrenotazionePaypalActivity" />

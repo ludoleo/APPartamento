@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class Modificainfopersonali extends AppCompatActivity {
+public class ModificaInfoPersonali extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

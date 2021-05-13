@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Modificaprofilo extends AppCompatActivity {
+public class ModificaProfilo extends AppCompatActivity {
     Button infopersonali ;
     Button notifiche;
     Button esperienza;
@@ -24,7 +24,7 @@ public class Modificaprofilo extends AppCompatActivity {
         infopersonali.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent b = new Intent(Modificaprofilo.this,Modificainfopersonali.class);
+                Intent b = new Intent(ModificaProfilo.this, ModificaInfoPersonali.class);
                 startActivity(b);
             }
         });
@@ -33,7 +33,7 @@ public class Modificaprofilo extends AppCompatActivity {
         notifiche.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent c = new Intent(Modificaprofilo.this,Notifiche.class);
+                Intent c = new Intent(ModificaProfilo.this,Notifiche.class);
                 startActivity(c);
             }
         });
@@ -42,7 +42,7 @@ public class Modificaprofilo extends AppCompatActivity {
         esperienza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent d = new Intent(Modificaprofilo.this,ProponiEsperieza.class);
+                Intent d = new Intent(ModificaProfilo.this,ProponiEsperieza.class);
                 startActivity(d);
             }
         });
@@ -50,7 +50,7 @@ public class Modificaprofilo extends AppCompatActivity {
         assistenza.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent e = new Intent(Modificaprofilo.this,Assistenza.class);
+                Intent e = new Intent(ModificaProfilo.this,Assistenza.class);
                 startActivity(e);
             }
         });
@@ -58,7 +58,7 @@ public class Modificaprofilo extends AppCompatActivity {
         annuncio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent f = new Intent(Modificaprofilo.this,Annuncio.class);
+                Intent f = new Intent(ModificaProfilo.this,Annuncio.class);
                 startActivity(f);
             }
         });
