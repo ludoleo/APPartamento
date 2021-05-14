@@ -32,12 +32,6 @@
         android:text="@string/etichetta10" />
 
     <Button
-        android:id="@+id/annuncio"
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:text="@string/Bottone5" />
-
-    <Button
         android:id="@+id/esperienza"
         android:layout_width="match_parent"
         android:layout_height="72dp"
