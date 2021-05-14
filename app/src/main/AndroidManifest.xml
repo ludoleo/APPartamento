@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".ProponiEsperieza"></activity>
+        <activity android:name=".Salvati"></activity>
+        <activity android:name=".RecensioniCasa" />
+        <activity android:name=".Latuacasa" />
+        <activity android:name=".Profiloproprietario" />
+        <activity android:name=".ProponiEsperieza" />
         <activity android:name=".ModificaInfoPersonali" />
         <activity android:name=".Notifiche" />
         <activity android:name=".Assistenza" />

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Latuacasa">
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:text="La tua Casa!"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="match_parent"
+        android:layout_height="174dp"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/recensionicasa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recensioni casa"
+                tools:layout_editor_absoluteX="121dp"
+                tools:layout_editor_absoluteY="55dp" />
+
+            <Button
+                android:id="@+id/vaiprop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vai al profilo proprietario"
+                tools:layout_editor_absoluteX="72dp"
+                tools:layout_editor_absoluteY="160dp" />
+
+            <Button
+                android:id="@+id/vaicoinq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vai al profilo coinquilino"
+                tools:layout_editor_absoluteX="78dp"
+                tools:layout_editor_absoluteY="266dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>
