@@ -40,7 +40,7 @@
                 android:id="@+id/vaiprop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vai al profilo proprietario"
+                android:text="Recensioni proprietario"
                 tools:layout_editor_absoluteX="72dp"
                 tools:layout_editor_absoluteY="160dp" />
 
@@ -48,7 +48,7 @@
                 android:id="@+id/vaicoinq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vai al profilo coinquilino"
+                android:text="Recensioni coinquilino"
                 tools:layout_editor_absoluteX="78dp"
                 tools:layout_editor_absoluteY="266dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>

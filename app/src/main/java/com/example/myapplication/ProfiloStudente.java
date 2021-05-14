@@ -21,7 +21,7 @@ public class ProfiloStudente extends AppCompatActivity {
         recensioni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ProfiloStudente.this, RecensioniProprietario.class);
+                Intent i = new Intent(ProfiloStudente.this, RecensioniStudent.class);
                 startActivity(i);
             }
         });
