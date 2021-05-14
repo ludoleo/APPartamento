@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity android:name=".ProponiEsperieza"></activity>
-        <activity android:name=".Annuncio" />
         <activity android:name=".ModificaInfoPersonali" />
         <activity android:name=".Notifiche" />
         <activity android:name=".Assistenza" />

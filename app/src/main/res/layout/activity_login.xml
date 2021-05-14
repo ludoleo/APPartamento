@@ -19,16 +19,28 @@
         app:layout_constraintVertical_bias="0.119" />
 
     <Button
-        android:id="@+id/button_registrati"
+        android:id="@+id/button_registratiStud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="registrati"
-        android:text="Registrati"
+        android:text="Registrati come Studente"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775" />
+        app:layout_constraintVertical_bias="0.686" />
+
+    <Button
+        android:id="@+id/button_registratiProp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="registrati"
+        android:text="Registrati come Proprietario"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.802" />
 
     <Button
         android:id="@+id/button_login"
@@ -40,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.571" />
+        app:layout_constraintVertical_bias="0.52" />
 
     <TextView
         android:id="@+id/textView3"
@@ -49,10 +61,9 @@
         android:text="Oppure puoi registrarti"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.651" />
+        app:layout_constraintVertical_bias="0.605" />
 
     <EditText
         android:id="@+id/text_email"

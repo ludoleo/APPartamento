@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class ProfiloUtente extends AppCompatActivity {
+public class ProfiloStudente extends AppCompatActivity {
 
     Button recensioni;
     Button modifica;
@@ -15,13 +15,13 @@ public class ProfiloUtente extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profilo_utente2);
+        setContentView(R.layout.activity_profilo_studente);
 
         recensioni = findViewById(R.id.recensioni);
         recensioni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ProfiloUtente.this, RecensioniUtente.class);
+                Intent i = new Intent(ProfiloStudente.this, RecensioniProprietario.class);
                 startActivity(i);
             }
         });
@@ -30,7 +30,7 @@ public class ProfiloUtente extends AppCompatActivity {
         modifica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a = new Intent(ProfiloUtente.this, ModificaProfilo.class);
+                Intent a = new Intent(ProfiloStudente.this, ModificaProfilo.class);
                 startActivity(a);
             }
     });

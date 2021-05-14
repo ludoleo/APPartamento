@@ -58,8 +58,8 @@ public class ModificaProfilo extends AppCompatActivity {
         annuncio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent f = new Intent(ModificaProfilo.this,Annuncio.class);
-                startActivity(f);
+               // Intent f = new Intent(ModificaProfilo.this,Annuncio.class);
+              //  startActivity(f);
             }
         });
 
