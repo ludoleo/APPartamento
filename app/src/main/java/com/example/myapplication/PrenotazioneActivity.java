@@ -14,7 +14,7 @@ public class PrenotazioneActivity extends AppCompatActivity {
         setContentView(R.layout.activity_prenotazione);
     }
     public void back(View view) {
-        Intent intent = new Intent(this, ProfiloCasa.class);
+        Intent intent = new Intent(this, ProfiloCasaActivity.class);
         startActivity(intent);
     }
 
@@ -24,7 +24,7 @@ public class PrenotazioneActivity extends AppCompatActivity {
     }
 
     public void annulla(View view) {
-        Intent intent = new Intent(this, ProfiloCasa.class);
+        Intent intent = new Intent(this, ProfiloCasaActivity.class);
         startActivity(intent);
     }
 }

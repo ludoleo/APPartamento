@@ -12,4 +12,29 @@
         android:layout_height="wrap_content"
         android:onClick="back"
         android:text="@string/indietro" />
+
+    <TextView
+        android:id="@+id/et_prenotazione_paypal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/etichettaPaypal" />
+
+    <TextView
+        android:id="@+id/et_paypal_importo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/etichettaImportoPaypal" />
+
+    <Button
+        android:id="@+id/b_paypal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Paypal" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/etichetta13" />
+
 </LinearLayout>

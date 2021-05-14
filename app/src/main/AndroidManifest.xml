@@ -9,12 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".MessaggiUtente"></activity>
-        <activity android:name=".Home" />
-        <activity android:name=".VisitaVirtuale" />
-        <activity android:name=".CaseProprietario" />
-        <activity android:name=".InserimentoDatiProprietario" />
-        <activity android:name=".ProponiEsperieza" />
+        <activity android:name=".ProponiEsperieza"></activity>
         <activity android:name=".ModificaInfoPersonali" />
         <activity android:name=".Notifiche" />
         <activity android:name=".Assistenza" />

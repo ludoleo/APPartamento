@@ -23,6 +23,11 @@
     <string name="etichetta9">Impostazioni Account</string>
     <string name="etichetta10">Gestione Alloggio</string>
     <string name="etichetta11">Assistenza</string>
-
+    <string name="etichetta13">Opzione visita virtuale</string>
+    <string name="prezzo">Prezzo</string>
+    <string name="zone">Zone</string>
+    <string name="tipologia">Tipologia</string>
+    <string name="etichettaPaypal">Per la tua prenotazione il proprietario richiede il pagamento di un ticket, che ti verrà rimborsato una volta avvenuta la visita</string>
+    <string name="etichettaImportoPaypal">Il proprietario richiede un importo di 5 euro per la prenotazione di questa visita</string>
 
 </resources>
