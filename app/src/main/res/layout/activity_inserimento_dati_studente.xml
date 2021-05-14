@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/et_descrizione"
+        android:id="@+id/et_descrizioneS"
         android:layout_width="0dp"
         android:layout_height="90dp"
         android:ems="10"
