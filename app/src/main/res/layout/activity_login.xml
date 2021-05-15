@@ -97,7 +97,7 @@
         android:id="@+id/text_PasswordDimenticata"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="resetPassword"
+        android:onClick="pwDimenticata"
         android:text="Password dimenticata"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

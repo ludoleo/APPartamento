@@ -49,8 +49,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(View view) {
 
-        String emailUtente = email.getText().toString();
-        String passwordUtente = password.getText().toString();
+        //String emailUtente = email.getText().toString();
+        //String passwordUtente = password.getText().toString();
 
         //controllo se è studente o proprietario e lo mando alla pagina
 
@@ -73,10 +73,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
-    public void resetPassword(View view) {
+    public void pwDimenticata(View view) {
 
         Intent intent = new Intent(LoginActivity.this , ResetPassword.class);
         startActivity(intent);
+
     }
 }

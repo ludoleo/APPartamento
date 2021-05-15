@@ -30,6 +30,13 @@
             android:layout_weight="1"
             android:text="min price" />
 
+        <Button
+            android:id="@+id/b_selezione_prezzo_localita"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="conferma"
+            android:text="@string/conferma" />
+
         <TextView
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
@@ -77,12 +84,5 @@
             android:text="Stanza Singola" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/b_selezione_prezzo_localita"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="conferma"
-        android:text="@string/conferma" />
 
 </LinearLayout>
