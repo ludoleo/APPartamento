@@ -13,6 +13,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1 ;
 
 
+
     //private FirebaseAuth mAuth;
 
     private EditText email;
@@ -51,10 +52,21 @@ public class LoginActivity extends AppCompatActivity {
         String emailUtente = email.getText().toString();
         String passwordUtente = password.getText().toString();
 
+        //controllo se è studente o proprietario e lo mando alla pagina
+
+        Intent intent = new Intent(LoginActivity.this, ProfiloStudente.class);
+        startActivity(intent);
+
 
     }
 
-    public void registrati(View view) {
+    public void registraProprietario(View view) {
+
+        Intent intent = new Intent(LoginActivity.this , RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    public void registraStudente(View view) {
 
         Intent intent = new Intent(LoginActivity.this , RegisterActivity.class);
         startActivity(intent);
@@ -62,4 +74,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+    public void resetPassword(View view) {
+
+        Intent intent = new Intent(LoginActivity.this , ResetPassword.class);
+        startActivity(intent);
+    }
 }

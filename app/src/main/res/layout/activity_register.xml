@@ -23,7 +23,7 @@
     <EditText
         android:id="@+id/et_email"
         android:layout_width="318dp"
-        android:layout_height="48"
+        android:layout_height="48dp"
         android:ems="10"
         android:hint="E-mail"
         android:inputType="textEmailAddress"

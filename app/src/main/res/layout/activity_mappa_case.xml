@@ -11,6 +11,7 @@
         android:id="@+id/b_back_mappa_case"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="indietro"
         android:text="@string/indietro" />
 
     <LinearLayout
@@ -62,14 +63,16 @@
         android:text="Button" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/visualizzza_casa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:onClick="visualizzaCasa"
+        android:text="Visualizza casa" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/lista_case"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:onClick="listaCase"
+        android:text="Lista case" />
 </LinearLayout>

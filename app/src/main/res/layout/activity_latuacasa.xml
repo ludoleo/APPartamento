@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Latuacasa">
+    tools:context=".LaTuaCasa">
 
     <TextView
         android:id="@+id/textView22"
@@ -33,24 +33,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Recensioni casa"
-                tools:layout_editor_absoluteX="121dp"
-                tools:layout_editor_absoluteY="55dp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.138" />
 
             <Button
                 android:id="@+id/vaiprop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Recensioni proprietario"
-                tools:layout_editor_absoluteX="72dp"
-                tools:layout_editor_absoluteY="160dp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.399" />
 
             <Button
                 android:id="@+id/vaicoinq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Recensioni coinquilino"
-                tools:layout_editor_absoluteX="78dp"
-                tools:layout_editor_absoluteY="266dp" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.666" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.textfield.TextInputLayout>
 

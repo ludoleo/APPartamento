@@ -54,14 +54,14 @@ public class ModificaProfilo extends AppCompatActivity {
                 startActivity(e);
             }
         });
-        annuncio = findViewById(R.id.annuncio);
-        annuncio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        //annuncio = findViewById(R.id.annuncio);
+        //annuncio.setOnClickListener(new View.OnClickListener() {
+           // @Override
+           // public void onClick(View v) {
                // Intent f = new Intent(ModificaProfilo.this,Annuncio.class);
               //  startActivity(f);
-            }
-        });
+           // }
+       // });
 
     }
 }

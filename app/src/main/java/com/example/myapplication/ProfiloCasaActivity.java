@@ -18,6 +18,7 @@ public class ProfiloCasaActivity extends AppCompatActivity {
     }
 
     public void prenota(View view) {
+
         Intent intent = new Intent(this, PrenotazioneActivity.class);
         startActivity(intent);
     }

@@ -53,6 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="profilo"
             app:srcCompat="@drawable/ic_baseline_face_24"
             tools:ignore="VectorDrawableCompat" />
 
@@ -61,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="messaggi"
             app:srcCompat="@drawable/ic_baseline_message_24"
             tools:ignore="VectorDrawableCompat" />
 
@@ -69,6 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="salvati"
             app:srcCompat="@drawable/ic_baseline_favorite_24"
             tools:ignore="VectorDrawableCompat" />
 
@@ -77,6 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="prenotazione"
             app:srcCompat="@drawable/ic_baseline_calendar_today_24"
             tools:ignore="VectorDrawableCompat" />
 

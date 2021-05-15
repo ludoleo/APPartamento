@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Latuacasa extends AppCompatActivity {
+public class LaTuaCasa extends AppCompatActivity {
     Button recensionicasa;
     Button vaiprop;
     Button vaicoinq;
@@ -21,7 +21,7 @@ public class Latuacasa extends AppCompatActivity {
         recensionicasa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent b = new Intent(Latuacasa.this,RecensioniCasa.class);
+                Intent b = new Intent(LaTuaCasa.this,RecensioniCasa.class);
                 startActivity(b);
             }
         });
@@ -31,7 +31,7 @@ public class Latuacasa extends AppCompatActivity {
         vaiprop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent c = new Intent(Latuacasa.this,RecensioniStudent.class);
+                Intent c = new Intent(LaTuaCasa.this,RecensioniStudent.class);
                 startActivity(c);
             }
         });
@@ -40,7 +40,7 @@ public class Latuacasa extends AppCompatActivity {
         vaicoinq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent d = new Intent(Latuacasa.this,RecensioniProprietario.class);
+                Intent d = new Intent(LaTuaCasa.this,RecensioniProprietario.class);
                 startActivity(d);
             }
         });

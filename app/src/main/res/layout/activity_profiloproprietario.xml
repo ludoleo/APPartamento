@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profiloproprietario">
+    tools:context=".ProfiloProprietario">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,6 +31,7 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -60,19 +61,18 @@
                     android:text="Le tue case" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/visualizzza_casa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Prenotazioni" />
+
+                <Button
+                    android:id="@+id/recensioniprop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Recensioni proprietario" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/recensioniprop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Recensioni proprietario"
-                tools:layout_editor_absoluteX="86dp"
-                tools:layout_editor_absoluteY="450dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

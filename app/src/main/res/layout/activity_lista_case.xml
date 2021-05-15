@@ -6,4 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".ListaCase">
 
+    <ImageButton
+        android:id="@+id/visualizzaCasa"
+        android:layout_width="406dp"
+        android:layout_height="333dp"
+        android:onClick="visualizzaCasa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <Button
+        android:id="@+id/mappa_case"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="visualizzaMappa"
+        android:text="Visualizza Mappa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

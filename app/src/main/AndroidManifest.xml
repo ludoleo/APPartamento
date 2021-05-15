@@ -16,7 +16,7 @@
         <activity android:name=".Assistenza" />
         <activity android:name=".PrenotazionePaypalActivity" />
         <activity android:name=".PrenotazioneActivity" />
-        <activity android:name=".ProfiloCasa" />
+        <activity android:name=".ProfiloCasaActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
