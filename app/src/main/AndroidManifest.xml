@@ -31,7 +31,7 @@
         <activity android:name=".RecensioniCasa" />
         <activity android:name=".RecensioniProprietario" />
         <activity android:name=".RecensioniStudent"/>
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".RegisterActivityStud" />
         <activity android:name=".ResetPassword" />
         <activity android:name=".Salvati" />
         <activity android:name=".SelezionePrezzoLocalita" />

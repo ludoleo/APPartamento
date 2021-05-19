@@ -7,20 +7,6 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/et_nome"
-        android:layout_width="318dp"
-        android:layout_height="48dp"
-        android:ems="10"
-        android:hint="Nome"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.272" />
-
-    <EditText
         android:id="@+id/et_email"
         android:layout_width="318dp"
         android:layout_height="48dp"
@@ -74,4 +60,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.619" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,10 +2,19 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -14,14 +23,10 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    //private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
     private EditText email;
     private EditText password;
-
-    //Google
-    //GoogleSignInClient mGoogleSignInClient;
-   // SignInButton button;
 
 
     @Override
@@ -49,8 +54,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login(View view) {
 
-        //String emailUtente = email.getText().toString();
-        //String passwordUtente = password.getText().toString();
+        String emailUtente = email.getText().toString();
+        String passwordUtente = password.getText().toString();
+        
+        loginWithFirebase(emailUtente,passwordUtente);
 
         //controllo se è studente o proprietario e lo mando alla pagina
 
@@ -60,15 +67,35 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void loginWithFirebase(String emailUtente, String passwordUtente) {
+        mAuth.signInWithEmailAndPassword(emailUtente, passwordUtente)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            //updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
     public void registraProprietario(View view) {
 
-        Intent intent = new Intent(LoginActivity.this , RegisterActivity.class);
+        Intent intent = new Intent(LoginActivity.this , RegisterActivityProp.class);
         startActivity(intent);
     }
 
     public void registraStudente(View view) {
 
-        Intent intent = new Intent(LoginActivity.this , RegisterActivity.class);
+        Intent intent = new Intent(LoginActivity.this , RegisterActivityStud.class);
         startActivity(intent);
     }
 

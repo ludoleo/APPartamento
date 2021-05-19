@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "94958735722",
+    "project_id": "appartamento-81c2d",
+    "storage_bucket": "appartamento-81c2d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:94958735722:android:641c08a6e284c391d91513",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "94958735722-aeavbmn0qdg3km79en383vd6a1798bam.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRfep2G0-eG3uANhiuRR3iCOOJpaazSFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "94958735722-aeavbmn0qdg3km79en383vd6a1798bam.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
