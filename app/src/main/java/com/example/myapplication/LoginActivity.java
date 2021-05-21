@@ -21,12 +21,13 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int RC_SIGN_IN = 1 ;
 
-
-
     private FirebaseAuth mAuth;
 
     private EditText email;
     private EditText password;
+
+   // LoginButton loginButton;
+    //CallbackManager mCallbackManager = CallbackManager.Factory.create();
 
 
     @Override
@@ -41,14 +42,14 @@ public class LoginActivity extends AppCompatActivity {
 
       //  AppEventsLogger.activateApp(this);
 
-       // mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         initUI();
     }
 
     private void initUI() {
 
-        email = (EditText) findViewById(R.id.et_email);
-        password = (EditText) findViewById(R.id.et_password);
+        email = (EditText) findViewById(R.id.text_email);
+        password = (EditText) findViewById(R.id.text_password);
 
     }
 
@@ -61,14 +62,13 @@ public class LoginActivity extends AppCompatActivity {
 
         //controllo se è studente o proprietario e lo mando alla pagina
 
-        Intent intent = new Intent(LoginActivity.this, ProfiloStudente.class);
-        startActivity(intent);
 
 
     }
 
-    private void loginWithFirebase(String emailUtente, String passwordUtente) {
-        mAuth.signInWithEmailAndPassword(emailUtente, passwordUtente)
+    private void loginWithFirebase(String email, String password) {
+
+        mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
+                            updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -85,6 +85,15 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+        Intent intent = new Intent(LoginActivity.this, ProfiloStudente.class);
+        startActivity(intent);
+    }
+
+    private void updateUI(FirebaseUser currentUser) {
+
+        Log.i(TAG, "Connesso utente "+currentUser);
+        Intent intent = new Intent(this, SelezionePrezzoLocalita.class);
+        startActivity(intent);
     }
 
     public void registraProprietario(View view) {
