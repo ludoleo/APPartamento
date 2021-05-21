@@ -19,7 +19,7 @@ public class Home extends AppCompatActivity {
 
     public void profilo(View view) {
 
-        Intent intent = new Intent(Home.this , ProfiloStudente.class);
+        Intent intent = new Intent(Home.this , LoginActivity.class);
         startActivity(intent);
     }
 

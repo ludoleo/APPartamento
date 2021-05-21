@@ -115,4 +115,11 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    public void logout(View view) {
+        mAuth.signOut();
+
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
+    }
 }

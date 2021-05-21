@@ -29,5 +29,9 @@
     <string name="tipologia">Tipologia</string>
     <string name="etichettaPaypal">Per la tua prenotazione il proprietario richiede il pagamento di un ticket, che ti verrà rimborsato una volta avvenuta la visita</string>
     <string name="etichettaImportoPaypal">Il proprietario richiede un importo di 5 euro per la prenotazione di questa visita</string>
+    <string name="facebook_app_id">513976396407275</string>
+    <string name="fb_login_protocol_scheme">fb513976396407275</string>
+
+
 
 </resources>
