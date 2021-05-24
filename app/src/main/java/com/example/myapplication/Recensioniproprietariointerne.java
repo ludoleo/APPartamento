@@ -21,7 +21,7 @@ Button pulsanteok;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.recensioniproprietariointerne);
+        setContentView(R.layout.recensioniproprietariointern);
         seekBar10 = findViewById(R.id.seekBar20);
         seekBar10.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
