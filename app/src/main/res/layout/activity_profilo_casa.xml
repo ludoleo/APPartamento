@@ -20,12 +20,14 @@
             android:text="Nome dell'appartamento"
             android:textColor="#D3000000"
             android:textSize="40sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:padding="15dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/et_punteggio"
@@ -33,7 +35,8 @@
                 android:layout_height="wrap_content"
                 android:text="punteggio"
                 android:textColor="#D3000000"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:padding="5dp"/>
 
             <TextView
                 android:id="@+id/et_numRecensioni"
@@ -42,7 +45,8 @@
                 android:layout_weight="1"
                 android:text="(#recensioni)"
                 android:textColor="#D3000000"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:padding="5dp"/>
 
             <TextView
                 android:id="@+id/et_localita"
@@ -51,13 +55,15 @@
                 android:layout_weight="1"
                 android:text="localita"
                 android:textColor="#D3000000"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:padding="5dp"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="3dp">
 
             <TextView
                 android:id="@+id/et_tipologiaStanza"
@@ -66,7 +72,8 @@
                 android:layout_weight="1"
                 android:text="tipologiaStanza"
                 android:textColor="#D3000000"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:padding="5dp"/>
 
             <TextView
                 android:id="@+id/et_prezzo"
@@ -75,7 +82,8 @@
                 android:layout_weight="1"
                 android:text="prezzo"
                 android:textColor="#D3000000"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:padding="5dp"/>
 
             <TextView
                 android:id="@+id/et_proprietario"
@@ -84,14 +92,16 @@
                 android:layout_weight="1"
                 android:text="proprietario"
                 android:textColor="#D3000000"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:padding="5dp"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/et_ospiti"
@@ -101,7 +111,8 @@
                 android:text="ospiti"
                 android:textColor="#D3000000"
                 android:textSize="16sp"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:padding="5dp"/>
 
             <TextView
                 android:id="@+id/et_numeroCamere"
@@ -111,7 +122,8 @@
                 android:text="numero camere"
                 android:textColor="#D3000000"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:padding="5dp"/>
 
             <TextView
                 android:id="@+id/et_num_bagni"
@@ -121,7 +133,8 @@
                 android:text="numero bagni"
                 android:textColor="#D3000000"
                 android:textSize="16sp"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:padding="5dp"/>
         </LinearLayout>
 
         <TextView
@@ -131,33 +144,40 @@
             android:text="Elenco dei servizi"
             android:textColor="#D3000000"
             android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:padding="10dp"/>
 
         <LinearLayout
             android:id="@+id/arrayListServizi"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="5dp"
             ></LinearLayout>
 
         <TextView
             android:id="@+id/posizione"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Posizione" />
+            android:text="Posizione"
+            android:padding="10dp"/>
 
         <TextView
             android:id="@+id/descrizione"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Qui andrà una descrizione della casa. Vi saranno informazioni scritte dal proprietario sulle pricipali caratteristiche dell'abitazione e sul perchè debba essere scelta" />
+            android:text="Qui andrà una descrizione della casa. Vi saranno informazioni scritte dal proprietario sulle pricipali caratteristiche dell'abitazione e sul perchè debba essere scelta"
+            android:padding="15dp"/>
 
         <Button
             android:id="@+id/b_prenota"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="prenota"
-            android:text="Prenota visita" />
+            android:text="Prenota visita"
+            android:padding="15dp"
+            android:layout_gravity="center"
+            />
 
     </LinearLayout>
 

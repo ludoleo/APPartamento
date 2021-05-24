@@ -10,17 +10,15 @@ public class Utente {
     private String cognome;
     private String telefono;
     private String email;
-    private ImageView fotoUtente;
     private float valutazione;
-    private boolean primaEsperienza;
+    private String primaEsperienza;
 
-    public Utente(String nome, String cognome, String telefono, String email, ImageView fotoUtente, boolean primaEsperienza) {
+    public Utente(String nome, String cognome, String telefono, String email, String primaEsperienza) {
 
         this.nome = nome;
         this.cognome = cognome;
         this.telefono = telefono;
         this.email = email;
-        this.fotoUtente = fotoUtente;
         this.valutazione = 0;
         this.primaEsperienza = primaEsperienza;
     }
@@ -42,15 +40,11 @@ public class Utente {
         return email;
     }
 
-    public ImageView getFotoUtente() {
-        return fotoUtente;
-    }
-
     public float getValutazione() {
         return valutazione;
     }
 
-    public boolean isPrimaEsperienza() {
+    public String isPrimaEsperienza() {
         return primaEsperienza;
     }
 
@@ -70,15 +64,11 @@ public class Utente {
         this.email = email;
     }
 
-    public void setFotoUtente(ImageView fotoUtente) {
-        this.fotoUtente = fotoUtente;
-    }
-
     public void setValutazione(float valutazione) {
         this.valutazione = valutazione;
     }
 
-    public void setPrimaEsperienza(boolean primaEsperienza) {
+    public void setPrimaEsperienza(String primaEsperienza) {
         this.primaEsperienza = primaEsperienza;
     }
 

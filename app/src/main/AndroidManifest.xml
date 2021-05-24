@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.myapplication">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
 
     <application
         android:allowBackup="true"
@@ -11,19 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".RecensioneProprietarioEsterno"></activity>
-        <activity android:name=".RecensioneCasaInterna" />
         <activity android:name=".Assistenza" />
         <activity android:name=".CaseProprietario" />
         <activity android:name=".ElencoPrenotazioni" />
-        <activity android:name=".Home">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
+        <activity android:name=".Home" />
         <activity android:name=".InserimentoDatiProprietario" />
-        <activity android:name=".InserimentoDatiStudente"/>
+        <activity android:name=".InserimentoDatiStudente" />
         <activity android:name=".LaTuaCasa" />
         <activity android:name=".ListaCase" />
         <activity android:name=".MappaCase" />
@@ -38,14 +33,19 @@
         <activity android:name=".ProfiloStudente" />
         <activity android:name=".ProponiEsperieza" />
         <activity android:name=".RecensioniCasa" />
-        <activity android:name=".RecensioniProprietarioInterne" />
-        <activity android:name=".RecensioniStudentInterne" />
-        <activity android:name=".RegisterActivityStud" />
+        <activity android:name=".RecensioniProprietario" />
+        <activity android:name=".RecensioniStudent"/>
+        <activity android:name=".RegisterActivityStud">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ResetPassword" />
         <activity android:name=".Salvati" />
         <activity android:name=".SelezionePrezzoLocalita" />
         <activity android:name=".VisitaVirtuale" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity"/>
         <activity android:name=".MainActivity" />
     </application>
 

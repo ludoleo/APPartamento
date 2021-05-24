@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -235,7 +236,7 @@ public class RegisterActivityStud extends AppCompatActivity {
 
         Log.i(TAG, "Connesso utente "+currentUser);
 
-        Intent intent = new Intent(RegisterActivityStud.this, SelezionePrezzoLocalita.class);
+        Intent intent = new Intent(RegisterActivityStud.this, InserimentoDatiStudente.class);
         startActivity(intent);
 
     }
@@ -260,9 +261,10 @@ public class RegisterActivityStud extends AppCompatActivity {
                         }
                     }
                 });
+        //dopo la registrazione si passa all'inserimento dei dati
         Intent intent = new Intent(RegisterActivityStud.this , InserimentoDatiStudente.class);
+        intent.putExtra("email", emailutente);
         startActivity(intent);
-
     }
 
     private boolean passwordValida(String passwordUtente1, String confermaPasswordUtente2) {
