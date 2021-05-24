@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class ProfiloStudente extends AppCompatActivity {
 
     Button recensioni;
     Button modifica;
+    ImageButton imagebutton2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,12 +24,12 @@ public class ProfiloStudente extends AppCompatActivity {
         recensioni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ProfiloStudente.this, RecensioniStudent.class);
+                Intent i = new Intent(ProfiloStudente.this, RecensioniStudentinterne.class);
                 startActivity(i);
             }
         });
 
-        modifica = findViewById(R.id.modifica);
+        modifica = findViewById(R.id.modificaprofilo);
         modifica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,5 +37,7 @@ public class ProfiloStudente extends AppCompatActivity {
                 startActivity(a);
             }
     });
+
+
 }
 }

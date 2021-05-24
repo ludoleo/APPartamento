@@ -1,5 +1,7 @@
 package com.example.myapplication.classi;
 
+import android.view.MotionEvent;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -47,7 +49,7 @@ public class RecensioneCasa {
         this.descrizione = descrizione;
     }
 
-    public float getValutazioneMedia() {
+    public MotionEvent getValutazioneMedia() {
         return valutazioneMedia;
     }
 

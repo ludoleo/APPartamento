@@ -31,7 +31,7 @@ public class LaTuaCasa extends AppCompatActivity {
         vaiprop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent c = new Intent(LaTuaCasa.this,RecensioniStudent.class);
+                Intent c = new Intent(LaTuaCasa.this, RecensioniStudentinterne.class);
                 startActivity(c);
             }
         });
@@ -40,7 +40,7 @@ public class LaTuaCasa extends AppCompatActivity {
         vaicoinq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent d = new Intent(LaTuaCasa.this,RecensioniProprietario.class);
+                Intent d = new Intent(LaTuaCasa.this, Recensioniproprietariointerne.class);
                 startActivity(d);
             }
         });

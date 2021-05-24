@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RecensioniStudent">
+    tools:context=".RecensioneProprietarioesterno">
 
-    <TextView
-        android:id="@+id/textView24"
+    <Button
+        android:id="@+id/buttonaggiungirecprop"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:text="Recensioni Studente"
-        android:textSize="30sp" />
+        android:layout_height="wrap_content"
+        android:text="Aggiungi recensione su proprietario" />
 
     <ListView
+        android:id="@+id/listview12"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

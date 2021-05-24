@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class RecensioniProprietario extends AppCompatActivity {
+public class Recensionecasainterna extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recensioni_proprietario);
+        setContentView(R.layout.activity_recensionecasainterna);
     }
 }

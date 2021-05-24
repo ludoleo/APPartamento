@@ -7,21 +7,14 @@
     android:orientation="vertical"
     tools:context=".RecensioniCasa">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:text="Recensioni casa"
-        android:textSize="30sp" />
-
-    <ImageView
-        android:id="@+id/imageView2"
+    <Button
+        android:id="@+id/Aggiungirecensionecasa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/star_big_on" />
+        android:text="Aggiungi recensione casa" />
 
     <ListView
+        android:id="@+id/listview10"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 </LinearLayout>

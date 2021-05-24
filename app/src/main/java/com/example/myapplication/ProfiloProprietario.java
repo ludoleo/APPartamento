@@ -22,7 +22,7 @@ public class ProfiloProprietario extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent a = new Intent(ProfiloProprietario.this,RecensioniProprietario.class);
+                Intent a = new Intent(ProfiloProprietario.this, Recensioniproprietariointerne.class);
                 startActivity(a);
             }
         });
