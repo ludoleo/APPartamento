@@ -18,7 +18,7 @@ public class ModificaProfilo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modificaprofilo);
+        setContentView(R.layout.activity_modifica_profilo);
 
         infopersonali = findViewById(R.id.infopersonali);
         infopersonali.setOnClickListener(new View.OnClickListener() {

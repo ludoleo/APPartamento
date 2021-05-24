@@ -49,7 +49,7 @@ public class RecensioneCasa {
         this.descrizione = descrizione;
     }
 
-    public MotionEvent getValutazioneMedia() {
+    public float getValutazioneMedia() {
         return valutazioneMedia;
     }
 

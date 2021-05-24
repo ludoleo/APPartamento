@@ -14,9 +14,9 @@ public class Studente extends Utente {
     private List<String> hobby = new LinkedList<>();
     private boolean senzaAlloggio;
 
-    public Studente(String idUtente, String nome, String cognome, String telefono, String email, ImageView fotoUtente,
+    public Studente(String nome, String cognome, String telefono, String email, ImageView fotoUtente,
                     boolean primaEsperienza, String universita, String tipologiaLaurea, String indirizzoLaurea, String descrizione) {
-        super(idUtente, nome, cognome, telefono, email, fotoUtente, primaEsperienza);
+        super(nome, cognome, telefono, email, fotoUtente, primaEsperienza);
         this.universita = universita;
         this.tipologiaLaurea = tipologiaLaurea;
         this.indirizzoLaurea = indirizzoLaurea;

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RecensioniStudentinterne">
+    tools:context=".RecensioniStudentInterne">
 
         <TextView
             android:id="@+id/textView"
@@ -98,7 +98,7 @@
             android:id="@+id/constraint1"
             android:layout_width="match_parent"
             android:layout_height="271dp"
-            android:background="@drawable/Immagineapp1">
+            android:background="@drawable/immagine_app1">
 
                 <Button
                     android:id="@+id/pulsanteok3"

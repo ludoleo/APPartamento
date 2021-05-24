@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,4 +40,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
     }
 
 
+    public void confermaInfoStudente(View view) {
+        //Intent intent = new Intent()
+    }
 }

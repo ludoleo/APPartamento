@@ -10,8 +10,8 @@ public class Proprietario extends Utente{
     private List<Casa> listaCase = new LinkedList<>();
     private List<Annuncio> listaAnnunci = new LinkedList<>();
 
-    public Proprietario(String idUtente, String nome, String cognome, String telefono, String email, ImageView fotoUtente, boolean primaEsperienza) {
-        super(idUtente, nome, cognome, telefono, email, fotoUtente, primaEsperienza);
+    public Proprietario(String nome, String cognome, String telefono, String email, ImageView fotoUtente, boolean primaEsperienza) {
+        super(nome, cognome, telefono, email, fotoUtente, primaEsperienza);
     }
 
     public void addCasa (Casa casa){

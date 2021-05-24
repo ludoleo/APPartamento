@@ -2,31 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linear1"
+    android:id="@+id/casaint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Recensioniproprietariointerne">
+    tools:context=".RecensioneCasaInterna">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text="Recensioni proprietario"
+        android:text="Recensioni Casa"
         android:textSize="24sp"
         android:textStyle="normal|bold" />
 
     <EditText
+        android:id="@+id/labelcasa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Inserisci Descrizione" />
+        android:text="Inserisci Descrizione Casa" />
 
     <TextView
+        android:id="@+id/valutacamera"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:text="valuta pulizia"
+        android:text="valuta camera"
         android:textSize="24sp" />
 
     <SeekBar
@@ -38,9 +40,10 @@
         android:progress="3" />
 
     <TextView
+        android:id="@+id/spazicomuni"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:text="valuta disponbilità"
+        android:text="valuta spazi comuni"
         android:textSize="24sp" />
 
     <SeekBar
@@ -52,9 +55,10 @@
         android:progress="3" />
 
     <TextView
+        android:id="@+id/valutacondominio"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:text="valuta luoghi comuni "
+        android:text="valuta condominio"
         android:textSize="24sp" />
 
     <SeekBar
@@ -66,9 +70,10 @@
         android:progress="3" />
 
     <TextView
+        android:id="@+id/vicinanzaluogostudio"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:text="valuta pagamento"
+        android:text="valuta vicinanza luogo di studio"
         android:textSize="24sp" />
 
     <SeekBar
@@ -80,9 +85,10 @@
         android:progress="3" />
 
     <TextView
+        android:id="@+id/vicinanzamezzi"
         android:layout_width="match_parent"
         android:layout_height="36dp"
-        android:text="valuta Chiarezza"
+        android:text="valuta vicinanza mezzi di trasporto"
         android:textSize="24sp" />
 
     <SeekBar
@@ -97,7 +103,7 @@
         android:id="@+id/constraint1"
         android:layout_width="match_parent"
         android:layout_height="271dp"
-        android:background="@drawable/Immagineapp1">
+        android:background="@drawable/foto_recensionecasa">
 
         <Button
             android:id="@+id/pulsanteok3"

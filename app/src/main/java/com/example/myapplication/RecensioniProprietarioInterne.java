@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 
-public class Recensioniproprietariointerne extends AppCompatActivity {
+public class RecensioniProprietarioInterne extends AppCompatActivity {
 SeekBar seekBar10;
 SeekBar seekBar11;
 SeekBar seekBar12;
@@ -21,7 +21,7 @@ Button pulsanteok;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.recensioniproprietariointern);
+        setContentView(R.layout.activity_recensioni_proprietario_interne);
         seekBar10 = findViewById(R.id.seekBar20);
         seekBar10.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

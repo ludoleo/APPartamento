@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/imm_torino"
     tools:context=".Home">
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="340dp"
-        android:layout_height="320dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.163"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <TextView
         android:id="@+id/et_cerca"
@@ -45,6 +35,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/rosso_mattone"
+            android:fadingEdge="horizontal"
+            android:visibility="visible"
             app:srcCompat="@drawable/ic_baseline_home_24"
             tools:ignore="VectorDrawableCompat" />
 
@@ -53,6 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/rosso_mattone"
             android:onClick="profilo"
             app:srcCompat="@drawable/ic_baseline_face_24"
             tools:ignore="VectorDrawableCompat" />
@@ -62,6 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/rosso_mattone"
             android:onClick="messaggi"
             app:srcCompat="@drawable/ic_baseline_message_24"
             tools:ignore="VectorDrawableCompat" />
@@ -71,6 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/rosso_mattone"
             android:onClick="salvati"
             app:srcCompat="@drawable/ic_baseline_favorite_24"
             tools:ignore="VectorDrawableCompat" />
@@ -80,6 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/rosso_mattone"
             android:onClick="prenotazione"
             app:srcCompat="@drawable/ic_baseline_calendar_today_24"
             tools:ignore="VectorDrawableCompat" />

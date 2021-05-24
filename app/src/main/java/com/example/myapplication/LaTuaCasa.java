@@ -15,7 +15,7 @@ public class LaTuaCasa extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_latuacasa);
+        setContentView(R.layout.activity_la_tua_casa);
 
         recensionicasa = findViewById(R.id.recensionicasa);
         recensionicasa.setOnClickListener(new View.OnClickListener() {
@@ -31,7 +31,7 @@ public class LaTuaCasa extends AppCompatActivity {
         vaiprop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent c = new Intent(LaTuaCasa.this, RecensioniStudentinterne.class);
+                Intent c = new Intent(LaTuaCasa.this, RecensioniStudentInterne.class);
                 startActivity(c);
             }
         });
@@ -40,7 +40,7 @@ public class LaTuaCasa extends AppCompatActivity {
         vaicoinq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent d = new Intent(LaTuaCasa.this, Recensioniproprietariointerne.class);
+                Intent d = new Intent(LaTuaCasa.this, RecensioniProprietarioInterne.class);
                 startActivity(d);
             }
         });

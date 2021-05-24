@@ -11,20 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".RecensioneProprietarioesterno"></activity>
-        <activity android:name=".Recensionecasainterna" />
+        <activity android:name=".RecensioneProprietarioEsterno"></activity>
+        <activity android:name=".RecensioneCasaInterna" />
         <activity android:name=".Assistenza" />
         <activity android:name=".CaseProprietario" />
         <activity android:name=".ElencoPrenotazioni" />
-        <activity android:name=".Home" />
-        <activity android:name=".InserimentoDatiProprietario" />
-        <activity android:name=".InserimentoDatiStudente">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".Home">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+        <activity android:name=".InserimentoDatiProprietario" />
+        <activity android:name=".InserimentoDatiStudente"/>
         <activity android:name=".LaTuaCasa" />
         <activity android:name=".ListaCase" />
         <activity android:name=".MappaCase" />
@@ -39,8 +38,8 @@
         <activity android:name=".ProfiloStudente" />
         <activity android:name=".ProponiEsperieza" />
         <activity android:name=".RecensioniCasa" />
-        <activity android:name=".Recensioniproprietariointerne" />
-        <activity android:name=".RecensioniStudentinterne" />
+        <activity android:name=".RecensioniProprietarioInterne" />
+        <activity android:name=".RecensioniStudentInterne" />
         <activity android:name=".RegisterActivityStud" />
         <activity android:name=".ResetPassword" />
         <activity android:name=".Salvati" />
