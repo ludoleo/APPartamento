@@ -18,7 +18,13 @@
         <activity android:name=".ElencoPrenotazioni" />
         <activity android:name=".Home" />
         <activity android:name=".InserimentoDatiProprietario" />
-        <activity android:name=".InserimentoDatiStudente" />
+        <activity android:name=".InserimentoDatiStudente" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".LaTuaCasa" />
         <activity android:name=".ListaCase" />
         <activity android:name=".MappaCase" />
@@ -40,13 +46,7 @@
         <activity android:name=".Salvati" />
         <activity android:name=".SelezionePrezzoLocalita" />
         <activity android:name=".VisitaVirtuale" />
-        <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".LoginActivity"/>
         <activity android:name=".MainActivity" />
     </application>
 

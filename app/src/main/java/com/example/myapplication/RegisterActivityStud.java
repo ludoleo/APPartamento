@@ -260,7 +260,7 @@ public class RegisterActivityStud extends AppCompatActivity {
                         }
                     }
                 });
-        Intent intent = new Intent(RegisterActivityStud.this , SelezionePrezzoLocalita.class);
+        Intent intent = new Intent(RegisterActivityStud.this , InserimentoDatiStudente.class);
         startActivity(intent);
 
     }

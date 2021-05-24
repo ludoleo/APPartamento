@@ -32,6 +32,11 @@
     <string name="facebook_app_id">513976396407275</string>
     <string name="fb_login_protocol_scheme">fb513976396407275</string>
 
-
+    <string-array name="hobby">
+        <item>Giochi da tavolo</item>
+        <item>Scacchi</item>
+        <item>Cucina</item>
+        <item>Musei</item>
+    </string-array>
 
 </resources>

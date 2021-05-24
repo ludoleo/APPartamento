@@ -6,7 +6,6 @@ import java.util.Objects;
 
 public class Utente {
 
-    private String idUtente;
     private String nome;
     private String cognome;
     private String telefono;
@@ -15,8 +14,8 @@ public class Utente {
     private float valutazione;
     private boolean primaEsperienza;
 
-    public Utente(String idUtente, String nome, String cognome, String telefono, String email, ImageView fotoUtente, boolean primaEsperienza) {
-        this.idUtente = idUtente;
+    public Utente(String nome, String cognome, String telefono, String email, ImageView fotoUtente, boolean primaEsperienza) {
+
         this.nome = nome;
         this.cognome = cognome;
         this.telefono = telefono;
@@ -26,9 +25,6 @@ public class Utente {
         this.primaEsperienza = primaEsperienza;
     }
 
-    public String getIdUtente() {
-        return idUtente;
-    }
 
     public String getNome() {
         return nome;
@@ -56,10 +52,6 @@ public class Utente {
 
     public boolean isPrimaEsperienza() {
         return primaEsperienza;
-    }
-
-    public void setIdUtente(String idUtente) {
-        this.idUtente = idUtente;
     }
 
     public void setNome(String nome) {
@@ -95,11 +87,11 @@ public class Utente {
         if (this == o) return true;
         if (!(o instanceof Utente)) return false;
         Utente utente = (Utente) o;
-        return getIdUtente().equals(utente.getIdUtente());
+        return getEmail().equals(utente.getEmail());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdUtente());
+        return Objects.hash(getEmail());
     }
 }

@@ -1,89 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/et_descrizioneS"
-        android:layout_width="0dp"
-        android:layout_height="90dp"
-        android:ems="10"
-        android:gravity="start|top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descrizione"
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.08"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.18" />
+        android:padding="15dp" />
 
     <EditText
         android:id="@+id/et_numTelefono"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:hint="Telefono"
         android:inputType="phone"
-        android:text="Tel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.548" />
+        android:padding="15dp" />
 
     <EditText
         android:id="@+id/et_univerista"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:hint="Università"
         android:inputType="textPersonName"
-        android:text="Università"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.631" />
+        android:padding="15dp" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButtonTriennale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Triennale" />
+
+        <RadioButton
+            android:id="@+id/radioButtonMagistrale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Magistrale" />
+    </RadioGroup>
 
     <EditText
         android:id="@+id/et_inidirizzoLaurea"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:inputType="textPersonName"
-        android:text="Indirizzo Laurea"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.715" />
+        android:hint="Indirizzo Laurea"
+        android:padding="15dp"/>
 
-    <CheckedTextView
-        android:id="@+id/checkedTextView"
-        android:layout_width="0dp"
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Prima esperienza fuorisede"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775" />
+        android:text="Prima esperienza da fuori sede" />
+
+    <Spinner
+        android:id="@+id/spinner3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/hobby"
+        android:padding="15dp"
+        />
 
     <Button
         android:id="@+id/conferma"
-        android:layout_width="161dp"
-        android:layout_height="50dp"
-        android:text="Conferma"
-        app:backgroundTint="#AE5252"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.854" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center|center_horizontal"
+        android:text="Conferma" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
