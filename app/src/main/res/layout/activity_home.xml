@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/imm_torino"
-    tools:context=".Home">
+    tools:context=".home.Home">
 
     <TextView
         android:id="@+id/et_cerca"

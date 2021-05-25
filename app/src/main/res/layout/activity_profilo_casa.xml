@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="fill_horizontal"
     android:orientation="vertical"
-    tools:context=".ProfiloCasaActivity">
+    tools:context=".profilo.ProfiloCasaActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

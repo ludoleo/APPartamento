@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.myapplication.login.LoginActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     //private FirebaseAuth mAuth;

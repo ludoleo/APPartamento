@@ -6,55 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".InserimentoDatiProprietario">
-
-    <TextView
-        android:id="@+id/et_descrizioneP"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Breve descrizione"
-        android:padding="15dp"/>
-
-    <TextView
-        android:id="@+id/et_numTelP"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Telefono"
-        android:padding="15dp"/>
-
-    <TextView
-        android:id="@+id/et_fotoCasa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Foto"
-        android:padding="15dp"/>
-
-    <TextView
-        android:id="@+id/et_indirizzo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Indirizzo"
-        android:padding="15dp"/>
+    tools:context=".registrazione.InserimentoDatiProprietario">
 
     <TextView
         android:id="@+id/et_prezzoCasa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Prezzo"
+        android:hint="Prezzo (mensilità richiesta)"
         android:padding="15dp"/>
 
     <TextView
-        android:id="@+id/et_inquiliniPresenti"
+        android:id="@+id/et_speseStraordinarie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Inquilini"
-        android:padding="15dp"/>
-
-    <TextView
-        android:id="@+id/et_serviziCasa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Servizi"
+        android:hint="Eventuali spese straordinarie (conguaglio...)"
         android:padding="15dp"/>
 
     <TextView
@@ -65,14 +30,8 @@
         android:padding="15dp"/>
 
     <Button
-        android:id="@+id/aggiungiCasa"
+        android:id="@+id/i_d_p_continua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Aggiungi Casa" />
-
-    <Button
-        android:id="@+id/aggiungiDisponibilita"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Aggiungi Disponibilita'" />
+        android:text="Continua" />
 </LinearLayout>
