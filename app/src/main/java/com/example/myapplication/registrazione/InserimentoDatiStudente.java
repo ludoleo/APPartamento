@@ -39,7 +39,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
     private EditText et_nome;
     private EditText et_cognome;
 
-    private EditText et_descrizione;
+    private EditText et_descrizioneS;
     private EditText et_numTelefono;
     private EditText et_universita;
     private EditText et_indirizzoLaurea;
@@ -68,7 +68,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
 
         et_nome = (EditText) findViewById(R.id.et_nome);
         et_cognome = (EditText) findViewById(R.id.et_cognome);
-        et_descrizione = (EditText) findViewById(R.id.et_descrizioneS);
+        et_descrizioneS = (EditText) findViewById(R.id.et_descrizioneS);
         et_numTelefono = (EditText) findViewById(R.id.et_numTelefono);
         et_universita = (EditText) findViewById(R.id.et_univerista);
         et_indirizzoLaurea = (EditText) findViewById(R.id.et_inidirizzoLaurea);
@@ -84,21 +84,22 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         
     }
 
-    public void inviaMessaggio(){
+    public void inviaMessaggio(View view){
 
         //mappo i dati che ottengo (operazione utile?)
         Map<String, String> listaElementi = new HashMap<>();
 
-        String email = getIntent().getExtras().getString("email");
+       // String email = getIntent().getExtras().getString("email");
+        String email = "flavio@gmailcom";
         String nome = et_nome.getText().toString();
         String cognome = et_cognome.getText().toString();
         String telefono = et_numTelefono.getText().toString();
         String universita = et_universita.getText().toString();
         String indirizzoLaurea = et_indirizzoLaurea.getText().toString();
-        String descrizione = et_descrizione.getText().toString();
+        String descrizione = et_descrizioneS.getText().toString();
 
         //aggiungo le informazioni prese dai dati ad una mappa per gestirne il controllo
-        listaElementi.put("Email",email);
+        //listaElementi.put("Email",email);
         listaElementi.put("Nome",nome);
         listaElementi.put("Cognome", cognome);
         listaElementi.put("Telefono",telefono);
@@ -127,7 +128,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
                 return;}
         }
 
-        Studente studente = new Studente(nome,cognome,telefono,email,
+        Studente studente = new Studente(nome,cognome,telefono,email ,
                 primaEsperienza,universita,tipologia,indirizzoLaurea,descrizione);
 
         DatabaseReference studenteAggiunto = myRef.child("Studenti").push();
@@ -157,10 +158,11 @@ public class InserimentoDatiStudente extends AppCompatActivity {
                 //inviaNotifica(studente.getMatricola(), studente.getNome(), studente.getCognome());
             }
 
+
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                Studente studente = snapshot.getValue(Studente.class);
-                Log.i(TAG, "Rimosso studente "+studente.toString());
+               // Studente studente = snapshot.getValue(Studente.class);
+                //Log.i(TAG, "Rimosso studente "+studente.toString());
                 //tvMessaggio.setText("Rimosso studente "+studente.toString());
             }
 
@@ -179,7 +181,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
     private void clear(){
         et_nome.setText("");
         et_cognome.setText("");
-        et_descrizione.setText("");
+        et_descrizioneS.setText("");
         et_numTelefono.setText("");
         et_universita.setText("");
         et_indirizzoLaurea.setText("");

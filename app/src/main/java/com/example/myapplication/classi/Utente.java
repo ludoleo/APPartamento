@@ -13,6 +13,9 @@ public class Utente {
     private float valutazione;
     private String primaEsperienza;
 
+    public Utente() {
+    }
+
     public Utente(String nome, String cognome, String telefono, String email, String primaEsperienza) {
 
         this.nome = nome;
