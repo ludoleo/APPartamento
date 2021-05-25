@@ -8,6 +8,7 @@
 
     <application
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -18,7 +19,12 @@
         <activity android:name=".prenotazione.ElencoPrenotazioni" />
         <activity android:name=".home.Home" />
         <activity android:name=".registrazione.InserimentoDatiProprietario" />
-        <activity android:name=".registrazione.InserimentoDatiStudente" />
+        <activity android:name=".registrazione.InserimentoDatiStudente" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity android:name=".home.LaTuaCasa" />
         <activity android:name=".ricercalloggio.ListaCase" />
         <activity android:name=".ricercalloggio.MappaCase" />
@@ -33,14 +39,9 @@
         <activity android:name=".profilo.ProfiloStudente" />
         <activity android:name=".profilo.ProponiEsperieza" />
         <activity android:name=".recensione.RecensioniCasa" />
-        <activity android:name=".RecensioniProprietario" />
-        <activity android:name=".RecensioniStudent"/>
-        <activity android:name=".registrazione.RegisterActivityStud">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".recensione.RecensioniProprietarioInterne" />
+        <activity android:name=".recensione.RecensioniStudentInterne"/>
+        <activity android:name=".registrazione.RegisterActivityStud"/>
         <activity android:name=".login.ResetPassword" />
         <activity android:name=".salvati.Salvati" />
         <activity android:name=".ricercalloggio.SelezionePrezzoLocalita" />

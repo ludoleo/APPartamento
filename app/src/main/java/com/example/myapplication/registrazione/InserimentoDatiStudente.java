@@ -90,7 +90,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         Map<String, String> listaElementi = new HashMap<>();
 
        // String email = getIntent().getExtras().getString("email");
-        String email = "flavio@gmailcom";
+        String email = "gioele@politoit";
         String nome = et_nome.getText().toString();
         String cognome = et_cognome.getText().toString();
         String telefono = et_numTelefono.getText().toString();
@@ -134,7 +134,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         DatabaseReference studenteAggiunto = myRef.child("Studenti").push();
         studenteAggiunto.setValue(studente);
         String key = studenteAggiunto.getKey(); // Estraggo la chiave assegnata allo studente
-        myRef.child("Chiavi").child(email).setValue(key);
+        myRef.child("Chiavi").child(email).setValue(email);
 
         clear();
 
