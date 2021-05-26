@@ -1,5 +1,6 @@
 package com.example.myapplication.registrazione;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Studente;
+import com.example.myapplication.profilo.ProfiloStudente;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -139,6 +141,9 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         clear();
 
         leggiChild();
+
+        Intent intent = new Intent(this, ProfiloStudente.class);
+        startActivity(intent);
     }
 
     private void leggiChild() {

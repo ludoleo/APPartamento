@@ -13,7 +13,7 @@ public class Proprietario extends Utente{
     public Proprietario() {
     }
 
-    public Proprietario(String idUtente, String nome, String cognome, String telefono, String email, ImageView fotoUtente, String primaEsperienza) {
+    public Proprietario(String nome, String cognome, String telefono, String email, ImageView fotoUtente, String primaEsperienza) {
         super(nome, cognome, telefono, email, primaEsperienza);
     }
 

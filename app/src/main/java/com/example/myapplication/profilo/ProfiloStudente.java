@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.example.myapplication.R;
+import com.example.myapplication.home.Home;
 import com.example.myapplication.recensione.RecensioniStudentInterne;
 
 public class ProfiloStudente extends AppCompatActivity {
@@ -17,8 +18,8 @@ public class ProfiloStudente extends AppCompatActivity {
     Button modifica;
     ImageButton imagebutton2;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo_studente);
 
@@ -38,8 +39,12 @@ public class ProfiloStudente extends AppCompatActivity {
                 Intent a = new Intent(ProfiloStudente.this, ModificaProfilo.class);
                 startActivity(a);
             }
-    });
+        });
+    }
 
+    public void goHome(View view) {
 
-}
+            Intent intent = new Intent(this, Home.class);
+            startActivity(intent);
+    }
 }

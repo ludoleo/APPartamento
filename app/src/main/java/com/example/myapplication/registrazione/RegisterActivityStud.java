@@ -2,15 +2,21 @@ package com.example.myapplication.registrazione;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
+import com.example.myapplication.classi.Proprietario;
+import com.example.myapplication.classi.Studente;
+import com.example.myapplication.classi.Utente;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -33,6 +39,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import com.facebook.FacebookSdk;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class RegisterActivityStud extends AppCompatActivity {
@@ -43,10 +51,14 @@ public class RegisterActivityStud extends AppCompatActivity {
     private EditText email;
     private EditText password;
     private EditText confermaPassword;
+    private CheckBox isStudente;
 
     private FirebaseAuth mAuth;
 
-    //
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+
+    // accesso con Google
     GoogleSignInClient mGoogleSignInClient;
     SignInButton button;
 
@@ -63,7 +75,7 @@ public class RegisterActivityStud extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_stud);
-        this.setTitle("Registrazione Utente");
+        this.setTitle("Registrazione Studente");
 
         //2) iniziaizzo l'istanza di firebase
         mAuth = FirebaseAuth.getInstance();
@@ -81,6 +93,10 @@ public class RegisterActivityStud extends AppCompatActivity {
         confermaPassword = (EditText) findViewById(R.id.et_confermaPassword);
         button = (SignInButton) findViewById(R.id.sign_in_button);
         loginButton = (LoginButton) findViewById(R.id.login_button);
+        isStudente = (CheckBox) findViewById(R.id.isStudente);
+
+        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+        myRef = database.getReference();
 
         //google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -208,12 +224,16 @@ public class RegisterActivityStud extends AppCompatActivity {
 
         Log.i(TAG, "Informazioni inserite sono:"+" "+emailutente+" "+passwordUtente+" "+confermaPasswordUtente);
 
+
+
         if (!emailValida(emailutente))
             Toast.makeText(this, "Inserire un email valida", Toast.LENGTH_SHORT).show();
         else if (!passwordValida(passwordUtente, confermaPasswordUtente))
             Toast.makeText(this, "Inserire password coincidenti e lunghe almeno 6 caratteri", Toast.LENGTH_SHORT).show();
         else
             createFirebaseUser(emailutente,passwordUtente);
+
+             aggiungoUtenteAdb(emailutente);
 
 
 
@@ -248,6 +268,7 @@ public class RegisterActivityStud extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -264,13 +285,34 @@ public class RegisterActivityStud extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void aggiungoUtenteAdb(String emailutente) {
+
+        //Utente utente = new Utente("","","",emailutente,"");
+
+        if(isStudente.isChecked()) {
+             //l'utente è uno studente
+            Studente studente = new Studente("", "", "", emailutente,
+                     "",  "",  "",  "",  "");
+            DatabaseReference studenteAggiunto = myRef.child("Studenti").push();
+            studenteAggiunto.setValue(studente);
+        }
+        else  {
+
+            Proprietario proprietario = new Proprietario( "",  "",  "",  emailutente,  null,  "");
+            DatabaseReference proprietarioAggiunto = myRef.child("Proprietari").push();
+            proprietarioAggiunto.setValue(proprietario);
+        }
+        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+       // DatabaseReference ref = FirebaseDatabase.getInstance().getReference(USERS_TABLE);
+        //ref.child(user.getUid()).setValue(user_class);
+    }
+
     private boolean passwordValida(String passwordUtente1, String confermaPasswordUtente2) {
         //verifico che le password siano uguali e abbiano lunghezza di almeno 6 caratteri
         if(passwordUtente1.compareTo(confermaPasswordUtente2) == 0 && passwordUtente1.length() > 5)
             return true;
         else
             return false;
-
     }
 
     private boolean emailValida(String emailutente) {
@@ -281,5 +323,4 @@ public class RegisterActivityStud extends AppCompatActivity {
             return false;
 
     }
-
 }
