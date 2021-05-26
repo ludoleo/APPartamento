@@ -4,69 +4,63 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.ricercalloggio.SelezionePrezzoLocalita;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
 
-public class RegisterActivityProp extends AppCompatActivity {
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-    private static final String TAG = "RegisterActivityProp";
-    private static final int RC_SIGN_IN = 1 ;
+
+public class RegisterActivityUtente extends AppCompatActivity {
+
+    private static final String TAG = "RegisterActivityUtente";
+    private static final int RC_SIGN_IN = 1;
 
     private EditText email;
     private EditText password;
     private EditText confermaPassword;
+    private CheckBox isProprietario;
 
     private FirebaseAuth mAuth;
 
-    // accesso con google
-    GoogleSignInClient mGoogleSignInClient;
-    SignInButton button;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+
+    // accesso con Google
+   // GoogleSignInClient mGoogleSignInClient;
+    //SignInButton button;
 
     //Facebook
-    LoginButton loginButton;
-    CallbackManager mCallbackManager = CallbackManager.Factory.create();
+   // LoginButton loginButton;
+    //CallbackManager mCallbackManager = CallbackManager.Factory.create();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        FacebookSdk.setApplicationId("513976396407275");
-        FacebookSdk.sdkInitialize(getApplicationContext());
+        //FacebookSdk.setApplicationId("513976396407275");
+        //FacebookSdk.sdkInitialize(getApplicationContext());
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_prop);
-        this.setTitle("Registrazione Proprietario");
+        setContentView(R.layout.activity_register);
+        this.setTitle("Registrazione Studente");
 
         //2) iniziaizzo l'istanza di firebase
         mAuth = FirebaseAuth.getInstance();
+
+
+        //AppEventsLogger.activateApp(this);
 
         initUI();
     }
@@ -76,9 +70,13 @@ public class RegisterActivityProp extends AppCompatActivity {
         email = (EditText) findViewById(R.id.et_email);
         password = (EditText) findViewById(R.id.et_password);
         confermaPassword = (EditText) findViewById(R.id.et_confermaPassword);
-        button = (SignInButton) findViewById(R.id.sign_in_button);
-        loginButton = (LoginButton) findViewById(R.id.login_button);
 
+        isProprietario = (CheckBox) findViewById(R.id.isProprietario);
+
+        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+        myRef = database.getReference();
+
+        /*
         //google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("94958735722-aeavbmn0qdg3km79en383vd6a1798bam.apps.googleusercontent.com")
@@ -92,6 +90,7 @@ public class RegisterActivityProp extends AppCompatActivity {
                 signIn();
             }
         });
+
 
         //facebook
         loginButton.setReadPermissions("email", "public_profile");
@@ -114,8 +113,11 @@ public class RegisterActivityProp extends AppCompatActivity {
             }
         });
 
+         */
+
     }
 
+    /*
     private void handleFacebookAccessToken(AccessToken token) {
 
         Log.d(TAG, "handleFacebookAccessToken:" + token);
@@ -133,7 +135,7 @@ public class RegisterActivityProp extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(RegisterActivityProp.this , "Authentication failed.",
+                            Toast.makeText(RegisterActivityStud.this , "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -142,12 +144,18 @@ public class RegisterActivityProp extends AppCompatActivity {
 
     }
 
+     */
+
+    /*
     private void signIn() {
 
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+
+     */
+    /*
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -172,6 +180,9 @@ public class RegisterActivityProp extends AppCompatActivity {
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+     */
+
+    /*
     private void firebaseAuthWithGoogle(String idToken) {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
@@ -187,13 +198,15 @@ public class RegisterActivityProp extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            updateUI(null);
+                           updateUI(null);
                         }
                     }
                 });
     }
 
 
+
+     */
     public void registra(View view) {
 
         Log.i(TAG,"Cliccato sul pulsante registrati");
@@ -204,6 +217,7 @@ public class RegisterActivityProp extends AppCompatActivity {
 
         Log.i(TAG, "Informazioni inserite sono:"+" "+emailutente+" "+passwordUtente+" "+confermaPasswordUtente);
 
+
         if (!emailValida(emailutente))
             Toast.makeText(this, "Inserire un email valida", Toast.LENGTH_SHORT).show();
         else if (!passwordValida(passwordUtente, confermaPasswordUtente))
@@ -211,7 +225,7 @@ public class RegisterActivityProp extends AppCompatActivity {
         else
             createFirebaseUser(emailutente,passwordUtente);
 
-
+            // aggiungoUtenteAdb(emailutente);
 
     }
 
@@ -220,13 +234,15 @@ public class RegisterActivityProp extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            updateUI(currentUser);
+           updateUI(currentUser);
         }
     }
 
     private void updateUI(FirebaseUser currentUser) {
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Log.i(TAG, "Connesso utente "+currentUser);
+
+        Intent intent = new Intent(RegisterActivityUtente.this, InserimentoDatiStudente.class);
         startActivity(intent);
 
     }
@@ -241,21 +257,58 @@ public class RegisterActivityProp extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterActivityProp.this, "Authentication failed.",
+                            Toast.makeText(RegisterActivityUtente.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             //updateUI();
                         }
                     }
                 });
-
-        Intent intent = new Intent(RegisterActivityProp.this , InserimentoDatiProprietario.class);
-        intent.putExtra("email", emailutente);
-        startActivity(intent);
+        //dopo la registrazione si passa all'inserimento dei dati
+        if(isProprietario.isChecked()) {
+            Intent intent = new Intent(RegisterActivityUtente.this, InserimentoDatiProprietario.class);
+            intent.putExtra("email", emailutente);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(RegisterActivityUtente.this, InserimentoDatiStudente.class);
+            intent.putExtra("email", emailutente);
+            startActivity(intent);
+        }
     }
+
+    /*
+    private void aggiungoUtenteAdb(String emailutente) {
+
+        //Utente utente = new Utente("","","",emailutente,"");
+
+        if(isProprietario.isChecked()) {
+             //l'utente è uno studente
+            Proprietario proprietario = new Proprietario( "",  "",  "",  emailutente,  null,  "");
+            DatabaseReference proprietarioAggiunto = myRef.child("Proprietari").push();
+            proprietarioAggiunto.setValue(proprietario);
+        }
+
+        else {
+
+            Studente studente = new Studente("", "", "", emailutente,
+                    "",  "",  "",  "",  "");
+            DatabaseReference studenteAggiunto = myRef.child("Studenti").push();
+            studenteAggiunto.setValue(studente);
+
+        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+       // DatabaseReference ref = FirebaseDatabase.getInstance().getReference(USERS_TABLE);
+        //ref.child(user.getUid()).setValue(user_class);
+     }
+    }
+
+     */
+
+
 
     private boolean passwordValida(String passwordUtente1, String confermaPasswordUtente2) {
         //verifico che le password siano uguali e abbiano lunghezza di almeno 6 caratteri
@@ -263,7 +316,6 @@ public class RegisterActivityProp extends AppCompatActivity {
             return true;
         else
             return false;
-
     }
 
     private boolean emailValida(String emailutente) {
@@ -274,5 +326,4 @@ public class RegisterActivityProp extends AppCompatActivity {
             return false;
 
     }
-
 }

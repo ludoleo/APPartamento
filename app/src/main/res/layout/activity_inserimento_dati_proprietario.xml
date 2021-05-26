@@ -8,30 +8,55 @@
     android:gravity="center"
     tools:context=".registrazione.InserimentoDatiProprietario">
 
-    <TextView
+    <EditText
+        android:id="@+id/et_nomeP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome" />
+
+    <EditText
+        android:id="@+id/et_cognomeP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cognome" />
+
+    <EditText
+        android:id="@+id/et_numTelefonoP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:hint="Num Telefono" />
+
+    <EditText
+        android:id="@+id/et_emailP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="E-mail" />
+
+    <EditText
         android:id="@+id/et_prezzoCasa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Prezzo (mensilità richiesta)"
-        android:padding="15dp"/>
+        android:padding="15dp" />
 
-    <TextView
+    <EditText
         android:id="@+id/et_speseStraordinarie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Eventuali spese straordinarie (conguaglio...)"
         android:padding="15dp"/>
 
-    <TextView
-        android:id="@+id/et_descrizioneCasa"
+    <CheckBox
+        android:id="@+id/cb_primaEsperienzaP"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descrizione"
-        android:padding="15dp"/>
+        android:text="Prima Esperienza" />
 
     <Button
         android:id="@+id/i_d_p_continua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="conferma"
         android:text="Continua" />
 </LinearLayout>

@@ -127,7 +127,8 @@ public class InserimentoDatiStudente extends AppCompatActivity {
             if(s.compareTo("")==0) {
                 Toast.makeText(this, "Attenzione campo vuoto ", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "ERRORE");
-                return;}
+                return;
+            }
         }
 
         Studente studente = new Studente(nome,cognome,telefono,email ,
@@ -135,9 +136,9 @@ public class InserimentoDatiStudente extends AppCompatActivity {
 
         DatabaseReference studenteAggiunto = myRef.child("Studenti").push();
         studenteAggiunto.setValue(studente);
+
         String key = studenteAggiunto.getKey(); // Estraggo la chiave assegnata allo studente
         myRef.child("Chiavi").child(email).setValue(email);
-
         clear();
 
         leggiChild();

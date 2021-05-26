@@ -11,17 +11,18 @@ import com.example.myapplication.messaggi.MessaggiUtente;
 import com.example.myapplication.R;
 import com.example.myapplication.prenotazione.PrenotazioneActivity;
 import com.example.myapplication.salvati.Salvati;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Home extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        mAuth = FirebaseAuth.getInstance();
     }
-
-
-
 
     public void profilo(View view) {
 
@@ -44,6 +45,13 @@ public class Home extends AppCompatActivity {
     public void prenotazione(View view) {
 
         Intent intent = new Intent(Home.this , PrenotazioneActivity.class);
+        startActivity(intent);
+    }
+
+    public void esci(View view) {
+        mAuth.signOut();
+
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

@@ -91,7 +91,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="158dp">
+        android:layout_height="116dp">
 
         <ImageButton
             android:id="@+id/button_home3"
