@@ -91,8 +91,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         //mappo i dati che ottengo (operazione utile?)
         Map<String, String> listaElementi = new HashMap<>();
 
-       // String email = getIntent().getExtras().getString("email");
-        String email = "gioele@politoit";
+        String email = getIntent().getExtras().getString("email");
         String nome = et_nome.getText().toString();
         String cognome = et_cognome.getText().toString();
         String telefono = et_numTelefono.getText().toString();
@@ -101,7 +100,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         String descrizione = et_descrizioneS.getText().toString();
 
         //aggiungo le informazioni prese dai dati ad una mappa per gestirne il controllo
-        //listaElementi.put("Email",email);
+        listaElementi.put("Email",email);
         listaElementi.put("Nome",nome);
         listaElementi.put("Cognome", cognome);
         listaElementi.put("Telefono",telefono);
@@ -138,7 +137,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         studenteAggiunto.setValue(studente);
 
         String key = studenteAggiunto.getKey(); // Estraggo la chiave assegnata allo studente
-        myRef.child("Chiavi").child(email).setValue(email);
+        myRef.child("Chiavi").child(key).setValue(email);
         clear();
 
         leggiChild();

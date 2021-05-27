@@ -22,7 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-public class RegisterActivityUtente extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity {
 
     private static final String TAG = "RegisterActivityUtente";
     private static final int RC_SIGN_IN = 1;
@@ -37,30 +37,17 @@ public class RegisterActivityUtente extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
-    // accesso con Google
-   // GoogleSignInClient mGoogleSignInClient;
-    //SignInButton button;
-
-    //Facebook
-   // LoginButton loginButton;
-    //CallbackManager mCallbackManager = CallbackManager.Factory.create();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //FacebookSdk.setApplicationId("513976396407275");
-        //FacebookSdk.sdkInitialize(getApplicationContext());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        this.setTitle("Registrazione Studente");
+        this.setTitle("Registrazione Utente");
 
         //2) iniziaizzo l'istanza di firebase
         mAuth = FirebaseAuth.getInstance();
-
-
-        //AppEventsLogger.activateApp(this);
 
         initUI();
     }
@@ -76,137 +63,8 @@ public class RegisterActivityUtente extends AppCompatActivity {
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
 
-        /*
-        //google
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("94958735722-aeavbmn0qdg3km79en383vd6a1798bam.apps.googleusercontent.com")
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
-
-
-        //facebook
-        loginButton.setReadPermissions("email", "public_profile");
-        // Callback registration
-        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, "facebook:onSuccess:" + loginResult);
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
-
-            @Override
-            public void onCancel() {
-                // App code
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-            }
-        });
-
-         */
-
     }
 
-    /*
-    private void handleFacebookAccessToken(AccessToken token) {
-
-        Log.d(TAG, "handleFacebookAccessToken:" + token);
-
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Toast.makeText(RegisterActivityStud.this , "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-                    }
-                });
-
-    }
-
-     */
-
-    /*
-    private void signIn() {
-
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-
-     */
-    /*
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            //verifico se il signin va a buon fine oppure no
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-                firebaseAuthWithGoogle(account.getIdToken());
-
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
-            }
-        }
-
-        // Facebook - Pass the activity result back to the Facebook SDK
-        mCallbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
-     */
-
-    /*
-    private void firebaseAuthWithGoogle(String idToken) {
-
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                           updateUI(null);
-                        }
-                    }
-                });
-    }
-
-
-
-     */
     public void registra(View view) {
 
         Log.i(TAG,"Cliccato sul pulsante registrati");
@@ -242,7 +100,7 @@ public class RegisterActivityUtente extends AppCompatActivity {
 
         Log.i(TAG, "Connesso utente "+currentUser);
 
-        Intent intent = new Intent(RegisterActivityUtente.this, InserimentoDatiStudente.class);
+        Intent intent = new Intent(RegistrationActivity.this, InserimentoDatiStudente.class);
         startActivity(intent);
 
     }
@@ -262,7 +120,7 @@ public class RegisterActivityUtente extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(RegisterActivityUtente.this, "Authentication failed.",
+                            Toast.makeText(RegistrationActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                             //updateUI();
                         }
@@ -270,12 +128,12 @@ public class RegisterActivityUtente extends AppCompatActivity {
                 });
         //dopo la registrazione si passa all'inserimento dei dati
         if(isProprietario.isChecked()) {
-            Intent intent = new Intent(RegisterActivityUtente.this, InserimentoDatiProprietario.class);
+            Intent intent = new Intent(RegistrationActivity.this, InserimentoDatiProprietario.class);
             intent.putExtra("email", emailutente);
             startActivity(intent);
         }
         else {
-            Intent intent = new Intent(RegisterActivityUtente.this, InserimentoDatiStudente.class);
+            Intent intent = new Intent(RegistrationActivity.this, InserimentoDatiStudente.class);
             intent.putExtra("email", emailutente);
             startActivity(intent);
         }

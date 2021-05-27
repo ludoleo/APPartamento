@@ -11,9 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
-import com.example.myapplication.home.Home;
 import com.example.myapplication.profilo.ProfiloStudente;
-import com.example.myapplication.registrazione.RegisterActivityUtente;
+import com.example.myapplication.registrazione.RegistrationActivity;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -73,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initUI() {
 
+        mAuth.signOut();
+
         email = (EditText) findViewById(R.id.text_email);
         password = (EditText) findViewById(R.id.text_password);
         button = (SignInButton) findViewById(R.id.sign_in_button);
@@ -129,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void registraUtente(View view) {
 
-        Intent intent = new Intent(LoginActivity.this , RegisterActivityUtente.class);
+        Intent intent = new Intent(LoginActivity.this , RegistrationActivity.class);
         startActivity(intent);
     }
 
