@@ -24,20 +24,34 @@
             android:id="@+id/recensioni"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="92dp"
             android:layout_marginEnd="60dp"
             android:layout_marginRight="60dp"
             android:text="@string/Bottone1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="144dp"
-            android:layout_height="105dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <Button
+            android:id="@+id/changeimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginRight="60dp"
+            android:text="Foto Profilo"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.064"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/immaginestudente"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="72dp"
+            android:layout_marginRight="72dp"
+            app:layout_constraintEnd_toStartOf="@+id/recensioni"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />

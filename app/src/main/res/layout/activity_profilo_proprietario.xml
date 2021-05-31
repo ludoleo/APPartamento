@@ -21,10 +21,16 @@
             android:textSize="30sp" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/immaginepropriet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <Button
+            android:id="@+id/cambiaimmagineprop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cambia Immagine " />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -61,7 +67,7 @@
                     android:text="Le tue case" />
 
                 <Button
-                    android:id="@+id/visualizzza_casa"
+                    android:id="@+id/prenotaz"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Prenotazioni" />
@@ -74,5 +80,6 @@
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
