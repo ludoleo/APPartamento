@@ -91,7 +91,9 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         //mappo i dati che ottengo (operazione utile?)
         Map<String, String> listaElementi = new HashMap<>();
 
-        String email = getIntent().getExtras().getString("email");
+       // String email = getIntent().getExtras().getString("email");
+
+        String email = "lucrezia@gmail.com";
         String nome = et_nome.getText().toString();
         String cognome = et_cognome.getText().toString();
         String telefono = et_numTelefono.getText().toString();
