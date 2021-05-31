@@ -41,8 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Tipologia di Laurea"
-        android:padding="15dp"
-        />
+        android:padding="15dp" />
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -75,7 +74,7 @@
         android:id="@+id/et_descrizioneS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Parlami un po' di te.."
+        android:hint="Parlami un po' di te..."
         android:padding="15dp" />
     <CheckBox
         android:id="@+id/checkBoxPrimaEsperienza"

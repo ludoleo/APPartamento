@@ -42,6 +42,23 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
+        <ImageButton
+            android:id="@+id/button_home3"
+            android:layout_width="47dp"
+            android:layout_height="38dp"
+            android:background="@color/rosso_mattone"
+            android:fadingEdge="horizontal|vertical"
+            android:onClick="goHome"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.997"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.033"
+            app:srcCompat="@drawable/ic_baseline_home_24"
+            tools:ignore="VectorDrawableCompat" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -50,7 +67,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView16"
+            android:id="@+id/text_info"
             android:layout_width="match_parent"
             android:layout_height="37dp"
             android:text="@string/etichetta6"
@@ -58,28 +75,40 @@
             android:textStyle="normal|bold" />
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/text_nome"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:text="@string/etichetta2" />
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/text_cognome"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:text="@string/etichetta3" />
 
         <TextView
-            android:id="@+id/textView19"
+            android:id="@+id/text_telefono"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="@string/etichetta5" />
+
+        <TextView
+            android:id="@+id/text_descrizione"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:text="@string/etichetta4" />
 
         <TextView
-            android:id="@+id/textView20"
+            android:id="@+id/text_universita"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:text="@string/etichetta5" />
+            android:text="Univeristà" />
+
+        <TextView
+            android:id="@+id/text_indirizzoLaurea"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="Indirizzo Laurea" />
 
     </LinearLayout>
 
@@ -88,26 +117,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/Bottone2" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="116dp">
-
-        <ImageButton
-            android:id="@+id/button_home3"
-            android:layout_width="87dp"
-            android:layout_height="68dp"
-            android:background="@color/rosso_mattone"
-            android:fadingEdge="horizontal|vertical"
-            android:onClick="goHome"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.375"
-            app:srcCompat="@drawable/ic_baseline_home_24"
-            tools:ignore="VectorDrawableCompat" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

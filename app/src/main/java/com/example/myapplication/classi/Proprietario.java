@@ -7,14 +7,15 @@ import java.util.List;
 
 public class Proprietario extends Utente{
 
+
     private List<Casa> listaCase = new LinkedList<>();
     private List<Annuncio> listaAnnunci = new LinkedList<>();
 
     public Proprietario() {
     }
 
-    public Proprietario(String nome, String cognome, String telefono, String email, ImageView fotoUtente, String primaEsperienza) {
-        super(nome, cognome, telefono, email, primaEsperienza);
+    public Proprietario(String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza ) {
+        super(nome, cognome, telefono, email, descrizione, primaEsperienza );
     }
 
     public void addCasa (Casa casa){

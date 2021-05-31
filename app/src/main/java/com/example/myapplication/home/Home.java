@@ -49,6 +49,7 @@ public class Home extends AppCompatActivity {
     }
 
     public void esci(View view) {
+
         mAuth.signOut();
 
         Intent intent = new Intent(this, LoginActivity.class);

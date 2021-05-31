@@ -1,31 +1,27 @@
 package com.example.myapplication.classi;
 
-import android.widget.ImageView;
-
 import java.util.LinkedList;
 import java.util.List;
 
 public class Studente extends Utente {
 
     private String universita;
-    private String tipologiaLaurea;
+    private String tipologiaLaurea; //triennale o magistrale
     private String indirizzoLaurea;
-    private String descrizione;
     private List<String> hobby = new LinkedList<>();
-    private boolean senzaAlloggio;
+    private String senzaAlloggio; // non è un inquilino
 
 
     public Studente() {
     }
 
-    public Studente(String nome, String cognome, String telefono, String email,
-                    String primaEsperienza, String universita, String tipologiaLaurea, String indirizzoLaurea, String descrizione) {
-        super(nome, cognome, telefono, email, primaEsperienza);
+    public Studente(String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza,
+                    String universita, String tipologiaLaurea, String indirizzoLaurea, String senzaAlloggio) {
+        super(nome, cognome, telefono, email, descrizione, primaEsperienza);
         this.universita = universita;
         this.tipologiaLaurea = tipologiaLaurea;
         this.indirizzoLaurea = indirizzoLaurea;
-        this.descrizione = descrizione;
-        this.senzaAlloggio = true;
+        this.senzaAlloggio = senzaAlloggio;
     }
 
     public String getUniversita() {
@@ -52,14 +48,6 @@ public class Studente extends Utente {
         this.indirizzoLaurea = indirizzoLaurea;
     }
 
-    public String getDescrizione() {
-        return descrizione;
-    }
-
-    public void setDescrizione(String descrizione) {
-        this.descrizione = descrizione;
-    }
-
     public List<String> getHobby() {
         return hobby;
     }
@@ -68,15 +56,21 @@ public class Studente extends Utente {
         this.hobby = hobby;
     }
 
-    public boolean isSenzaAlloggio() {
+    public String getSenzaAlloggio() {
         return senzaAlloggio;
     }
 
-    public void setSenzaAlloggio(boolean senzaAlloggio) {
+    public void setSenzaAlloggio(String senzaAlloggio) {
         this.senzaAlloggio = senzaAlloggio;
     }
 
     public void aggiungiHobby(String hobby) {
-        this.hobby.add(hobby);}
+        this.hobby.add(hobby);
+    }
+
+    @Override
+    public String toString() {
+        return "Studente: "+this.getNome()+" "+this.getCognome();
+    }
 
 }

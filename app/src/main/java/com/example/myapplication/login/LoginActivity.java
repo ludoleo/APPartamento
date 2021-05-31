@@ -72,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initUI() {
 
+        //non va bene il signOut() qui
         mAuth.signOut();
 
         email = (EditText) findViewById(R.id.text_email);
@@ -148,7 +149,9 @@ public class LoginActivity extends AppCompatActivity {
 
         Log.i(TAG, "Connesso utente "+currentUser);
 
+        String emailUtente = currentUser.getEmail();
         Intent intent = new Intent(this, ScegliUtente.class);
+        intent.putExtra("email", emailUtente);
         startActivity(intent);
 
     }
@@ -174,7 +177,10 @@ public class LoginActivity extends AppCompatActivity {
                 });
         //va controllato se l'utente autenticato è uno studente o un proprietario
 
+        String idUtente = mAuth.getCurrentUser().getUid();
+
         Intent intent = new Intent(LoginActivity.this, ProfiloStudente.class);
+        intent.putExtra("idUtente", idUtente);
         startActivity(intent);
     }
 

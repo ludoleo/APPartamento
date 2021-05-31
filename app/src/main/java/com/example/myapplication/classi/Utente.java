@@ -1,7 +1,5 @@
 package com.example.myapplication.classi;
 
-import android.widget.ImageView;
-
 import java.util.Objects;
 
 public class Utente {
@@ -10,18 +8,20 @@ public class Utente {
     private String cognome;
     private String telefono;
     private String email;
+    private String descrizione;
     private float valutazione;
     private String primaEsperienza;
 
     public Utente() {
     }
 
-    public Utente(String nome, String cognome, String telefono, String email, String primaEsperienza) {
+    public Utente(String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza) {
 
         this.nome = nome;
         this.cognome = cognome;
         this.telefono = telefono;
         this.email = email;
+        this.descrizione = descrizione;
         this.valutazione = 0;
         this.primaEsperienza = primaEsperienza;
     }
@@ -47,10 +47,6 @@ public class Utente {
         return valutazione;
     }
 
-    public String isPrimaEsperienza() {
-        return primaEsperienza;
-    }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -71,6 +67,19 @@ public class Utente {
         this.valutazione = valutazione;
     }
 
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public String getPrimaEsperienza() {
+        return primaEsperienza;
+    }
+
     public void setPrimaEsperienza(String primaEsperienza) {
         this.primaEsperienza = primaEsperienza;
     }
@@ -86,5 +95,13 @@ public class Utente {
     @Override
     public int hashCode() {
         return Objects.hash(getEmail());
+    }
+
+    @Override
+    public String toString() {
+        return "Utente{" +
+                "nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                '}';
     }
 }

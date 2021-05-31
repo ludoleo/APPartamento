@@ -9,8 +9,8 @@
     <string name="etichetta12">Profilo Studente</string>
     <string name="etichetta2">Nome</string>
     <string name="etichetta3">Cognome</string>
-    <string name="etichetta4">Hobby</string>
-    <string name="etichetta5">Lingue</string>
+    <string name="etichetta4">Descrizione</string>
+    <string name="etichetta5">Telefono</string>
     <string name="etichetta6">Informazioni personali</string>
     <string name="Bottone1">Recensioni </string>
     <string name="Bottone2">Modifica Profilo</string>

@@ -18,6 +18,8 @@ import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.profilo.ProfiloProprietario;
 import com.example.myapplication.profilo.ProfiloStudente;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,10 +35,7 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
     private EditText et_nomeP;
     private EditText et_cognomeP;
     private EditText et_numTelefonoP;
-    private EditText et_emailP;
-
-    private EditText et_prezzoMesile;
-    private EditText et_speseStraordinarie;
+    private EditText et_descrizioneP;
 
     private CheckBox cb_primaEsperienzaP;
 
@@ -61,13 +60,9 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
         et_nomeP = (EditText) findViewById(R.id.et_nomeP);
         et_cognomeP = (EditText) findViewById(R.id.et_cognomeP);
         et_numTelefonoP = (EditText) findViewById(R.id.et_numTelefonoP);
-        et_emailP = (EditText) findViewById(R.id.et_emailP);
+        et_descrizioneP = (EditText) findViewById(R.id.et_descrizione);
 
         cb_primaEsperienzaP = (CheckBox) findViewById(R.id.cb_primaEsperienzaP) ;
-
-        // et_prezzoMesile = (EditText) findViewById(R.id.et_prezzoCasa);
-       // et_descrizione = (EditText) findViewById(R.id.et_descrizioneCasa);
-       // et_speseStraordinarie = (EditText) findViewById(R.id.et_speseStraordinarie);
 
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
@@ -81,7 +76,8 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
         String nome = et_nomeP.getText().toString();
         String cognome = et_cognomeP.getText().toString();
         String numTelefono = et_numTelefonoP.getText().toString();
-        String email = et_emailP.getText().toString();
+        String email = getIntent().getExtras().getString("email");
+        String descrizioneP = et_descrizioneP.getText().toString();
 
         listaElementi.put("Nome", nome);
         listaElementi.put("Cognome", cognome);
@@ -102,7 +98,7 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
                 return;
             }
         }
-        Proprietario proprietario = new Proprietario(nome,cognome,numTelefono,email,null,primaEsperienzaP);
+        Proprietario proprietario = new Proprietario(nome,cognome,numTelefono,email, descrizioneP, primaEsperienzaP);
 
         DatabaseReference proprietarioAggiunto = myRef.child("Proprietari").push();
         proprietarioAggiunto.setValue(proprietario);
@@ -156,7 +152,6 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
         et_nomeP.setText("");
         et_cognomeP.setText("");
         et_numTelefonoP.setText("");
-        et_emailP.setText("");
         cb_primaEsperienzaP.setChecked(false);
     }
 

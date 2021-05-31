@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.profilo.ProfiloStudente;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,12 +52,12 @@ public class InserimentoDatiStudente extends AppCompatActivity {
     private RadioButton rb_magistrale;
 
     private CheckBox cb_primaEsperienza;
+    private String studenteSenzaAlloggio;
 
    //Database
    private FirebaseDatabase database;
    private DatabaseReference myRef;
 
-   //private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         String universita = et_universita.getText().toString();
         String indirizzoLaurea = et_indirizzoLaurea.getText().toString();
         String descrizione = et_descrizioneS.getText().toString();
+        studenteSenzaAlloggio = si;
 
         //aggiungo le informazioni prese dai dati ad una mappa per gestirne il controllo
         listaElementi.put("Email",email);
@@ -107,6 +110,9 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         listaElementi.put("Università",universita);
         listaElementi.put("Indirizzo di Laurea",indirizzoLaurea);
         listaElementi.put("Descrizione",descrizione);
+        listaElementi.put("Senza Alloggio", studenteSenzaAlloggio);
+        //listaElementi.put("Prima Esperienza",primaEsperienza);
+
 
         String tipologia;
         String primaEsperienza;
@@ -116,6 +122,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
             tipologia = magistrale;
         else
             tipologia = triennale;
+
         //boolean prima esperienza
         if(cb_primaEsperienza.isChecked())
             primaEsperienza = si;
@@ -130,19 +137,23 @@ public class InserimentoDatiStudente extends AppCompatActivity {
             }
         }
 
-        Studente studente = new Studente(nome,cognome,telefono,email ,
-                primaEsperienza,universita,tipologia,indirizzoLaurea,descrizione);
+
+
+        Studente studente = new Studente(nome,cognome,telefono,email , descrizione,primaEsperienza,
+                universita,tipologia,indirizzoLaurea,studenteSenzaAlloggio);
 
         DatabaseReference studenteAggiunto = myRef.child("Studenti").push();
         studenteAggiunto.setValue(studente);
 
+        Log.i(TAG, "Studente "+studente.getNome()+" "+studente.getCognome());
         String key = studenteAggiunto.getKey(); // Estraggo la chiave assegnata allo studente
         myRef.child("Chiavi").child(key).setValue(email);
         clear();
 
-        leggiChild();
+        //leggiChild();
 
         Intent intent = new Intent(this, ProfiloStudente.class);
+        intent.putExtra("idUtente",key);
         startActivity(intent);
     }
 
@@ -151,23 +162,23 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         myRef.child("Studenti").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Studente studente = snapshot.getValue(Studente.class);
-                Log.i(TAG, "Aggiunto studente "+studente.toString());
+               // Studente studente = snapshot.getValue(Studente.class);
+               // Log.i(TAG, "Aggiunto studente " + studente.toString());
                 //inviaNotifica(studente.getMatricola(), studente.getNome(), studente.getCognome());
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Studente studente = snapshot.getValue(Studente.class);
-                Log.i(TAG, "Modificato studente "+studente.toString());
+                Log.i(TAG, "Modificato studente " + studente.toString());
                 //inviaNotifica(studente.getMatricola(), studente.getNome(), studente.getCognome());
             }
 
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-               // Studente studente = snapshot.getValue(Studente.class);
-                //Log.i(TAG, "Rimosso studente "+studente.toString());
+                 Studente studente = snapshot.getValue(Studente.class);
+                Log.i(TAG, "Rimosso studente "+studente.toString());
                 //tvMessaggio.setText("Rimosso studente "+studente.toString());
             }
 

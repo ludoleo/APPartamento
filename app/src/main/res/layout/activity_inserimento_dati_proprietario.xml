@@ -28,24 +28,10 @@
         android:hint="Num Telefono" />
 
     <EditText
-        android:id="@+id/et_emailP"
+        android:id="@+id/et_descrizione"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="E-mail" />
-
-    <EditText
-        android:id="@+id/et_prezzoCasa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Prezzo (mensilità richiesta)"
-        android:padding="15dp" />
-
-    <EditText
-        android:id="@+id/et_speseStraordinarie"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Eventuali spese straordinarie (conguaglio...)"
-        android:padding="15dp"/>
+        android:hint="Parlami un po' di te..." />
 
     <CheckBox
         android:id="@+id/cb_primaEsperienzaP"
