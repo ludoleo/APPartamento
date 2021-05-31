@@ -69,7 +69,7 @@ public class ProfiloStudente extends AppCompatActivity {
 
         // nel file c'è salvato Firbase user --> in teoria dovrebbe essere il nostro studenti
 
-        //StorageReference profileref = storageReference.child("user/"+f.getCurrentuser().getUid()+"profile.jpg"); //--> stesso percorso da copiare in uploadFirebase al posto di image
+        //StorageReference profileref = storageReference.child("user/"+f.getCurrentuser().getUid()+"profile.jpg"); //--> stesso percorso da copiare in uploadFirebase al posto di image al fine di avere cartella e non sovrascrivere
         //profileref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
           //  @Override
             //public void onSuccess(Uri uri) {
