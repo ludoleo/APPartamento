@@ -4,110 +4,66 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.example.myapplication.R;
 
 public class RecensioniProprietarioInterne extends AppCompatActivity {
-SeekBar seekBar10;
-SeekBar seekBar11;
-SeekBar seekBar12;
-SeekBar seekBar13;
-SeekBar seekBar14;
-LinearLayout linear1;
-ConstraintLayout constraint1;
-Button pulsanteok;
+    TextView rateCount, showRating;
+    EditText review;
+    Button submit;
+    RatingBar ratingbar;
+    float rateValue; String temp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recensioni_proprietario_interne);
-        seekBar10 = findViewById(R.id.seekBar20);
-        seekBar10.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        rateCount = findViewById(R.id.ratecount);
+        review = findViewById(R.id.Review);
+        submit = findViewById(R.id.Submit);
+        ratingbar = findViewById(R.id.RatingBar);
+        showRating = findViewById(R.id.showRating);
+
+        ratingbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                rateValue = ratingbar.getRating();
+                if(rateValue <= 1  && rateValue > 0)
+                    rateCount.setText("Pessimo"+rateValue + "/5");
 
-            }
+                else if (rateValue <= 2  && rateValue > 1)
+                    rateCount.setText("Discreto"+rateValue + "/5");
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+                else if (rateValue <= 3  && rateValue > 2)
+                    rateCount.setText("Buono"+rateValue + "/5");
 
-            }
+                else if (rateValue <= 4  && rateValue > 3)
+                    rateCount.setText("Ottimo"+rateValue + "/5");
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        seekBar11 = findViewById(R.id.seekBar21);
-        seekBar11.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+                else if (rateValue <= 5  && rateValue > 4)
+                    rateCount.setText("Eccelente"+rateValue + "/5");
 
             }
         });
-        seekBar12 = findViewById(R.id.seekBar22);
-        seekBar12.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        submit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        seekBar13 = findViewById(R.id.seekBar23);
-        seekBar13.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        seekBar14 = findViewById(R.id.seekBar24);
-        seekBar14.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
+            public void onClick(View v) {
+                temp = rateCount.getText().toString();
+                showRating.setText("Your Rating \n" + temp +"\n" + review.getText());
+                review.setText("");
+                ratingbar.setRating(0);
+                rateCount.setText("");
             }
         });
     }
 }
+
+
+

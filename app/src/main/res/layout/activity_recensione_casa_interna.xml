@@ -6,120 +6,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context=".recensione.RecensioneCasaInterna">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="Recensioni Casa"
-        android:textSize="24sp"
-        android:textStyle="normal|bold" />
-
-    <EditText
-        android:id="@+id/labelcasa"
+        android:id="@+id/ratecount2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Inserisci Descrizione Casa" />
+        android:textAppearance="?android:textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/valutacamera"
+        android:id="@+id/textView200"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:text="valuta camera"
-        android:textSize="24sp" />
+        android:layout_height="wrap_content"
+        android:text="Valutazione Generale Casa"
+        android:textAppearance="?android:textAppearanceLarge" />
 
-    <SeekBar
-        android:id="@+id/seekBar20"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="match_parent"
-        android:layout_height="39dp"
-        android:max="5"
-        android:progress="3" />
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/RatingBar2"/>
 
+    <EditText
+        android:id="@+id/Review2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Scrivi recenione" />
+
+    <Button
+        android:id="@+id/Submit2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Invia"
+        android:textAllCaps="false" />
     <TextView
-        android:id="@+id/spazicomuni"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:text="valuta spazi comuni"
-        android:textSize="24sp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:id="@+id/showRating2"
+        android:layout_margin="10dp"/>
 
-    <SeekBar
-        android:id="@+id/seekBar21"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="match_parent"
-        android:layout_height="39dp"
-        android:max="5"
-        android:progress="3" />
 
-    <TextView
-        android:id="@+id/valutacondominio"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:text="valuta condominio"
-        android:textSize="24sp" />
 
-    <SeekBar
-        android:id="@+id/seekBar22"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="match_parent"
-        android:layout_height="39dp"
-        android:max="5"
-        android:progress="3" />
 
-    <TextView
-        android:id="@+id/vicinanzaluogostudio"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:text="valuta vicinanza luogo di studio"
-        android:textSize="24sp" />
 
-    <SeekBar
-        android:id="@+id/seekBar23"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="match_parent"
-        android:layout_height="39dp"
-        android:max="5"
-        android:progress="3" />
 
-    <TextView
-        android:id="@+id/vicinanzamezzi"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:text="valuta vicinanza mezzi di trasporto"
-        android:textSize="24sp" />
 
-    <SeekBar
-        android:id="@+id/seekBar24"
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="match_parent"
-        android:layout_height="39dp"
-        android:max="5"
-        android:progress="3" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint1"
-        android:layout_width="match_parent"
-        android:layout_height="271dp"
-        android:background="@drawable/foto_recensionecasa">
 
-        <Button
-            android:id="@+id/pulsanteok3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="97dp"
-            android:layout_marginLeft="97dp"
-            android:layout_marginTop="111dp"
-            android:layout_marginEnd="98dp"
-            android:layout_marginRight="98dp"
-            android:layout_marginBottom="112dp"
-            android:text="Conferma Recensione"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </LinearLayout>
