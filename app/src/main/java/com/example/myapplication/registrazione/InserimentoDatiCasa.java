@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class InserimentoDatiCasa extends AppCompatActivity {
 
@@ -37,6 +38,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    private Boolean flagNomeCasaUguale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +51,13 @@ public class InserimentoDatiCasa extends AppCompatActivity {
     private void initUI() {
         et_nomeCasa = (EditText) findViewById(R.id.et_nomeCasa);
         et_numeroCivico = (EditText) findViewById(R.id.et_numeroCivico);
+        et_viaCasa = (EditText) findViewById(R.id.et_viaCasa);
         et_CAP = (EditText) findViewById(R.id.et_CAP);
         et_numeroBagni = (EditText) findViewById(R.id.et_numeroBagni);
         et_numeroStanze = (EditText) findViewById(R.id.et_numeroStanze);
         et_numeroOspiti = (EditText) findViewById(R.id.et_numeroOspiti);
+
+        flagNomeCasaUguale = false;
 
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
@@ -97,28 +102,72 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         //Il nome della casa è unico
             //TO_DO
 
-        //Creo l'oggetto casa
 
-        //costruisco l'indiritto
-        String indirizzo = viaCasa+" "+numeroCivico+" "+cap;
-        //prendo nota del proprietario
-        String proprietario = "id_proprietario";
+        controlloNomeCasa(nomeCasa);
 
-        Casa casa = new Casa(nomeCasa,indirizzo,numeroOspiti,numeroBagni,numeroStanze,proprietario);
-        //eseguo il push
-        DatabaseReference casaAggiunta = myRef.child("Case").push();
-        casaAggiunta.setValue(casa);
+        if(flagNomeCasaUguale) {
+            Log.i(TAG, "Flag " +flagNomeCasaUguale.booleanValue());
+            et_nomeCasa.setText("");
+            return;
+        }
+        else {
+            Log.i(TAG, "valore flag else " +flagNomeCasaUguale.booleanValue());
+            //Creo l'oggetto casa
 
-        Log.i(TAG, "Casa "+casa.getNomeCasa());
-        String key = casaAggiunta.getKey(); // Estraggo la chiave assegnata alla casa
-        myRef.child("Chiavi").child(key).setValue(nomeCasa);
+            //costruisco l'indiritto
+            String indirizzo = viaCasa + " ," + numeroCivico + " ," + cap;
+            //prendo nota del proprietario
+            String proprietario = "id_proprietario";
 
-        leggiChild();
-        clear();
+            Casa casa = new Casa(nomeCasa, indirizzo, numeroOspiti, numeroBagni, numeroStanze, proprietario);
+            //eseguo il push
+            DatabaseReference casaAggiunta = myRef.child("Case").push();
+            casaAggiunta.setValue(casa);
 
-        Intent intent = new Intent(this, Annuncio.class);
-        startActivity(intent);
+            Log.i(TAG, "Casa " + casa.getNomeCasa());
+            //String key = casaAggiunta.getKey(); // Estraggo la chiave assegnata alla casa
+            //myRef.child("Chiavi").child(key).setValue(nomeCasa);
+
+            leggiChild();
+            clear();
+
+            Intent intent = new Intent(this, Home.class);
+            startActivity(intent);
+        }
     }
+
+
+    private void controlloNomeCasa(String nomeCasa) {
+
+        myRef.child("Case").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
+
+                    Casa casaFiglio = caseSnapshot.getValue(Casa.class);
+                    if(casaFiglio.getNomeCasa().compareTo(nomeCasa)==0) {
+                        Toast.makeText(InserimentoDatiCasa.this, "Attenzione "+nomeCasa+"già presente, inserire nuovo nome!", Toast.LENGTH_SHORT).show();
+                         cambiaFlag();
+                    }
+                    Log.i(TAG,"Casa :"+casaFiglio.getNomeCasa()+ "/n");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        });
+    }
+
+    private void cambiaFlag() {
+        Log.i(TAG, "Passo dal flag ");
+        flagNomeCasaUguale = true;
+        Log.i(TAG, "Passo dal flag "+flagNomeCasaUguale.booleanValue());
+    }
+
 
     public void leggiChild(){
 

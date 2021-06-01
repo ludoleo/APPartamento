@@ -82,10 +82,13 @@ public class ProfiloStudente extends AppCompatActivity {
 
             Log.i(TAG, "Sono in popola");
 
-        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
+
+        myRef.child("Utenti").addValueEventListener(new ValueEventListener(){
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Log.i(TAG,"funziona");
 
                 // Get Post object and use the values to update the UI
                 for(DataSnapshot figlio : dataSnapshot.getChildren()) {
