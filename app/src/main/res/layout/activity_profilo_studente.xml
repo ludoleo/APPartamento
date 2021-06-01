@@ -92,8 +92,7 @@
             android:id="@+id/text_nome"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:text="@string/etichetta2" />
-
+         ></TextView>
         <TextView
             android:id="@+id/text_cognome"
             android:layout_width="match_parent"

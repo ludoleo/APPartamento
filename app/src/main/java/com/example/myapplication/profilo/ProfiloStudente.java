@@ -14,18 +14,15 @@ import com.example.myapplication.R;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.recensione.RecensioniStudentInterne;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class ProfiloStudente extends AppCompatActivity {
 
-    private static final String TAG = "Errore DB";
+    private static final String TAG = "Profilo Studente";
     Button recensioni;
     Button modifica;
     ImageButton imagebutton2;
@@ -37,8 +34,6 @@ public class ProfiloStudente extends AppCompatActivity {
     private TextView text_univerista;
     private TextView text_indirizzoLaure;
 
-    public FirebaseAuth mAuth;
-    public FirebaseUser mUser;
     public DatabaseReference myRef;
     public FirebaseDatabase database;
     private String idUtente;
@@ -66,30 +61,42 @@ public class ProfiloStudente extends AppCompatActivity {
             }
         });
 
+            text_nome = (TextView) findViewById(R.id.text_nome);
+            text_cognome = (TextView) findViewById(R.id.text_cognome);
+            text_descrizione = (TextView) findViewById(R.id.text_descrizione);
+            text_telefono = (TextView) findViewById(R.id.text_telefono);
+            text_univerista = (TextView) findViewById(R.id.text_universita);
+            text_indirizzoLaure = (TextView) findViewById(R.id.text_indirizzoLaurea);
+
             idUtente = getIntent().getExtras().getString("idUtente");
             database = FirebaseDatabase.getInstance();
             //capire come accedere a quel determinato studente
             myRef = database.getReference();
-            Log.i("Profilo", "sono passata da qui"+idUtente);
+            Log.i(TAG, "sono passata da qui "+idUtente);
 
             popola(idUtente);
     }
 
+
     private void popola(String idUtente) {
 
-        myRef.child("Studenti").addValueEventListener(new ValueEventListener(){
+            Log.i(TAG, "Sono in popola");
+
+        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 // Get Post object and use the values to update the UI
                 for(DataSnapshot figlio : dataSnapshot.getChildren()) {
 
-                    Log.i(TAG, "Studente "+figlio.toString()+"/n");
+                    Log.i(TAG, "Studente "+figlio.getKey()+"/n");
 
                     if(figlio.getKey().compareTo(idUtente)==0) {
 
                         Studente studente = figlio.getValue(Studente.class);
                         Log.i(TAG, "Profilo dello studente" + studente.toString());
+
 
                         text_nome.setText(studente.getNome());
                         text_cognome.setText(studente.getCognome());

@@ -13,6 +13,7 @@
         android:layout_width="201dp"
         android:layout_height="64dp"
         android:text="Cerca"
+        android:onClick="cercaMappa"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.166"

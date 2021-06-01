@@ -54,6 +54,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
     private CheckBox cb_primaEsperienza;
     private String studenteSenzaAlloggio;
 
+
    //Database
    private FirebaseDatabase database;
    private DatabaseReference myRef;
@@ -85,6 +86,8 @@ public class InserimentoDatiStudente extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
+
+
         
     }
 
@@ -93,6 +96,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         //mappo i dati che ottengo (operazione utile?)
         Map<String, String> listaElementi = new HashMap<>();
 
+        String idStudente = getIntent().getExtras().getString("idStudente");
         String email = getIntent().getExtras().getString("email");
         String nome = et_nome.getText().toString();
         String cognome = et_cognome.getText().toString();
@@ -113,6 +117,8 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         listaElementi.put("Senza Alloggio", studenteSenzaAlloggio);
         //listaElementi.put("Prima Esperienza",primaEsperienza);
 
+
+        Log.i(TAG,"Questo è l'idStudente "+idStudente);
 
         String tipologia;
         String primaEsperienza;
@@ -142,18 +148,18 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         Studente studente = new Studente(nome,cognome,telefono,email , descrizione,primaEsperienza,
                 universita,tipologia,indirizzoLaurea,studenteSenzaAlloggio);
 
-        DatabaseReference studenteAggiunto = myRef.child("Studenti").push();
+        DatabaseReference studenteAggiunto = myRef.child("Utenti").child("Studenti").child(idStudente);
         studenteAggiunto.setValue(studente);
 
         Log.i(TAG, "Studente "+studente.getNome()+" "+studente.getCognome());
-        String key = studenteAggiunto.getKey(); // Estraggo la chiave assegnata allo studente
-        myRef.child("Chiavi").child(key).setValue(email);
+        //String key = studenteAggiunto.getKey(); // Estraggo la chiave assegnata allo studente
+        myRef.child("Chiavi").child(idStudente).setValue(email);
         clear();
 
-        //leggiChild();
+        leggiChild();
 
         Intent intent = new Intent(this, ProfiloStudente.class);
-        intent.putExtra("idUtente",key);
+        intent.putExtra("idUtente",idStudente);
         startActivity(intent);
     }
 
@@ -162,8 +168,8 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         myRef.child("Studenti").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-               // Studente studente = snapshot.getValue(Studente.class);
-               // Log.i(TAG, "Aggiunto studente " + studente.toString());
+               Studente studente = snapshot.getValue(Studente.class);
+                Log.i(TAG, "Aggiunto studente " + studente.toString());
                 //inviaNotifica(studente.getMatricola(), studente.getNome(), studente.getCognome());
             }
 

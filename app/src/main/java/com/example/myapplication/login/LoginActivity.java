@@ -64,16 +64,12 @@ public class LoginActivity extends AppCompatActivity {
 
         this.setTitle("APPartamento");
 
-      //  AppEventsLogger.activateApp(this);
-
         mAuth = FirebaseAuth.getInstance();
         initUI();
     }
 
     private void initUI() {
 
-        //non va bene il signOut() qui
-        mAuth.signOut();
 
         email = (EditText) findViewById(R.id.text_email);
         password = (EditText) findViewById(R.id.text_password);
@@ -94,7 +90,6 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
-
 
         //facebook
         loginButton.setReadPermissions("email", "public_profile");
@@ -156,6 +151,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+
     private void loginWithFirebase(String email, String password) {
 
         mAuth.signInWithEmailAndPassword(email, password)
@@ -166,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            updateUIGiaRegistrato(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -175,14 +171,32 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
+
         //va controllato se l'utente autenticato è uno studente o un proprietario
 
-        String idUtente = mAuth.getCurrentUser().getUid();
 
-        Intent intent = new Intent(LoginActivity.this, ProfiloStudente.class);
+       // String idUtente = mAuth.getCurrentUser().getUid();
+
+       // Intent intent = new Intent(LoginActivity.this, ProfiloStudente.class);
+        //intent.putExtra("idUtente", idUtente);
+       // startActivity(intent);
+    }
+
+    private void updateUIGiaRegistrato(FirebaseUser user) {
+
+        Log.i(TAG, "Connesso utente "+user);
+
+        //va controllato se l'utente è proprietario o studente e va mandato nel profilo giusto
+        String idUtente = user.getUid();
+        Intent intent = new Intent(this, ProfiloStudente.class);
         intent.putExtra("idUtente", idUtente);
         startActivity(intent);
+
     }
+
+    /*
+    Accesso con Google
+     */
 
     private void signIn() {
 
@@ -261,9 +275,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
-
 
 
     public void pwDimenticata(View view) {
@@ -272,5 +284,4 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
-
 }

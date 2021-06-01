@@ -73,6 +73,7 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
 
         Map<String, String> listaElementi = new HashMap<>();
 
+        String idProprietario = getIntent().getExtras().getString("idProprietario");
         String nome = et_nomeP.getText().toString();
         String cognome = et_cognomeP.getText().toString();
         String numTelefono = et_numTelefonoP.getText().toString();
@@ -100,7 +101,7 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
         }
         Proprietario proprietario = new Proprietario(nome,cognome,numTelefono,email, descrizioneP, primaEsperienzaP);
 
-        DatabaseReference proprietarioAggiunto = myRef.child("Proprietari").push();
+        DatabaseReference proprietarioAggiunto = myRef.child("Utenti").child("Proprietari").child(idProprietario);
         proprietarioAggiunto.setValue(proprietario);
 
         clear();
@@ -108,6 +109,7 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
         leggiChild();
 
         Intent intent = new Intent(this, ProfiloProprietario.class);
+        intent.putExtra("idUtente",idProprietario);
         startActivity(intent);
 
     }

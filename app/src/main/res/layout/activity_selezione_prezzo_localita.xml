@@ -38,7 +38,7 @@
             android:text="@string/conferma" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/text_nomeP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

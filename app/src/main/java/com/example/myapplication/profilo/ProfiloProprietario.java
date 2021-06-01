@@ -13,12 +13,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.recensione.RecensioniProprietarioInterne;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -32,22 +39,40 @@ public class ProfiloProprietario extends AppCompatActivity {
     FirebaseStorage storage;
     StorageReference storageReference;
 
+    private TextView text_nomeP;
+    private TextView text_cognomeP;
+    private TextView text_numTelP;
+
+    public DatabaseReference myRef;
+    public FirebaseDatabase database;
+    private String idUtente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo_proprietario);
+
         letuecase =  findViewById(R.id.letuecase);
-
         prenotaz  =  findViewById(R.id.prenotaz);
-
         cambiaimmagine = findViewById(R.id.cambiaimmagineprop);
-
         recensioniprop =  findViewById(R.id.recensioniprop);
-
         immagineprop = findViewById(R.id.immaginepropriet);
 
         storageReference = FirebaseStorage.getInstance().getReference();
+
+        text_nomeP = (TextView) findViewById(R.id.text_nomeP);
+        text_cognomeP = (TextView) findViewById(R.id.text_cognomeP);
+        text_numTelP = (TextView) findViewById(R.id.text_numTelP);
+
+        idUtente = getIntent().getExtras().getString("idUtente");
+
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
+
+        popolaProprietario(idUtente);
+
+
+
 
         recensioniprop.setOnClickListener(new View.OnClickListener() {
 
@@ -84,6 +109,31 @@ public class ProfiloProprietario extends AppCompatActivity {
 
 
     }
+
+    private void popolaProprietario(String idUtente) {
+
+        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot figlioP : snapshot.getChildren()) {
+                    if(figlioP.getKey().compareTo(idUtente)==0) {
+
+                        Proprietario proprietario = figlioP.getValue(Proprietario.class);
+
+                        text_nomeP.setText(proprietario.getNome());
+                        text_cognomeP.setText(proprietario.getCognome());
+                        text_numTelP.setText(proprietario.getTelefono());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     private void pickimagefromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");

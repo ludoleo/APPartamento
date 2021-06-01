@@ -41,7 +41,6 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         this.setTitle("Registrazione Utente");
@@ -92,7 +91,7 @@ public class RegistrationActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-           updateUI(currentUser);
+           //updateUI(currentUser);
         }
     }
 
@@ -115,7 +114,6 @@ public class RegistrationActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-
                             updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -126,15 +124,19 @@ public class RegistrationActivity extends AppCompatActivity {
                         }
                     }
                 });
+        String idU = mAuth.getUid();
         //dopo la registrazione si passa all'inserimento dei dati
         if(isProprietario.isChecked()) {
+
             Intent intent = new Intent(RegistrationActivity.this, InserimentoDatiProprietario.class);
             intent.putExtra("email", emailutente);
+            intent.putExtra("idProprietario", idU);
             startActivity(intent);
         }
         else {
             Intent intent = new Intent(RegistrationActivity.this, InserimentoDatiStudente.class);
             intent.putExtra("email", emailutente);
+            intent.putExtra("idStudente",idU);
             startActivity(intent);
         }
     }
@@ -165,8 +167,6 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
      */
-
-
 
     private boolean passwordValida(String passwordUtente1, String confermaPasswordUtente2) {
         //verifico che le password siano uguali e abbiano lunghezza di almeno 6 caratteri

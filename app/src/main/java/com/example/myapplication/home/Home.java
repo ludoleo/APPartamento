@@ -10,6 +10,7 @@ import com.example.myapplication.login.LoginActivity;
 import com.example.myapplication.messaggi.MessaggiUtente;
 import com.example.myapplication.R;
 import com.example.myapplication.prenotazione.PrenotazioneActivity;
+import com.example.myapplication.ricercalloggio.MappaCase;
 import com.example.myapplication.salvati.Salvati;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -54,5 +55,10 @@ public class Home extends AppCompatActivity {
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    public void cercaMappa(View view) {
+        Intent intent = new Intent(this, MappaCase.class);
+                startActivity(intent);
     }
 }
