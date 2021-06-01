@@ -4,33 +4,33 @@ import java.util.Objects;
 
 public class Casa {
 
-    private String idCasa;
+    private String nomeCasa;
     private String indirizzo;
     private int numeroOspiti;
-    private int getNumeroOspitiMax;
     private int numeroBagni;
-    private int numeroLocali;
+    private int numeroStanze;
     private float valutazione;
-    private Proprietario proprietario;
+    private String proprietario; //ne salvo l'id
 
-    public Casa(String idCasa, String indirizzo, int numeroOspiti, int getNumeroOspitiMax, int numeroBagni, int numeroLocali,
-                Proprietario proprietario) {
-        this.idCasa = idCasa;
+    public Casa(){}
+
+    public Casa(String nomeCasa, String indirizzo, int numeroOspiti, int numeroBagni, int numeroStanze,
+                String proprietario) {
+        this.nomeCasa = nomeCasa;
         this.indirizzo = indirizzo;
         this.numeroOspiti = numeroOspiti;
-        this.getNumeroOspitiMax = getNumeroOspitiMax;
         this.numeroBagni = numeroBagni;
-        this.numeroLocali = numeroLocali;
+        this.numeroStanze = numeroStanze;
         this.valutazione = 0;
         this.proprietario = proprietario;
     }
 
-    public String getIdCasa() {
-        return idCasa;
+    public String getNomeCasa() {
+        return nomeCasa;
     }
 
-    public void setIdCasa(String idCasa) {
-        this.idCasa = idCasa;
+    public void setNomeCasa(String nomeCasa) {
+        this.nomeCasa = nomeCasa;
     }
 
     public String getIndirizzo() {
@@ -49,14 +49,6 @@ public class Casa {
         this.numeroOspiti = numeroOspiti;
     }
 
-    public int getGetNumeroOspitiMax() {
-        return getNumeroOspitiMax;
-    }
-
-    public void setGetNumeroOspitiMax(int getNumeroOspitiMax) {
-        this.getNumeroOspitiMax = getNumeroOspitiMax;
-    }
-
     public int getNumeroBagni() {
         return numeroBagni;
     }
@@ -65,12 +57,12 @@ public class Casa {
         this.numeroBagni = numeroBagni;
     }
 
-    public int getNumeroLocali() {
-        return numeroLocali;
+    public int getNumeroStanze() {
+        return numeroStanze;
     }
 
-    public void setNumeroLocali(int numeroLocali) {
-        this.numeroLocali = numeroLocali;
+    public void setNumeroStanze(int numeroStanze) {
+        this.numeroStanze = numeroStanze;
     }
 
     public float getValutazione() {
@@ -81,11 +73,11 @@ public class Casa {
         this.valutazione = valutazione;
     }
 
-    public Proprietario getProprietario() {
+    public String getProprietario() {
         return proprietario;
     }
 
-    public void setProprietario(Proprietario proprietario) {
+    public void setProprietario(String proprietario) {
         this.proprietario = proprietario;
     }
 
@@ -94,11 +86,11 @@ public class Casa {
         if (this == o) return true;
         if (!(o instanceof Casa)) return false;
         Casa casa = (Casa) o;
-        return getIdCasa().equals(casa.getIdCasa());
+        return getNomeCasa().equals(casa.getNomeCasa());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getIdCasa());
+        return Objects.hash(getNomeCasa());
     }
 }

@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".login.ScegliUtente"></activity>
+        <activity android:name=".registrazione.InserimentoDatiCasa">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".login.ScegliUtente" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -23,13 +30,7 @@
         <activity android:name=".profilo.Assistenza" />
         <activity android:name=".home.CaseProprietario" />
         <activity android:name=".prenotazione.ElencoPrenotazioni" />
-        <activity android:name=".home.Home">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".home.Home"/>
         <activity android:name=".registrazione.InserimentoDatiProprietario" />
         <activity android:name=".registrazione.InserimentoDatiStudente" />
         <activity android:name=".home.LaTuaCasa" />
@@ -38,11 +39,10 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBCyadRVH_uGnvM79GNR49RowBbyE4hkYg"/>
-
+            android:value="AIzaSyBCyadRVH_uGnvM79GNR49RowBbyE4hkYg" />
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+            android:value="@integer/google_play_services_version" />
 
         <activity android:name=".messaggi.MessaggiUtente" />
         <activity android:name=".profilo.ModificaInfoPersonali" />

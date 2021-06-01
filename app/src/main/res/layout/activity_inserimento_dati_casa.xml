@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".registrazione.InserimentoDatiCasa">
+
+    <EditText
+        android:id="@+id/et_nomeCasa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Scegli il nome della tua casa" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Posizione"
+        android:padding="10dp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/et_viaCasa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:hint="Via/Strada/P.zz" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="fill">
+
+        <EditText
+            android:id="@+id/et_numeroCivico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="Numero civico" />
+
+
+        <EditText
+            android:id="@+id/et_CAP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="30dp"
+            android:padding="10dp"
+            android:hint="CAP" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Caratteristiche principali (numero)"
+        android:padding="10dp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="fill"
+        android:paddingBottom="25dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#Bagni"
+            android:padding="10dp"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/et_numeroBagni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#Stanze"
+            android:padding="10dp"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/et_numeroStanze"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="3" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="#Ospisti"
+            android:padding="10dp"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/et_numeroOspiti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="2" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/i_d_p_continua"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="caricaCasa"
+        android:text="Continua"
+        tools:ignore="OnClick" />
+</LinearLayout>
