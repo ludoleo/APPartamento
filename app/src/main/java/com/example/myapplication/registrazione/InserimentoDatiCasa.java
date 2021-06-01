@@ -38,7 +38,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-    private Boolean flagNomeCasaUguale;
+    Boolean flagNomeCasaUguale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         myRef = database.getReference();
     }
 
-    public void caricaCasa(View view){
+    public void caricaCasa(View view) {
 
         String nomeCasa = et_nomeCasa.getText().toString();
         String viaCasa = et_viaCasa.getText().toString();
@@ -73,45 +73,45 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         int numeroStanze = 0;
         int numeroOspiti = 0;
         //Controllo sui valori numerici (Con il cast)
-        try{
-           numeroBagni = Integer.parseInt(et_numeroBagni.getText().toString().trim());
-           numeroStanze =  Integer.parseInt(et_numeroStanze.getText().toString().trim());
-           numeroOspiti =  Integer.parseInt(et_numeroOspiti.getText().toString().trim());
+        try {
+            numeroBagni = Integer.parseInt(et_numeroBagni.getText().toString().trim());
+            numeroStanze = Integer.parseInt(et_numeroStanze.getText().toString().trim());
+            numeroOspiti = Integer.parseInt(et_numeroOspiti.getText().toString().trim());
 
-        }catch (NumberFormatException nfe){
+        } catch (NumberFormatException nfe) {
             Toast.makeText(this, "Attenzione errore nei valori numerici", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // controllo sulla presenza dei valori forniti dal proprietario
-        if(nomeCasa.compareTo("")==0) {
+        if (nomeCasa.compareTo("") == 0) {
             Toast.makeText(this, "Attenzione aggiungi il nome della casa", Toast.LENGTH_SHORT).show();
             return;
-        } else if(viaCasa.compareTo("")==0){
+        } else if (viaCasa.compareTo("") == 0) {
             Toast.makeText(this, "Attenzione aggiungi la via della casa", Toast.LENGTH_SHORT).show();
             return;
-        } else if(numeroCivico.compareTo("")==0){
+        } else if (numeroCivico.compareTo("") == 0) {
             Toast.makeText(this, "Attenzione aggiungi il numero civico della casa", Toast.LENGTH_SHORT).show();
             return;
-        } else if(cap.compareTo("")==0){
+        } else if (cap.compareTo("") == 0) {
             Toast.makeText(this, "Attenzione aggiungi il CAP della zona", Toast.LENGTH_SHORT).show();
             return;
         }
 
 
         //Il nome della casa è unico
-            //TO_DO
+        //TO_DO
 
 
-        controlloNomeCasa(nomeCasa);
+        //non funziona come controllo
+        //controlloNomeCasa(nomeCasa);
 
-        if(flagNomeCasaUguale) {
-            Log.i(TAG, "Flag " +flagNomeCasaUguale.booleanValue());
+        if (flagNomeCasaUguale) {
+            Log.i(TAG, "Flag if " + flagNomeCasaUguale.booleanValue());
             et_nomeCasa.setText("");
             return;
-        }
-        else {
-            Log.i(TAG, "valore flag else " +flagNomeCasaUguale.booleanValue());
+        } else {
+            Log.i(TAG, "valore flag else " + flagNomeCasaUguale.booleanValue());
             //Creo l'oggetto casa
 
             //costruisco l'indiritto
@@ -128,7 +128,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
             //String key = casaAggiunta.getKey(); // Estraggo la chiave assegnata alla casa
             //myRef.child("Chiavi").child(key).setValue(nomeCasa);
 
-            leggiChild();
+            //leggiChild();
             clear();
 
             Intent intent = new Intent(this, Home.class);
@@ -136,8 +136,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         }
     }
 
-
-    private void controlloNomeCasa(String nomeCasa) {
+    public void controlloNomeCasa(String nomeCasa) {
 
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
             @Override
@@ -149,7 +148,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
                         Toast.makeText(InserimentoDatiCasa.this, "Attenzione "+nomeCasa+"già presente, inserire nuovo nome!", Toast.LENGTH_SHORT).show();
                          cambiaFlag();
                     }
-                    Log.i(TAG,"Casa :"+casaFiglio.getNomeCasa()+ "/n");
+                    Log.i(TAG,"Casa :"+casaFiglio.getNomeCasa());
                 }
             }
 
