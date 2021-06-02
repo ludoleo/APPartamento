@@ -110,6 +110,10 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
 
         Intent intent = new Intent(this, ProfiloProprietario.class);
         intent.putExtra("idUtente",idProprietario);
+        intent.putExtra("nome",nome);
+        intent.putExtra("cognome",cognome);
+        intent.putExtra("numTel",numTelefono);
+        intent.putExtra("email",email);
         startActivity(intent);
 
     }

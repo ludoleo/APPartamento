@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
+import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.profilo.ProfiloStudente;
 import com.google.firebase.auth.FirebaseAuth;
@@ -143,6 +144,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
             }
         }
 
+        controlloStudente(email);
 
 
         Studente studente = new Studente(nome,cognome,telefono,email , descrizione,primaEsperienza,
@@ -156,11 +158,44 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         myRef.child("Chiavi").child(idStudente).setValue(email);
         clear();
 
-        leggiChild();
+        //leggiChild();
 
         Intent intent = new Intent(this, ProfiloStudente.class);
         intent.putExtra("idUtente",idStudente);
+        intent.putExtra("nome",nome);
+        intent.putExtra("cognome",cognome);
+        intent.putExtra("telefono",telefono);
+        //intent.putExtra("email",email);
+        intent.putExtra("descrizione",descrizione);
+        intent.putExtra("universita",universita);
+       //intent.putExtra("tipologia",tipologia);
+        intent.putExtra("indirizzoLaurea",indirizzoLaurea);
+
         startActivity(intent);
+    }
+
+    public void controlloStudente(String email) {
+
+        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot studentiSnapshot: dataSnapshot.getChildren()) {
+
+                    Studente studenteFiglio = studentiSnapshot.getValue(Studente.class);
+                    if(studenteFiglio.getEmail().compareTo(email)==0) {
+                        Toast.makeText(InserimentoDatiStudente.this, "Attenzione "+email+"già presente, inserire nuova email!", Toast.LENGTH_SHORT).show();
+                    }
+                    Log.i(TAG,"Casa :"+studenteFiglio.getNome());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        });
     }
 
     private void leggiChild() {

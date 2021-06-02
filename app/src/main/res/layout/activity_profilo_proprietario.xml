@@ -60,6 +60,12 @@
                     android:layout_height="60dp"
                     android:text="Via" />
 
+                <TextView
+                    android:id="@+id/text_emailP"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="Email" />
+
                 <Button
                     android:id="@+id/letuecase"
                     android:layout_width="match_parent"

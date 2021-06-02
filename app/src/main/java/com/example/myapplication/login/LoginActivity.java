@@ -76,6 +76,8 @@ public class LoginActivity extends AppCompatActivity {
         button = (SignInButton) findViewById(R.id.sign_in_button);
         loginButton = (LoginButton) findViewById(R.id.login_button);
 
+        mAuth.signOut();
+
 
         //google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -140,6 +142,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    // TODO controllare bene questo metodo
+
     private void updateUI(FirebaseUser currentUser) {
 
         Log.i(TAG, "Connesso utente "+currentUser);
@@ -186,6 +190,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Log.i(TAG, "Connesso utente "+user);
 
+        // TODO controllare se utente registrato è proprietario o studente (COME?)
         //va controllato se l'utente è proprietario o studente e va mandato nel profilo giusto
         String idUtente = user.getUid();
         Intent intent = new Intent(this, ProfiloStudente.class);
@@ -240,11 +245,11 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            updateUIGiaRegistrato(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            updateUI(null);
+                            updateUIGiaRegistrato(null);
                         }
                     }
                 });
@@ -265,13 +270,13 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            updateUIGiaRegistrato(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this , "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                            updateUIGiaRegistrato(null);
                         }
                     }
                 });

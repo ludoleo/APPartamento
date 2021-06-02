@@ -74,7 +74,29 @@ public class ProfiloStudente extends AppCompatActivity {
             myRef = database.getReference();
             Log.i(TAG, "sono passata da qui "+idUtente);
 
-            popola(idUtente);
+            //popola(idUtente);
+            leggiValori();
+    }
+
+    private void leggiValori() {
+
+        String nome = getIntent().getExtras().getString("nome");
+        String cognome = getIntent().getExtras().getString("cognome");
+        String telefono = getIntent().getExtras().getString("telefono");
+        String descrizione = getIntent().getExtras().getString("descrizione");
+        String universita = getIntent().getExtras().getString("universita");
+       // String tipologia = getIntent().getExtras().getString("tipologia");
+        String inidirizzoLaurea = getIntent().getExtras().getString("inidirizzoLaurea");
+
+
+        text_nome.setText(nome);
+        text_cognome.setText(cognome);
+        text_telefono.setText(telefono);
+        text_descrizione.setText(descrizione);
+        text_univerista.setText(universita);
+        text_indirizzoLaure.setText(inidirizzoLaurea);
+
+
     }
 
 

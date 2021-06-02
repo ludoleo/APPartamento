@@ -12,12 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
+import com.example.myapplication.home.Home;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -35,7 +37,8 @@ public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private FirebaseDatabase database;
-    private DatabaseReference myRef;
+   // private DatabaseReference myRef;
+    String idU;
 
 
     @Override
@@ -59,8 +62,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
         isProprietario = (CheckBox) findViewById(R.id.isProprietario);
 
-        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
-        myRef = database.getReference();
+       //database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+        //myRef = database.getReference();
 
     }
 
@@ -86,16 +89,39 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
+    @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        Log.i(TAG,"Entro in start, id utente è "+ mAuth.getUid());
         if(currentUser != null){
            //updateUI(currentUser);
+            //updateUI();
         }
     }
 
-    private void updateUI(FirebaseUser currentUser) {
+    private void updateUI(String email) {
+
+        Log.i(TAG, "passo da qui "+idU);
+        if(isProprietario.isChecked()) {
+
+            Intent intent = new Intent(RegistrationActivity.this, InserimentoDatiProprietario.class);
+            intent.putExtra("email", email);
+            intent.putExtra("idProprietario", idU);
+            Log.i(TAG, "ID proprietario "+idU);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(RegistrationActivity.this, InserimentoDatiStudente.class);
+            intent.putExtra("email", email);
+            intent.putExtra("idStudente",idU);
+            startActivity(intent);
+        }
+    }
+
+    /*
+    private void updateUI2(FirebaseUser currentUser) {
 
         Log.i(TAG, "Connesso utente "+currentUser);
 
@@ -104,17 +130,26 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
-    private void createFirebaseUser(String emailutente, String passwordUtente) {
+     */
 
-        mAuth.createUserWithEmailAndPassword(emailutente, passwordUtente)
+    private void createFirebaseUser(String email, String password) {
+
+
+        Log.i(TAG,"entro in crea utente ");
+
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
+
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            idU = user.getUid();
+                            setNome(user, email);
+                            updateUI(email);
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -124,21 +159,10 @@ public class RegistrationActivity extends AppCompatActivity {
                         }
                     }
                 });
-        String idU = mAuth.getUid();
-        //dopo la registrazione si passa all'inserimento dei dati
-        if(isProprietario.isChecked()) {
 
-            Intent intent = new Intent(RegistrationActivity.this, InserimentoDatiProprietario.class);
-            intent.putExtra("email", emailutente);
-            intent.putExtra("idProprietario", idU);
-            startActivity(intent);
-        }
-        else {
-            Intent intent = new Intent(RegistrationActivity.this, InserimentoDatiStudente.class);
-            intent.putExtra("email", emailutente);
-            intent.putExtra("idStudente",idU);
-            startActivity(intent);
-        }
+
+        //dopo la registrazione si passa all'inserimento dei dati
+
     }
 
     /*
@@ -167,6 +191,23 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
      */
+
+    private void setNome(FirebaseUser user, String email) {
+
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(email)
+                .build();
+
+        user.updateProfile(profileUpdates)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()) {
+                            Log.i(TAG, "User profile updated with email: "+email);
+                        }
+                    }
+                });
+    }
 
     private boolean passwordValida(String passwordUtente1, String confermaPasswordUtente2) {
         //verifico che le password siano uguali e abbiano lunghezza di almeno 6 caratteri

@@ -42,6 +42,7 @@ public class ProfiloProprietario extends AppCompatActivity {
     private TextView text_nomeP;
     private TextView text_cognomeP;
     private TextView text_numTelP;
+    private TextView text_emailP;
 
     public DatabaseReference myRef;
     public FirebaseDatabase database;
@@ -63,13 +64,16 @@ public class ProfiloProprietario extends AppCompatActivity {
         text_nomeP = (TextView) findViewById(R.id.text_nomeP);
         text_cognomeP = (TextView) findViewById(R.id.text_cognomeP);
         text_numTelP = (TextView) findViewById(R.id.text_numTelP);
+        text_emailP = (TextView) findViewById(R.id.text_emailP);
 
         idUtente = getIntent().getExtras().getString("idUtente");
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference();
 
-        popolaProprietario(idUtente);
+       // popolaProprietario(idUtente);
+
+        scriviValori();
 
 
 
@@ -107,6 +111,20 @@ public class ProfiloProprietario extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void scriviValori() {
+
+        String nome = getIntent().getExtras().getString("nome");
+        String cognome = getIntent().getExtras().getString("cognome");
+        String numTel = getIntent().getExtras().getString("numTel");
+        String email = getIntent().getExtras().getString("email");
+
+        text_nomeP.setText(nome);
+        text_cognomeP.setText(cognome);
+        text_numTelP.setText(numTel);
+        text_emailP.setText(email);
 
     }
 
