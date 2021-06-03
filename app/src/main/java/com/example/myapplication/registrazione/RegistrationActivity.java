@@ -78,10 +78,14 @@ public class RegistrationActivity extends AppCompatActivity {
         Log.i(TAG, "Informazioni inserite sono:"+" "+emailutente+" "+passwordUtente+" "+confermaPasswordUtente);
 
 
-        if (!emailValida(emailutente))
+        if (!emailValida(emailutente)) {
             Toast.makeText(this, "Inserire un email valida", Toast.LENGTH_SHORT).show();
-        else if (!passwordValida(passwordUtente, confermaPasswordUtente))
+            return;
+        }
+        else if (!passwordValida(passwordUtente, confermaPasswordUtente)) {
             Toast.makeText(this, "Inserire password coincidenti e lunghe almeno 6 caratteri", Toast.LENGTH_SHORT).show();
+            return;
+        }
         else
             createFirebaseUser(emailutente,passwordUtente);
 

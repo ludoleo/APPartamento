@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
@@ -19,12 +20,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ProfiloStudente extends AppCompatActivity {
 
     private static final String TAG = "Profilo Studente";
+    private static final int IMAG_PICK_CODE = 1000;
+    private static final int PERMISSION_CODE = 1001;
+
     Button recensioni;
     Button modifica;
+    ImageView immagineStudente ;
     ImageButton imagebutton2;
 
     private TextView text_nome;
@@ -34,14 +41,20 @@ public class ProfiloStudente extends AppCompatActivity {
     private TextView text_univerista;
     private TextView text_indirizzoLaure;
 
+
     public DatabaseReference myRef;
     public FirebaseDatabase database;
+
+    FirebaseStorage storage;
+    StorageReference storageReference;
+
     private String idUtente;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo_studente);
+
 
         recensioni = findViewById(R.id.recensioni);
         recensioni.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +65,7 @@ public class ProfiloStudente extends AppCompatActivity {
             }
         });
 
-        modifica = findViewById(R.id.modificaprofilo);
+        modifica = findViewById(R.id.modificaProfilo);
         modifica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

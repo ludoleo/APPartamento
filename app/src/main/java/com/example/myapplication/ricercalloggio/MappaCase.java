@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.myapplication.R;
+import com.example.myapplication.home.Home;
 import com.example.myapplication.profilo.ProfiloCasaActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -68,7 +69,7 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
 
     public void indietro(View view) {
 
-        Intent intent = new Intent(MappaCase.this , SelezionePrezzoLocalita.class);
+        Intent intent = new Intent(MappaCase.this , Home.class);
         startActivity(intent);
 
     }

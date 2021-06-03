@@ -72,6 +72,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         int numeroBagni = 0;
         int numeroStanze = 0;
         int numeroOspiti = 0;
+        
         //Controllo sui valori numerici (Con il cast)
         try {
             numeroBagni = Integer.parseInt(et_numeroBagni.getText().toString().trim());

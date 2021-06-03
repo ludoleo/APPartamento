@@ -14,8 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".registrazione.InserimentoDatiCasa"/>
 
+        <activity android:name=".registrazione.InserimentoDatiCasa"/>
         <activity android:name=".login.ScegliUtente" />
 
         <meta-data
@@ -59,9 +59,7 @@
         <activity android:name=".recensione.RecensioniProprietarioInterne" />
         <activity android:name=".recensione.RecensioniStudentInterne" />
         <activity android:name=".registrazione.RegistrationActivity" />
-        <activity android:name=".login.ResetPassword" />
         <activity android:name=".salvati.Salvati" />
-        <activity android:name=".ricercalloggio.SelezionePrezzoLocalita" />
         <activity android:name=".prenotazione.VisitaVirtuale" />
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".MainActivity" />

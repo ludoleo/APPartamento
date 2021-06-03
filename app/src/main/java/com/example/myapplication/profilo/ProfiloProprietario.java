@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Proprietario;
+import com.example.myapplication.home.Home;
 import com.example.myapplication.recensione.RecensioniProprietarioInterne;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,7 +34,7 @@ import com.google.firebase.storage.UploadTask;
 
 public class ProfiloProprietario extends AppCompatActivity {
 
-    Button recensioniprop,letuecase,prenotaz,cambiaimmagine;
+    Button recensioniProp, leTueCase,prenotaz, cambiaImmagine;
     ImageView immagineprop;
     private static final int IMAG_PICK_CODE = 1000;
     private static final int PERMISSION_CODE = 1001;
@@ -53,11 +55,11 @@ public class ProfiloProprietario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo_proprietario);
 
-        letuecase =  findViewById(R.id.letuecase);
+        leTueCase =  findViewById(R.id.leTueCase);
         prenotaz  =  findViewById(R.id.prenotaz);
-        cambiaimmagine = findViewById(R.id.cambiaimmagineprop);
-        recensioniprop =  findViewById(R.id.recensioniprop);
-        immagineprop = findViewById(R.id.immaginepropriet);
+        cambiaImmagine = findViewById(R.id.cambiaImmagineProp);
+        recensioniProp =  findViewById(R.id.recensioniProp);
+        immagineprop = findViewById(R.id.immaginePropriet);
 
         storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -78,7 +80,7 @@ public class ProfiloProprietario extends AppCompatActivity {
 
 
 
-        recensioniprop.setOnClickListener(new View.OnClickListener() {
+        recensioniProp.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -86,7 +88,7 @@ public class ProfiloProprietario extends AppCompatActivity {
                 startActivity(a);
             }
         });
-        cambiaimmagine.setOnClickListener(new View.OnClickListener() {
+        cambiaImmagine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // check runtime permission
@@ -187,11 +189,13 @@ public class ProfiloProprietario extends AppCompatActivity {
             // set image to image view
            // immagineprop.setImageURI(data.getData()); codice reale
             Uri imageUri = data.getData();
+            Log.i("ProfiloProp","passo da qui");
             immagineprop.setImageURI(imageUri);
             uploadimagetoFirebase(imageUri);
 
         }
     }
+
 
     private void uploadimagetoFirebase(Uri imageUri) {
         StorageReference fileRef = storageReference.child("profile.jpg");
@@ -214,5 +218,10 @@ public class ProfiloProprietario extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void goHome(View view) {
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
     }
 }

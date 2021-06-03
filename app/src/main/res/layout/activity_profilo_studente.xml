@@ -32,7 +32,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/changeimage"
+            android:id="@+id/cambiaImmagineStudente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -43,7 +43,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/immaginestudente"
+            android:id="@+id/immagineStudente"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
@@ -126,7 +126,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/modificaprofilo"
+        android:id="@+id/modificaProfilo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/Bottone2" />

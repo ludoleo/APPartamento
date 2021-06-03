@@ -1,9 +1,12 @@
 package com.example.myapplication.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -39,11 +42,16 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     private static final int RC_SIGN_IN = 1 ;
+    private static final String MY_SHARED_PREF = "login_prefs";
+    private static final String CBOX_DATA_KEY = "remember_checkbox";
+    private static final String EMAIL_DATA_KEY = "remember_mail";
+    private static final String PASSWORD_DATA_KEY = "remember_password";
 
     private FirebaseAuth mAuth;
 
     private EditText email;
     private EditText password;
+    CheckBox ricordami;
 
     // accesso con Google
     GoogleSignInClient mGoogleSignInClient;
@@ -75,6 +83,9 @@ public class LoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.text_password);
         button = (SignInButton) findViewById(R.id.sign_in_button);
         loginButton = (LoginButton) findViewById(R.id.login_button);
+        ricordami = (CheckBox) findViewById(R.id.cb_ricordami);
+
+        getMyPreferences();
 
         mAuth.signOut();
 
@@ -158,6 +169,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginWithFirebase(String email, String password) {
 
+        final boolean checkRicordami = ricordami.isChecked();
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -167,6 +180,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUIGiaRegistrato(user);
+                            savePreference(checkRicordami, email, password);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -282,11 +296,47 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    //GESTIONE PREFERENZE
+
+    private void savePreference(boolean checkRicordami, String mailUtente, String passwordUtente) {
+        SharedPreferences prefs = this.getSharedPreferences(MY_SHARED_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor= prefs.edit();;
+        if(checkRicordami) {
+            prefsEditor.putBoolean(CBOX_DATA_KEY, checkRicordami);
+            prefsEditor.putString(EMAIL_DATA_KEY, mailUtente);
+            prefsEditor.putString(PASSWORD_DATA_KEY, passwordUtente);
+            prefsEditor.commit();
+        } else{
+            prefsEditor.clear();
+            prefsEditor.commit();
+        }
+    }
+
+    private void getMyPreferences() {
+        SharedPreferences prefs = getSharedPreferences(MY_SHARED_PREF, Context.MODE_PRIVATE);
+        if(prefs.getBoolean(CBOX_DATA_KEY, false)){
+            email.setText(prefs.getString(EMAIL_DATA_KEY, ""));
+            password.setText(prefs.getString(PASSWORD_DATA_KEY, ""));
+            ricordami.setChecked(prefs.getBoolean(CBOX_DATA_KEY, false));
+        }
+    }
 
     public void pwDimenticata(View view) {
+        String emailAddress = email.getText().toString();
 
-        Intent intent = new Intent(LoginActivity.this , ResetPassword.class);
-        startActivity(intent);
+        if(!emailAddress.isEmpty()) {
+            mAuth.sendPasswordResetEmail(emailAddress)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.i(TAG, "Email sent to user.");
+                                Toast.makeText(LoginActivity.this, "Una mail è stata inviata al tuo indirizzo di posta.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }else
+            Toast.makeText(this, "Compila il campo mail per poter ripristinare la password.", Toast.LENGTH_SHORT).show();
 
     }
 }
