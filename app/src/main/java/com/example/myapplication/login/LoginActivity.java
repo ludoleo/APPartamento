@@ -168,8 +168,12 @@ public class LoginActivity extends AppCompatActivity {
         Log.i(TAG, "Connesso utente "+currentUser);
 
         String emailUtente = currentUser.getEmail();
+        String idUtente = currentUser.getUid();
+
+        Log.i(TAG,"Accesso con Google utente: "+emailUtente+" "+idUtente);
         Intent intent = new Intent(this, ScegliUtente.class);
         intent.putExtra("email", emailUtente);
+       // intent.putExtra("idUtente",idUtente);
         startActivity(intent);
 
     }
@@ -198,25 +202,19 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
-        //va controllato se l'utente autenticato è uno studente o un proprietario
-
-
-       // String idUtente = mAuth.getCurrentUser().getUid();
-
-       // Intent intent = new Intent(LoginActivity.this, ProfiloStudente.class);
-        //intent.putExtra("idUtente", idUtente);
-       // startActivity(intent);
     }
 
 
-
+//questo metodo viene usato solo quando si fa l'accesso con username o password
     private void updateUIGiaRegistrato(FirebaseUser user) {
 
 
-        Log.i(TAG, "Connesso utente "+user.getEmail());
+        Log.i(TAG, "Connesso utente già registrato con us e pw "+user.getEmail());
         String idUtente = user.getUid();
 
         // TODO controllare se utente registrato è proprietario o studente (COME?)
+
+        //problema!!!!!!!
 
         myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
 
@@ -229,7 +227,7 @@ public class LoginActivity extends AppCompatActivity {
                 // Get Post object and use the values to update the UI
                 for(DataSnapshot figlio : dataSnapshot.getChildren()) {
 
-                    //Log.i(TAG, "Studente "+figlio.getKey()+"/n");
+                    Log.i(TAG, "Studente "+figlio.getKey()+"/n");
 
                     if(figlio.getKey().compareTo(idUtente)==0) {
                         Log.i(TAG,"Entra nell'if del DB studente ");
@@ -311,13 +309,77 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithCredential:success");
+                            Log.d(TAG, "signInWithGoogleCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUIGiaRegistrato(user);
+                            final boolean[] flagStudente = {false};
+                            final boolean[] flagProprietario = {false};
+
+                            //Controllo se l'utente è già uno studente
+                            myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+                                    String idUtente = user.getUid();
+                                    Log.i(TAG,"funziona "+user.getUid());
+
+                                    for(DataSnapshot figlio : dataSnapshot.getChildren()) {
+
+                                        if(figlio.getKey().compareTo(idUtente)==0) {
+                                            Log.i(TAG,"Entra nell'if del DB studente ");
+                                            flagStudente[0] = true;
+                                        }
+                                    }
+                                    if(flagStudente[0]) {
+                                        Log.i(TAG, "Entra nell'if del flag false ");
+                                        vaiProfiloStudente(idUtente);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    // Getting Post failed, log a message
+                                    Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                                }
+                            });
+
+                            //controllo se l'utente è già un proprietario
+                            myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener(){
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    boolean flagProprietario = false;
+                                    String idUtente = user.getUid();
+                                    Log.i(TAG,"funziona "+user.getUid());
+
+                                    for(DataSnapshot figlio : dataSnapshot.getChildren()) {
+
+                                        if(figlio.getKey().compareTo(idUtente)==0) {
+                                            Log.i(TAG,"Entra nell'if del DB studente ");
+                                            flagProprietario = true;
+                                        }
+                                    }
+                                    if(flagProprietario) {
+                                        Log.i(TAG, "Entra nell'if del flag false ");
+                                        vaiProfiloProprietario(idUtente);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    // Getting Post failed, log a message
+                                    Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                                }
+                            });
+
+                            if(!flagStudente[0] && !flagProprietario[0])
+                                updateUI(user);
+
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            updateUIGiaRegistrato(null);
+                            //updateUI(null);
                         }
                     }
                 });
@@ -338,13 +400,13 @@ public class LoginActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUIGiaRegistrato(user);
+                            updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Toast.makeText(LoginActivity.this , "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUIGiaRegistrato(null);
+                            updateUI(null);
                         }
                     }
                 });

@@ -66,7 +66,6 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inserimento_dati_studente);
         this.setTitle("Parlaci di te");
-
         initUI();
     }
 
@@ -87,10 +86,9 @@ public class InserimentoDatiStudente extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
-        Log.i(TAG, "ref del db è : "+myRef.getKey());
 
+        Log.i(TAG, "ref del db è : "+myRef.toString());
 
-        
     }
 
     public void inviaMessaggio(View view){
@@ -146,7 +144,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         }
 
         //TODO controllare il metodo, controlla anche studente con se stesso (?)
-        controlloStudente(email);
+        //controlloStudente(email);
 
 
         Studente studente = new Studente(nome,cognome,telefono,email , descrizione,primaEsperienza,
@@ -164,19 +162,8 @@ public class InserimentoDatiStudente extends AppCompatActivity {
 
 
         Intent intent = new Intent(this, ProfiloStudente.class);
-        startActivity(intent);
-        /*
         intent.putExtra("idUtente",idStudente);
-        intent.putExtra("nome",nome);
-        intent.putExtra("cognome",cognome);
-        intent.putExtra("telefono",telefono);
-        //intent.putExtra("email",email);
-        intent.putExtra("descrizione",descrizione);
-        intent.putExtra("universita",universita);
-       //intent.putExtra("tipologia",tipologia);
-        intent.putExtra("indirizzoLaurea",indirizzoLaurea);
-
-         */
+        startActivity(intent);
 
 
     }

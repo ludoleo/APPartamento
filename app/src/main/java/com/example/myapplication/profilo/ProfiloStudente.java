@@ -45,11 +45,12 @@ public class ProfiloStudente extends AppCompatActivity {
 
     public DatabaseReference myRef;
     public FirebaseDatabase database;
+    private String idUtente;
 
     FirebaseStorage storage;
     StorageReference storageReference;
 
-    private String idUtente;
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +84,9 @@ public class ProfiloStudente extends AppCompatActivity {
             text_indirizzoLaure = (TextView) findViewById(R.id.text_indirizzoLaurea);
 
             idUtente = getIntent().getExtras().getString("idUtente");
+
             database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
-            //capire come accedere a quel determinato studente
+
             myRef = database.getReference();
             Log.i(TAG, "sono passata da qui "+idUtente);
 

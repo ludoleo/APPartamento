@@ -100,7 +100,7 @@ public class RegistrationActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         Log.i(TAG,"Entro in start, id utente è "+ mAuth.getUid());
         if(currentUser != null){
-           //updateUI(currentUser);
+          // updateUI(currentUser.getEmail());
             //updateUI();
         }
     }
@@ -120,6 +120,7 @@ public class RegistrationActivity extends AppCompatActivity {
             Intent intent = new Intent(RegistrationActivity.this, InserimentoDatiStudente.class);
             intent.putExtra("email", email);
             intent.putExtra("idStudente",idU);
+            Log.i(TAG, "ID studente "+idU);
             startActivity(intent);
         }
     }
@@ -151,7 +152,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                             FirebaseUser user = mAuth.getCurrentUser();
                             idU = user.getUid();
-                            setNome(user, email);
+                            //setNome(user, email);
                             updateUI(email);
 
                         } else {
@@ -169,32 +170,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
-    /*
-    private void aggiungoUtenteAdb(String emailutente) {
-
-        //Utente utente = new Utente("","","",emailutente,"");
-
-        if(isProprietario.isChecked()) {
-             //l'utente è uno studente
-            Proprietario proprietario = new Proprietario( "",  "",  "",  emailutente,  null,  "");
-            DatabaseReference proprietarioAggiunto = myRef.child("Proprietari").push();
-            proprietarioAggiunto.setValue(proprietario);
-        }
-
-        else {
-
-            Studente studente = new Studente("", "", "", emailutente,
-                    "",  "",  "",  "",  "");
-            DatabaseReference studenteAggiunto = myRef.child("Studenti").push();
-            studenteAggiunto.setValue(studente);
-
-        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-       // DatabaseReference ref = FirebaseDatabase.getInstance().getReference(USERS_TABLE);
-        //ref.child(user.getUid()).setValue(user_class);
-     }
-    }
-
-     */
 
     private void setNome(FirebaseUser user, String email) {
 
