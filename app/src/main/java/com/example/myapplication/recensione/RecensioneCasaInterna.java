@@ -8,6 +8,7 @@ import com.example.myapplication.R;
 
 public class RecensioneCasaInterna extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.home.Home;
+import com.example.myapplication.home.LaTuaCasa;
 import com.example.myapplication.recensione.RecensioniStudentInterne;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -82,15 +83,16 @@ public class ProfiloStudente extends AppCompatActivity {
             text_indirizzoLaure = (TextView) findViewById(R.id.text_indirizzoLaurea);
 
             idUtente = getIntent().getExtras().getString("idUtente");
-            database = FirebaseDatabase.getInstance();
+            database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
             //capire come accedere a quel determinato studente
             myRef = database.getReference();
             Log.i(TAG, "sono passata da qui "+idUtente);
 
-            //popola(idUtente);
-            leggiValori();
+            popola(idUtente);
+            //leggiValori();
     }
 
+    /*
     private void leggiValori() {
 
         String nome = getIntent().getExtras().getString("nome");
@@ -101,7 +103,6 @@ public class ProfiloStudente extends AppCompatActivity {
        // String tipologia = getIntent().getExtras().getString("tipologia");
         String inidirizzoLaurea = getIntent().getExtras().getString("inidirizzoLaurea");
 
-
         text_nome.setText(nome);
         text_cognome.setText(cognome);
         text_telefono.setText(telefono);
@@ -109,8 +110,9 @@ public class ProfiloStudente extends AppCompatActivity {
         text_univerista.setText(universita);
         text_indirizzoLaure.setText(inidirizzoLaurea);
 
-
     }
+
+     */
 
 
     private void popola(String idUtente) {
@@ -118,7 +120,7 @@ public class ProfiloStudente extends AppCompatActivity {
             Log.i(TAG, "Sono in popola");
 
 
-        myRef.child("Utenti").addValueEventListener(new ValueEventListener(){
+        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -144,7 +146,6 @@ public class ProfiloStudente extends AppCompatActivity {
                         text_indirizzoLaure.setText(studente.getIndirizzoLaurea());
                     }
                 }
-
             }
 
             @Override
@@ -161,5 +162,10 @@ public class ProfiloStudente extends AppCompatActivity {
 
             Intent intent = new Intent(this, Home.class);
             startActivity(intent);
+    }
+
+    public void laTuaCasa(View view) {
+        Intent intent = new Intent(this, LaTuaCasa.class);
+        startActivity(intent);
     }
 }

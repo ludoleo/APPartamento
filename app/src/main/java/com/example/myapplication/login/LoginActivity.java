@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
+import com.example.myapplication.profilo.ProfiloProprietario;
 import com.example.myapplication.profilo.ProfiloStudente;
 import com.example.myapplication.registrazione.RegistrationActivity;
 import com.facebook.AccessToken;
@@ -37,6 +38,11 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -48,6 +54,8 @@ public class LoginActivity extends AppCompatActivity {
     private static final String PASSWORD_DATA_KEY = "remember_password";
 
     private FirebaseAuth mAuth;
+    private DatabaseReference myRef;
+    private FirebaseDatabase database;
 
     private EditText email;
     private EditText password;
@@ -73,6 +81,8 @@ public class LoginActivity extends AppCompatActivity {
         this.setTitle("APPartamento");
 
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+        myRef = database.getReference();
         initUI();
     }
 
@@ -133,8 +143,6 @@ public class LoginActivity extends AppCompatActivity {
         String passwordUtente = password.getText().toString();
 
         loginWithFirebase(emailUtente,passwordUtente);
-
-        //controllo se è studente o proprietario e lo mando alla pagina
     }
 
     public void registraUtente(View view) {
@@ -200,17 +208,63 @@ public class LoginActivity extends AppCompatActivity {
        // startActivity(intent);
     }
 
+
+
     private void updateUIGiaRegistrato(FirebaseUser user) {
 
-        Log.i(TAG, "Connesso utente "+user);
+
+        Log.i(TAG, "Connesso utente "+user.getEmail());
+        String idUtente = user.getUid();
 
         // TODO controllare se utente registrato è proprietario o studente (COME?)
-        //va controllato se l'utente è proprietario o studente e va mandato nel profilo giusto
-        String idUtente = user.getUid();
+
+        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                boolean flag = false;
+                Log.i(TAG,"funziona "+idUtente);
+
+                // Get Post object and use the values to update the UI
+                for(DataSnapshot figlio : dataSnapshot.getChildren()) {
+
+                    //Log.i(TAG, "Studente "+figlio.getKey()+"/n");
+
+                    if(figlio.getKey().compareTo(idUtente)==0) {
+                        Log.i(TAG,"Entra nell'if del DB studente ");
+                        flag = true;
+                    }
+                }
+                if(!flag) {
+                    Log.i(TAG, "Entra nell'if del flag false ");
+                    vaiProfiloProprietario(idUtente);
+                }
+                else
+                    vaiProfiloStudente(idUtente);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        });
+    }
+
+    private void vaiProfiloProprietario(String idUtente) {
+
+        Intent intent = new Intent(this, ProfiloProprietario.class);
+        intent.putExtra("idUtente", idUtente);
+        startActivity(intent);
+    }
+
+    private void vaiProfiloStudente(String idUtente) {
+
         Intent intent = new Intent(this, ProfiloStudente.class);
         intent.putExtra("idUtente", idUtente);
         startActivity(intent);
-
     }
 
     /*

@@ -70,15 +70,12 @@ public class ProfiloProprietario extends AppCompatActivity {
 
         idUtente = getIntent().getExtras().getString("idUtente");
 
-        database = FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
 
-       // popolaProprietario(idUtente);
+        popolaProprietario(idUtente);
 
-        scriviValori();
-
-
-
+       //scriviValori();
 
         recensioniProp.setOnClickListener(new View.OnClickListener() {
 
@@ -132,7 +129,7 @@ public class ProfiloProprietario extends AppCompatActivity {
 
     private void popolaProprietario(String idUtente) {
 
-        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
+        myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot figlioP : snapshot.getChildren()) {

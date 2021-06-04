@@ -87,6 +87,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
+        Log.i(TAG, "ref del db è : "+myRef.getKey());
 
 
         
@@ -144,6 +145,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
             }
         }
 
+        //TODO controllare il metodo, controlla anche studente con se stesso (?)
         controlloStudente(email);
 
 
@@ -160,7 +162,10 @@ public class InserimentoDatiStudente extends AppCompatActivity {
 
         //leggiChild();
 
+
         Intent intent = new Intent(this, ProfiloStudente.class);
+        startActivity(intent);
+        /*
         intent.putExtra("idUtente",idStudente);
         intent.putExtra("nome",nome);
         intent.putExtra("cognome",cognome);
@@ -171,7 +176,9 @@ public class InserimentoDatiStudente extends AppCompatActivity {
        //intent.putExtra("tipologia",tipologia);
         intent.putExtra("indirizzoLaurea",indirizzoLaurea);
 
-        startActivity(intent);
+         */
+
+
     }
 
     public void controlloStudente(String email) {
@@ -185,7 +192,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
                     if(studenteFiglio.getEmail().compareTo(email)==0) {
                         Toast.makeText(InserimentoDatiStudente.this, "Attenzione "+email+"già presente, inserire nuova email!", Toast.LENGTH_SHORT).show();
                     }
-                    Log.i(TAG,"Casa :"+studenteFiglio.getNome());
+                    Log.i(TAG,"Studente :"+studenteFiglio.getNome());
                 }
             }
 

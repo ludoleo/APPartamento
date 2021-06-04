@@ -67,6 +67,8 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
 
+        Log.i(TAG,"la ref del database è :"+myRef.toString());
+
     }
 
     public void conferma(View view) {
