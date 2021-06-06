@@ -31,6 +31,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
     private EditText et_numeroCivico;
     private EditText et_CAP;
     //Caratteristiche principali
+    
     private EditText et_numeroBagni;
     private EditText et_numeroStanze;
     private EditText et_numeroOspiti;

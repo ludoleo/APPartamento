@@ -33,7 +33,7 @@ public class ProfiloStudente extends AppCompatActivity {
     Button recensioni;
     Button modifica;
     ImageView immagineStudente ;
-    ImageButton imagebutton2;
+
 
     private TextView text_nome;
     private TextView text_cognome;
@@ -66,6 +66,8 @@ public class ProfiloStudente extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        immagineStudente = findViewById(R.id.immagineStudente);
 
         modifica = findViewById(R.id.modificaProfilo);
         modifica.setOnClickListener(new View.OnClickListener() {

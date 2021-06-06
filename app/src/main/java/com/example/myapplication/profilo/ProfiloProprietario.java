@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -12,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,8 +24,10 @@ import com.example.myapplication.R;
 import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.recensione.RecensioniProprietarioInterne;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +37,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+
 public class ProfiloProprietario extends AppCompatActivity {
 
     Button recensioniProp, leTueCase,prenotaz, cambiaImmagine;
@@ -39,12 +46,13 @@ public class ProfiloProprietario extends AppCompatActivity {
     private static final int IMAG_PICK_CODE = 1000;
     private static final int PERMISSION_CODE = 1001;
     FirebaseStorage storage;
-    StorageReference storageReference;
+    StorageReference storageRef;
 
     private TextView text_nomeP;
     private TextView text_cognomeP;
     private TextView text_numTelP;
     private TextView text_emailP;
+    private Uri ImageUri ;
 
     public DatabaseReference myRef;
     public FirebaseDatabase database;
@@ -61,8 +69,8 @@ public class ProfiloProprietario extends AppCompatActivity {
         recensioniProp =  findViewById(R.id.recensioniProp);
         immagineprop = findViewById(R.id.immaginePropriet);
 
-        storageReference = FirebaseStorage.getInstance().getReference();
-
+        //storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference storageRef = storage.getReference();
         text_nomeP = (TextView) findViewById(R.id.text_nomeP);
         text_cognomeP = (TextView) findViewById(R.id.text_cognomeP);
         text_numTelP = (TextView) findViewById(R.id.text_numTelP);
@@ -152,8 +160,9 @@ public class ProfiloProprietario extends AppCompatActivity {
     }
 
     private void pickimagefromGallery() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
+        Intent intent = new Intent();
         intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,IMAG_PICK_CODE);
 
 
@@ -182,20 +191,59 @@ public class ProfiloProprietario extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == RESULT_OK && resultCode == IMAG_PICK_CODE){
+        if(requestCode == IMAG_PICK_CODE && resultCode == RESULT_OK){
+            ImageUri = data.getData();
             // set image to image view
            // immagineprop.setImageURI(data.getData()); codice reale
-            Uri imageUri = data.getData();
+
             Log.i("ProfiloProp","passo da qui");
-            immagineprop.setImageURI(imageUri);
-            uploadimagetoFirebase(imageUri);
+            immagineprop.setImageURI(ImageUri);
+            uploadimagetoFirebase(ImageUri);
 
         }
     }
 
+    // gestisco le varie estensioni
+
+    private String getFileExtention(Uri uri){
+        ContentResolver contentResolver = getContentResolver();
+
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+
+        return  mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    // effettuo l'upload su Firebase
 
     private void uploadimagetoFirebase(Uri imageUri) {
-        StorageReference fileRef = storageReference.child("profile.jpg");
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Upload effettuato");
+        pd.show();
+
+        if(ImageUri != null){
+            StorageReference FileReference = FirebaseStorage.getInstance().getReference().child("ProfiloPropietario").child(System.currentTimeMillis()+"."+getFileExtention(ImageUri));
+
+            FileReference.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    FileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            String url = uri.toString();
+
+                            Log.d("Dowload Url", url);
+                            pd.dismiss();
+                            Toast.makeText(ProfiloProprietario.this,"Image upload successfull",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            });
+        }
+    }
+
+
+        /*StorageReference fileRef = storageReference.child("profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -215,7 +263,7 @@ public class ProfiloProprietario extends AppCompatActivity {
             }
         });
 
-    }
+    }*/
 
     public void goHome(View view) {
         Intent intent = new Intent(this, Home.class);
