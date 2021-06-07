@@ -1,5 +1,6 @@
 package com.example.myapplication.classi;
 
+import android.location.Address;
 import android.widget.ImageView;
 
 import java.util.Date;
@@ -10,20 +11,24 @@ import java.util.Objects;
 public class Annuncio {
 
     private String idAnnuncio;
-    private Proprietario proprietario;
-    private Casa casa;
-    private Date dataAnnuncio; //come gestire le date??
+    private String  idProprietario;
+    private String idCasa;
+    private Date dataAnnuncio;
     private String tipologiaAlloggio;
-    private float prezzoMensile;
+    private Integer prezzoMensile;
     private String speseStraordinarie;
+    private Address indirizzo;
+    //TODO creare un metodo per aggiungere i servizi e le immagini
     private List<ImageView> listaImmagini = new LinkedList<>();
     private List<String> listaServizi = new LinkedList<>();
 
-    public Annuncio(String idAnnuncio, Proprietario proprietario, Casa casa, Date dataAnnuncio,
-                    String tipologiaAlloggio, float prezzoMensile, String speseStraordinarie) {
+    public Annuncio(){}
+
+    public Annuncio(String proprietario, String casa, Date dataAnnuncio,
+                    String tipologiaAlloggio, Integer prezzoMensile, String speseStraordinarie) {
         this.idAnnuncio = idAnnuncio;
-        this.proprietario = proprietario;
-        this.casa = casa;
+        this.idProprietario = proprietario;
+        this.idCasa = casa;
         this.dataAnnuncio = dataAnnuncio;
         this.tipologiaAlloggio = tipologiaAlloggio;
         this.prezzoMensile = prezzoMensile;
@@ -38,20 +43,20 @@ public class Annuncio {
         this.idAnnuncio = idAnnuncio;
     }
 
-    public Proprietario getProprietario() {
-        return proprietario;
+    public String getProprietario() {
+        return idProprietario;
     }
 
-    public void setProprietario(Proprietario proprietario) {
-        this.proprietario = proprietario;
+    public void setProprietario(String proprietario) {
+        this.idProprietario = proprietario;
     }
 
-    public Casa getCasa() {
-        return casa;
+    public String getCasa() {
+        return idCasa;
     }
 
-    public void setCasa(Casa casa) {
-        this.casa = casa;
+    public void setCasa(String casa) {
+        this.idCasa = casa;
     }
 
     public Date getDataAnnuncio() {
@@ -70,11 +75,11 @@ public class Annuncio {
         this.tipologiaAlloggio = tipologiaAlloggio;
     }
 
-    public float getPrezzoMensile() {
+    public Integer getPrezzoMensile() {
         return prezzoMensile;
     }
 
-    public void setPrezzoMensile(float prezzoMensile) {
+    public void setPrezzoMensile(Integer prezzoMensile) {
         this.prezzoMensile = prezzoMensile;
     }
 
@@ -102,6 +107,14 @@ public class Annuncio {
         this.listaServizi.add(servizio);
     }
 
+    public Address getIndirizzo() {
+        return indirizzo;
+    }
+
+    public void setIndirizzo(Address indirizzo) {
+        this.indirizzo = indirizzo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,5 +126,9 @@ public class Annuncio {
     @Override
     public int hashCode() {
         return Objects.hash(getIdAnnuncio());
+    }
+
+    public String toString(){
+        return ""+idCasa+" "+prezzoMensile+" Euro/mese";
     }
 }

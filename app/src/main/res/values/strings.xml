@@ -39,4 +39,11 @@
         <item>Musei</item>
     </string-array>
 
+    <string-array name="tipologiaPostiLetto">
+        <item>Intero appartamento</item>
+        <item>Stanza singola</item>
+        <item>Stanza doppia</item>
+        <item>Posto letto</item>
+    </string-array>
+
 </resources>

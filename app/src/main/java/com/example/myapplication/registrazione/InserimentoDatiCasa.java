@@ -3,6 +3,7 @@ package com.example.myapplication.registrazione;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.location.Address;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,16 +11,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.profilo.ProfiloStudente;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Locale;
 
 public class InserimentoDatiCasa extends AppCompatActivity {
 
@@ -31,7 +32,6 @@ public class InserimentoDatiCasa extends AppCompatActivity {
     private EditText et_numeroCivico;
     private EditText et_CAP;
     //Caratteristiche principali
-    
     private EditText et_numeroBagni;
     private EditText et_numeroStanze;
     private EditText et_numeroOspiti;
@@ -68,14 +68,15 @@ public class InserimentoDatiCasa extends AppCompatActivity {
 
         String nomeCasa = et_nomeCasa.getText().toString();
         String viaCasa = et_viaCasa.getText().toString();
-        String numeroCivico = et_numeroCivico.getText().toString();
         String cap = et_CAP.getText().toString();
+        int numeroCivico = 0;
         int numeroBagni = 0;
         int numeroStanze = 0;
         int numeroOspiti = 0;
         
         //Controllo sui valori numerici (Con il cast)
         try {
+            numeroCivico = Integer.parseInt(et_numeroCivico.getText().toString().trim());
             numeroBagni = Integer.parseInt(et_numeroBagni.getText().toString().trim());
             numeroStanze = Integer.parseInt(et_numeroStanze.getText().toString().trim());
             numeroOspiti = Integer.parseInt(et_numeroOspiti.getText().toString().trim());
@@ -92,9 +93,6 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         } else if (viaCasa.compareTo("") == 0) {
             Toast.makeText(this, "Attenzione aggiungi la via della casa", Toast.LENGTH_SHORT).show();
             return;
-        } else if (numeroCivico.compareTo("") == 0) {
-            Toast.makeText(this, "Attenzione aggiungi il numero civico della casa", Toast.LENGTH_SHORT).show();
-            return;
         } else if (cap.compareTo("") == 0) {
             Toast.makeText(this, "Attenzione aggiungi il CAP della zona", Toast.LENGTH_SHORT).show();
             return;
@@ -102,8 +100,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
 
 
         //Il nome della casa è unico
-        //TO_DO
-
+        //TODO la casa deve essere unica
 
         //non funziona come controllo
         //controlloNomeCasa(nomeCasa);
@@ -116,9 +113,13 @@ public class InserimentoDatiCasa extends AppCompatActivity {
             Log.i(TAG, "valore flag else " + flagNomeCasaUguale.booleanValue());
             //Creo l'oggetto casa
 
-            //costruisco l'indiritto
-            String indirizzo = viaCasa + " ," + numeroCivico + " ," + cap;
-            //prendo nota del proprietario
+            //TODO costruire l'indirizzo
+            Locale l = Locale.ITALIAN;
+            Address indirizzo = new Address(l);
+            indirizzo.setAddressLine(numeroCivico,viaCasa);
+            indirizzo.setPostalCode(cap);
+
+            //TODO prendo nota del proprietario autenticato
             String proprietario = "id_proprietario";
 
             Casa casa = new Casa(nomeCasa, indirizzo, numeroOspiti, numeroBagni, numeroStanze, proprietario);
@@ -156,9 +157,6 @@ public class InserimentoDatiCasa extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // ...
             }
         });
     }

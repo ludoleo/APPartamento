@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.myapplication.R;
+import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.profilo.ProfiloCasaActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,6 +31,11 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +47,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -51,11 +58,15 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
     private MapView mapView;
     GoogleMap gmap;
     //posizione utente
-    LocationManager locationManager;
+    /*LocationManager locationManager;
     LocationListener locationListener;
     LatLng posizioneUtente;
 
     List<LatLng> polylinePoints = new LinkedList<>();
+    */
+    //Database
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +74,8 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
         setContentView(R.layout.activity_mappa_case);
 
         createMapView(savedInstanceState);
-        getLocation();
-        verifyPermission();
+        //getLocation();
+        //verifyPermission();
     }
 
     public void indietro(View view) {
@@ -73,16 +84,16 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
         startActivity(intent);
 
     }
+    //TODO collegare l'Annuncio alla mappa
+
     public void visualizzaCasa(View view) {
 
         Intent intent = new Intent(MappaCase.this , ProfiloCasaActivity.class);
         startActivity(intent);
     }
     public void listaCase(View view) {
-
         Intent intent = new Intent(MappaCase.this , ListaCase.class);
-        startActivity(intent);
-    }
+        startActivity(intent); }
 
     //CREAZIONE MAP VIEW
 
@@ -110,11 +121,33 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
             uiSettings.setMyLocationButtonEnabled(true);
 
         //specifico una coppia latitudine longitudine
+        //TODO mettere un marker per ogni annuncio
 
-        LatLng city = new LatLng(45.0735886, 7.6055663);
-        gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(city,15)); // 0-20
-        gmap.addMarker(new MarkerOptions().position(city));
 
+        List<Annuncio> listaAnnunci = new ArrayList<>();
+
+        myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot annData: dataSnapshot.getChildren()) {
+                    Annuncio ann = annData.getValue(Annuncio.class);
+                    listaAnnunci.add(ann);}
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
+        //Aggiungo i marker dei vari annunci
+        for(Annuncio a : listaAnnunci){
+            LatLng c = new LatLng(a.getIndirizzo().getLatitude(),a.getIndirizzo().getLongitude());
+            MarkerOptions mo = new MarkerOptions().position(c);
+            mo.title(""+a.getPrezzoMensile());
+            gmap.addMarker(mo);
+        }
+        //Aggiungo coordinate del poli
+        LatLng poliTo = new LatLng(45.057856432, 7.65664237342);
+        gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(poliTo,12)); // 0-20
+        gmap.addMarker(new MarkerOptions().position(poliTo));
     }
     @Override
     protected void onStart() {
@@ -144,6 +177,7 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
 
     //ESTRAZIONE POSIZIONE UTENTE
 
+    /*
     private void getLocation(){
             //Nuovo location manager
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -241,7 +275,8 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
     /*
     ASYNCTASK
     */
-
+    //TODO metodo per il calcolo del percorso dall'università alla casa dell'annuncio
+    /*
     private class DownloadTask extends AsyncTask<String, Void, String> {
         // implemento il metodo do in background
         @Override
@@ -316,5 +351,5 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
             }
         }
     }
-
+*/
 }

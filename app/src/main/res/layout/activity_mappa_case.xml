@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,29 +7,39 @@
     android:orientation="vertical"
     tools:context=".ricercalloggio.MappaCase">
 
-    <Button
-        android:id="@+id/b_back_mappa_case"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="indietro"
-        android:text="@string/indietro" />
-
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/prenotaz"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="visualizzaCasa"
-        android:text="Visualizza casa" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/lista_case"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="listaCase"
-        android:text="Lista case" />
-</LinearLayout>
+            <Button
+                android:id="@+id/b_back_mappa_case"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="indietro"
+                android:text="@string/indietro" />
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/prenotaz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="visualizzaCasa"
+                android:text="Visualizza casa" />
+
+            <Button
+                android:id="@+id/lista_case"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="listaCase"
+                android:text="Lista case" />
+        </LinearLayout>
+
+</ScrollView>

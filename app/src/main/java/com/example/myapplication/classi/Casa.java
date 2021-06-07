@@ -1,11 +1,13 @@
 package com.example.myapplication.classi;
 
+import android.location.Address;
+
 import java.util.Objects;
 
 public class Casa {
 
     private String nomeCasa;
-    private String indirizzo;
+    private Address indirizzo;
     private int numeroOspiti;
     private int numeroBagni;
     private int numeroStanze;
@@ -14,7 +16,7 @@ public class Casa {
 
     public Casa(){}
 
-    public Casa(String nomeCasa, String indirizzo, int numeroOspiti, int numeroBagni, int numeroStanze,
+    public Casa(String nomeCasa, Address indirizzo, int numeroOspiti, int numeroBagni, int numeroStanze,
                 String proprietario) {
         this.nomeCasa = nomeCasa;
         this.indirizzo = indirizzo;
@@ -33,11 +35,11 @@ public class Casa {
         this.nomeCasa = nomeCasa;
     }
 
-    public String getIndirizzo() {
+    public Address getIndirizzo() {
         return indirizzo;
     }
 
-    public void setIndirizzo(String indirizzo) {
+    public void setIndirizzo(Address indirizzo) {
         this.indirizzo = indirizzo;
     }
 
@@ -92,5 +94,10 @@ public class Casa {
     @Override
     public int hashCode() {
         return Objects.hash(getNomeCasa());
+    }
+
+    @Override
+    public String toString() {
+        return ""+nomeCasa;
     }
 }

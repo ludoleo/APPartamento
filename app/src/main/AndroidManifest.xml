@@ -14,8 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".registrazione.InserimentoDatiCasa"/>
+        <activity android:name=".registrazione.InserimentoDatiAnnuncio"></activity>
+        <activity android:name=".registrazione.InserimentoDatiCasa" />
         <activity android:name=".login.ScegliUtente" />
 
         <meta-data
