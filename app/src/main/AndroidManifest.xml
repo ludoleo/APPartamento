@@ -14,8 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".registrazione.InserimentoDatiAnnuncio"></activity>
+        <activity android:name=".registrazione.InserimentoDatiAnnuncio" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".registrazione.InserimentoDatiCasa" />
+
         <activity android:name=".login.ScegliUtente" />
 
         <meta-data
@@ -25,13 +33,7 @@
         <activity android:name=".profilo.Assistenza" />
         <activity android:name=".home.CaseProprietario" />
         <activity android:name=".prenotazione.ElencoPrenotazioni" />
-        <activity android:name=".home.Home">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".home.Home"/>
         <activity android:name=".registrazione.InserimentoDatiProprietario" />
         <activity android:name=".registrazione.InserimentoDatiStudente" />
         <activity android:name=".home.LaTuaCasa" />

@@ -38,6 +38,10 @@ public class ListaCase extends AppCompatActivity {
     }
 
     private void initUI() {
+
+        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+        myRef = database.getReference();
+
         // preparazione della ListView per l'elenco delle città
         ListView listView = (ListView) findViewById(R.id.lv_elencoAnnunci);
         CustomItem[] items = createItems();

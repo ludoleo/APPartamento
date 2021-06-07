@@ -51,11 +51,19 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
         initUI();
     }
     private void initUI() {
-        sa_elencoCaseProprietario = new ArrayAdapter<Casa>(this, R.layout.row);
+
+        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+        myRef = database.getReference();
+
+        List<Casa> data = getCaseProprietario(idProprietario);
+
+        sa_elencoCaseProprietario = new ArrayAdapter<Casa>(this, android.R.layout.simple_spinner_item,data);
+        sa_elencoCaseProprietario.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         sa_elencoCaseProprietario.addAll(getCaseProprietario(idProprietario));
-        spCaseProprietario = findViewById(R.id.spinnerCaseProprietario);
+        spCaseProprietario = (Spinner) findViewById(R.id.spinnerCaseProprietario);
         spCaseProprietario.setAdapter(sa_elencoCaseProprietario);
-        spTipologiaPostoLetto = findViewById(R.id.spinnerTipologiaPostoLetto);
+        spTipologiaPostoLetto = (Spinner) findViewById(R.id.spinnerTipologiaPostoLetto);
         //prezzi
         et_prezzo = (EditText) findViewById(R.id.et_prezzoMensileAnnuncio);
         et_speseStraordinarie = (EditText) findViewById(R.id.et_SpeseStraordinarie);
@@ -72,7 +80,9 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
                 for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
                     Casa casaFiglio = caseSnapshot.getValue(Casa.class);
                     if(casaFiglio.getProprietario().compareTo(proprietario)==0) {
-                    case_Proprietario.add(casaFiglio);}
+                        case_Proprietario.add(casaFiglio);
+                        Log.i(TAG, "Le case del proprietario sono: "+casaFiglio.toString());
+                    }
                 }
             }
             @Override

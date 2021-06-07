@@ -39,7 +39,7 @@ public class Home extends AppCompatActivity {
 
     public void salvati(View view) {
 
-        Intent intent = new Intent(Home.this , Salvati.class);
+        Intent intent = new Intent(Home.this , MappaCase.class);
         startActivity(intent);
     }
 

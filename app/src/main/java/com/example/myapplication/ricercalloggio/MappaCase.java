@@ -74,6 +74,9 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
         setContentView(R.layout.activity_mappa_case);
 
         createMapView(savedInstanceState);
+
+        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+        myRef = database.getReference();
         //getLocation();
         //verifyPermission();
     }
@@ -137,6 +140,8 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
+        /*
+
         //Aggiungo i marker dei vari annunci
         for(Annuncio a : listaAnnunci){
             LatLng c = new LatLng(a.getIndirizzo().getLatitude(),a.getIndirizzo().getLongitude());
@@ -144,6 +149,8 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
             mo.title(""+a.getPrezzoMensile());
             gmap.addMarker(mo);
         }
+
+         */
         //Aggiungo coordinate del poli
         LatLng poliTo = new LatLng(45.057856432, 7.65664237342);
         gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(poliTo,12)); // 0-20

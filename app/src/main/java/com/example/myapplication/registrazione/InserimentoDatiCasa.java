@@ -122,7 +122,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
 
             String indirizzo = ""+viaCasa+","+numeroCivico+","+cap;
             //TODO prendo nota del proprietario autenticato
-            String proprietario = "id_proprietario";
+            String proprietario = "idProprietario";
 
             Casa casa = new Casa(nomeCasa, indirizzo, numeroOspiti, numeroBagni, numeroStanze, proprietario);
             //eseguo il push
