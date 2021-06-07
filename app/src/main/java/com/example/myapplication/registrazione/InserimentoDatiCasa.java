@@ -112,13 +112,15 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         } else {
             Log.i(TAG, "valore flag else " + flagNomeCasaUguale.booleanValue());
             //Creo l'oggetto casa
-
             //TODO costruire l'indirizzo
-            Locale l = Locale.ITALIAN;
-            Address indirizzo = new Address(l);
+
+            /* Locale l = Locale.ITALIAN;
+            String indirizzo = new Address(l);
             indirizzo.setAddressLine(numeroCivico,viaCasa);
             indirizzo.setPostalCode(cap);
+            */
 
+            String indirizzo = ""+viaCasa+","+numeroCivico+","+cap;
             //TODO prendo nota del proprietario autenticato
             String proprietario = "id_proprietario";
 

@@ -75,7 +75,6 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
                     case_Proprietario.add(casaFiglio);}
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }

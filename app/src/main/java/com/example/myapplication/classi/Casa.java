@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Casa {
 
     private String nomeCasa;
-    private Address indirizzo;
+    private String indirizzo;
     private int numeroOspiti;
     private int numeroBagni;
     private int numeroStanze;
@@ -16,7 +16,7 @@ public class Casa {
 
     public Casa(){}
 
-    public Casa(String nomeCasa, Address indirizzo, int numeroOspiti, int numeroBagni, int numeroStanze,
+    public Casa(String nomeCasa, String indirizzo, int numeroOspiti, int numeroBagni, int numeroStanze,
                 String proprietario) {
         this.nomeCasa = nomeCasa;
         this.indirizzo = indirizzo;
@@ -35,11 +35,11 @@ public class Casa {
         this.nomeCasa = nomeCasa;
     }
 
-    public Address getIndirizzo() {
+    public String getIndirizzo() {
         return indirizzo;
     }
 
-    public void setIndirizzo(Address indirizzo) {
+    public void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
     }
 

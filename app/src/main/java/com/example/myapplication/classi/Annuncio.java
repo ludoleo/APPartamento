@@ -17,7 +17,7 @@ public class Annuncio {
     private String tipologiaAlloggio;
     private Integer prezzoMensile;
     private String speseStraordinarie;
-    private Address indirizzo;
+    private String indirizzo;
     //TODO creare un metodo per aggiungere i servizi e le immagini
     private List<ImageView> listaImmagini = new LinkedList<>();
     private List<String> listaServizi = new LinkedList<>();
@@ -107,11 +107,11 @@ public class Annuncio {
         this.listaServizi.add(servizio);
     }
 
-    public Address getIndirizzo() {
+    public String getIndirizzo() {
         return indirizzo;
     }
 
-    public void setIndirizzo(Address indirizzo) {
+    public void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
     }
 
