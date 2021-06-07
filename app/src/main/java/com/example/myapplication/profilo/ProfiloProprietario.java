@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Proprietario;
+import com.example.myapplication.home.CaseProprietario;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.recensione.RecensioniProprietarioInterne;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -69,8 +70,10 @@ public class ProfiloProprietario extends AppCompatActivity {
         recensioniProp =  findViewById(R.id.recensioniProp);
         immagineprop = findViewById(R.id.immaginePropriet);
 
+        storage = FirebaseStorage.getInstance("gs://appartamento-81c2d.appspot.com");
         //storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference storageRef = storage.getReference();
+        Log.i("Storage", "StorageRef è: "+storageRef);
         text_nomeP = (TextView) findViewById(R.id.text_nomeP);
         text_cognomeP = (TextView) findViewById(R.id.text_cognomeP);
         text_numTelP = (TextView) findViewById(R.id.text_numTelP);
@@ -267,6 +270,11 @@ public class ProfiloProprietario extends AppCompatActivity {
 
     public void goHome(View view) {
         Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
+    }
+
+    public void vaiTueCase(View view) {
+        Intent intent = new Intent(this, CaseProprietario.class);
         startActivity(intent);
     }
 }

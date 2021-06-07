@@ -15,6 +15,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.classi.RecensioneCasa;
+import com.example.myapplication.classi.RecensioneUtente;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -63,12 +65,14 @@ public class RecensioniProprietarioInterne extends AppCompatActivity {
                 Log.i(TAG, "DEscrizione rec"+descrizioneRec);
 
                 if(fromUser)
-                    myRef.child("Rating").child("Voto").setValue(rateValue);
+                    //RecensioneUtente recensioneUtente = new RecensioneUtente()
+                   // myRef.child("RatingProprietario").child()
+                    myRef.child("RatingProprietario").child("Voto").setValue(rateValue);
                     //myRef.child("Rating").child("Utente");
-                    myRef.child("Rating").child("Descrizione").setValue(descrizioneRec);
-                    myRef.child("Rating").child("IdUtente").setValue(user.getUid());
+                    myRef.child("RatingProprietario").child("Descrizione").setValue(descrizioneRec);
+                    myRef.child("RatingProprietario").child("IdUtente").setValue(user.getUid());
 
-                myRef.child("Rating").addValueEventListener(new ValueEventListener() {
+                myRef.child("RatingProprietario").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot != null && snapshot.getValue() != null) {

@@ -37,6 +37,7 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
     private ArrayAdapter<Casa> sa_elencoCaseProprietario;
     private Spinner spCaseProprietario;
     private Spinner spTipologiaPostoLetto;
+    private TextView tv_spinner;
     //prezzo
     private EditText et_prezzo;
     private EditText et_speseStraordinarie;
@@ -62,17 +63,33 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-        List<Casa> data = getCaseProprietario(user.getUid().toString());
+        List<Casa> data = getCaseProprietario(user.getUid());
 
         sa_elencoCaseProprietario = new ArrayAdapter<Casa>(this, android.R.layout.simple_spinner_item,data);
         sa_elencoCaseProprietario.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spCaseProprietario = (Spinner) findViewById(R.id.spinnerCaseProprietario);
         spCaseProprietario.setAdapter(sa_elencoCaseProprietario);
+
+        //TODO non funziona lo spinner, non visualizza la casa selezionata
         spTipologiaPostoLetto = (Spinner) findViewById(R.id.spinnerTipologiaPostoLetto);
         //prezzi
         et_prezzo = (EditText) findViewById(R.id.et_prezzoMensileAnnuncio);
         et_speseStraordinarie = (EditText) findViewById(R.id.et_SpeseStraordinarie);
+        tv_spinner = (TextView) findViewById(R.id.tv_spinner);
+
+        //LISTENER SPINNER---------
+
+        spCaseProprietario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                String item =(String) parent.getItemAtPosition(position);
+                tv_spinner.setText(item);
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
     }
 
     private List<Casa> getCaseProprietario(String proprietario) {
@@ -99,7 +116,11 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
     public void caricaAnnuncio(View view) {
 
-        String casa = spCaseProprietario.getSelectedItem().toString();
+
+
+       // Log.i(TAG,"Elemento dello spinner: "+spCaseProprietario.getSelectedItemId());
+       // String casa = tv_spinner.getText().toString();
+        String casa = "La Mia Casa";
         String tipologia = spTipologiaPostoLetto.getSelectedItem().toString();
         Date data = new Date();
         Integer prezzo = 0;
@@ -133,7 +154,7 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
         });
 
         DatabaseReference annuncioAggiunto = myRef.child("Annunci").push();
-        annuncioAggiunto.setValue(casa);
+        annuncioAggiunto.setValue(annuncio);
         //inserisco l'Id dell'annuncio
         String key = annuncioAggiunto.getKey();
         annuncio.setIdAnnuncio(key);

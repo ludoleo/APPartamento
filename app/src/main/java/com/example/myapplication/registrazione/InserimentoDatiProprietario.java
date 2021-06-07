@@ -37,6 +37,9 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
     private EditText et_numTelefonoP;
     private EditText et_descrizioneP;
 
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
+
     private CheckBox cb_primaEsperienzaP;
 
     //Database
@@ -64,6 +67,9 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
 
         cb_primaEsperienzaP = (CheckBox) findViewById(R.id.cb_primaEsperienzaP) ;
 
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
 
@@ -75,7 +81,8 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
 
         Map<String, String> listaElementi = new HashMap<>();
 
-        String idProprietario = getIntent().getExtras().getString("idProprietario");
+        //String idProprietario = getIntent().getExtras().getString("idProprietario");
+        String idProprietario = user.getUid();
         String nome = et_nomeP.getText().toString();
         String cognome = et_cognomeP.getText().toString();
         String numTelefono = et_numTelefonoP.getText().toString();
@@ -109,6 +116,7 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
         clear();
 
         Intent intent = new Intent(this, ProfiloProprietario.class);
+        intent.putExtra("idUtente",idProprietario);
         startActivity(intent);
 
     }

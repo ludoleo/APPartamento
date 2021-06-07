@@ -14,13 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".registrazione.InserimentoDatiAnnuncio" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".registrazione.InserimentoDatiAnnuncio" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
         <activity android:name=".registrazione.InserimentoDatiCasa" />
 
@@ -33,7 +28,13 @@
         <activity android:name=".profilo.Assistenza" />
         <activity android:name=".home.CaseProprietario" />
         <activity android:name=".prenotazione.ElencoPrenotazioni" />
-        <activity android:name=".home.Home"/>
+        <activity android:name=".home.Home">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".registrazione.InserimentoDatiProprietario" />
         <activity android:name=".registrazione.InserimentoDatiStudente" />
         <activity android:name=".home.LaTuaCasa" />
@@ -58,7 +59,10 @@
         <activity android:name=".profilo.ProfiloStudente" />
         <activity android:name=".profilo.ProponiEsperieza" />
         <activity android:name=".recensione.RecensioniCasa" />
+
         <activity android:name=".recensione.RecensioniProprietarioInterne" />
+        <activity android:name=".recensione.RecensioneCasaInterna"/>
+
         <activity android:name=".recensione.RecensioniStudentInterne" />
         <activity android:name=".registrazione.RegistrationActivity" />
         <activity android:name=".salvati.Salvati" />

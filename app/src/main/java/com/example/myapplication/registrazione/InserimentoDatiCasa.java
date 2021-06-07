@@ -133,7 +133,8 @@ public class InserimentoDatiCasa extends AppCompatActivity {
 
             clear();
 
-            Intent intent = new Intent(this, Home.class);
+            //Intent intent = new Intent(this, Home.class);
+            Intent intent = new Intent(this, InserimentoDatiAnnuncio.class);
             startActivity(intent);
         }
     }

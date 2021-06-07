@@ -19,6 +19,9 @@ public class RecensioneUtente {
    private Utente recensito;
 
 
+    public RecensioneUtente() {
+    }
+
     public RecensioneUtente(String idRecensione, String descrizione, int valutazionePulizia, int valutazionePagamento, int valutazioneLuoghiComuni,
                             int valutazioneDisponibilita, int valutazioneChiarezza, boolean recensitoIsProprietario, Utente recensore, Utente recensito) {
 

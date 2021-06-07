@@ -88,7 +88,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initUI() {
 
-
         email = (EditText) findViewById(R.id.text_email);
         password = (EditText) findViewById(R.id.text_password);
         button = (SignInButton) findViewById(R.id.sign_in_button);
@@ -98,7 +97,6 @@ public class LoginActivity extends AppCompatActivity {
         getMyPreferences();
 
         mAuth.signOut();
-
 
         //google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -173,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.i(TAG,"Accesso con Google utente: "+emailUtente+" "+idUtente);
         Intent intent = new Intent(this, ScegliUtente.class);
         intent.putExtra("email", emailUtente);
-       // intent.putExtra("idUtente",idUtente);
+        intent.putExtra("idUtente",idUtente);
         startActivity(intent);
 
     }
@@ -201,13 +199,11 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 
 
 //questo metodo viene usato solo quando si fa l'accesso con username o password
     private void updateUIGiaRegistrato(FirebaseUser user) {
-
 
         Log.i(TAG, "Connesso utente già registrato con us e pw "+user.getEmail());
         String idUtente = user.getUid();
@@ -216,6 +212,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //problema!!!!!!!
 
+       // myRef.child("Utenti").child("Studenti").child(idUtente);
         myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
 
             @Override

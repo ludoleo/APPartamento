@@ -100,7 +100,7 @@ public class RegistrationActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         Log.i(TAG,"Entro in start, id utente è "+ mAuth.getUid());
         if(currentUser != null){
-          // updateUI(currentUser.getEmail());
+         // updateUI(currentUser.getEmail());
             //updateUI();
         }
     }
