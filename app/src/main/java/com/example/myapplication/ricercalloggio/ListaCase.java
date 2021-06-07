@@ -67,9 +67,6 @@ public class ListaCase extends AppCompatActivity {
             }
         };
         listView.setAdapter(arrayAdapter);
-
-        //TODO collegare l'annuncio con la list view
-
     }
 
     public void visualizzaMappa(View view) {

@@ -118,9 +118,9 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
             uiSettings.setMapToolbarEnabled(true);
             uiSettings.setMyLocationButtonEnabled(true);
 
-        //specifico una coppia latitudine longitudine
         //TODO mettere un marker per ogni annuncio
 
+        //SALVO TUTTI GLI ANNUNCI IN UNA LISTA
         List<Annuncio> listaAnnunci = new ArrayList<>();
 
         myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
@@ -134,6 +134,7 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
+        //SCORRO LA LISTA PER CREARE UN MARKER PER OGNI ANNUNCIO
         for(Annuncio a : listaAnnunci){
             MarkerOptions mo = new MarkerOptions().position(geocoding(a.getIndirizzo()));
             mo.title(""+a.getPrezzoMensile());
@@ -148,43 +149,34 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
     private LatLng geocoding(String indirizzo) {
         try {
             List<Address> addresses = geocoder.getFromLocationName(indirizzo, 5);
-
             if (addresses == null)
                 return null;
-
             Address location = addresses.get(0);
             LatLng destinazione = new LatLng(location.getLatitude(), location.getLongitude());
             return destinazione;
-
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
-
     @Override
     protected void onStart() {
         super.onStart();
-        mapView.onStart();
-    }
+        mapView.onStart(); }
     @Override
     protected void onStop() {
         super.onStop();
-        mapView.onStop();
-    }
+        mapView.onStop(); }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mapView.onDestroy();
-    }
+        mapView.onDestroy(); }
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mapView.onLowMemory();
-    }
+        mapView.onLowMemory(); }
     @Override
     protected void onPause() {
         super.onPause();
-        mapView.onPause();
-    }
+        mapView.onPause(); }
 }
