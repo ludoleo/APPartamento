@@ -137,7 +137,7 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
         //SCORRO LA LISTA PER CREARE UN MARKER PER OGNI ANNUNCIO
         for(Annuncio a : listaAnnunci){
             MarkerOptions mo = new MarkerOptions().position(geocoding(a.getIndirizzo()));
-            mo.title(""+a.getPrezzoMensile());
+            mo.title(""+a.getPrezzoMensile()+"€");
             gmap.addMarker(mo);
         }
         //Aggiungo coordinate del poli

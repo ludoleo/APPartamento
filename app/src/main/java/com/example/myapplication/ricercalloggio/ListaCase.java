@@ -95,7 +95,7 @@ public class ListaCase extends AppCompatActivity {
         });
 
         //TODO qui parte l'algoritomo di ricerca ottimale
-        //ricrcaOttimale();
+        //ricercaOttimale();
 
         int size = listaAnnunci.size();
 

@@ -66,7 +66,6 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
         sa_elencoCaseProprietario = new ArrayAdapter<Casa>(this, android.R.layout.simple_spinner_item,data);
         sa_elencoCaseProprietario.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //LO SPINNER NON SEGNA I VALORI
 
         spCaseProprietario = (Spinner) findViewById(R.id.spinnerCaseProprietario);
         spCaseProprietario.setAdapter(sa_elencoCaseProprietario);
@@ -74,7 +73,6 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
         //prezzi
         et_prezzo = (EditText) findViewById(R.id.et_prezzoMensileAnnuncio);
         et_speseStraordinarie = (EditText) findViewById(R.id.et_SpeseStraordinarie);
-
     }
 
     private List<Casa> getCaseProprietario(String proprietario) {
