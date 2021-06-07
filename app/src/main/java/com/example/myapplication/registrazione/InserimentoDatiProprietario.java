@@ -108,49 +108,9 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
 
         clear();
 
-        //leggiChild();
-
         Intent intent = new Intent(this, ProfiloProprietario.class);
-        intent.putExtra("idUtente",idProprietario);
-
         startActivity(intent);
 
-    }
-    private void leggiChild() {
-
-        myRef.child("Proprietari").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Proprietario proprietario = snapshot.getValue(Proprietario.class);
-                Log.i(TAG, "Aggiunto proprietario "+proprietario.toString());
-                //inviaNotifica(studente.getMatricola(), studente.getNome(), studente.getCognome());
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Proprietario proprietario = snapshot.getValue(Proprietario.class);
-                Log.i(TAG, "Modificato proprietario "+proprietario.toString());
-                //inviaNotifica(studente.getMatricola(), studente.getNome(), studente.getCognome());
-            }
-
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                // Studente studente = snapshot.getValue(Studente.class);
-                //Log.i(TAG, "Rimosso studente "+studente.toString());
-                //tvMessaggio.setText("Rimosso studente "+studente.toString());
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     private void clear(){

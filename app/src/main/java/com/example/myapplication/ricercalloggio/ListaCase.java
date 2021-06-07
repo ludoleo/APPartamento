@@ -69,17 +69,7 @@ public class ListaCase extends AppCompatActivity {
         listView.setAdapter(arrayAdapter);
 
         //TODO collegare l'annuncio con la list view
-/*
-        listView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Intent intent = new Intent(ListaCase.this , ProfiloCasaActivity.class);
-                //intent.putExtra("idAnnuncio", );
-                startActivity(intent);
-            }
-        });
- */
     }
 
     public void visualizzaMappa(View view) {

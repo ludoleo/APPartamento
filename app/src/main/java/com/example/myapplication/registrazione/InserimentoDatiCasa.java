@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.home.Home;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,10 +37,13 @@ public class InserimentoDatiCasa extends AppCompatActivity {
     private EditText et_numeroBagni;
     private EditText et_numeroStanze;
     private EditText et_numeroOspiti;
-
+    //Autenticazione
+    public FirebaseUser user;
+    public FirebaseAuth mAuth;
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+
     Boolean flagNomeCasaUguale;
 
     @Override
@@ -59,9 +64,13 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         et_numeroOspiti = (EditText) findViewById(R.id.et_numeroOspiti);
 
         flagNomeCasaUguale = false;
-
+        //database
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
+        //autenticazione
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
     }
 
     public void caricaCasa(View view) {
@@ -98,11 +107,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
             return;
         }
 
-
-        //Il nome della casa è unico
         //TODO la casa deve essere unica
-
-        //non funziona come controllo
         //controlloNomeCasa(nomeCasa);
 
         if (flagNomeCasaUguale) {
@@ -111,18 +116,13 @@ public class InserimentoDatiCasa extends AppCompatActivity {
             return;
         } else {
             Log.i(TAG, "valore flag else " + flagNomeCasaUguale.booleanValue());
-            //Creo l'oggetto casa
+
+            //CREO L'OGGETTO CASA
+
             //TODO costruire l'indirizzo
-
-            /* Locale l = Locale.ITALIAN;
-            String indirizzo = new Address(l);
-            indirizzo.setAddressLine(numeroCivico,viaCasa);
-            indirizzo.setPostalCode(cap);
-            */
-
             String indirizzo = ""+viaCasa+","+numeroCivico+","+cap;
-            //TODO prendo nota del proprietario autenticato
-            String proprietario = "idProprietario";
+            //TODO proprietario
+            String proprietario = user.getUid().toString();
 
             Casa casa = new Casa(nomeCasa, indirizzo, numeroOspiti, numeroBagni, numeroStanze, proprietario);
             //eseguo il push
@@ -130,10 +130,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
             casaAggiunta.setValue(casa);
 
             Log.i(TAG, "Casa " + casa.getNomeCasa());
-            //String key = casaAggiunta.getKey(); // Estraggo la chiave assegnata alla casa
-            //myRef.child("Chiavi").child(key).setValue(nomeCasa);
 
-            //leggiChild();
             clear();
 
             Intent intent = new Intent(this, Home.class);
@@ -156,7 +153,6 @@ public class InserimentoDatiCasa extends AppCompatActivity {
                     Log.i(TAG,"Casa :"+casaFiglio.getNomeCasa());
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -168,65 +164,6 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         flagNomeCasaUguale = true;
         Log.i(TAG, "Passo dal flag "+flagNomeCasaUguale.booleanValue());
     }
-
-
-    public void leggiChild(){
-
-        ChildEventListener childEventListener = new ChildEventListener() {
-
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
-                Casa casa = dataSnapshot.getValue(Casa.class);
-                
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so displayed the changed comment.
-                // Comment newComment = dataSnapshot.getValue(Comment.class);
-                //String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so remove it.
-                //String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.d(TAG, "onChildMoved:" + dataSnapshot.getKey());
-
-                // A comment has changed position, use the key to determine if we are
-                // displaying this comment and if so move it.
-                //  Comment movedComment = dataSnapshot.getValue(Comment.class);
-                // String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.w(TAG, "postComments:onCancelled", databaseError.toException());
-                //   Toast.makeText(mContext, "Failed to load comments.",
-                //         Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        myRef.child("Case").addChildEventListener(childEventListener);
-    }
-
     private void clear() {
         et_nomeCasa.setText("");
         et_numeroCivico.setText("");
