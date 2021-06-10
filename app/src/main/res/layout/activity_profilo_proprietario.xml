@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".profilo.ProfiloProprietario">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,12 +25,13 @@
             android:text="Profilo Proprietario"
             android:textSize="30sp" />
 
+
         <ImageView
             android:id="@+id/immaginePropriet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="114dp"
+            android:layout_height="114dp"
+            android:translationX="145dp"
             tools:srcCompat="@tools:sample/avatars" />
-
 
         <ImageButton
             android:id="@+id/button_home3"
@@ -107,4 +113,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

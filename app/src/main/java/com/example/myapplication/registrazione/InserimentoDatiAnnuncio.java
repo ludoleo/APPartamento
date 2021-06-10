@@ -65,10 +65,26 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
         List<Casa> data = getCaseProprietario(user.getUid());
 
-        sa_elencoCaseProprietario = new ArrayAdapter<Casa>(this, android.R.layout.simple_spinner_item,data);
+        spCaseProprietario = (Spinner) findViewById(R.id.spinnerCaseProprietario);
+
+
+        spCaseProprietario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                Log.i(TAG,"Entro nel listener! "+position);
+
+                tv_spinner.setText(data.get(position).toString());
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+                tv_spinner.setText("");
+            }
+        });
+
+        sa_elencoCaseProprietario = new ArrayAdapter<Casa>(this, android.R.layout.simple_spinner_dropdown_item,data);
         sa_elencoCaseProprietario.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spCaseProprietario = (Spinner) findViewById(R.id.spinnerCaseProprietario);
+
         spCaseProprietario.setAdapter(sa_elencoCaseProprietario);
 
         //TODO non funziona lo spinner, non visualizza la casa selezionata
@@ -80,16 +96,7 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
         //LISTENER SPINNER---------
 
-        spCaseProprietario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                String item =(String) parent.getItemAtPosition(position);
-                tv_spinner.setText(item);
-            }
 
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
     }
 
     private List<Casa> getCaseProprietario(String proprietario) {
@@ -117,9 +124,10 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
     public void caricaAnnuncio(View view) {
 
 
+        Log.i(TAG,"Stampo la casa ottenuta "+spCaseProprietario.getSelectedItem().toString());
 
        // Log.i(TAG,"Elemento dello spinner: "+spCaseProprietario.getSelectedItemId());
-       // String casa = tv_spinner.getText().toString();
+       // String casa = spCaseProprietario.getSelectedItem().toString();
         String casa = "La Mia Casa";
         String tipologia = spTipologiaPostoLetto.getSelectedItem().toString();
         Date data = new Date();
