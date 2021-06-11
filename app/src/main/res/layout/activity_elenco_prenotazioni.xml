@@ -22,21 +22,12 @@
         android:paddingLeft="15dp"/>
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabPrenotazioni"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabPrenotazioniAttuali"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:tabMode="scrollable"
-            android:text="Attuali" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabPrenotazioniCancellate"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Cancellate" />
     </com.google.android.material.tabs.TabLayout>
-
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerPrenotazioni"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

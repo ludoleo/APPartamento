@@ -20,7 +20,8 @@ public class Prenotazione {
         DIECI_DODICI,
         DODICI_QUATTORDICI,
         QUATTORIDCI_SEDICI,
-        SEDICI_DICIOTTO;
+        SEDICI_DICIOTTO,
+        DICIOTTO_VENTI;
     }
     //TODO considerare il video
 

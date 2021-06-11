@@ -25,18 +25,19 @@
 
         <activity android:name=".profilo.Assistenza" />
         <activity android:name=".home.CaseProprietario" />
-        <activity android:name=".prenotazione.ElencoPrenotazioni" />
-        <activity android:name=".home.Home"/>
-        <activity android:name=".registrazione.InserimentoDatiProprietario" />
-        <activity android:name=".registrazione.InserimentoDatiStudente" />
-        <activity android:name=".home.LaTuaCasa" />
-        <activity android:name=".ricercalloggio.ListaAnnunci" >
+        <activity android:name=".prenotazione.ElencoPrenotazioni" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".home.Home"/>
+        <activity android:name=".registrazione.InserimentoDatiProprietario" />
+        <activity android:name=".registrazione.InserimentoDatiStudente" />
+        <activity android:name=".home.LaTuaCasa" />
+        <activity android:name=".ricercalloggio.ListaAnnunci" />
+
         <activity android:name=".ricercalloggio.MappaAnnunci" />
 
         <meta-data
