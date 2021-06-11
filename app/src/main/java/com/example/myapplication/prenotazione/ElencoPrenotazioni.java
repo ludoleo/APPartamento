@@ -10,7 +10,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-import com.example.myapplication.PrenotazioniFragment;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Prenotazione;
 import com.google.android.material.tabs.TabLayout;
