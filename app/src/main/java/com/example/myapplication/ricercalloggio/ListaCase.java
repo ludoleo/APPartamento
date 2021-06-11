@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import java.util.List;
 
 public class ListaCase extends AppCompatActivity {
 
+    private static final String TAG = "LISTA";
+    private List<Annuncio> listaAnnunci = new ArrayList<>();
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
@@ -39,10 +42,28 @@ public class ListaCase extends AppCompatActivity {
 
     private void initUI() {
 
+        //collego il db
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
 
-        // preparazione della ListView per l'elenco delle città
+        //metto in una lista tutti gli annunci
+        myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot annData: dataSnapshot.getChildren()) {
+                    Log.i(TAG, "annuncio");
+                    Annuncio ann = annData.getValue(Annuncio.class);
+                    listaAnnunci.add(ann);
+                }
+                aggiorna();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    private void aggiorna() {
+
         ListView listView = (ListView) findViewById(R.id.lv_elencoAnnunci);
         CustomItem[] items = createItems();
 
@@ -80,23 +101,9 @@ public class ListaCase extends AppCompatActivity {
     }
     private CustomItem[] createItems() {
 
-        //metto in una lista tutti gli annunci
-        List<Annuncio> listaAnnunci = new ArrayList<>();
-
-        myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot annData: dataSnapshot.getChildren()) {
-                    Annuncio ann = annData.getValue(Annuncio.class);
-                    listaAnnunci.add(ann);}
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
-
         //TODO qui parte l'algoritomo di ricerca ottimale
         //ricercaOttimale();
-
+        Log.i(TAG, ""+listaAnnunci.size());
         int size = listaAnnunci.size();
 
         CustomItem[] items = new CustomItem[size]; //numero di annunci possibili
@@ -107,6 +114,7 @@ public class ListaCase extends AppCompatActivity {
             items[i] = new CustomItem();
             items[i].nomeCasa = a.getCasa();
             items[i].prezzoCasa = a.getPrezzoMensile()+" Euro al mese";
+            Log.i(TAG, items[i].nomeCasa+" "+items[i].prezzoCasa);
         }
         return items;
     }

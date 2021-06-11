@@ -25,7 +25,7 @@ public class Annuncio {
     public Annuncio(){}
 
     public Annuncio(String proprietario, String casa, Date dataAnnuncio,
-                    String tipologiaAlloggio, Integer prezzoMensile, String speseStraordinarie) {
+                    String tipologiaAlloggio, Integer prezzoMensile, String speseStraordinarie, String indirizzo) {
         this.idAnnuncio = idAnnuncio;
         this.idProprietario = proprietario;
         this.idCasa = casa;
@@ -33,6 +33,7 @@ public class Annuncio {
         this.tipologiaAlloggio = tipologiaAlloggio;
         this.prezzoMensile = prezzoMensile;
         this.speseStraordinarie = speseStraordinarie;
+        this.indirizzo = "";
     }
 
     public String getIdAnnuncio() {

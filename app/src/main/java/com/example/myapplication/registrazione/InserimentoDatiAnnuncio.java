@@ -34,10 +34,9 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
     private static final String TAG = "ANNUNCIO";
     //spinner casa
-    private ArrayAdapter<Casa> sa_elencoCaseProprietario;
+    private ArrayAdapter<String> sa_elencoCaseProprietario;
     private Spinner spCaseProprietario;
     private Spinner spTipologiaPostoLetto;
-    private TextView tv_spinner;
     //prezzo
     private EditText et_prezzo;
     private EditText et_speseStraordinarie;
@@ -63,45 +62,22 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-        List<Casa> data = getCaseProprietario(user.getUid());
+        List<String> data = getCaseProprietario(user.getUid().toString());
 
-        spCaseProprietario = (Spinner) findViewById(R.id.spinnerCaseProprietario);
-
-
-        spCaseProprietario.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                Log.i(TAG,"Entro nel listener! "+position);
-
-                tv_spinner.setText(data.get(position).toString());
-            }
-
-            public void onNothingSelected(AdapterView<?> parent) {
-                tv_spinner.setText("");
-            }
-        });
-
-        sa_elencoCaseProprietario = new ArrayAdapter<Casa>(this, android.R.layout.simple_spinner_dropdown_item,data);
+        sa_elencoCaseProprietario = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,data);
         sa_elencoCaseProprietario.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-
+        spCaseProprietario = (Spinner) findViewById(R.id.spinnerCaseProprietario);
         spCaseProprietario.setAdapter(sa_elencoCaseProprietario);
-
-        //TODO non funziona lo spinner, non visualizza la casa selezionata
         spTipologiaPostoLetto = (Spinner) findViewById(R.id.spinnerTipologiaPostoLetto);
         //prezzi
         et_prezzo = (EditText) findViewById(R.id.et_prezzoMensileAnnuncio);
         et_speseStraordinarie = (EditText) findViewById(R.id.et_SpeseStraordinarie);
-        tv_spinner = (TextView) findViewById(R.id.tv_spinner);
-
-        //LISTENER SPINNER---------
-
-
     }
 
-    private List<Casa> getCaseProprietario(String proprietario) {
+    private List<String> getCaseProprietario(String proprietario) {
 
-        List<Casa> case_Proprietario = new LinkedList<>();
+        List<String> case_Proprietario = new LinkedList<>();
 
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
             @Override
@@ -109,7 +85,7 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
                 for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
                     Casa casaFiglio = caseSnapshot.getValue(Casa.class);
                     if(casaFiglio.getProprietario().compareTo(proprietario)==0) {
-                        case_Proprietario.add(casaFiglio);
+                        case_Proprietario.add(casaFiglio.getNomeCasa());
                         Log.i(TAG, "Le case del proprietario sono: "+casaFiglio.toString());
                     }
                 }
@@ -123,12 +99,7 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
     public void caricaAnnuncio(View view) {
 
-
-        Log.i(TAG,"Stampo la casa ottenuta "+spCaseProprietario.getSelectedItem().toString());
-
-       // Log.i(TAG,"Elemento dello spinner: "+spCaseProprietario.getSelectedItemId());
-       // String casa = spCaseProprietario.getSelectedItem().toString();
-        String casa = "La Mia Casa";
+        String casa = spCaseProprietario.getSelectedItem().toString();
         String tipologia = spTipologiaPostoLetto.getSelectedItem().toString();
         Date data = new Date();
         Integer prezzo = 0;
@@ -144,7 +115,7 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
        //TODO porre dei limiti sul valore del prezzo
 
-        Annuncio annuncio = new Annuncio(user.getUid().toString(), casa, data, tipologia,prezzo,speseStraordinarie);
+        Annuncio annuncio = new Annuncio(user.getUid().toString(), casa, data, tipologia,prezzo,speseStraordinarie, "");
         //associo l'indirizzo della casa all'annuncio per comodità
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
             @Override

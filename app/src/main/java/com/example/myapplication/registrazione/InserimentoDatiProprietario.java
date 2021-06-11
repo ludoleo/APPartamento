@@ -45,6 +45,7 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+
     private static final String si = "SI";
     private static final String no = "NO";
 
