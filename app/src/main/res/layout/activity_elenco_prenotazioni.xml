@@ -1,9 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".prenotazione.ElencoPrenotazioni">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/indietro" />
+    <TextView
+        android:id="@+id/textViewPrenotazioneTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Prenotazioni"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:paddingLeft="15dp"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabPrenotazioniAttuali"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:tabMode="scrollable"
+            android:text="Attuali" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabPrenotazioniCancellate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Cancellate" />
+    </com.google.android.material.tabs.TabLayout>
+
+</LinearLayout>

@@ -7,22 +7,57 @@ import java.util.Objects;
 public class Prenotazione {
 
     private String idPrenotazione;
+    private String idStudente;
+    private String idProprietario;
+    private String idAnnuncio;
     private Date dataPrenotazione;
-    private Timestamp time;
     private boolean terminata;
     private boolean cancellata;
     private boolean pagata;
-    //considerare il video
-
-
-    public Prenotazione(String idPrenotazione, Date dataPrenotazione, Timestamp time) {
-        this.idPrenotazione = idPrenotazione;
-        this.dataPrenotazione = dataPrenotazione;
-        this.time = time;
-        this.cancellata=false;
-        this.terminata=false;
-        this.pagata=false;
+    private Orario orario;
+    public enum Orario{
+        OTTO_DIECI,
+        DIECI_DODICI,
+        DODICI_QUATTORDICI,
+        QUATTORIDCI_SEDICI,
+        SEDICI_DICIOTTO;
     }
+    //TODO considerare il video
+
+    public Prenotazione(){}
+
+    public Prenotazione(String idPrenotazione, String idStudente, String idProprietario,
+                        String idAnnuncio, Date dataPrenotazione, boolean terminata,
+                        boolean cancellata, boolean pagata, Orario orario) {
+
+        this.idPrenotazione = idPrenotazione;
+        this.idStudente = idStudente;
+        this.idProprietario = idProprietario;
+        this.idAnnuncio = idAnnuncio;
+        this.dataPrenotazione = dataPrenotazione;
+        this.terminata = terminata;
+        this.cancellata = cancellata;
+        this.pagata = pagata;
+        this.orario = orario;
+    }
+
+    public String getIdStudente() {
+        return idStudente; }
+
+    public void setIdStudente(String idStudente) {
+        this.idStudente = idStudente; }
+
+    public String getIdProprietario() {
+        return idProprietario; }
+
+    public void setIdProprietario(String idProprietario) {
+        this.idProprietario = idProprietario; }
+
+    public String getIdAnnuncio() {
+        return idAnnuncio; }
+
+    public void setIdAnnuncio(String idAnnuncio) {
+        this.idAnnuncio = idAnnuncio; }
 
     public String getIdPrenotazione() {
         return idPrenotazione;
@@ -37,16 +72,7 @@ public class Prenotazione {
     }
 
     public void setDataPrenotazione(Date dataPrenotazione) {
-        this.dataPrenotazione = dataPrenotazione;
-    }
-
-    public Timestamp getTime() {
-        return time;
-    }
-
-    public void setTime(Timestamp time) {
-        this.time = time;
-    }
+        this.dataPrenotazione = dataPrenotazione; }
 
     public boolean isTerminata() {
         return terminata;
@@ -71,6 +97,12 @@ public class Prenotazione {
     public void setPagata(boolean pagata) {
         this.pagata = pagata;
     }
+
+    public Orario getOrario() {
+        return orario; }
+
+    public void setOrario(Orario orario) {
+        this.orario = orario; }
 
     @Override
     public boolean equals(Object o) {
