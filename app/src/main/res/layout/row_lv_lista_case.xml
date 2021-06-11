@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/row_lv_lista_case"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:id="@+id/row_lv_lista_case">
+    android:orientation="horizontal">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textViewNomeCasaLista"
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Nome Casa" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewPrezzCasaLista"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Prezzo al mese" />
+            <TextView
+                android:id="@+id/textViewNomeCasaLista"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nome Casa" />
+
+            <TextView
+                android:id="@+id/textViewPrezzCasaLista"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Prezzo al mese" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

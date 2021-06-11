@@ -18,15 +18,10 @@
         app:layout_constraintVertical_bias="0.316"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <TextView
-        android:id="@+id/et_casa"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Casa in Corso Duca"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ListView
+        android:id="@+id/lv_case_prop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <Button
         android:id="@+id/modificaCasa"

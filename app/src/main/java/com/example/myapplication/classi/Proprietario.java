@@ -10,6 +10,7 @@ public class Proprietario extends Utente{
 
     private List<Casa> listaCase = new LinkedList<>();
     private List<Annuncio> listaAnnunci = new LinkedList<>();
+    private ImageView immagineProfilo ;
 
     public Proprietario() {
     }
@@ -32,5 +33,13 @@ public class Proprietario extends Utente{
 
     public List<Annuncio> getListaAnnunci(){
         return this.listaAnnunci;
+    }
+
+    public ImageView getImmagineProfilo() {
+        return immagineProfilo;
+    }
+
+    public void setImmagineProfilo(ImageView immagineProfilo) {
+        this.immagineProfilo = immagineProfilo;
     }
 }
