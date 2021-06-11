@@ -29,6 +29,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,7 +59,11 @@ public class ProfiloProprietario extends AppCompatActivity {
 
     public DatabaseReference myRef;
     public FirebaseDatabase database;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
     private String idUtente;
+    private String uriImm;
+    //String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +89,9 @@ public class ProfiloProprietario extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
 
         popolaProprietario(idUtente);
 
@@ -151,6 +160,7 @@ public class ProfiloProprietario extends AppCompatActivity {
                         text_nomeP.setText(proprietario.getNome());
                         text_cognomeP.setText(proprietario.getCognome());
                         text_numTelP.setText(proprietario.getTelefono());
+                       // immagineprop.setImageURI(convertiURI());
                     }
                 }
             }
@@ -160,6 +170,13 @@ public class ProfiloProprietario extends AppCompatActivity {
 
             }
         });
+    }
+
+    private Uri convertiURI() {
+
+        Uri urip = Uri.parse("url");
+        return urip;
+
     }
 
     private void pickimagefromGallery() {
@@ -225,14 +242,14 @@ public class ProfiloProprietario extends AppCompatActivity {
 
         if(ImageUri != null){
             StorageReference FileReference = FirebaseStorage.getInstance().getReference().child("ProfiloPropietario").child(System.currentTimeMillis()+"."+getFileExtention(ImageUri));
-
+            //storageRef.child(mAuth.getCurrentUser().getUid()+"."+getFileExtention(ImageUri));
             FileReference.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                     FileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            String url = uri.toString();
+                           String url = uri.toString();
 
                             Log.d("Dowload Url", url);
                             pd.dismiss();
