@@ -10,8 +10,7 @@ import com.example.myapplication.login.LoginActivity;
 import com.example.myapplication.messaggi.MessaggiUtente;
 import com.example.myapplication.R;
 import com.example.myapplication.prenotazione.PrenotazioneActivity;
-import com.example.myapplication.ricercalloggio.MappaCase;
-import com.example.myapplication.salvati.Salvati;
+import com.example.myapplication.ricercalloggio.MappaAnnunci;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Home extends AppCompatActivity {
@@ -39,7 +38,7 @@ public class Home extends AppCompatActivity {
 
     public void salvati(View view) {
 
-        Intent intent = new Intent(Home.this , MappaCase.class);
+        Intent intent = new Intent(Home.this , MappaAnnunci.class);
         startActivity(intent);
     }
 
@@ -58,7 +57,7 @@ public class Home extends AppCompatActivity {
     }
 
     public void cercaMappa(View view) {
-        Intent intent = new Intent(this, MappaCase.class);
+        Intent intent = new Intent(this, MappaAnnunci.class);
                 startActivity(intent);
     }
 }

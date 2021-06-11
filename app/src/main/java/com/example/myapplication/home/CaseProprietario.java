@@ -17,7 +17,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.registrazione.InserimentoDatiCasa;
-import com.example.myapplication.ricercalloggio.ListaCase;
+import com.example.myapplication.ricercalloggio.ListaAnnunci;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,11 +33,14 @@ import java.util.List;
 public class CaseProprietario extends AppCompatActivity {
 
     private static final String TAG = "case del proprietario";
+
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+
     private FirebaseAuth mAuth;
     private FirebaseUser user;
-    ArrayList<Casa> lista;
+
+    private List<Casa> listaCase = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,112 +50,96 @@ public class CaseProprietario extends AppCompatActivity {
     }
 
     private void initUI() {
-
+        //collego il db
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
-
+        //riferimento all'user
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-        ListView listView = (ListView) findViewById(R.id.lv_case_prop);
-        //Casa[] items = createItems(user.getUid());
-        //Log.i(TAG, "Entro nell'array adapter "+items.length);
-        lista = new ArrayList<>();
-        getCasa();
-
-        //popolaLista(user.getUid());
-
-        /*
+        //metto in una lista tuttel le case
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot caseSnapshot : dataSnapshot.getChildren()) {
-                    Casa casaFiglio = caseSnapshot.getValue(Casa.class);
-                    if (casaFiglio.getProprietario().compareTo(user.getUid()) == 0) {
-                        lista.add(casaFiglio);
-                        Log.i(TAG, "Le case del proprietario sono: " + casaFiglio.toString());
-                    }
+                for (DataSnapshot annData: dataSnapshot.getChildren()) {
+                    Casa c = annData.getValue(Casa.class);
+                    if(c.getProprietario().compareTo(user.getUid())==0)
+                        listaCase.add(c);
                 }
+                aggiorna();
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
+    }
 
+    private void aggiorna() {
 
-         */
-        Log.i(TAG,"lista:"+lista.toString());
+        ListView listView = (ListView) findViewById(R.id.lv_elencoAnnunci);
+        CaseProprietario.CustomItem[] items = createItems();
 
-        ArrayAdapter<Casa> arrayAdapter = new ArrayAdapter<Casa>(
-                this, R.layout.row_lv_lista_case, R.id.textViewNomeCasaLista, lista) {
+        ArrayAdapter<CaseProprietario.CustomItem> arrayAdapter = new ArrayAdapter<CaseProprietario.CustomItem>(
+                this, R.layout.row_lv_lista_case_proprietario, R.id.textViewNomeCasaProprietario, items) {
             @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                return getViewNotOptimized(position, convertView, parent);
-            }
+            public View getView(int position, View convertView, ViewGroup parent){
+                return getViewNotOptimized(position,convertView,parent); }
 
-
-            public View getViewNotOptimized(int position, View convertView, ViewGroup par) {
-                Casa casa = getItem(position); // Rif. alla riga attualmente
+            public View getViewNotOptimized(int position, View convertView, ViewGroup par){
+                CaseProprietario.CustomItem item = getItem(position); // Rif. alla riga attualmente
                 LayoutInflater inflater =
-                        (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View rowView = inflater.inflate(R.layout.row_lv_lista_case, null);
+                        (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.row_lv_lista_case_proprietario, null);
                 TextView nomeCasaView =
-                        (TextView) rowView.findViewById(R.id.textViewNomeCasaLista);
-                TextView prezzoCasaView =
-                        (TextView) rowView.findViewById(R.id.textViewPrezzCasaLista);
-                nomeCasaView.setText(casa.getNomeCasa());
-                prezzoCasaView.setText("prezzo");
+                        (TextView)rowView.findViewById(R.id.textViewNomeCasaProprietario);
+                TextView inidirizzoCasaView =
+                        (TextView)rowView.findViewById(R.id.textViewIndirizzoCasaProprietario);
+                TextView ospitiCasaView =
+                        (TextView)rowView.findViewById(R.id.textViewNumeroDiOspiti);
+                TextView valutazioneCasaView =
+                        (TextView)rowView.findViewById(R.id.textViewValutazione);
+
+                nomeCasaView.setText(item.nomeCasa);
+                inidirizzoCasaView.setText(item.indirizzoCasa);
+                ospitiCasaView.setText(""+item.numeroOspiti);
+                valutazioneCasaView.setText(""+item.valutazione);
+
                 return rowView;
             }
         };
         listView.setAdapter(arrayAdapter);
     }
 
-    private void getCasa() {
-        Casa casa = new Casa("casa","indirizzo",8,4,4,null);
-        lista.add(casa);
-
+    //Gestione del CustomItem
+    private static class CustomItem {
+        public String nomeCasa;
+        public String indirizzoCasa;
+        public int numeroOspiti;
+        public float valutazione;
     }
+    private CaseProprietario.CustomItem[] createItems() {
 
-    private void popolaLista(String proprietario) {
-        Log.i(TAG,"Entro in popola");
 
-        List<Casa> case_Proprietario = new LinkedList<>();
+        int size = listaCase.size();
 
+        CaseProprietario.CustomItem[] items = new CaseProprietario.CustomItem[size]; //numero di annunci possibili
+        for (int i = 0; i < items.length; i++) {
+            //mi prendo il riferimento all'annuncio
+            Casa a = listaCase.get(i);
+
+            items[i] = new CaseProprietario.CustomItem();
+            items[i].nomeCasa = a.getNomeCasa();
+            items[i].indirizzoCasa = a.getIndirizzo();
+            items[i].numeroOspiti = a.getNumeroOspiti();
+            items[i].valutazione = a.getValutazione();
+        }
+        return items;
     }
-
-    /*
-    private Casa[] createItems(String proprietario) {
-
-        //metto in una lista tutti gli annunci
-        List<Casa> case_Proprietario = new LinkedList<>();
-        Casa[] caseArray;
-
-        myRef.child("Case").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot caseSnapshot : dataSnapshot.getChildren()) {
-                    Casa casaFiglio = caseSnapshot.getValue(Casa.class);
-                    if (casaFiglio.getProprietario().compareTo(proprietario) == 0) {
-                        case_Proprietario.add(casaFiglio);
-                        Log.i(TAG, "Le case del proprietario sono: " + casaFiglio.toString());
-                    }
-                }
-            }
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-        caseArray = case_Proprietario.toArray(new Casa[case_Proprietario.size()]);
-        return caseArray;
+    private static class ViewHolder{
+        public TextView nomeCasaView;
+        public TextView inidirizzoCasaView;
+        public TextView ospitiCasaView;
+        public TextView valutazioneCasaView;
     }
-
-
-
-     */
 
     public void inserisciCasa(View view) {
         Intent intent = new Intent(this, InserimentoDatiCasa.class);

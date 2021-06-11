@@ -30,14 +30,14 @@
         <activity android:name=".registrazione.InserimentoDatiProprietario" />
         <activity android:name=".registrazione.InserimentoDatiStudente" />
         <activity android:name=".home.LaTuaCasa" />
-        <activity android:name=".ricercalloggio.ListaCase" >
+        <activity android:name=".ricercalloggio.ListaAnnunci" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ricercalloggio.MappaCase" />
+        <activity android:name=".ricercalloggio.MappaAnnunci" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

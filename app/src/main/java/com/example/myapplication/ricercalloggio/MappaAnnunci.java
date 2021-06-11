@@ -1,24 +1,11 @@
 package com.example.myapplication.ricercalloggio;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.example.myapplication.R;
@@ -32,28 +19,17 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
+public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final String TAG = "";
@@ -68,7 +44,7 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mappa_case);
+        setContentView(R.layout.activity_mappa_annunci);
 
         createMapView(savedInstanceState);
 
@@ -78,7 +54,7 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
 
     public void indietro(View view) {
 
-        Intent intent = new Intent(MappaCase.this , Home.class);
+        Intent intent = new Intent(MappaAnnunci.this , Home.class);
         startActivity(intent);
 
     }
@@ -86,11 +62,11 @@ public class MappaCase extends AppCompatActivity implements OnMapReadyCallback {
 
     public void visualizzaCasa(View view) {
 
-        Intent intent = new Intent(MappaCase.this , ProfiloCasaActivity.class);
+        Intent intent = new Intent(MappaAnnunci.this , ProfiloCasaActivity.class);
         startActivity(intent);
     }
     public void listaCase(View view) {
-        Intent intent = new Intent(MappaCase.this , ListaCase.class);
+        Intent intent = new Intent(MappaAnnunci.this , ListaAnnunci.class);
         startActivity(intent); }
 
     //CREAZIONE MAP VIEW

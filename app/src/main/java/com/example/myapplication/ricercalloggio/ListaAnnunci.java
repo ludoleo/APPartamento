@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
-import com.example.myapplication.profilo.ProfiloCasaActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListaCase extends AppCompatActivity {
+public class ListaAnnunci extends AppCompatActivity {
 
     private static final String TAG = "LISTA";
     private List<Annuncio> listaAnnunci = new ArrayList<>();
@@ -36,7 +35,7 @@ public class ListaCase extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_case);
+        setContentView(R.layout.activity_lista_annunci);
         initUI();
     }
 
@@ -55,6 +54,9 @@ public class ListaCase extends AppCompatActivity {
                     Annuncio ann = annData.getValue(Annuncio.class);
                     listaAnnunci.add(ann);
                 }
+
+                //TODO qui parte l'algoritomo di ricerca ottimale
+                //ricercaOttimale();
                 aggiorna();
             }
             @Override
@@ -68,7 +70,7 @@ public class ListaCase extends AppCompatActivity {
         CustomItem[] items = createItems();
 
         ArrayAdapter<CustomItem> arrayAdapter = new ArrayAdapter<CustomItem>(
-                this, R.layout.row_lv_lista_case, R.id.textViewNomeCasaLista, items) {
+                this, R.layout.row_lv_lista_annunci, R.id.textViewNomeCasaLista, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -77,7 +79,7 @@ public class ListaCase extends AppCompatActivity {
                 CustomItem item = getItem(position); // Rif. alla riga attualmente
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View rowView = inflater.inflate(R.layout.row_lv_lista_case, null);
+                View rowView = inflater.inflate(R.layout.row_lv_lista_annunci, null);
                 TextView nomeCasaView =
                         (TextView)rowView.findViewById(R.id.textViewNomeCasaLista);
                 TextView prezzoCasaView =
@@ -91,7 +93,7 @@ public class ListaCase extends AppCompatActivity {
     }
 
     public void visualizzaMappa(View view) {
-        Intent intent = new Intent(ListaCase.this , MappaCase.class);
+        Intent intent = new Intent(ListaAnnunci.this , MappaAnnunci.class);
         startActivity(intent);}
 
     //Gestione del CustomItem
@@ -101,8 +103,6 @@ public class ListaCase extends AppCompatActivity {
     }
     private CustomItem[] createItems() {
 
-        //TODO qui parte l'algoritomo di ricerca ottimale
-        //ricercaOttimale();
         Log.i(TAG, ""+listaAnnunci.size());
         int size = listaAnnunci.size();
 
