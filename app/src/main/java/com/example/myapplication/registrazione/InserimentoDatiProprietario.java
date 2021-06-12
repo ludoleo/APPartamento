@@ -117,6 +117,7 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
         clear();
 
         Intent intent = new Intent(this, ProfiloProprietario.class);
+        //todo servono realmente?
         intent.putExtra("idUtente",idProprietario);
         startActivity(intent);
 

@@ -112,7 +112,7 @@ public class ListaAnnunci extends AppCompatActivity {
             Annuncio a = listaAnnunci.get(i);
 
             items[i] = new CustomItem();
-            items[i].nomeCasa = a.getCasa();
+            items[i].nomeCasa = a.getIdAnnuncio();
             items[i].prezzoCasa = a.getPrezzoMensile()+" Euro al mese";
             Log.i(TAG, items[i].nomeCasa+" "+items[i].prezzoCasa);
         }

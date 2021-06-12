@@ -37,6 +37,7 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
     private ArrayAdapter<String> sa_elencoCaseProprietario;
     private Spinner spCaseProprietario;
     private Spinner spTipologiaPostoLetto;
+    private EditText et_nomeAnnuncio;
     //prezzo
     private EditText et_prezzo;
     private EditText et_speseStraordinarie;
@@ -70,6 +71,9 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
         spCaseProprietario = (Spinner) findViewById(R.id.spinnerCaseProprietario);
         spCaseProprietario.setAdapter(sa_elencoCaseProprietario);
         spTipologiaPostoLetto = (Spinner) findViewById(R.id.spinnerTipologiaPostoLetto);
+
+        et_nomeAnnuncio = (EditText) findViewById(R.id.et_nomeAnnuncio);
+
         //prezzi
         et_prezzo = (EditText) findViewById(R.id.et_prezzoMensileAnnuncio);
         et_speseStraordinarie = (EditText) findViewById(R.id.et_SpeseStraordinarie);
@@ -101,6 +105,7 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
         String casa = spCaseProprietario.getSelectedItem().toString();
         String tipologia = spTipologiaPostoLetto.getSelectedItem().toString();
+        String nomeAnnuncio = et_nomeAnnuncio.getText().toString();
         Date data = new Date();
         Integer prezzo = 0;
 
@@ -115,7 +120,9 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
        //TODO porre dei limiti sul valore del prezzo
 
-        Annuncio annuncio = new Annuncio(user.getUid().toString(), casa, data, tipologia,prezzo,speseStraordinarie, "");
+        String idAnnuncio = nomeAnnuncio+" - "+casa;
+
+        Annuncio annuncio = new Annuncio(idAnnuncio,user.getUid().toString(), casa, data, tipologia,prezzo,speseStraordinarie, "");
         //associo l'indirizzo della casa all'annuncio per comodità
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
             @Override
@@ -134,9 +141,6 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
         DatabaseReference annuncioAggiunto = myRef.child("Annunci").push();
         annuncioAggiunto.setValue(annuncio);
-        //inserisco l'Id dell'annuncio
-        String key = annuncioAggiunto.getKey();
-        annuncio.setIdAnnuncio(key);
 
         //pulisco i campi
         et_prezzo.setText("");

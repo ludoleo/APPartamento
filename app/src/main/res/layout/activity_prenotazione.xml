@@ -15,20 +15,32 @@
         android:text="@string/indietro" />
 
     <CalendarView
-        android:id="@+id/calendarView2"
+        android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <Spinner
+        android:id="@+id/spinnerFasciaOraria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/fasceOrarie"
+        android:layout_weight="0.2"
+        android:padding="15dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.25">
 
         <Button
             android:id="@+id/b_annulla_pr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_margin="5dp"
             android:onClick="annulla"
             android:text="@string/annulla" />
 
@@ -37,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_margin="5dp"
             android:onClick="conferma"
             android:text="@string/conferma" />
     </LinearLayout>

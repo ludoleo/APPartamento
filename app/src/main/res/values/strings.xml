@@ -45,7 +45,14 @@
         <item>Stanza doppia</item>
         <item>Posto letto</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="fasceOrarie">
+        <item>8:00-10:00</item>
+        <item>10:00-12:00</item>
+        <item>12:00-14:00</item>
+        <item>14:00-16:00</item>
+        <item>16:00-18:00</item>
+        <item>18:00-20:00</item>
+    </string-array>
 
 </resources>

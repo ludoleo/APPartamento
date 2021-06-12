@@ -11,7 +11,7 @@ import android.view.View;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.profilo.ProfiloCasaActivity;
+import com.example.myapplication.profilo.ProfiloAnnuncio;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -62,7 +62,7 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
 
     public void visualizzaCasa(View view) {
 
-        Intent intent = new Intent(MappaAnnunci.this , ProfiloCasaActivity.class);
+        Intent intent = new Intent(MappaAnnunci.this , ProfiloAnnuncio.class);
         startActivity(intent);
     }
     public void listaCase(View view) {

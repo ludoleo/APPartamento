@@ -1,58 +1,60 @@
 package com.example.myapplication.classi;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
 public class Prenotazione {
 
     private String idPrenotazione;
-    private String idStudente;
-    private String idProprietario;
+    private String emailStudente;
+    private String emailProprietario;
     private String idAnnuncio;
     private Date dataPrenotazione;
+    private boolean confermata;
     private boolean terminata;
     private boolean cancellata;
     private boolean pagata;
-    private Orario orario;
-    public enum Orario{
-        OTTO_DIECI,
-        DIECI_DODICI,
-        DODICI_QUATTORDICI,
-        QUATTORIDCI_SEDICI,
-        SEDICI_DICIOTTO,
-        DICIOTTO_VENTI;
-    }
+    private String orario;
+
     //TODO considerare il video
 
     public Prenotazione(){}
 
-    public Prenotazione(String idPrenotazione, String idStudente, String idProprietario,
+    public Prenotazione(String idPrenotazione, String idStudente, String emailProprietario,
                         String idAnnuncio, Date dataPrenotazione, boolean terminata,
-                        boolean cancellata, boolean pagata, Orario orario) {
+                        boolean cancellata, boolean pagata, String orario, boolean confermata) {
 
         this.idPrenotazione = idPrenotazione;
-        this.idStudente = idStudente;
-        this.idProprietario = idProprietario;
+        this.emailStudente = idStudente;
+        this.emailProprietario = emailProprietario;
         this.idAnnuncio = idAnnuncio;
         this.dataPrenotazione = dataPrenotazione;
         this.terminata = terminata;
         this.cancellata = cancellata;
         this.pagata = pagata;
         this.orario = orario;
+        this.confermata = confermata;
+    }
+
+    public boolean isConfermata() {
+        return confermata;
+    }
+
+    public void setConfermata(boolean confermata) {
+        this.confermata = confermata;
     }
 
     public String getIdStudente() {
-        return idStudente; }
+        return emailStudente; }
 
     public void setIdStudente(String idStudente) {
-        this.idStudente = idStudente; }
+        this.emailStudente = idStudente; }
 
-    public String getIdProprietario() {
-        return idProprietario; }
+    public String getEmailProprietario() {
+        return emailProprietario; }
 
-    public void setIdProprietario(String idProprietario) {
-        this.idProprietario = idProprietario; }
+    public void setEmailProprietario(String emailProprietario) {
+        this.emailProprietario = emailProprietario; }
 
     public String getIdAnnuncio() {
         return idAnnuncio; }
@@ -99,10 +101,10 @@ public class Prenotazione {
         this.pagata = pagata;
     }
 
-    public Orario getOrario() {
+    public String getOrario() {
         return orario; }
 
-    public void setOrario(Orario orario) {
+    public void setOrario(String orario) {
         this.orario = orario; }
 
     @Override

@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class Annuncio {
 
-    private String idAnnuncio;
+    private String nomeAnnuncio;
     private String  idProprietario;
     private String idCasa;
     private Date dataAnnuncio;
@@ -24,9 +24,9 @@ public class Annuncio {
 
     public Annuncio(){}
 
-    public Annuncio(String proprietario, String casa, Date dataAnnuncio,
+    public Annuncio(String nomeAnnuncio, String proprietario, String casa, Date dataAnnuncio,
                     String tipologiaAlloggio, Integer prezzoMensile, String speseStraordinarie, String indirizzo) {
-        this.idAnnuncio = idAnnuncio;
+        this.nomeAnnuncio = nomeAnnuncio;
         this.idProprietario = proprietario;
         this.idCasa = casa;
         this.dataAnnuncio = dataAnnuncio;
@@ -37,11 +37,11 @@ public class Annuncio {
     }
 
     public String getIdAnnuncio() {
-        return idAnnuncio;
+        return nomeAnnuncio;
     }
 
     public void setIdAnnuncio(String idAnnuncio) {
-        this.idAnnuncio = idAnnuncio;
+        this.nomeAnnuncio = idAnnuncio;
     }
 
     public String getProprietario() {

@@ -25,13 +25,8 @@
 
         <activity android:name=".profilo.Assistenza" />
         <activity android:name=".home.CaseProprietario" />
-        <activity android:name=".prenotazione.ElencoPrenotazioni" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".prenotazione.ElencoPrenotazioni" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".home.Home"/>
         <activity android:name=".registrazione.InserimentoDatiProprietario" />
         <activity android:name=".registrazione.InserimentoDatiStudente" />
@@ -51,9 +46,15 @@
         <activity android:name=".profilo.ModificaInfoPersonali" />
         <activity android:name=".profilo.ModificaProfilo" />
         <activity android:name=".profilo.Notifiche" />
-        <activity android:name=".prenotazione.PrenotazioneActivity" />
+        <activity android:name=".prenotazione.PrenotazioneActivity" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
         <activity android:name=".prenotazione.PrenotazionePaypalActivity" />
-        <activity android:name=".profilo.ProfiloCasaActivity" />
+        <activity android:name=".profilo.ProfiloAnnuncio" />
         <activity android:name=".profilo.ProfiloProprietario" />
         <activity android:name=".profilo.ProfiloStudente" />
         <activity android:name=".profilo.ProponiEsperieza" />

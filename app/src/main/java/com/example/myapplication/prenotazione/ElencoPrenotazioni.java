@@ -73,12 +73,14 @@ public class ElencoPrenotazioni extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot annData: dataSnapshot.getChildren()) {
                     Prenotazione p = annData.getValue(Prenotazione.class);
-                    if(p.getIdProprietario().compareTo(user.getUid())==0 ||
+                    if(p.getEmailProprietario().compareTo(user.getUid())==0 ||
                         p.getIdStudente().compareTo(user.getUid())==0) {
                         if (p.isCancellata())
                             listaPrenotazioniCancellate.add(p);
-                        else
-                            listaPrenotazioniAttuali.add(p);
+                        else{
+                            if(p.isConfermata())
+                                listaPrenotazioniAttuali.add(p);
+                        }
                     }
                 }
                 aggiorna();
