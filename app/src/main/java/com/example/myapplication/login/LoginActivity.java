@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 
         getMyPreferences();
 
-        mAuth.signOut();
+        //mAuth.signOut();
 
         //google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

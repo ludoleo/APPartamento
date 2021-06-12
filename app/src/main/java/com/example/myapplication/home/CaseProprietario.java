@@ -75,7 +75,7 @@ public class CaseProprietario extends AppCompatActivity {
 
     private void aggiorna() {
 
-        ListView listView = (ListView) findViewById(R.id.lv_elencoAnnunci);
+        ListView listView = (ListView) findViewById(R.id.lv_case_prop);
         CaseProprietario.CustomItem[] items = createItems();
 
         ArrayAdapter<CaseProprietario.CustomItem> arrayAdapter = new ArrayAdapter<CaseProprietario.CustomItem>(
