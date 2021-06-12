@@ -11,16 +11,16 @@ public class RecensioneCasa {
     private Date dataRevisione; //gestione date
     private String descrizione;
     private float valutazioneMedia;
-    private boolean recensitoIsProprietario;
-    private Utente recensore;
-    private Casa casaRecensita;
+   // private boolean recensitoIsProprietario;
+    private String recensore;
+    private String casaRecensita; // id
 
-    public RecensioneCasa(String idRecensione, Date dataRevisione, String descrizione, float valutazioneMedia, boolean recensitoIsProprietario, Utente recensore, Casa casaRecensita) {
+    public RecensioneCasa(String idRecensione, Date dataRevisione, String descrizione, float valutazioneMedia,  String recensore, String casaRecensita) {
         this.idRecensione = idRecensione;
         this.dataRevisione = dataRevisione;
         this.descrizione = descrizione;
         this.valutazioneMedia = valutazioneMedia;
-        this.recensitoIsProprietario = recensitoIsProprietario;
+      //  this.recensitoIsProprietario = recensitoIsProprietario;
         this.recensore = recensore;
         this.casaRecensita = casaRecensita;
     }
@@ -57,27 +57,27 @@ public class RecensioneCasa {
         this.valutazioneMedia = valutazioneMedia;
     }
 
-    public boolean isRecensitoIsProprietario() {
-        return recensitoIsProprietario;
-    }
+   // public boolean isRecensitoIsProprietario() {
+   //     return recensitoIsProprietario;
+   // }
 
-    public void setRecensitoIsProprietario(boolean recensitoIsProprietario) {
-        this.recensitoIsProprietario = recensitoIsProprietario;
-    }
+   // public void setRecensitoIsProprietario(boolean recensitoIsProprietario) {
+    //    this.recensitoIsProprietario = recensitoIsProprietario;
+  //  }
 
-    public Utente getRecensore() {
+    public String getRecensore() {
         return recensore;
     }
 
-    public void setRecensore(Utente recensore) {
+    public void setRecensore(String recensore) {
         this.recensore = recensore;
     }
 
-    public Casa getCasaRecensita() {
+    public String getCasaRecensita() {
         return casaRecensita;
     }
 
-    public void setCasaRecensita(Casa casaRecensita) {
+    public void setCasaRecensita(String casaRecensita) {
         this.casaRecensita = casaRecensita;
     }
 

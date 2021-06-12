@@ -114,6 +114,10 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
         DatabaseReference proprietarioAggiunto = myRef.child("Utenti").child("Proprietari").child(idProprietario);
         proprietarioAggiunto.setValue(proprietario);
 
+        myRef.child("Chiavi").child(idProprietario).setValue(email);
+
+        //TODO prendere il token dell'utente
+
         clear();
 
         Intent intent = new Intent(this, ProfiloProprietario.class);
