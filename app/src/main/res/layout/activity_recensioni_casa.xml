@@ -14,7 +14,7 @@
         android:text="Aggiungi recensione casa" />
 
     <ListView
-        android:id="@+id/listview10"
+        android:id="@+id/listRecCasa"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>
