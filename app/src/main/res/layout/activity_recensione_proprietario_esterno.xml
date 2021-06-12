@@ -14,7 +14,7 @@
         android:text="Aggiungi recensione su proprietario" />
 
     <ListView
-        android:id="@+id/listview12"
+        android:id="@+id/ListaRecProp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

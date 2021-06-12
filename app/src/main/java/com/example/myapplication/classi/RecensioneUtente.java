@@ -8,31 +8,30 @@ public class RecensioneUtente {
    private String idRecensione;
    private Date dataRevisione; //gestione date
    private String descrizione;
-   private int valutazionePulizia;
-   private int valutazionePagamento;
-   private int valutazioneLuoghiComuni;
-   private int valutazioneDisponibilita;
-   private int valutazioneChiarezza;
+   //private int valutazionePulizia;
+   //private int valutazionePagamento;
+   //private int valutazioneLuoghiComuni;
+   //private int valutazioneDisponibilita;
+   //private int valutazioneChiarezza;
    private float valutazioneMedia;
-   private boolean recensitoIsProprietario;
-   private Utente recensore;
-   private Utente recensito;
+   //private boolean recensitoIsProprietario;
+   private String recensore;// id
+   private String recensito;//id
 
 
     public RecensioneUtente() {
     }
 
-    public RecensioneUtente(String idRecensione, String descrizione, int valutazionePulizia, int valutazionePagamento, int valutazioneLuoghiComuni,
-                            int valutazioneDisponibilita, int valutazioneChiarezza, boolean recensitoIsProprietario, Utente recensore, Utente recensito) {
+    public RecensioneUtente(String idRecensione, String descrizione,float valutazioneMedia, String recensore, String recensito, Date data) {
 
         this.idRecensione = idRecensione;
         this.descrizione = descrizione;
-        this.valutazionePulizia = valutazionePulizia;
-        this.valutazionePagamento = valutazionePagamento;
-        this.valutazioneLuoghiComuni = valutazioneLuoghiComuni;
-        this.valutazioneDisponibilita = valutazioneDisponibilita;
-        this.valutazioneChiarezza = valutazioneChiarezza;
-        this.recensitoIsProprietario = recensitoIsProprietario;
+       // this.valutazionePulizia = valutazionePulizia;
+        //this.valutazionePagamento = valutazionePagamento;
+        //this.valutazioneLuoghiComuni = valutazioneLuoghiComuni;
+        //this.valutazioneDisponibilita = valutazioneDisponibilita;
+        //this.valutazioneChiarezza = valutazioneChiarezza;
+        //this.recensitoIsProprietario = recensitoIsProprietario;
         this.recensore = recensore;
         this.recensito = recensito;
     }
@@ -45,13 +44,8 @@ public class RecensioneUtente {
         this.idRecensione = idRecensione;
     }
 
-    public Date getDataRevisione() {
-        return dataRevisione;
-    }
-
-    public void setDataRevisione(Date dataRevisione) {
-        this.dataRevisione = dataRevisione;
-    }
+    public Date getDataRevisione() { return dataRevisione; }
+    public void setDataRevisione(Date dataRevisione) { this.dataRevisione = dataRevisione; }
 
     public String getDescrizione() {
         return descrizione;
@@ -61,45 +55,44 @@ public class RecensioneUtente {
         this.descrizione = descrizione;
     }
 
-    public int getValutazionePulizia() {
-        return valutazionePulizia;
-    }
+    //public int getValutazionePulizia() {
+       // return valutazionePulizia;}
 
-    public void setValutazionePulizia(int valutazionePulizia) {
-        this.valutazionePulizia = valutazionePulizia;
-    }
+ //   public void setValutazionePulizia(int valutazionePulizia) {
+   //     this.valutazionePulizia = valutazionePulizia;
+    //}
 
-    public int getValutazionePagamento() {
-        return valutazionePagamento;
-    }
+//    public int getValutazionePagamento() {
+  //      return valutazionePagamento;
+   // }
 
-    public void setValutazionePagamento(int valutazionePagamento) {
-        this.valutazionePagamento = valutazionePagamento;
-    }
+    //public void setValutazionePagamento(int valutazionePagamento) {
+      //  this.valutazionePagamento = valutazionePagamento;
+    //}
 
-    public int getValutazioneLuoghiComuni() {
-        return valutazioneLuoghiComuni;
-    }
+    //public int getValutazioneLuoghiComuni() {
+      //  return valutazioneLuoghiComuni;
+    //}
 
-    public void setValutazioneLuoghiComuni(int valutazioneLuoghiComuni) {
-        this.valutazioneLuoghiComuni = valutazioneLuoghiComuni;
-    }
+    //public void setValutazioneLuoghiComuni(int valutazioneLuoghiComuni) {
+      //  this.valutazioneLuoghiComuni = valutazioneLuoghiComuni;
+    //}
 
-    public int getValutazioneDisponibilita() {
-        return valutazioneDisponibilita;
-    }
+    //public int getValutazioneDisponibilita() {
+     //   return valutazioneDisponibilita;
+    //}
 
-    public void setValutazioneDisponibilita(int valutazioneDisponibilita) {
-        this.valutazioneDisponibilita = valutazioneDisponibilita;
-    }
+    //public void setValutazioneDisponibilita(int valutazioneDisponibilita) {
+      //  this.valutazioneDisponibilita = valutazioneDisponibilita;
+    //}
 
-    public int getValutazioneChiarezza() {
-        return valutazioneChiarezza;
-    }
+    //public int getValutazioneChiarezza() {
+      //  return valutazioneChiarezza;
+    //}
 
-    public void setValutazioneChiarezza(int valutazioneChiarezza) {
-        this.valutazioneChiarezza = valutazioneChiarezza;
-    }
+    //public void setValutazioneChiarezza(int valutazioneChiarezza) {
+      //  this.valutazioneChiarezza = valutazioneChiarezza;
+    //}
 
     public float getValutazioneMedia() {
         return valutazioneMedia;
@@ -109,27 +102,27 @@ public class RecensioneUtente {
         this.valutazioneMedia = valutazioneMedia;
     }
 
-    public boolean isRecensitoIsProprietario() {
-        return recensitoIsProprietario;
-    }
+   // public boolean isRecensitoIsProprietario() {
+     //   return recensitoIsProprietario;
+   // }
 
-    public void setRecensitoIsProprietario(boolean recensitoIsProprietario) {
-        this.recensitoIsProprietario = recensitoIsProprietario;
-    }
+    //public void setRecensitoIsProprietario(boolean recensitoIsProprietario) {
+      //  this.recensitoIsProprietario = recensitoIsProprietario;
+    //}
 
-    public Utente getRecensore() {
+    public String getRecensore() {
         return recensore;
     }
 
-    public void setRecensore(Utente recensore) {
+    public void setRecensore(String recensore) {
         this.recensore = recensore;
     }
 
-    public Utente getRecensito() {
+    public String getRecensito() {
         return recensito;
     }
 
-    public void setRecensito(Utente recensito) {
+    public void setRecensito(String recensito) {
         this.recensito = recensito;
     }
 
