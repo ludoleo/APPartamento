@@ -8,8 +8,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 
+import com.example.myapplication.AlarmBroadcastReceiver;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Prenotazione;
 import com.google.android.material.tabs.TabLayout;
@@ -22,14 +29,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.example.myapplication.AlarmBroadcastReceiver.ACTION_ALARM;
 
 public class ElencoPrenotazioni extends AppCompatActivity {
 
     //inizializzo
     TabLayout tabLayout;
     ViewPager viewPager;
+    Intent intent;
+    PendingIntent alarmIntent;
+    int ora;
+    int minuti;
+    AlarmManager alarmManager;
 
     //Autenticazione
     public FirebaseUser user;
@@ -135,5 +150,43 @@ public class ElencoPrenotazioni extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return arrayList.get(position);
         }
+    }
+
+    //alarm------------------------------------------
+    //genero un alarm 30' prima dell'orario della prenotazione
+    public void alarm() {
+        intent = new Intent(getApplicationContext(), AlarmBroadcastReceiver.class);
+        intent.setAction(ACTION_ALARM);
+        alarmIntent = PendingIntent.getBroadcast(getApplicationContext(),0, intent,0);
+
+        triggerAlarmAtGivenTime();
+    }
+
+    private void triggerAlarmAtGivenTime() {
+        //creo alarm manager
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        calendar.set(Calendar.HOUR_OF_DAY,ora);
+        calendar.set(Calendar.MINUTE, minuti);
+        calendar.set(Calendar.SECOND, 0);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),alarmIntent);
+
+        salvaInSharePreferences(Long.toString(calendar.getTimeInMillis()));
+
+    }
+
+    private void salvaInSharePreferences(String timeInMillis) {
+        SharedPreferences sharedPreferences = getSharedPreferences("com.example.myapplication",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("millis",timeInMillis);
+        editor.commit();
+    }
+
+    //da invocare se si annulla una prenotazione
+    private void cancelAlarm() {
+        alarmManager.cancel(alarmIntent);
     }
 }

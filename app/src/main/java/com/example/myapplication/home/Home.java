@@ -45,16 +45,10 @@ public class Home extends AppCompatActivity {
             Intent intent = new Intent(Home.this, LoginActivity.class);
             startActivity(intent);
         }
-        //controlloUtente();
     }
 
     //TODO quando torno sulla home e sono loggato voglio poter vedere la home e andare sul profilo solo quando clicco su profilo
-    private void controlloUtente() {
 
-        Log.i(TAG,"entro in controlloUtente ");
-
-
-    }
 
 
 
@@ -78,8 +72,6 @@ public class Home extends AppCompatActivity {
             Intent intent = new Intent(Home.this, LoginActivity.class);
             startActivity(intent);
         } else {
-            // updateUIGiaRegistrato(user);
-            // private void updateUIGiaRegistrato(FirebaseUser user) {
 
             Log.i(TAG, "Connesso utente già registrato con us e pw " + user.getEmail());
             String idUtente = user.getUid();
@@ -119,8 +111,6 @@ public class Home extends AppCompatActivity {
             });
         }
     }
-        //controlloUtente();
-   // }
 
     public void messaggi(View view) {
 
@@ -130,6 +120,7 @@ public class Home extends AppCompatActivity {
 
     public void salvati(View view) {
 
+        //TODO aggiungere activity per case salvate
         Intent intent = new Intent(Home.this , MappaAnnunci.class);
         startActivity(intent);
     }

@@ -116,6 +116,7 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
 
         myRef.child("Chiavi").child(idProprietario).setValue(email);
 
+        //TODO prendere il token dell'utente
 
         clear();
 
