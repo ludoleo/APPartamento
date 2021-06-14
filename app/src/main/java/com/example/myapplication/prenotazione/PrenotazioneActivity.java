@@ -7,6 +7,8 @@ import androidx.core.app.NotificationManagerCompat;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.classi.Prenotazione;
 import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.home.Home;
+import com.example.myapplication.messaggi.MessaggiUtente;
 import com.example.myapplication.profilo.ProfiloAnnuncio;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -95,9 +98,10 @@ public class PrenotazioneActivity extends AppCompatActivity {
         Prenotazione prenotazione = new Prenotazione("",emailStudente,emailProprietario,idAnnuncio,dataSelzionata,
                                     false,false,false,fasciaOraria,false);
 
-        //todo notifica al proprietario e creazione delle chat
+        //todo notifica al proprietario e creazione delle chat, bisogna prendere il token del proprietario
         DatabaseReference preAdd = myRef.child("Prenotazioni").push();
         preAdd.setValue(prenotazione);
+        inviaNotifica();
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
     }
@@ -110,8 +114,10 @@ public class PrenotazioneActivity extends AppCompatActivity {
     private void inviaNotifica() {
 
         //TODO Intent che mi apre l'app al tocco sulla notifica
-        Intent intent = new Intent(this,PrenotazioneActivity.class);
+        Intent intent = new Intent(this, MessaggiUtente.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        //salva intent per utilizzarlo al momento dell'apertura della notifica
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
 
 
@@ -119,9 +125,13 @@ public class PrenotazioneActivity extends AppCompatActivity {
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                 .setContentTitle("Conferma Prenotazione")
                 .setContentText("Prenotazione da confermare")
-                .setContentIntent(pendingIntent)
+                .setContentIntent(pendingIntent) //passo l'intent da aprire
                 .setAutoCancel(true) //notifica eliminata dopo il click
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT); //priorita per le notifiche
+
+        //aggiunta di suono alla notifica
+        Uri suonoNotifica = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        builder.setSound(suonoNotifica);
 
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
@@ -150,4 +160,8 @@ public class PrenotazioneActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    //aggiungere il controllo su nuovo token
+
+
 }
