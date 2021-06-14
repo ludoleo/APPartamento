@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class RecensioneCasa {
 
-    private String idRecensione;
+    //private String idRecensione;
     private Date dataRevisione; //gestione date
     private String descrizione;
     private float valutazioneMedia;
@@ -15,8 +15,11 @@ public class RecensioneCasa {
     private String recensore;
     private String casaRecensita; // id
 
-    public RecensioneCasa(String idRecensione, Date dataRevisione, String descrizione, float valutazioneMedia,  String recensore, String casaRecensita) {
-        this.idRecensione = idRecensione;
+    public RecensioneCasa() {
+    }
+
+    public RecensioneCasa(Date dataRevisione, String descrizione, float valutazioneMedia, String recensore, String casaRecensita) {
+        //this.idRecensione = idRecensione;
         this.dataRevisione = dataRevisione;
         this.descrizione = descrizione;
         this.valutazioneMedia = valutazioneMedia;
@@ -24,7 +27,7 @@ public class RecensioneCasa {
         this.recensore = recensore;
         this.casaRecensita = casaRecensita;
     }
-
+ /*
     public String getIdRecensione() {
         return idRecensione;
     }
@@ -33,6 +36,8 @@ public class RecensioneCasa {
         this.idRecensione = idRecensione;
     }
 
+
+  */
     public Date getDataRevisione() {
         return dataRevisione;
     }
@@ -81,6 +86,7 @@ public class RecensioneCasa {
         this.casaRecensita = casaRecensita;
     }
 
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -93,4 +99,6 @@ public class RecensioneCasa {
     public int hashCode() {
         return Objects.hash(getIdRecensione());
     }
+
+     */
 }

@@ -24,6 +24,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.home.CaseProprietario;
 import com.example.myapplication.home.Home;
+import com.example.myapplication.recensione.RecensioneProprietarioEsterno;
 import com.example.myapplication.recensione.RecensioniProprietarioInterne;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -101,7 +102,7 @@ public class ProfiloProprietario extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent a = new Intent(ProfiloProprietario.this, RecensioniProprietarioInterne.class);
+                Intent a = new Intent(ProfiloProprietario.this, RecensioneProprietarioEsterno.class);
                 startActivity(a);
             }
         });

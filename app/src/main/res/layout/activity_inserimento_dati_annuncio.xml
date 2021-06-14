@@ -15,19 +15,11 @@
         android:padding="10dp"
         android:textStyle="bold"/>
 
-    <Spinner
-        android:id="@+id/spinnerCaseProprietario"
-        android:layout_width="match_parent"
+    <AutoCompleteTextView
         android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:padding="5dp"/>
-
-    <TextView
-        android:id="@+id/tv_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:padding="10dp"/>
+        android:id="@+id/text_caseProprietario"
+        android:hint="Aggiungi la tua casa"
+        android:layout_width="fill_parent"/>
 
     <Button
         android:id="@+id/i_d_a_inserisciCasa"

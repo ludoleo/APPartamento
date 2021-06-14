@@ -54,7 +54,7 @@ public class RecensioniCasa extends AppCompatActivity {
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
         // Preparazione ListView per l'elenco delle RecensioniCasa
-       myRef.child("Recensioni_Casa").child("casarecensita").addValueEventListener(new ValueEventListener() {
+       myRef.child("Recensioni_Casa").addValueEventListener(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot datasnapshots) {
                for (DataSnapshot recCasaData : datasnapshots.getChildren()) {

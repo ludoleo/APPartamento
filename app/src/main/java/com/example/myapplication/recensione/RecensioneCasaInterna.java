@@ -77,7 +77,7 @@ public class RecensioneCasaInterna extends AppCompatActivity {
     }
 
     public void NuovaRecensioneCasa(View view) {
-        String idrecensione = getIntent().getExtras().getString("IdRecensioneCasa");
+
         String descrizione = review2.getText().toString();
         float valutazionemedia = rateValue2;
         Date data = new Date();
@@ -85,15 +85,16 @@ public class RecensioneCasaInterna extends AppCompatActivity {
             Toast.makeText(this, "Attenzione aggiungi recensione", Toast.LENGTH_SHORT).show();
             return;
         }
-        String recensore = user.getUid().toString();
+        String recensore = user.getUid();
         // Può funzionare?
-       String casarecensita = Casa.class.getName().toString() ;
+       String casarecensita = " ";
 
-        RecensioneCasa recensioneCasa = new RecensioneCasa(idrecensione,data,descrizione,valutazionemedia,casarecensita,recensore);
+        RecensioneCasa recensioneCasa = new RecensioneCasa(data,descrizione,valutazionemedia,recensore,casarecensita);
         //PUSH
         DatabaseReference recensioneCasaAggiunta = myRef.child("Recensioni_Casa").push();
         recensioneCasaAggiunta.setValue(recensioneCasa);
-        Log.i(TAG, "Recensione aggiunta da" + user.getUid().toString());
+
+        Log.i(TAG, "Recensione aggiunta da" + user.getUid());
 
         PulisciCampi();
 

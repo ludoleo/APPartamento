@@ -63,8 +63,10 @@ public class CaseProprietario extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot annData: dataSnapshot.getChildren()) {
                     Casa c = annData.getValue(Casa.class);
-                    if(c.getProprietario().compareTo(user.getUid())==0)
+                    if (c.getProprietario().compareTo(user.getUid()) == 0) {
+                        Log.i(TAG, "casa: " + c.getNomeCasa() + " " + c.getIndirizzo());
                         listaCase.add(c);
+                    }
                 }
                 aggiorna();
             }
@@ -75,6 +77,7 @@ public class CaseProprietario extends AppCompatActivity {
 
     private void aggiorna() {
 
+        //TODO aggiungere on option item selection che permette di cliccare
         ListView listView = (ListView) findViewById(R.id.lv_case_prop);
         CaseProprietario.CustomItem[] items = createItems();
 
@@ -121,6 +124,7 @@ public class CaseProprietario extends AppCompatActivity {
 
         int size = listaCase.size();
 
+        Log.i(TAG, "Size lista case "+listaCase.size());
         CaseProprietario.CustomItem[] items = new CaseProprietario.CustomItem[size]; //numero di annunci possibili
         for (int i = 0; i < items.length; i++) {
             //mi prendo il riferimento all'annuncio

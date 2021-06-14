@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -33,9 +34,8 @@ import java.util.List;
 public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
     private static final String TAG = "ANNUNCIO";
-    //spinner casa
-    private ArrayAdapter<String> sa_elencoCaseProprietario;
-    private Spinner spCaseProprietario;
+
+    //spinner tipologia
     private Spinner spTipologiaPostoLetto;
     private EditText et_nomeAnnuncio;
     //prezzo
@@ -47,6 +47,9 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    // case proprietario
+    AutoCompleteTextView acTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,20 +66,27 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-        List<String> data = getCaseProprietario(user.getUid().toString());
-
-        sa_elencoCaseProprietario = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,data);
-        sa_elencoCaseProprietario.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spCaseProprietario = (Spinner) findViewById(R.id.spinnerCaseProprietario);
-        spCaseProprietario.setAdapter(sa_elencoCaseProprietario);
         spTipologiaPostoLetto = (Spinner) findViewById(R.id.spinnerTipologiaPostoLetto);
-
         et_nomeAnnuncio = (EditText) findViewById(R.id.et_nomeAnnuncio);
-
         //prezzi
         et_prezzo = (EditText) findViewById(R.id.et_prezzoMensileAnnuncio);
         et_speseStraordinarie = (EditText) findViewById(R.id.et_SpeseStraordinarie);
+
+        List<String> data = getCaseProprietario(user.getUid());
+        Log.i(TAG,"Size di data "+data.size());
+        if(data.size()!=0) {
+
+            Log.i(TAG,"Sono nell'if di autocompletamento");
+            ArrayAdapter<String> adapter =
+                    new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,data);
+
+             acTextView =
+                    (AutoCompleteTextView)findViewById(R.id.text_caseProprietario);
+
+            acTextView.setAdapter(adapter);
+        }
+
+
     }
 
     private List<String> getCaseProprietario(String proprietario) {
@@ -103,7 +113,8 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
     public void caricaAnnuncio(View view) {
 
-        String casa = spCaseProprietario.getSelectedItem().toString();
+        //TODO controlli
+        String nomeCasa = acTextView.getText().toString() ;
         String tipologia = spTipologiaPostoLetto.getSelectedItem().toString();
         String nomeAnnuncio = et_nomeAnnuncio.getText().toString();
         Date data = new Date();
@@ -120,16 +131,16 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
        //TODO porre dei limiti sul valore del prezzo
 
-        String idAnnuncio = nomeAnnuncio+" - "+casa;
+        String idAnnuncio = nomeAnnuncio+" - "+nomeCasa;
 
-        Annuncio annuncio = new Annuncio(idAnnuncio,user.getUid().toString(), casa, data, tipologia,prezzo,speseStraordinarie, "");
+        Annuncio annuncio = new Annuncio(idAnnuncio,user.getUid().toString(), nomeCasa, data, tipologia,prezzo,speseStraordinarie, "");
         //associo l'indirizzo della casa all'annuncio per comodità
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
                     Casa casaFiglio = caseSnapshot.getValue(Casa.class);
-                    if(casaFiglio.getNomeCasa().compareTo(casa)==0){
+                    if(casaFiglio.getNomeCasa().compareTo(nomeCasa)==0){
                         annuncio.setIndirizzo(casaFiglio.getIndirizzo());
                     }
                 }

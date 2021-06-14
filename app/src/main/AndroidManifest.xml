@@ -82,6 +82,7 @@
 
         <activity android:name=".recensione.RecensioniProprietarioInterne" />
         <activity android:name=".recensione.RecensioneCasaInterna"/>
+        <activity android:name=".recensione.RecensioneProprietarioEsterno"/>
 
         <activity android:name=".recensione.RecensioniStudentInterne" />
         <activity android:name=".registrazione.RegistrationActivity" />
