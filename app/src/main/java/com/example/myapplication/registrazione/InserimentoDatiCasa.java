@@ -1,5 +1,6 @@
 package com.example.myapplication.registrazione;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,6 +14,12 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.home.Home;
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -22,29 +29,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 public class InserimentoDatiCasa extends AppCompatActivity {
 
     private static final String TAG = "CASA";
     //Nome
-    private EditText et_nomeCasa;
+     EditText et_nomeCasa;
     //Posizione
-    private EditText et_viaCasa;
-    private EditText et_numeroCivico;
-    private EditText et_CAP;
+     EditText et_viaCasa, et_numeroCivico, et_CAP;
     //Caratteristiche principali
-    private EditText et_numeroBagni;
-    private EditText et_numeroStanze;
-    private EditText et_numeroOspiti;
+     EditText et_numeroBagni, et_numeroStanze, et_numeroOspiti;
     //Autenticazione
     public FirebaseUser user;
     public FirebaseAuth mAuth;
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-
-    Boolean flagNomeCasaUguale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
     }
 
     private void initUI() {
+
         et_nomeCasa = (EditText) findViewById(R.id.et_nomeCasa);
         et_numeroCivico = (EditText) findViewById(R.id.et_numeroCivico);
         et_viaCasa = (EditText) findViewById(R.id.et_viaCasa);
@@ -63,7 +68,19 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         et_numeroStanze = (EditText) findViewById(R.id.et_numeroStanze);
         et_numeroOspiti = (EditText) findViewById(R.id.et_numeroOspiti);
 
-        flagNomeCasaUguale = false;
+        Places.initialize(getApplicationContext(),"AIzaSyBCyadRVH_uGnvM79GNR49RowBbyE4hkYg");
+        et_viaCasa.setFocusable(false);
+        et_viaCasa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS,
+                        Place.Field.LAT_LNG, Place.Field.NAME);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,
+                        fieldList).build(InserimentoDatiCasa.this);
+                startActivityForResult(intent,100);
+            }
+        });
+
         //database
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
@@ -73,7 +90,20 @@ public class InserimentoDatiCasa extends AppCompatActivity {
 
     }
 
-    public void caricaCasa(View view) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 100 && resultCode == RESULT_OK){
+            Place place = Autocomplete.getPlaceFromIntent(data);
+            et_viaCasa.setText(place.getAddress());
+            //todo in teoria già qua possiamo salvarci le coordinate della casa senza utilizzare il geocoder.
+        }else if(resultCode == AutocompleteActivity.RESULT_ERROR){
+            Status status = Autocomplete.getStatusFromIntent(data);
+            Toast.makeText(getApplicationContext(),status.getStatusMessage(),Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void caricaDati() {
 
         String nomeCasa = et_nomeCasa.getText().toString();
         String viaCasa = et_viaCasa.getText().toString();
@@ -108,51 +138,46 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         }
 
         //TODO la casa deve essere unica
-        //controlloNomeCasa(nomeCasa);
 
-        if (flagNomeCasaUguale) {
-            Log.i(TAG, "Flag if " + flagNomeCasaUguale.booleanValue());
-            et_nomeCasa.setText("");
-            return;
-        } else {
-            Log.i(TAG, "valore flag else " + flagNomeCasaUguale.booleanValue());
+        //CREO L'OGGETTO CASA
 
-            //CREO L'OGGETTO CASA
+        //TODO costruire l'indirizzo
+        String indirizzo = ""+viaCasa+","+numeroCivico+","+cap;
+        //TODO proprietario
+        String proprietario = user.getUid().toString();
 
-            //TODO costruire l'indirizzo
-            String indirizzo = ""+viaCasa+","+numeroCivico+","+cap;
-            //TODO proprietario
-            String proprietario = user.getUid().toString();
+        Casa casa = new Casa(nomeCasa, indirizzo, numeroOspiti, numeroBagni, numeroStanze, proprietario);
+        //eseguo il push
+        DatabaseReference casaAggiunta = myRef.child("Case").push();
+        casaAggiunta.setValue(casa);
 
-            Casa casa = new Casa(nomeCasa, indirizzo, numeroOspiti, numeroBagni, numeroStanze, proprietario);
-            //eseguo il push
-            DatabaseReference casaAggiunta = myRef.child("Case").push();
-            casaAggiunta.setValue(casa);
+        Log.i(TAG, "Casa " + casa.getNomeCasa());
 
-            Log.i(TAG, "Casa " + casa.getNomeCasa());
+        clear();
 
-            clear();
+        Intent intent = new Intent(this, InserimentoDatiAnnuncio.class);
+        startActivity(intent);
 
-            //Intent intent = new Intent(this, Home.class);
-            Intent intent = new Intent(this, InserimentoDatiAnnuncio.class);
-            startActivity(intent);
-        }
     }
 
-    public void controlloNomeCasa(String nomeCasa) {
+    public void caricaCasa(View view) {
+
+        List<String> casaList = new LinkedList<>();
+
 
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
-
                     Casa casaFiglio = caseSnapshot.getValue(Casa.class);
-                    if(casaFiglio.getNomeCasa().compareTo(nomeCasa)==0) {
-                        Toast.makeText(InserimentoDatiCasa.this, "Attenzione "+nomeCasa+"già presente, inserire nuovo nome!", Toast.LENGTH_SHORT).show();
-                         cambiaFlag();
-                    }
-                    Log.i(TAG,"Casa :"+casaFiglio.getNomeCasa());
+                    casaList.add(casaFiglio.getNomeCasa());
                 }
+                //todo metodo sul controllo dei dati
+                //metodo per controllo unicità nome casa
+                if(!casaList.contains(et_nomeCasa.getText().toString()))
+                    caricaDati();
+                else
+                   stampaErroreCasaUguale();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -160,11 +185,6 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         });
     }
 
-    private void cambiaFlag() {
-        Log.i(TAG, "Passo dal flag ");
-        flagNomeCasaUguale = true;
-        Log.i(TAG, "Passo dal flag "+flagNomeCasaUguale.booleanValue());
-    }
     private void clear() {
         et_nomeCasa.setText("");
         et_numeroCivico.setText("");
@@ -172,6 +192,9 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         et_numeroBagni.setText("");
         et_numeroStanze.setText("");
         et_numeroOspiti.setText("");
+    }
+    private void stampaErroreCasaUguale() {
+        Toast.makeText(this, "Errore il nome della casa è già esistente", Toast.LENGTH_SHORT);
     }
 
 }
