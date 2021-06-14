@@ -152,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /*
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -162,6 +163,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+     */
 
     // TODO controllare bene questo metodo
 

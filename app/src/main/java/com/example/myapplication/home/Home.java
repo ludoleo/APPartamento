@@ -41,16 +41,7 @@ public class Home extends AppCompatActivity {
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
 
-        if(user==null) {
-            Intent intent = new Intent(Home.this, LoginActivity.class);
-            startActivity(intent);
-        }
     }
-
-    //TODO quando torno sulla home e sono loggato voglio poter vedere la home e andare sul profilo solo quando clicco su profilo
-
-
-
 
     private void vaiProfiloProprietario(String idUtente) {
 
@@ -73,7 +64,7 @@ public class Home extends AppCompatActivity {
             startActivity(intent);
         } else {
 
-            Log.i(TAG, "Connesso utente già registrato con us e pw " + user.getEmail());
+            Log.i(TAG, "Connesso utente già registrato " + user.getEmail());
             String idUtente = user.getUid();
 
             // myRef.child("Utenti").child("Studenti").child(idUtente);

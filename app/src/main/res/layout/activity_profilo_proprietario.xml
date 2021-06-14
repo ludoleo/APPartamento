@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/sfondo"
     tools:context=".profilo.ProfiloProprietario">
 
     <ScrollView
@@ -11,107 +12,107 @@
         android:layout_height="match_parent">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="44dp">
-
-        <TextView
-            android:id="@+id/textView10"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:text="Profilo Proprietario"
-            android:textSize="30sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="44dp">
 
-
-        <ImageView
-            android:id="@+id/immaginePropriet"
-            android:layout_width="114dp"
-            android:layout_height="114dp"
-            android:translationX="145dp"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <ImageButton
-            android:id="@+id/button_home3"
-            android:layout_width="47dp"
-            android:layout_height="38dp"
-            android:background="@color/rosso_mattone"
-            android:fadingEdge="horizontal|vertical"
-            android:onClick="goHome"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.997"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.033"
-            app:srcCompat="@drawable/ic_baseline_home_24"
-            tools:ignore="VectorDrawableCompat" />
-
-        <Button
-            android:id="@+id/cambiaImmagineProp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cambia Immagine " />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:id="@+id/linearLayout2"
+            <TextView
+                android:id="@+id/textView10"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="68dp"
+                android:text="Profilo Proprietario"
+                android:textSize="30sp" />
 
-                <TextView
-                    android:id="@+id/text_nomeP"
+
+            <ImageView
+                android:id="@+id/immaginePropriet"
+                android:layout_width="114dp"
+                android:layout_height="114dp"
+                android:translationX="145dp"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageButton
+                android:id="@+id/button_home3"
+                android:layout_width="47dp"
+                android:layout_height="38dp"
+                android:background="@color/rosso_mattone"
+                android:fadingEdge="horizontal|vertical"
+                android:onClick="goHome"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.997"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.033"
+                app:srcCompat="@drawable/ic_baseline_home_24"
+                tools:ignore="VectorDrawableCompat" />
+
+            <Button
+                android:id="@+id/cambiaImmagineProp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cambia Immagine " />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:text="@string/etichetta2" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/text_cognomeP"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:text="Cognome" />
+                    <TextView
+                        android:id="@+id/text_nomeP"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="@string/etichetta2" />
 
-                <TextView
-                    android:id="@+id/text_numTelP"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:text="Via" />
+                    <TextView
+                        android:id="@+id/text_cognomeP"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:text="Cognome" />
 
-                <TextView
-                    android:id="@+id/text_emailP"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:text="Email" />
+                    <TextView
+                        android:id="@+id/text_numTelP"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:text="Via" />
 
-                <Button
-                    android:id="@+id/leTueCase"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="vaiTueCase"
-                    android:text="Le tue case" />
+                    <TextView
+                        android:id="@+id/text_emailP"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:text="Email" />
 
-                <Button
-                    android:id="@+id/prenotaz"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Prenotazioni" />
+                    <Button
+                        android:id="@+id/leTueCase"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="vaiTueCase"
+                        android:text="Le tue case" />
 
-                <Button
-                    android:id="@+id/recensioniProp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Recensioni proprietario" />
-            </LinearLayout>
+                    <Button
+                        android:id="@+id/prenotaz"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Prenotazioni" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <Button
+                        android:id="@+id/recensioniProp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Recensioni proprietario" />
+                </LinearLayout>
 
-    </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
