@@ -46,6 +46,9 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
+
+    //TODO aggiungere il getToken()
+
     private static final String TAG = "LoginActivity";
     private static final int RC_SIGN_IN = 1 ;
     private static final String MY_SHARED_PREF = "login_prefs";
@@ -155,6 +158,7 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             updateUI(currentUser);
+
         }
     }
 

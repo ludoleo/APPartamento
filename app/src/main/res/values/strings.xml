@@ -31,6 +31,8 @@
     <string name="etichettaImportoPaypal">Il proprietario richiede un importo di 5 euro per la prenotazione di questa visita</string>
     <string name="facebook_app_id">513976396407275</string>
     <string name="fb_login_protocol_scheme">fb513976396407275</string>
+    <string name="channel_name">APPartamento_channel</string>
+    <string name="channel_description">Descrizione canale</string>
 
     <string-array name="hobby">
         <item>Giochi da tavolo</item>
