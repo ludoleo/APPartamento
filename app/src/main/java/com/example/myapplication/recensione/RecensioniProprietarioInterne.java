@@ -110,7 +110,7 @@ public class RecensioniProprietarioInterne extends AppCompatActivity {
 
         RecensioneUtente recensioneprop = new RecensioneUtente(idrecensione,descrizione,valutazionemedia,recensito,recensore,data);
         //PUSH
-        DatabaseReference recensioneAggiunta = myRef.child("Recensioni_Proprietario").push();
+        DatabaseReference recensioneAggiunta = myRef.child("Recensioni_Studente").push();
         recensioneAggiunta.setValue(recensioneprop);
 
         Log.i(TAG, "Recensione aggiunta da" + user.getUid().toString());
@@ -123,7 +123,7 @@ public class RecensioniProprietarioInterne extends AppCompatActivity {
 
     public void controlloRensore(String recensore) {
 
-        myRef.child("Recensioni_Proprietario").addValueEventListener(new ValueEventListener() {
+        myRef.child("Recensioni_Studente").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {

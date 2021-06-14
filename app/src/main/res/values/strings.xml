@@ -41,6 +41,12 @@
         <item>Musei</item>
     </string-array>
 
+    <string-array name="ProblemiAssistenza">
+        <item>Aggiungere Inquilino Presente</item>
+        <item>Servizi App non funzionanti</item>
+        <item>Altro</item>
+    </string-array>
+
     <string-array name="tipologiaPostiLetto">
         <item>Intero appartamento</item>
         <item>Stanza singola</item>

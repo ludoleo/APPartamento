@@ -8,14 +8,53 @@
     tools:context=".profilo.Assistenza">
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/textView15"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:text="Assistenza"
-        android:textSize="30sp" />
+        android:text="Centro Assistenza"
+        android:textSize="24sp"
+
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView26"
+        android:id="@+id/textView13"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="81dp"
+        android:text="Appartamento garantisce un supporto telefonico al fine di evitare problemi con l'App.Inoltre puoi segnalare la tipologia di problema qua sotto e cercheremo di agire al più presto.Grazie!" />
+
+    <Spinner
+        android:id="@+id/tipologiaProblematiche"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:entries="@array/ProblemiAssistenza" />
+
+    <EditText
+        android:id="@+id/problematica"
+        android:layout_width="match_parent"
+        android:layout_height="121dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Descrivi l'eventuale problema " />
+
+    <Button
+        android:id="@+id/conferma_assist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Conferma Assistenza" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Per Ulteriori Problemi Contattaci "
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="ChiamaAppartamento"
+        app:srcCompat="@android:drawable/ic_menu_call" />
+
 </LinearLayout>
