@@ -10,4 +10,5 @@
     <color name="rosso_mattone">#E28888</color>
     <color name="rosso_scuro">#AB3A3A</color>
     <color name="sfondo">#F2FFF2EE</color>
+    <color name="trasparente">#000000</color>
 </resources>
