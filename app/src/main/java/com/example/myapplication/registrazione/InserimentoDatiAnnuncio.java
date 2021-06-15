@@ -148,8 +148,5 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
     }
-    public void inserisciCasa(View view) {
-        Intent intent = new Intent(this, InserimentoDatiCasa.class);
-        startActivity(intent);
-    }
+
 }

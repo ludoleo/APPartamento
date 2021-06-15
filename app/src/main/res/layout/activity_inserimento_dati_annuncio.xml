@@ -10,26 +10,12 @@
     tools:context=".registrazione.InserimentoDatiAnnuncio">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="Seleziona la tua casa"
-        android:textStyle="bold" />
-
-    <TextView
         android:id="@+id/tv_nomeCasa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text=" "
         android:textStyle="normal" />
-
-    <Button
-        android:id="@+id/i_d_a_inserisciCasa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="inserisciCasa"
-        android:text="Inserisci Casa" />
 
 
     <EditText
@@ -70,13 +56,13 @@
 
         <EditText
             android:id="@+id/et_prezzoMensileAnnuncio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="86dp"
+            android:layout_height="match_parent"
             android:inputType="number"
             android:padding="20dp" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="101dp"
             android:layout_height="wrap_content"
             android:padding="20dp"
             android:text="Euro"
@@ -87,7 +73,7 @@
     <EditText
         android:id="@+id/et_SpeseStraordinarie"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="113dp"
         android:hint="Inserisci eventuali spese straordinarie che posso riguardare l'appartamento (conguaglio, caparre extra...)"
         android:padding="10dp" />
 

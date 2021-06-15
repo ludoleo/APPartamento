@@ -24,16 +24,11 @@
         android:onClick="inserisciCasa"
         android:text="Aggiungi nuova casa" />
 
-    <ScrollView
+    <ListView
+        android:id="@+id/lv_case_prop"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="600dp">
 
-        <ListView
-            android:id="@+id/lv_case_prop"
-            android:layout_width="fill_parent"
-            android:layout_height="600dp">
-
-        </ListView>
-    </ScrollView>
+    </ListView>
 
 </LinearLayout>

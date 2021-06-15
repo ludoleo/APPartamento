@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
     tools:context=".prenotazione.PrenotazioneActivity">
 
@@ -12,35 +13,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="back"
-        android:text="@string/indietro" />
+        android:text="@string/indietro"
+        android:translationY="5dp" />
 
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"/>
+        android:layout_height="25dp"
+        android:layout_weight="1"
+        android:translationY="30dp" />
 
     <Spinner
         android:id="@+id/spinnerFasciaOraria"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/fasceOrarie"
         android:layout_weight="0.2"
-        android:padding="15dp"/>
+        android:entries="@array/fasceOrarie"
+        android:padding="15dp"
+        android:translationY="30dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="bottom"
-        android:layout_weight="0.25">
+        android:layout_weight="0.25"
+        android:orientation="horizontal"
+        android:translationY="30dp">
 
         <Button
             android:id="@+id/b_annulla_pr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_margin="5dp"
+            android:layout_weight="1"
             android:onClick="annulla"
             android:text="@string/annulla" />
 
@@ -48,8 +53,8 @@
             android:id="@+id/b_confermaPrenotazione"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_margin="5dp"
+            android:layout_weight="1"
             android:onClick="conferma"
             android:text="@string/conferma" />
     </LinearLayout>

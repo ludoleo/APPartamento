@@ -122,4 +122,6 @@ public class ListaAnnunci extends AppCompatActivity {
         public TextView nomeCasaView;
         public TextView prezzoCasaView;
     }
+
+    //todo aggiungere il click sull'annuncio in modo tale che se studente è loggato può prenotare la casa
 }
