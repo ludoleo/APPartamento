@@ -2,6 +2,7 @@ package com.example.myapplication.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
+import com.example.myapplication.registrazione.InserimentoDatiAnnuncio;
 import com.example.myapplication.registrazione.InserimentoDatiCasa;
 import com.example.myapplication.ricercalloggio.ListaAnnunci;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,6 +44,7 @@ public class CaseProprietario extends AppCompatActivity {
     private FirebaseUser user;
 
     private List<Casa> listaCase = new ArrayList<>();
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +82,7 @@ public class CaseProprietario extends AppCompatActivity {
     private void aggiorna() {
 
         //TODO aggiungere on option item selection che permette di cliccare
-        ListView listView = (ListView) findViewById(R.id.lv_case_prop);
+         listView = (ListView) findViewById(R.id.lv_case_prop);
         CaseProprietario.CustomItem[] items = createItems();
 
         ArrayAdapter<CaseProprietario.CustomItem> arrayAdapter = new ArrayAdapter<CaseProprietario.CustomItem>(
@@ -110,7 +114,24 @@ public class CaseProprietario extends AppCompatActivity {
             }
         };
         listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                //TODO prendo l'id della casa che ho cliccato vado ad aggiungi annuncio, pushando con l'intent l'id
+
+                CaseProprietario.CustomItem casa = (CustomItem) adapterView.getItemAtPosition(pos);
+                creaAnnuncio(casa.nomeCasa);
+            }
+        });
     }
+
+    private void creaAnnuncio(String casa) {
+        Intent intent = new Intent(this, InserimentoDatiAnnuncio.class);
+        intent.putExtra("nomeCasa", casa);
+        startActivity(intent);
+    }
+
 
     //Gestione del CustomItem
     private static class CustomItem {
@@ -119,6 +140,7 @@ public class CaseProprietario extends AppCompatActivity {
         public int numeroOspiti;
         public float valutazione;
     }
+
     private CaseProprietario.CustomItem[] createItems() {
 
 

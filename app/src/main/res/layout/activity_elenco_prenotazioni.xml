@@ -27,7 +27,7 @@
         android:id="@+id/tabPrenotazioni"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/trasparente"></com.google.android.material.tabs.TabLayout>
+        android:background="@color/quantum_white_divider"></com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPagerPrenotazioni"

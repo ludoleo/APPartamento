@@ -16,11 +16,13 @@
         android:text="Seleziona la tua casa"
         android:textStyle="bold" />
 
-    <AutoCompleteTextView
-        android:id="@+id/text_caseProprietario"
-        android:layout_width="fill_parent"
+    <TextView
+        android:id="@+id/tv_nomeCasa"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Aggiungi la tua casa" />
+        android:padding="10dp"
+        android:text=" "
+        android:textStyle="normal" />
 
     <Button
         android:id="@+id/i_d_a_inserisciCasa"

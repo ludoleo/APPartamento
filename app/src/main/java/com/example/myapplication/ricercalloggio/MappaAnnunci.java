@@ -32,7 +32,7 @@ import java.util.List;
 public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
-    private static final String TAG = "";
+    private static final String TAG = "Mappe";
     private MapView mapView;
     GoogleMap gmap;
     Geocoder geocoder;

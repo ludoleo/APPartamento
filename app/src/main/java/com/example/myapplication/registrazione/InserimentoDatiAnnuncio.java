@@ -48,7 +48,7 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     // case proprietario
-    AutoCompleteTextView acTextView;
+    TextView textViewNomeCasa;
 
 
     @Override
@@ -72,20 +72,8 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
         et_prezzo = (EditText) findViewById(R.id.et_prezzoMensileAnnuncio);
         et_speseStraordinarie = (EditText) findViewById(R.id.et_SpeseStraordinarie);
 
-        List<String> data = getCaseProprietario(user.getUid());
-        Log.i(TAG,"Size di data "+data.size());
-        if(data.size()!=0) {
-
-            Log.i(TAG,"Sono nell'if di autocompletamento");
-            ArrayAdapter<String> adapter =
-                    new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,data);
-
-             acTextView =
-                    (AutoCompleteTextView)findViewById(R.id.text_caseProprietario);
-
-            acTextView.setAdapter(adapter);
-        }
-
+        textViewNomeCasa = (TextView) findViewById(R.id.tv_nomeCasa);
+        textViewNomeCasa.setText(getIntent().getExtras().getString("nomeCasa"));
 
     }
 
@@ -114,7 +102,7 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
     public void caricaAnnuncio(View view) {
 
         //TODO controlli
-        String nomeCasa = acTextView.getText().toString() ;
+        String nomeCasa = getIntent().getExtras().getString("nomeCasa") ;
         String tipologia = spTipologiaPostoLetto.getSelectedItem().toString();
         String nomeAnnuncio = et_nomeAnnuncio.getText().toString();
         Date data = new Date();

@@ -4,34 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
     tools:context=".ricercalloggio.ListaAnnunci">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Scegli i migliori annunci"
-        android:textSize="20dp"
-        android:textColor="@color/black"
         android:padding="10dp"
-        android:textStyle="bold"/>
+        android:text="Scegli i migliori annunci"
+        android:textColor="@color/rosso_scuro"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
-    <ScrollView
+    <ListView
+        android:id="@+id/lv_elencoAnnunci"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="593dp">
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/lv_elencoAnnunci"/>
-
-    </ScrollView>
+    </ListView>
 
     <Button
         android:id="@+id/bottone_vedi_casa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="visualizzaMappa"
-        android:text="Visulaizza Mappa" />
+        android:text="Visualizza Mappa" />
 
 </LinearLayout>
