@@ -73,7 +73,7 @@ public class RecensioniStudentInterne extends AppCompatActivity {
     }
 
     public void CaricaRecensioneStudente(View view) {
-        String idrecensione = getIntent().getExtras().getString("idSRecensioneStudente");
+
         String descrizione = review1.getText().toString();
         float valutazionemedia = rateValue1;
         // Data Recensione
@@ -93,7 +93,7 @@ public class RecensioniStudentInterne extends AppCompatActivity {
             return;
         }
 
-        RecensioneUtente recensioneprop = new RecensioneUtente(idrecensione,descrizione,valutazionemedia,recensito,recensore,data);
+        RecensioneUtente recensioneprop = new RecensioneUtente(descrizione,valutazionemedia,recensito,recensore,data);
         //PUSH
         DatabaseReference recensioneAggiunta = myRef.child("Recensioni_Proprietario").push();
         recensioneAggiunta.setValue(recensioneprop);

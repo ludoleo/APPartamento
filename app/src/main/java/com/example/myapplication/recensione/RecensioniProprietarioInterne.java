@@ -88,7 +88,7 @@ public class RecensioniProprietarioInterne extends AppCompatActivity {
 
     public void NuovaRecProp(View view) {
 
-        String idrecensione = getIntent().getExtras().getString("idSRecensioneProprietario");
+
         String descrizione = review.getText().toString();
         float valutazionemedia = rateValue;
         // Data Recensione
@@ -100,7 +100,7 @@ public class RecensioniProprietarioInterne extends AppCompatActivity {
             return;
         }
         // recensore e recensito
-        String recensore = user.getUid().toString();
+        String recensore = user.getUid();
         String recensito = "Nome Recensito";
         // controllo recensore/recensito
         if(recensore==recensito){
@@ -108,7 +108,7 @@ public class RecensioniProprietarioInterne extends AppCompatActivity {
             return;
         }
 
-        RecensioneUtente recensioneprop = new RecensioneUtente(idrecensione,descrizione,valutazionemedia,recensito,recensore,data);
+        RecensioneUtente recensioneprop = new RecensioneUtente(descrizione,valutazionemedia,recensore,recensito,data);
         //PUSH
         DatabaseReference recensioneAggiunta = myRef.child("Recensioni_Studente").push();
         recensioneAggiunta.setValue(recensioneprop);

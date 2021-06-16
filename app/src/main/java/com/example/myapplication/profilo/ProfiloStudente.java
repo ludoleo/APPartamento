@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -21,12 +24,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.RecensioniStudenteEsterneList;
 import com.example.myapplication.classi.Studente;
+import com.example.myapplication.classi.Utente;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.home.LaTuaCasa;
 import com.example.myapplication.recensione.RecensioniStudentInterne;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -37,17 +45,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
 
 import static android.widget.Toast.*;
 
 public class ProfiloStudente extends AppCompatActivity {
 
     private static final String TAG = "Profilo Studente";
-    private static final int IMAG_PICK_CODE = 1000;
+    private static final int IMAG_REQUEST = 1000;
     private static final int PERMISSION_CODE = 1001;
+    private Uri ImageUri;
+    private StorageTask UploadTask;
 
     Button recensioni;
     Button modifica;
@@ -72,30 +84,41 @@ public class ProfiloStudente extends AppCompatActivity {
     private FirebaseUser user;
 
 
-
     @Override
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo_studente);
 
 
+           // forse da aggiungere questo, ma in realtà myref c'è già(più sotto, sempre in OnCreate)--> myRef = FirebaseDatabase.getInstance().getReference("Studenti").child(user.getUid());
             mAuth = FirebaseAuth.getInstance();
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+               /*     // VERIFICARE QUESTO Forse nella classe Studenti settiamo una Stringa con "DEFAULT"?
+                    Studente student  = datasnapshot.getValue(Studente.class);
+                    //DOBBIAMO AGGIUNGERE URL ALLA CLASSE?
+                   if(student.getImageURL().equals("default")){
+                  immagineStudente.setImageResource(R.);
+                      } else
+                      Glide.with(getContext()).load(user.getImageURL()).into(immagineStudente);
+                    */
+               }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-            //user = mAuth.getCurrentUser();
-            // Al fine di tenere l'immagine del profilo ogni volta
-            if(user.getPhotoUrl() != null){
-                // aggiungere dependencies library video al minuto 11.55
-                //Glide.with(this)
-               // .load(user.getPhotoUrl))
-                //.into.(immaginestudente);
-            }
+            storageReference= FirebaseStorage.getInstance().getReference("Uploads");
 
 
         recensioni = findViewById(R.id.recensioni);
         recensioni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(ProfiloStudente.this, RecensioniStudentInterne.class);
+                Intent i = new Intent(ProfiloStudente.this, RecensioniStudenteEsterneList.class);
                 startActivity(i);
             }
         });
@@ -127,7 +150,7 @@ public class ProfiloStudente extends AppCompatActivity {
             }
 
             });
-        // FINE PERMESSI
+
             modifica = findViewById(R.id.modificaProfilo);
             modifica.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -154,14 +177,8 @@ public class ProfiloStudente extends AppCompatActivity {
             popola(idUtente);
             //leggiValori();
     }
-    // IMMAGINE PROFILO
+    // PERMESSI PT2
 
-    private void CambiaImmagine() {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if(intent.resolveActivity(getPackageManager())!= null){
-                startActivityForResult(intent,IMAG_PICK_CODE);
-            }
-    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -181,83 +198,100 @@ public class ProfiloStudente extends AppCompatActivity {
         }
 
     }
+    // CAMBIO IMMAGINE
+    private void CambiaImmagine() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,IMAG_REQUEST);
 
+        }
+        // GESTIONE ESTENSIONE
+    private String getFileExtention(Uri uri){
+        ContentResolver contentResolver = getContentResolver();
+
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+
+        return  mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+  // RISPOSTA AL FOR RESULT
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == IMAG_PICK_CODE){
-            switch (resultCode){
-                case RESULT_OK:
-                    Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-                    immagineStudente.setImageBitmap(bitmap);
-                    UploadImage(bitmap);
+        if(requestCode == IMAG_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+            ImageUri = data.getData();
+            // set image to image view
+            // immagineprop.setImageURI(data.getData()); codice reale
+            if (UploadTask != null && UploadTask.isInProgress())    {
+                Toast.makeText(ProfiloStudente.this,"Upload in Progress", LENGTH_SHORT).show();
+            } else{
+
+
+                Log.i("ProfiloStud","passo da qui");
+                // forse da togliere
+            immagineStudente.setImageURI(ImageUri);
+            UploadImage(ImageUri);
             }
         }
-    }
-    // UPLOAD IMMAGINE PROFILO
-    private void UploadImage(Bitmap bitmap) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        }
+        // GESTIONE DELL UPLOAD
 
-        String Uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference()
-                .child("ProfileImages")
-                .child(Uid+".jpeg");
-        storageReference.putBytes(baos.toByteArray())
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        getDowloadUrl(storageReference);
+    private void UploadImage(Uri ImageUri){
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Upload effettuato");
+        pd.show();
+
+        if(ImageUri != null){
+
+           final StorageReference FileReference =storageReference.child(System.currentTimeMillis()
+                   + "." +getFileExtention(ImageUri));
+           UploadTask = FileReference.putFile(ImageUri);
+           // Anche a lui rimaneva così
+           UploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+               @Override
+               public Task<Uri>then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                   if (!task.isSuccessful()){
+                       throw task.getException();
+                   }
+                   return FileReference.getDownloadUrl();
+               }
+           }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+               @Override
+               public void onComplete(@NonNull Task<Uri> task) {
+                   if (task.isSuccessful()){
+                       Uri DownloadUri = task.getResult();
+                       String mUri = DownloadUri.toString();
+
+                       myRef = FirebaseDatabase.getInstance().getReference("Studenti").child(user.getUid());
+                       HashMap<String,Object> map = new HashMap<>();
+                       map.put("imageURL",mUri);
+                       myRef.updateChildren(map);
+                       pd.dismiss();
+                   }
+                   else {
+                       Toast.makeText(ProfiloStudente.this,"Error", LENGTH_SHORT).show();
+                       pd.dismiss();
+                   }
+
+               }
+
+           }).addOnFailureListener(new OnFailureListener() {
+               @Override
+               public void onFailure(@NonNull Exception e) {
+                   Toast.makeText(ProfiloStudente.this,e.getMessage(), LENGTH_SHORT).show();
+                   pd.dismiss();
+               }
+           });
 
 
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG,"Upload Fallito :",e.getCause());
-
-                    }
-                });
-
-    }
-    private void getDowloadUrl(StorageReference storageReference){
-            storageReference.getDownloadUrl()
-                    .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            Log.d(TAG,"Con Successo"+uri);
-                            SetUserProfileUrl(uri);
-
-                        }
-                    });
-
-
-    }
-    private void SetUserProfileUrl(Uri uri){
-        // UNICO MODO ALTRIMENTI FireBaseUser da errore
-        FirebaseUser
-        FirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
-                .setPhotoUri(uri)
-                .build();
-        user.updateProfile(request)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        //Toast.makeText(this,"Upload effettuato correttamente", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //makeText(this,"Failure", LENGTH_SHORT).show();
-
-                    }
-                });
-
+        } else {
+            Toast.makeText(ProfiloStudente.this,"Nessuna immagine selezionata", LENGTH_SHORT).show();
+        }
 
     }
+
+
+
     // FINE IMMAGINE PROFILO
     /*
     private void leggiValori() {
@@ -335,6 +369,6 @@ public class ProfiloStudente extends AppCompatActivity {
         Intent intent = new Intent(this, LaTuaCasa.class);
         startActivity(intent);
     }
-
-
 }
+
+

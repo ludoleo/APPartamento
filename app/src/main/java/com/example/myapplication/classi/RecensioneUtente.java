@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class RecensioneUtente {
 
-   private String idRecensione;
+   //private String idRecensione;
    private Date dataRevisione; //gestione date
    private String descrizione;
    //private int valutazionePulizia;
@@ -22,9 +22,9 @@ public class RecensioneUtente {
     public RecensioneUtente() {
     }
 
-    public RecensioneUtente(String idRecensione, String descrizione,float valutazioneMedia, String recensore, String recensito, Date data) {
+    public RecensioneUtente( String descrizione,float valutazioneMedia, String recensore, String recensito, Date data) {
 
-        this.idRecensione = idRecensione;
+        //this.idRecensione = idRecensione;
         this.descrizione = descrizione;
        // this.valutazionePulizia = valutazionePulizia;
         //this.valutazionePagamento = valutazionePagamento;
@@ -36,13 +36,13 @@ public class RecensioneUtente {
         this.recensito = recensito;
     }
 
-    public String getIdRecensione() {
-        return idRecensione;
-    }
+   // public String getIdRecensione() {
+       // return idRecensione;
+    //}
 
-    public void setIdRecensione(String idRecensione) {
-        this.idRecensione = idRecensione;
-    }
+    //public void setIdRecensione(String idRecensione) {
+       // this.idRecensione = idRecensione;
+   // }
 
     public Date getDataRevisione() { return dataRevisione; }
     public void setDataRevisione(Date dataRevisione) { this.dataRevisione = dataRevisione; }
@@ -126,7 +126,7 @@ public class RecensioneUtente {
         this.recensito = recensito;
     }
 
-    @Override
+   /* @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof RecensioneUtente)) return false;
@@ -137,5 +137,5 @@ public class RecensioneUtente {
     @Override
     public int hashCode() {
         return Objects.hash(getIdRecensione());
-    }
+   } */
 }

@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -16,25 +15,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
+        <activity android:name=".RecensioniStudenteEsterneList"></activity>
+
         <service
             android:name=".MyService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
         <receiver android:name=".AlarmBroadcastReceiver">
             <intent-filter>
-                <action android:name="com.example.myapplication"></action>
-                <action android:name="android.intent.action.BOOT_COMPLETED" ></action>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.example.myapplication" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+
         <activity android:name=".registrazione.InserimentoDatiAnnuncio" />
         <activity android:name=".registrazione.InserimentoDatiCasa" />
-
         <activity android:name=".login.ScegliUtente" />
 
         <meta-data
@@ -44,19 +46,17 @@
         <activity android:name=".profilo.Assistenza" />
         <activity android:name=".home.CaseProprietario" />
         <activity android:name=".prenotazione.ElencoPrenotazioni" />
-
         <activity android:name=".home.Home">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".registrazione.InserimentoDatiProprietario" />
         <activity android:name=".registrazione.InserimentoDatiStudente" />
         <activity android:name=".home.LaTuaCasa" />
         <activity android:name=".ricercalloggio.ListaAnnunci" />
-
         <activity android:name=".ricercalloggio.MappaAnnunci" />
 
         <meta-data
@@ -73,20 +73,16 @@
         <activity android:name=".profilo.ModificaInfoPersonali" />
         <activity android:name=".profilo.ModificaProfilo" />
         <activity android:name=".profilo.Notifiche" />
-        <activity android:name=".prenotazione.PrenotazioneActivity">
-
-    </activity>
+        <activity android:name=".prenotazione.PrenotazioneActivity"></activity>
         <activity android:name=".prenotazione.PrenotazionePaypalActivity" />
         <activity android:name=".profilo.ProfiloAnnuncio" />
         <activity android:name=".profilo.ProfiloProprietario" />
         <activity android:name=".profilo.ProfiloStudente" />
         <activity android:name=".profilo.ProponiEsperieza" />
         <activity android:name=".recensione.RecensioniCasa" />
-
         <activity android:name=".recensione.RecensioniProprietarioInterne" />
-        <activity android:name=".recensione.RecensioneCasaInterna"/>
-        <activity android:name=".recensione.RecensioneProprietarioEsterno"/>
-
+        <activity android:name=".recensione.RecensioneCasaInterna" />
+        <activity android:name=".recensione.RecensioneProprietarioEsterno" />
         <activity android:name=".recensione.RecensioniStudentInterne" />
         <activity android:name=".registrazione.RegistrationActivity" />
         <activity android:name=".salvati.Salvati" />

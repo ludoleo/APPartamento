@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -33,12 +34,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecensioneProprietarioEsterno extends AppCompatActivity {
-
-    private static final String TAG = "LISTA RECENSIONI PROPRIETARIO"; ;
-    private List<RecensioneUtente> listaRecensioni = new ArrayList<>();
+    private  List<RecensioneUtente> listaRecensioni = new ArrayList<>();
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+
     Button buttonpropeseterno;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
