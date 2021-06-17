@@ -114,14 +114,13 @@ public class CaseProprietario extends AppCompatActivity {
             }
         };
         listView.setAdapter(arrayAdapter);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 //TODO prendo l'id della casa che ho cliccato vado ad aggiungi annuncio, pushando con l'intent l'id
-
                 CaseProprietario.CustomItem casa = (CustomItem) adapterView.getItemAtPosition(pos);
-                creaAnnuncio(casa.nomeCasa);
+                String nomeCasa = casa.nomeCasa;
+                creaAnnuncio(nomeCasa);
             }
         });
     }
@@ -131,7 +130,6 @@ public class CaseProprietario extends AppCompatActivity {
         intent.putExtra("nomeCasa", casa);
         startActivity(intent);
     }
-
 
     //Gestione del CustomItem
     private static class CustomItem {
