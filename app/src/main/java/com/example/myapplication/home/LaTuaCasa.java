@@ -35,7 +35,6 @@ public class LaTuaCasa extends AppCompatActivity {
     private Inquilino inquilino;
     private List<Inquilino> coinquilini;
     int i;
-    Button recensionicasa, vaiprop, vaicoinq;
     TextView laTuaCasa, ilProprietario, valutazioneProprietario, valutazioneCasa;
     //DATABASE
     FirebaseUser user;
@@ -52,31 +51,6 @@ public class LaTuaCasa extends AppCompatActivity {
         myRef = database.getReference();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-        //COLLEGO I BUTTON
-        recensionicasa = findViewById(R.id.recensionicasa);
-        recensionicasa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent b = new Intent(LaTuaCasa.this, RecensioniCasa.class);
-                startActivity(b);
-            }
-        });
-        vaiprop = findViewById(R.id.vaiprop);
-        vaiprop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent c = new Intent(LaTuaCasa.this, RecensioniProprietarioInterne.class);
-                startActivity(c);
-            }
-        });
-        vaicoinq = findViewById(R.id.vaicoinq);
-        vaicoinq.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent d = new Intent(LaTuaCasa.this, RecensioniStudentInterne.class);
-                startActivity(d);
-            }
-        });
         laTuaCasa = (TextView) findViewById(R.id.tv_laTuaCasa);
         ilProprietario = (TextView) findViewById(R.id.tv_proprietarioLaTuaCasa);
         valutazioneProprietario = (TextView) findViewById(R.id.tv_valutazioneProprietarioCasaTua);
@@ -189,6 +163,15 @@ public class LaTuaCasa extends AppCompatActivity {
                 });
             }
         }
+    }
+    private void recensioniCasa(View v){
+
+    }
+    private void recensioniProprietario(View v){
+
+    }
+    private void profiloProprietario(View v){
+
     }
 
 }

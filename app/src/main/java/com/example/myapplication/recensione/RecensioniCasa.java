@@ -128,6 +128,4 @@ public class RecensioniCasa extends AppCompatActivity {
         }
         return items;
     }
-
-
 }
