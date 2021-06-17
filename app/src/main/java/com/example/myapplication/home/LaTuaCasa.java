@@ -112,7 +112,7 @@ public class LaTuaCasa extends AppCompatActivity {
             //CARICO IL PROPRIETARIO E LA SUA VALUTAZIONE MEDIA
             ilProprietario.setText("Host: "+proprietario.getNome());
             valutazioneProprietario.setText(""+proprietario.getValutazione());
-
+            //TODO LIST VIEW CON I COINQULINI I ED I PROPRIETARI
         } else{
             //STAMPA ERRORE
         }
