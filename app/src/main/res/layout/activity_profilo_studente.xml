@@ -127,7 +127,7 @@
             android:text="@string/Bottone2" />
 
         <Button
-            android:id="@+id/la_tua_casa"
+            android:id="@+id/button_la_tua_casa"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:onClick="laTuaCasa"

@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.recensione.RecensioniStudenteEsterneList;
+import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.home.LaTuaCasa;
@@ -45,6 +46,7 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
+import java.util.List;
 
 import static android.widget.Toast.*;
 
@@ -58,6 +60,8 @@ public class ProfiloStudente extends AppCompatActivity {
 
     Button recensioni;
     Button modifica;
+    Button laTuaCasa;
+
     ImageButton immagineStudente ;
 
 
@@ -169,10 +173,38 @@ public class ProfiloStudente extends AppCompatActivity {
 
             idUtente = getIntent().getExtras().getString("idUtente");
 
+            //ASSOCIO IL PULSANTE VAI ALLA MIA CASA
+            laTuaCasa = (Button) findViewById(R.id.button_la_tua_casa);
+
+            database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+            myRef = database.getReference();
             Log.i(TAG, "sono passata da qui "+idUtente);
 
             popola(idUtente);
             //leggiValori();
+            studentIsInquilino();
+    }
+
+    //METODO CHE DISATTIVA IL PULSANTE SE LO STUDENTE NON E' UN INQUILINO
+    private void studentIsInquilino() {
+
+        laTuaCasa.setActivated(false);
+        myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot annunciSnapshot: dataSnapshot.getChildren()) {
+                    Inquilino a = annunciSnapshot.getValue(Inquilino.class);
+                    if(a.getStudente().compareTo(user.getUid())==0){
+                        laTuaCasa.setActivated(true);
+                        return;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
 
     }
@@ -389,6 +421,7 @@ public class ProfiloStudente extends AppCompatActivity {
 
     public void laTuaCasa(View view) {
         Intent intent = new Intent(this, LaTuaCasa.class);
+        intent.putExtra("idStudente", user.getUid());
         startActivity(intent);
     }
 
