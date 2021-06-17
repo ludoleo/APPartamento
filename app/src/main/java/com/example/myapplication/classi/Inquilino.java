@@ -7,21 +7,25 @@ public class Inquilino {
 
     private String studente;
     private String casa;
+    private String proprietario;
     private Date dataInizio;
     private Date dataFine;
 
-    public Inquilino(String studente, String casa, Date dataInizio, Date dataFine) {
+    public Inquilino(String studente, String casa, String proprietario, Date dataInizio, Date dataFine) {
         this.studente = studente;
         this.casa = casa;
+        this.proprietario = proprietario;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
     }
 
-    public String getCasa() {
-        return casa;}
+    public String getProprietario() {return proprietario;}
 
-    public void setCasa(String casa) {
-        this.casa = casa;}
+    public void setProprietario(String proprietario) {this.proprietario = proprietario;}
+
+    public String getCasa() {return casa;}
+
+    public void setCasa(String casa) {this.casa = casa;}
 
     public String getStudente() {
         return studente;
@@ -52,8 +56,7 @@ public class Inquilino {
         if (this == o) return true;
         if (!(o instanceof Inquilino)) return false;
         Inquilino inquilino = (Inquilino) o;
-        return getStudente().equals(inquilino.getStudente());
-    }
+        return getStudente().equals(inquilino.getStudente()); }
 
     @Override
     public int hashCode() {

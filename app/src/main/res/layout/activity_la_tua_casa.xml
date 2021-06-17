@@ -8,16 +8,39 @@
     tools:context=".home.LaTuaCasa">
 
     <TextView
-        android:id="@+id/textView22"
+        android:id="@+id/tv_laTuaCasa"
         android:layout_width="match_parent"
         android:layout_height="62dp"
         android:text="La tua Casa!"
         android:textSize="30sp" />
+    <TextView
+        android:id="@+id/tv_valutazioneCasaTua"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text=""
+        android:drawableRight="@drawable/ic_baseline_star"
+        />
     <Button
         android:id="@+id/recensionicasa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Recensioni casa" />
+    <TextView
+        android:id="@+id/tv_proprietarioLaTuaCasa"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:text="Il proprirtario della tua casa"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/tv_valutazioneProprietarioCasaTua"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text=""
+        android:drawableRight="@drawable/ic_baseline_star"
+        />
 
     <Button
         android:id="@+id/vaiprop"
@@ -25,6 +48,11 @@
         android:layout_height="wrap_content"
         android:text="Recensioni proprietario"/>
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </ListView>
     <Button
         android:id="@+id/vaicoinq"
         android:layout_width="wrap_content"
