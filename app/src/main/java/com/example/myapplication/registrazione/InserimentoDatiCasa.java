@@ -40,7 +40,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
     //Nome
      EditText et_nomeCasa;
     //Posizione
-     EditText et_viaCasa, et_numeroCivico, et_CAP;
+     EditText et_viaCasa;
     //Caratteristiche principali
      EditText et_numeroBagni, et_numeroStanze, et_numeroOspiti;
     //Autenticazione
@@ -61,9 +61,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
     private void initUI() {
 
         et_nomeCasa = (EditText) findViewById(R.id.et_nomeCasa);
-        et_numeroCivico = (EditText) findViewById(R.id.et_numeroCivico);
         et_viaCasa = (EditText) findViewById(R.id.et_viaCasa);
-        et_CAP = (EditText) findViewById(R.id.et_CAP);
         et_numeroBagni = (EditText) findViewById(R.id.et_numeroBagni);
         et_numeroStanze = (EditText) findViewById(R.id.et_numeroStanze);
         et_numeroOspiti = (EditText) findViewById(R.id.et_numeroOspiti);
@@ -104,18 +102,15 @@ public class InserimentoDatiCasa extends AppCompatActivity {
     }
 
     public void caricaDati() {
-
+        //todo gestire l'oggetto Place per ricavarne le coordinate
         String nomeCasa = et_nomeCasa.getText().toString();
         String viaCasa = et_viaCasa.getText().toString();
-        String cap = et_CAP.getText().toString();
-        int numeroCivico = 0;
         int numeroBagni = 0;
         int numeroStanze = 0;
         int numeroOspiti = 0;
         
         //Controllo sui valori numerici (Con il cast)
         try {
-            numeroCivico = Integer.parseInt(et_numeroCivico.getText().toString().trim());
             numeroBagni = Integer.parseInt(et_numeroBagni.getText().toString().trim());
             numeroStanze = Integer.parseInt(et_numeroStanze.getText().toString().trim());
             numeroOspiti = Integer.parseInt(et_numeroOspiti.getText().toString().trim());
@@ -132,52 +127,33 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         } else if (viaCasa.compareTo("") == 0) {
             Toast.makeText(this, "Attenzione aggiungi la via della casa", Toast.LENGTH_SHORT).show();
             return;
-        } else if (cap.compareTo("") == 0) {
-            Toast.makeText(this, "Attenzione aggiungi il CAP della zona", Toast.LENGTH_SHORT).show();
-            return;
         }
 
-        //TODO la casa deve essere unica
-
         //CREO L'OGGETTO CASA
-
-        //TODO costruire l'indirizzo
-        String indirizzo = ""+viaCasa+","+numeroCivico+","+cap;
-        //TODO proprietario
         String proprietario = user.getUid().toString();
-
-        Casa casa = new Casa(nomeCasa, indirizzo, numeroOspiti, numeroBagni, numeroStanze, proprietario);
+        Casa casa = new Casa(nomeCasa, viaCasa, numeroOspiti, numeroBagni, numeroStanze, proprietario);
         //eseguo il push
         DatabaseReference casaAggiunta = myRef.child("Case").push();
         casaAggiunta.setValue(casa);
-
         Log.i(TAG, "Casa " + casa.getNomeCasa());
-
         clear();
-
         Intent intent = new Intent(this, InserimentoDatiAnnuncio.class);
         startActivity(intent);
-
     }
 
     public void caricaCasa(View view) {
-
-        List<String> casaList = new LinkedList<>();
-
 
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
                     Casa casaFiglio = caseSnapshot.getValue(Casa.class);
-                    casaList.add(casaFiglio.getNomeCasa());
+                    if(casaFiglio.getNomeCasa().compareTo(et_nomeCasa.getText().toString())==0){
+                        stampaErroreCasaUguale();
+                        return;
+                    }
                 }
-                //todo metodo sul controllo dei dati
-                //metodo per controllo unicità nome casa
-                if(!casaList.contains(et_nomeCasa.getText().toString()))
-                    caricaDati();
-                else
-                   stampaErroreCasaUguale();
+                caricaDati();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -187,8 +163,6 @@ public class InserimentoDatiCasa extends AppCompatActivity {
 
     private void clear() {
         et_nomeCasa.setText("");
-        et_numeroCivico.setText("");
-        et_CAP.setText("");
         et_numeroBagni.setText("");
         et_numeroStanze.setText("");
         et_numeroOspiti.setText("");
@@ -196,5 +170,4 @@ public class InserimentoDatiCasa extends AppCompatActivity {
     private void stampaErroreCasaUguale() {
         Toast.makeText(this, "Errore il nome della casa è già esistente", Toast.LENGTH_SHORT);
     }
-
 }

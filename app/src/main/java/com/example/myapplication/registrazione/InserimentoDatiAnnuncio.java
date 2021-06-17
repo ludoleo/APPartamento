@@ -41,6 +41,9 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
     //prezzo
     private EditText et_prezzo;
     private EditText et_speseStraordinarie;
+    private static final int PREZZOMASSIMO = 700;
+    private static final int PREZZOMINIMO = 150;
+
     //Autenticazione
     public FirebaseUser user;
     public FirebaseAuth mAuth;
@@ -49,7 +52,7 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
     private DatabaseReference myRef;
     // case proprietario
     TextView textViewNomeCasa;
-
+    List<String> listaAnnunci = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,6 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
         initUI();
     }
     private void initUI() {
-
         //Database
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
@@ -74,55 +76,49 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
         textViewNomeCasa = (TextView) findViewById(R.id.tv_nomeCasa);
         textViewNomeCasa.setText(getIntent().getExtras().getString("nomeCasa"));
-
-    }
-
-    private List<String> getCaseProprietario(String proprietario) {
-
-        List<String> case_Proprietario = new LinkedList<>();
-
-        myRef.child("Case").addValueEventListener(new ValueEventListener() {
+        //carico gli annunci
+        myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
-                    Casa casaFiglio = caseSnapshot.getValue(Casa.class);
-                    if(casaFiglio.getProprietario().compareTo(proprietario)==0) {
-                        case_Proprietario.add(casaFiglio.getNomeCasa());
-                        Log.i(TAG, "Le case del proprietario sono: "+casaFiglio.toString());
-                    }
+                    Annuncio a = caseSnapshot.getValue(Annuncio.class);
+                    listaAnnunci.add(a.getIdAnnuncio());
                 }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        return case_Proprietario;
     }
 
     public void caricaAnnuncio(View view) {
 
-        //TODO controlli
         String nomeCasa = getIntent().getExtras().getString("nomeCasa") ;
         String tipologia = spTipologiaPostoLetto.getSelectedItem().toString();
         String nomeAnnuncio = et_nomeAnnuncio.getText().toString();
         Date data = new Date();
         Integer prezzo = 0;
 
-        try {
-            prezzo = Integer.parseInt(et_prezzo.getText().toString().trim());
-        } catch (NumberFormatException nfe) {
+        try {prezzo = Integer.parseInt(et_prezzo.getText().toString().trim());}
+        catch (NumberFormatException nfe) {
             Toast.makeText(this, "Attenzione errore nei valori numerici", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
+            return;}
         String speseStraordinarie = et_speseStraordinarie.getText().toString();
-
-       //TODO porre dei limiti sul valore del prezzo
-
+        if(prezzo<PREZZOMINIMO){
+           Toast.makeText(this, "Non pensi di poter chiedere di più?", Toast.LENGTH_SHORT).show();
+           return;}
+        else if(prezzo>PREZZOMASSIMO){
+            Toast.makeText(this, "Non pensi di poter chiedere troppo per uno studente?", Toast.LENGTH_SHORT).show();
+            return;}
+        if(nomeAnnuncio.compareTo("")==0){
+            Toast.makeText(this, "Inserisci il nome dell'annuncio", Toast.LENGTH_SHORT).show();
+            return;}
         String idAnnuncio = nomeAnnuncio+" - "+nomeCasa;
-
+        if(listaAnnunci.contains(idAnnuncio)){
+            Toast.makeText(this, "Esiste già un tuo annuncio con lo stesso nome", Toast.LENGTH_SHORT).show();
+            return;}
+        //CREO ANNUNCIO
         Annuncio annuncio = new Annuncio(idAnnuncio,user.getUid().toString(), nomeCasa, data, tipologia,prezzo,speseStraordinarie, "");
-        //associo l'indirizzo della casa all'annuncio per comodità
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -132,21 +128,17 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
                         annuncio.setIndirizzo(casaFiglio.getIndirizzo());
                     }
                 }
+                DatabaseReference annuncioAggiunto = myRef.child("Annunci").push();
+                annuncioAggiunto.setValue(annuncio);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
-        DatabaseReference annuncioAggiunto = myRef.child("Annunci").push();
-        annuncioAggiunto.setValue(annuncio);
-
-        //pulisco i campi
+        //PULISCO I CAMPI
         et_prezzo.setText("");
         et_speseStraordinarie.setText("");
-
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
     }
-
 }
