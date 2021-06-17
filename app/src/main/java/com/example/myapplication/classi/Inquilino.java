@@ -5,21 +5,29 @@ import java.util.Objects;
 
 public class Inquilino {
 
-    public Studente studente;
-    public Date dataInizio;
-    public Date dataFine;
+    private String studente;
+    private String casa;
+    private Date dataInizio;
+    private Date dataFine;
 
-    public Inquilino(Studente studente, Date dataInizio, Date dataFine) {
+    public Inquilino(String studente, String casa, Date dataInizio, Date dataFine) {
         this.studente = studente;
+        this.casa = casa;
         this.dataInizio = dataInizio;
-        this.dataFine = dataFine; //??
+        this.dataFine = dataFine;
     }
 
-    public Studente getStudente() {
+    public String getCasa() {
+        return casa;}
+
+    public void setCasa(String casa) {
+        this.casa = casa;}
+
+    public String getStudente() {
         return studente;
     }
 
-    public void setStudente(Studente studente) {
+    public void setStudente(String studente) {
         this.studente = studente;
     }
 
