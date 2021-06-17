@@ -85,7 +85,6 @@ public class ProfiloStudente extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo_studente);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
 
 
            // forse da aggiungere questo, ma in realtà myref c'è già(più sotto, sempre in OnCreate)--> myRef = FirebaseDatabase.getInstance().getReference("Studenti").child(user.getUid());

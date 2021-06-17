@@ -5,31 +5,23 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
     tools:context=".profilo.ProfiloStudente">
 
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/rosso_mattone"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/Widget.AppCompat.ActionBar"
         android:popupTheme="@style/MenuStyle">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/username"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20dp" />
 
-    </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,13 +34,13 @@
             android:layout_height="159dp"
             android:layout_marginEnd="18dp"
             android:layout_marginRight="18dp"
+            android:contentDescription="TODO"
             android:onClick="CambiaImmagine"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/recensioni"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_face_24"
-            android:contentDescription="TODO" />
+            app:srcCompat="@drawable/ic_baseline_face_24" />
 
         <Button
             android:id="@+id/recensioni"
