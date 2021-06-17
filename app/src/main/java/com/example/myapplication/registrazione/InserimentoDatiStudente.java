@@ -147,7 +147,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         //controlloStudente(email);
 
 
-        Studente studente = new Studente(nome,cognome,telefono,email , descrizione,primaEsperienza,
+        Studente studente = new Studente(idStudente, nome,cognome,telefono,email , descrizione,primaEsperienza,
                 universita,tipologia,indirizzoLaurea,studenteSenzaAlloggio);
 
         DatabaseReference studenteAggiunto = myRef.child("Utenti").child("Studenti").child(idStudente);

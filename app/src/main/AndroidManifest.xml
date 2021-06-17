@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".RecensioniStudenteEsterneList"></activity>
+        <activity android:name=".messaggi.MessaggiActivity"></activity>
 
         <service
             android:name=".MyService"
@@ -69,11 +69,11 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".messaggi.MessaggiUtente" />
+        <activity android:name=".messaggi.ChatActivity" />
         <activity android:name=".profilo.ModificaInfoPersonali" />
         <activity android:name=".profilo.ModificaProfilo" />
         <activity android:name=".profilo.Notifiche" />
-        <activity android:name=".prenotazione.PrenotazioneActivity"></activity>
+        <activity android:name=".prenotazione.PrenotazioneActivity" />
         <activity android:name=".prenotazione.PrenotazionePaypalActivity" />
         <activity android:name=".profilo.ProfiloAnnuncio" />
         <activity android:name=".profilo.ProfiloProprietario" />
@@ -83,6 +83,7 @@
         <activity android:name=".recensione.RecensioniProprietarioInterne" />
         <activity android:name=".recensione.RecensioneCasaInterna" />
         <activity android:name=".recensione.RecensioneProprietarioEsterno" />
+        <activity android:name=".recensione.RecensioniStudenteEsterneList" />
         <activity android:name=".recensione.RecensioniStudentInterne" />
         <activity android:name=".registrazione.RegistrationActivity" />
         <activity android:name=".salvati.Salvati" />

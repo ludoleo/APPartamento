@@ -14,8 +14,8 @@ public class Proprietario extends Utente{
     public Proprietario() {
     }
 
-    public Proprietario(String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza ) {
-        super(nome, cognome, telefono, email, descrizione, primaEsperienza );
+    public Proprietario(String id, String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza ) {
+        super(id, nome, cognome, telefono, email, descrizione, primaEsperienza );
     }
 
     public ImageView getImmagineProfilo() {

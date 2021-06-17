@@ -8,8 +8,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.myapplication.login.LoginActivity;
-import com.example.myapplication.messaggi.MessaggiUtente;
+import com.example.myapplication.messaggi.ChatActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.prenotazione.ElencoPrenotazioni;
 import com.example.myapplication.prenotazione.PrenotazioneActivity;
 import com.example.myapplication.profilo.ProfiloProprietario;
 import com.example.myapplication.profilo.ProfiloStudente;
@@ -105,7 +106,7 @@ public class Home extends AppCompatActivity {
 
     public void messaggi(View view) {
 
-        Intent intent = new Intent(Home.this , MessaggiUtente.class);
+        Intent intent = new Intent(Home.this , ChatActivity.class);
         startActivity(intent);
     }
 
@@ -118,7 +119,7 @@ public class Home extends AppCompatActivity {
 
     public void prenotazione(View view) {
 
-        Intent intent = new Intent(Home.this , PrenotazioneActivity.class);
+        Intent intent = new Intent(Home.this , ElencoPrenotazioni.class);
         startActivity(intent);
     }
 

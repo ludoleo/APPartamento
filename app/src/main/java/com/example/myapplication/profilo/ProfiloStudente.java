@@ -3,41 +3,37 @@ package com.example.myapplication.profilo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.RecensioniStudenteEsterneList;
+import com.example.myapplication.recensione.RecensioniStudenteEsterneList;
 import com.example.myapplication.classi.Studente;
-import com.example.myapplication.classi.Utente;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.home.LaTuaCasa;
-import com.example.myapplication.recensione.RecensioniStudentInterne;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,7 +44,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 
 import static android.widget.Toast.*;
@@ -72,6 +67,7 @@ public class ProfiloStudente extends AppCompatActivity {
     private TextView text_telefono;
     private TextView text_univerista;
     private TextView text_indirizzoLaure;
+    private TextView username;
 
 
     public DatabaseReference myRef;
@@ -89,9 +85,13 @@ public class ProfiloStudente extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo_studente);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+
 
            // forse da aggiungere questo, ma in realtà myref c'è già(più sotto, sempre in OnCreate)--> myRef = FirebaseDatabase.getInstance().getReference("Studenti").child(user.getUid());
+            database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
             mAuth = FirebaseAuth.getInstance();
+            myRef = database.getReference();
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot datasnapshot) {
@@ -166,18 +166,20 @@ public class ProfiloStudente extends AppCompatActivity {
             text_telefono = (TextView) findViewById(R.id.text_telefono);
             text_univerista = (TextView) findViewById(R.id.text_universita);
             text_indirizzoLaure = (TextView) findViewById(R.id.text_indirizzoLaurea);
+            username = (TextView) findViewById(R.id.username);
 
             idUtente = getIntent().getExtras().getString("idUtente");
 
-            database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
-
-            myRef = database.getReference();
             Log.i(TAG, "sono passata da qui "+idUtente);
 
             popola(idUtente);
             //leggiValori();
+
+
     }
     // PERMESSI PT2
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -345,6 +347,7 @@ public class ProfiloStudente extends AppCompatActivity {
                         text_descrizione.setText(studente.getDescrizione());
                         text_univerista.setText(studente.getUniversita());
                         text_indirizzoLaure.setText(studente.getIndirizzoLaurea());
+                        username.setText(studente.getNome()+" "+studente.getCognome());
                     }
                 }
             }
@@ -359,6 +362,26 @@ public class ProfiloStudente extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(ProfiloStudente.this,Home.class));
+                finish();
+                return true;
+        }
+        return false;
+    }
+
+
     public void goHome(View view) {
 
             Intent intent = new Intent(this, Home.class);
@@ -369,6 +392,8 @@ public class ProfiloStudente extends AppCompatActivity {
         Intent intent = new Intent(this, LaTuaCasa.class);
         startActivity(intent);
     }
+
+
 }
 
 

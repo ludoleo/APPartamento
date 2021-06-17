@@ -1,17 +1,14 @@
 package com.example.myapplication;
 
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
-import android.os.IBinder;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.myapplication.messaggi.MessaggiUtente;
-import com.google.firebase.database.FirebaseDatabase;
+import com.example.myapplication.messaggi.ChatActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -54,7 +51,7 @@ public class MyService extends FirebaseMessagingService {
     private void creaNotifica() {
         //prendi codice da esempio complesso
 
-        Intent intent = new Intent(this, MessaggiUtente.class);
+        Intent intent = new Intent(this, ChatActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 

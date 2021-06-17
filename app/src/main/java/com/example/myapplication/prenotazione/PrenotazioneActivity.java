@@ -18,9 +18,8 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Prenotazione;
-import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.messaggi.MessaggiUtente;
+import com.example.myapplication.messaggi.ChatActivity;
 import com.example.myapplication.profilo.ProfiloAnnuncio;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -114,7 +113,7 @@ public class PrenotazioneActivity extends AppCompatActivity {
     private void inviaNotifica() {
 
         //TODO Intent che mi apre l'app al tocco sulla notifica
-        Intent intent = new Intent(this, MessaggiUtente.class);
+        Intent intent = new Intent(this, ChatActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         //salva intent per utilizzarlo al momento dell'apertura della notifica

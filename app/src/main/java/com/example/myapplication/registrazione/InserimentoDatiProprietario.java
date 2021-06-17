@@ -109,7 +109,7 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
                 return;
             }
         }
-        Proprietario proprietario = new Proprietario(nome,cognome,numTelefono,email, descrizioneP, primaEsperienzaP);
+        Proprietario proprietario = new Proprietario(idProprietario,nome,cognome,numTelefono,email, descrizioneP, primaEsperienzaP);
 
         DatabaseReference proprietarioAggiunto = myRef.child("Utenti").child("Proprietari").child(idProprietario);
         proprietarioAggiunto.setValue(proprietario);

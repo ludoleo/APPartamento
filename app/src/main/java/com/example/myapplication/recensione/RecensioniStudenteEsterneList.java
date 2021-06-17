@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.recensione;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.myapplication.R;
 import com.example.myapplication.classi.RecensioneUtente;
 import com.example.myapplication.recensione.RecensioneProprietarioEsterno;
 import com.google.firebase.database.DataSnapshot;

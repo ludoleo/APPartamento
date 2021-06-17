@@ -15,9 +15,9 @@ public class Studente extends Utente {
     public Studente() {
     }
 
-    public Studente(String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza,
+    public Studente(String id, String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza,
                     String universita, String tipologiaLaurea, String indirizzoLaurea, String senzaAlloggio) {
-        super(nome, cognome, telefono, email, descrizione, primaEsperienza);
+        super(id,nome, cognome, telefono, email, descrizione, primaEsperienza);
         this.universita = universita;
         this.tipologiaLaurea = tipologiaLaurea;
         this.indirizzoLaurea = indirizzoLaurea;

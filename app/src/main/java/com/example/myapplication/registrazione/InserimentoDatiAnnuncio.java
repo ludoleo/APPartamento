@@ -77,27 +77,6 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
     }
 
-    private List<String> getCaseProprietario(String proprietario) {
-
-        List<String> case_Proprietario = new LinkedList<>();
-
-        myRef.child("Case").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
-                    Casa casaFiglio = caseSnapshot.getValue(Casa.class);
-                    if(casaFiglio.getProprietario().compareTo(proprietario)==0) {
-                        case_Proprietario.add(casaFiglio.getNomeCasa());
-                        Log.i(TAG, "Le case del proprietario sono: "+casaFiglio.toString());
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-        return case_Proprietario;
-    }
 
     public void caricaAnnuncio(View view) {
 

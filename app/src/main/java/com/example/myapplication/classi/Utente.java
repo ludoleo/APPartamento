@@ -11,12 +11,14 @@ public class Utente {
     private String descrizione;
     private float valutazione;
     private String primaEsperienza;
+    private String idUtente;
 
     public Utente() {
     }
 
-    public Utente(String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza) {
+    public Utente(String idUtente, String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza) {
 
+        this.idUtente = idUtente;
         this.nome = nome;
         this.cognome = cognome;
         this.telefono = telefono;
@@ -26,6 +28,14 @@ public class Utente {
         this.primaEsperienza = primaEsperienza;
     }
 
+
+    public String getIdUtente() {
+        return idUtente;
+    }
+
+    public void setIdUtente(String idUtente) {
+        this.idUtente = idUtente;
+    }
 
     public String getNome() {
         return nome;

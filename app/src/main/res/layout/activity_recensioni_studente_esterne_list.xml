@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RecensioniStudenteEsterneList">
+    tools:context=".recensione.RecensioniStudenteEsterneList">
 
     <ListView
         android:id="@+id/list_view_Rec_Studente"
