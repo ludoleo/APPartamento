@@ -161,7 +161,7 @@ public class Salvati extends ListActivity {
 
         switch (resultCode) {
             case Activity.RESULT_OK:
-                Bundle extra = data.getBundleExtra("preferiti");
+                Bundle extra = data.getBundleExtra("PreferitiBundle");
                 Preferiti preferiti = (Preferiti) extra.getParcelable("preferiti");
                 String sql="";
                 switch (requestCode) {

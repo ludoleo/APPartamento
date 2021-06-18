@@ -237,18 +237,17 @@ public class ProfiloAnnuncio extends AppCompatActivity {
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
-            int itemId = item.getItemId();
-            if (itemId == SAVE_MENU_OPTION) {
+                int itemId = item.getItemId();
+                 if (itemId == SAVE_MENU_OPTION) {
                 Intent data = new Intent();
-                Bundle teamBundle = new Bundle();
-                preferiti.NomeAnnuncio =et_nomeAnnuncio.getText().toString();
-                preferiti.Prezzo = et_prezzo.getText().toString();
-                preferiti.SpeseExtra =descrizioneAnnuncio.getText().toString();
-                preferiti.Indirizzo = et_indirizzo.getText().toString();
-                preferiti.TipologiaAlloggio= et_tipologiaStanza.getText().toString();
+                Bundle PreferitiBundle = getIntent().getExtras();
+                idAnnuncio = PreferitiBundle.getString("idAnnuncio");
 
-                teamBundle.putParcelable("preferiti", preferiti);
-                data.putExtra("preferiti", teamBundle);
+                while(annuncio.equals(null) || proprietario.equals(null) || casa.equals(null))
+                    caricaDati();
+                aggiornaSchermata();
+                PreferitiBundle.putParcelable("preferiti", preferiti);
+                data.putExtra("preferiti", PreferitiBundle);
                 setResult(Activity.RESULT_OK, data);
                 finish();
                 return true;
