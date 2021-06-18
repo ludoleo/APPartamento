@@ -21,7 +21,10 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.profilo.ProfiloAnnuncio;
 import com.example.myapplication.ricercalloggio.ListaAnnunci;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Salvati extends ListActivity {
     private final static String TAG_LOG = "PreferitiManagerSQL";
@@ -29,7 +32,7 @@ public class Salvati extends ListActivity {
     private final static int CREATE_ACTIVITY_RESULT = 1;
     private final static int UPDATE_ACTIVITY_RESULT = 2;
     private final static int DELETE_MENU_OPTION = 1;
-    private final static int UPDATE_MENU_OPTION = 2;
+    private final static int VEDI_ANNUNCIO = 2;
     private String[] FROMS = new String[] { Preferiti.PreferitiMetaData.NomeAnnuncio,
        Preferiti.PreferitiMetaData.idProprietario, Preferiti.PreferitiMetaData.idCasa, Preferiti.PreferitiMetaData.TipologiaAlloggio, Preferiti.PreferitiMetaData.Prezzo, Preferiti.PreferitiMetaData.Spesestraordinarie,
             Preferiti.PreferitiMetaData.Indirizzo};
@@ -38,6 +41,10 @@ public class Salvati extends ListActivity {
     private SQLiteDatabase db;
     private Cursor cursor;
     private CursorAdapter adapter;
+    //Firebase
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private String idAnnuncio;
 
 
  @Override
@@ -45,7 +52,7 @@ public class Salvati extends ListActivity {
         super.onCreate(savedInstanceState);
      db = dbHelper.getWritableDatabase();
 
-     String sql = "SELECT NomeAnnuncio, idProprietario, idCasa, TipologiaAlloggio, Prezzo,Spesestraordinarie,Indirizzo FROM Preferiti";
+     String sql = "SELECT NomeAnnuncio, TipologiaAlloggio, Prezzo,Spesestraordinarie,Indirizzo FROM Preferiti";
      cursor = db.rawQuery(sql, null);
 
      // Or, using the query() method
@@ -82,8 +89,9 @@ public class Salvati extends ListActivity {
     }
 
     @Override
+
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent createIntent = new Intent(this, TestoPreferiti.class);
+        Intent createIntent = new Intent(this, ProfiloAnnuncio.class);
         startActivityForResult(createIntent, CREATE_ACTIVITY_RESULT);
         return true;
     }
@@ -93,8 +101,8 @@ public class Salvati extends ListActivity {
                                     ContextMenu.ContextMenuInfo menuInfo) {
         int group = Menu.FIRST;
         menu.add(group, DELETE_MENU_OPTION, Menu.FIRST, "delete option");
-        menu.add(group, UPDATE_MENU_OPTION, Menu.FIRST + 1,
-                "update option");
+        menu.add(group, VEDI_ANNUNCIO, Menu.FIRST + 1,
+                "activity annuncio");
     }
 
     @Override
@@ -109,8 +117,15 @@ public class Salvati extends ListActivity {
                 updateListView();
                 return true;
             // Riporta all'activity per aggiornare i dati, nella nostra può essere inutile
-            case UPDATE_MENU_OPTION:
-                Cursor tmpCursor = db.query(Preferiti.PreferitiMetaData.TABLE_NAME,
+               case VEDI_ANNUNCIO:
+               {
+                   database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+                   myRef = database.getReference();
+                   idAnnuncio = getIntent().getExtras().getString("idAnnuncio");
+                   Intent intent = new Intent(Salvati.this,ProfiloAnnuncio.class);
+               }
+
+               /* Cursor tmpCursor = db.query(Preferiti.PreferitiMetaData.TABLE_NAME,
                         Preferiti.PreferitiMetaData.COLUMNS, "NomeAnnuncio" + PreferitiNomeAnnuncio, null, null, null,
                         null);
                 if (tmpCursor.moveToNext()) {
@@ -135,7 +150,7 @@ public class Salvati extends ListActivity {
                     updateIntent.putExtra("preferiti", teamBundle);
                     startActivityForResult(updateIntent, UPDATE_ACTIVITY_RESULT);
                 }
-                return true;
+                return true;*/
             default:
                 return super.onContextItemSelected(item);
         }
@@ -151,15 +166,15 @@ public class Salvati extends ListActivity {
                 String sql="";
                 switch (requestCode) {
                     case CREATE_ACTIVITY_RESULT:
-                        sql += "INSERT INTO Team (NomeAnnuncio, idProprietario, IdCasa,Prezzo,Indirizzo) ";
-                        sql += "VALUES ('"+preferiti.NomeAnnuncio+"', '"+preferiti.idProprietario+"','"+preferiti.idCasa+"','"+preferiti.Prezzo+"','"+preferiti.Indirizzo+"')";
+                        sql += "INSERT INTO Team (NomeAnnuncio, TipologiaAlloggio, Prezzo,Spesestraordinarie,Indirizzo) ";
+                        sql += "VALUES ('"+preferiti.NomeAnnuncio+"', '"+preferiti.TipologiaAlloggio+"','"+preferiti.Prezzo+"','"+preferiti.SpeseExtra+"','"+preferiti.Indirizzo+"')";
                         db.execSQL(sql);
                         break;
                     case UPDATE_ACTIVITY_RESULT:
                         sql += "UPDATE Preferiti ";
-                        sql += "SET idProprietario    = '"+preferiti.idProprietario+"', ";
-                        sql += "    idCasa  = '"+preferiti.idCasa+"', ";
+                        sql += "SET TipologiaAlloggio    = '"+preferiti.TipologiaAlloggio+"', ";
                         sql += "    Prezzo = '"+preferiti.Prezzo+"' ";
+                        sql += "    SpeseExtra = '"+preferiti.SpeseExtra+"' ";
                         sql += "    Indirizzo = '"+preferiti.Indirizzo+"' ";
                         sql += "WHERE NomeAnnuncio = '"+preferiti.NomeAnnuncio+"'";
                         db.execSQL(sql);
@@ -174,7 +189,7 @@ public class Salvati extends ListActivity {
     }
 
     private void updateListView() {
-        String sql = "SELECT NomeAnnuncio,idProprietario, idCasa, Prezzo, Indirizzo FROM Preferiti";
+        String sql = "SELECT  NomeAnnuncio, TipologiaAlloggio, Prezzo,Spesestraordinarie,Indirizzo FROM Preferiti";
         cursor = db.rawQuery(sql, null);
         adapter.changeCursor(cursor);
         adapter.notifyDataSetChanged();
@@ -190,9 +205,9 @@ public class Salvati extends ListActivity {
             String sql="";
             sql += "CREATE TABLE \"PREFERITI\" (";
             sql += "	    \"NomeAnnuncio\" TEXT PRIMARY KEY AUTOINCREMENT,";
-            sql += "	    \"idProprietario\" TEXT NOT NULL,";
-            sql += "	    \"idCasa\" TEXT NOT NULL,";
+            sql += "	    \"TipologiaAlloggio\" TEXT NOT NULL,";
             sql += "	    \"Prezzo\" TEXT NOT NULL,";
+            sql += "	    \"SpeseExtra\" TEXT NOT NULL,";
             sql += "	    \"Indirizzo\" TEXT";
             sql += ")";
 
