@@ -3,7 +3,6 @@ package com.example.myapplication.profilo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -28,7 +27,6 @@ import com.example.myapplication.recensione.RecensioniStudenteEsterneList;
 import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.home.LaTuaCasa;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,7 +44,6 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
-import java.util.List;
 
 import static android.widget.Toast.*;
 
@@ -395,7 +392,7 @@ public class ProfiloStudente extends AppCompatActivity {
     }
 
     public void laTuaCasa(View view) {
-        Intent intent = new Intent(this, LaTuaCasa.class);
+        Intent intent = new Intent(this, ProfiloCasa.class);
         intent.putExtra("idStudente", user.getUid());
         startActivity(intent);
     }

@@ -1,12 +1,9 @@
-package com.example.myapplication.home;
+package com.example.myapplication.profilo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
@@ -14,9 +11,6 @@ import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.classi.Studente;
-import com.example.myapplication.recensione.RecensioniCasa;
-import com.example.myapplication.recensione.RecensioniProprietarioInterne;
-import com.example.myapplication.recensione.RecensioniStudentInterne;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.LinkedList;
 import java.util.List;
 
-public class LaTuaCasa extends AppCompatActivity {
+public class ProfiloCasa extends AppCompatActivity {
 
     private Casa casa;
     private Proprietario proprietario;
@@ -45,7 +39,7 @@ public class LaTuaCasa extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_la_tua_casa);
+        setContentView(R.layout.activity_profilo_casa);
         //COLLEGO IL DB E L'AUTENTICAZIONE
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
@@ -86,7 +80,7 @@ public class LaTuaCasa extends AppCompatActivity {
             //CARICO IL PROPRIETARIO E LA SUA VALUTAZIONE MEDIA
             ilProprietario.setText("Host: "+proprietario.getNome());
             valutazioneProprietario.setText(""+proprietario.getValutazione());
-            //TODO LIST VIEW CON I COINQULINI I ED I PROPRIETARI
+            //TODO LIST VIEW CON I COINQULINI(STUDENTI) I ED I PROPRIETARI
         } else{
             //STAMPA ERRORE
         }

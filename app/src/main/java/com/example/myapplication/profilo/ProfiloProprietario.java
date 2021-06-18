@@ -45,25 +45,25 @@ import java.io.File;
 
 public class ProfiloProprietario extends AppCompatActivity {
 
-    Button recensioniProp, leTueCase,prenotaz, cambiaImmagine;
+    Button cambiaImmagine;
     ImageView immagineprop;
     private static final int IMAG_PICK_CODE = 1000;
     private static final int PERMISSION_CODE = 1001;
     FirebaseStorage storage;
     StorageReference storageRef;
 
-    private TextView text_nomeP;
-    private TextView text_cognomeP;
-    private TextView text_numTelP;
-    private TextView text_emailP;
+    TextView text_nomeP, text_cognomeP, text_emailP;
     private Uri ImageUri ;
 
-    public DatabaseReference myRef;
-    public FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private FirebaseDatabase database;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+
     private String idUtente;
     private String uriImm;
+
+    private Proprietario proprietario;
     //String url;
 
     @Override
@@ -71,22 +71,19 @@ public class ProfiloProprietario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo_proprietario);
 
-        leTueCase =  findViewById(R.id.leTueCase);
-        prenotaz  =  findViewById(R.id.prenotaz);
         cambiaImmagine = findViewById(R.id.cambiaImmagineProp);
-        recensioniProp =  findViewById(R.id.recensioniProp);
         immagineprop = findViewById(R.id.immaginePropriet);
 
         storage = FirebaseStorage.getInstance("gs://appartamento-81c2d.appspot.com");
         //storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference storageRef = storage.getReference();
         Log.i("Storage", "StorageRef è: "+storageRef);
+
         text_nomeP = (TextView) findViewById(R.id.text_nomeP);
         text_cognomeP = (TextView) findViewById(R.id.text_cognomeP);
-        text_numTelP = (TextView) findViewById(R.id.text_numTelP);
         text_emailP = (TextView) findViewById(R.id.text_emailP);
 
-        idUtente = getIntent().getExtras().getString("idUtente");
+        initUI();
 
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
@@ -94,18 +91,6 @@ public class ProfiloProprietario extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
-        popolaProprietario(idUtente);
-
-       //scriviValori();
-
-        recensioniProp.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent a = new Intent(ProfiloProprietario.this, RecensioneProprietarioEsterno.class);
-                startActivity(a);
-            }
-        });
         cambiaImmagine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,47 +115,55 @@ public class ProfiloProprietario extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
-    private void scriviValori() {
+    private void initUI() {
+
+        proprietario = null;
+        String idUtente = user.getUid();
+        if(!idUtente.equals(null)) {
+            myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot figlioP : snapshot.getChildren()) {
+                        if (figlioP.getKey().compareTo(idUtente) == 0) {
+                            proprietario = figlioP.getValue(Proprietario.class);
+                            caricaSchermata(proprietario);
+                            // immagineprop.setImageURI(convertiURI());
+                            return;
+                        }
+                    }
+                    caricaSchermata();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        else
+            caricaSchermata();
+    }
+
+    private void caricaSchermata() {
 
         String nome = getIntent().getExtras().getString("nome");
         String cognome = getIntent().getExtras().getString("cognome");
-        String numTel = getIntent().getExtras().getString("numTel");
         String email = getIntent().getExtras().getString("email");
 
         text_nomeP.setText(nome);
         text_cognomeP.setText(cognome);
-        text_numTelP.setText(numTel);
         text_emailP.setText(email);
 
+        //TODO sistemare le varie listview
     }
+    private void caricaSchermata(Proprietario proprietario) {
+        text_nomeP.setText(proprietario.getNome());
+        text_cognomeP.setText(proprietario.getCognome());
+        text_emailP.setText(proprietario.getEmail());
 
-    private void popolaProprietario(String idUtente) {
-
-        myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot figlioP : snapshot.getChildren()) {
-                    if(figlioP.getKey().compareTo(idUtente)==0) {
-
-                        Proprietario proprietario = figlioP.getValue(Proprietario.class);
-
-                        text_nomeP.setText(proprietario.getNome());
-                        text_cognomeP.setText(proprietario.getCognome());
-                        text_numTelP.setText(proprietario.getTelefono());
-                       // immagineprop.setImageURI(convertiURI());
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        //TODO sistemare le varie listview
     }
 
     private Uri convertiURI() {
@@ -185,8 +178,6 @@ public class ProfiloProprietario extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,IMAG_PICK_CODE);
-
-
     }
 
     @Override
@@ -262,8 +253,6 @@ public class ProfiloProprietario extends AppCompatActivity {
             });
         }
     }
-
-
         /*StorageReference fileRef = storageReference.child("profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -288,11 +277,6 @@ public class ProfiloProprietario extends AppCompatActivity {
 
     public void goHome(View view) {
         Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
-    }
-
-    public void vaiTueCase(View view) {
-        Intent intent = new Intent(this, CaseProprietario.class);
         startActivity(intent);
     }
 }

@@ -55,7 +55,7 @@
         </activity>
         <activity android:name=".registrazione.InserimentoDatiProprietario" />
         <activity android:name=".registrazione.InserimentoDatiStudente" />
-        <activity android:name=".home.LaTuaCasa" />
+        <activity android:name=".profilo.ProfiloCasa" />
         <activity android:name=".ricercalloggio.ListaAnnunci" />
         <activity android:name=".ricercalloggio.MappaAnnunci" />
 

@@ -1,30 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/sfondo"
+    android:orientation="vertical"
     tools:context=".profilo.ProfiloProprietario">
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="44dp">
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="match_parent"
-                android:layout_height="68dp"
-                android:text="Profilo Proprietario"
-                android:textSize="30sp" />
 
 
             <ImageView
@@ -57,62 +39,47 @@
                 android:layout_height="wrap_content"
                 android:text="Cambia Immagine " />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <TextView
+                android:id="@+id/text_nomeP"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="56dp"
+                android:text="@string/etichetta2" />
 
-                <LinearLayout
-                    android:id="@+id/linearLayout2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+            <TextView
+                android:id="@+id/text_cognomeP"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Cognome" />
 
-                    <TextView
-                        android:id="@+id/text_nomeP"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:text="@string/etichetta2" />
 
-                    <TextView
-                        android:id="@+id/text_cognomeP"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp"
-                        android:text="Cognome" />
+            <TextView
+                android:id="@+id/text_emailP"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Email" />
 
-                    <TextView
-                        android:id="@+id/text_numTelP"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:text="Via" />
+            <TextView
+                android:id="@+id/text_view_testo1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:textColor="@color/black"
+                android:text="Case proprietario" />
 
-                    <TextView
-                        android:id="@+id/text_emailP"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:text="Email" />
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </ListView>
 
-                    <Button
-                        android:id="@+id/leTueCase"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:onClick="vaiTueCase"
-                        android:text="Le tue case" />
+            <TextView
+                android:id="@+id/text_view_testo2"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:textColor="@color/black"
+                android:text="Recensioni Proprietario" />
 
-                    <Button
-                        android:id="@+id/prenotaz"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Prenotazioni" />
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </ListView>
 
-                    <Button
-                        android:id="@+id/recensioniProp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Recensioni proprietario" />
-                </LinearLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </LinearLayout>
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
