@@ -95,14 +95,15 @@ public class ProfiloStudente extends AppCompatActivity {
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-               /*     // VERIFICARE QUESTO Forse nella classe Studenti settiamo una Stringa con "DEFAULT"?
+
                     Studente student  = datasnapshot.getValue(Studente.class);
-                    //DOBBIAMO AGGIUNGERE URL ALLA CLASSE?
-                   if(student.getImageURL().equals("default")){
-                  immagineStudente.setImageResource(R.);
-                      } else
-                      Glide.with(getContext()).load(user.getImageURL()).into(immagineStudente);
-                    */
+
+                   //if(student.getImageURL().equals("default")){
+                  immagineStudente.setImageResource(R.mipmap.ic_launcher);
+                    //  } else
+                    // Aggiungere dependecies GLIDE
+                     // Glide.with(getContext()).load(student.getImageURL()).into(immagineStudente);
+
                }
 
                 @Override
@@ -259,7 +260,7 @@ public class ProfiloStudente extends AppCompatActivity {
 
                 Log.i("ProfiloStud","passo da qui");
                 // forse da togliere
-            immagineStudente.setImageURI(ImageUri);
+            //immagineStudente.setImageURI(ImageUri);
             UploadImage(ImageUri);
             }
         }

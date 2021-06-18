@@ -15,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".messaggi.MessaggiActivity"></activity>
+
+
+        <activity android:name=".messaggi.MessaggiActivity" />
 
         <service
             android:name=".MyService"
