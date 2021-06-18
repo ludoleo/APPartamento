@@ -10,18 +10,20 @@ public class Studente extends Utente {
     private String indirizzoLaurea;
     private List<String> hobby = new LinkedList<>();
     private String senzaAlloggio; // non è un inquilino
+    private String imageURL; // Associo immagine
 
 
     public Studente() {
     }
 
     public Studente(String id, String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza,
-                    String universita, String tipologiaLaurea, String indirizzoLaurea, String senzaAlloggio) {
+                    String universita, String tipologiaLaurea, String indirizzoLaurea, String senzaAlloggio,String imageURL) {
         super(id,nome, cognome, telefono, email, descrizione, primaEsperienza);
         this.universita = universita;
         this.tipologiaLaurea = tipologiaLaurea;
         this.indirizzoLaurea = indirizzoLaurea;
         this.senzaAlloggio = senzaAlloggio;
+        this.imageURL = imageURL;
     }
 
     public String getUniversita() {
@@ -66,6 +68,14 @@ public class Studente extends Utente {
 
     public void aggiungiHobby(String hobby) {
         this.hobby.add(hobby);
+    }
+    // IMMAGINE
+    public String getImageURL ()  {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL){
+        this.imageURL = imageURL;
     }
 
     @Override

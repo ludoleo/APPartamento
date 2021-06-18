@@ -8,11 +8,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.myapplication.R;
+import com.example.myapplication.salvati.Salvati;
 
 public class ModificaProfilo extends AppCompatActivity {
     Button infopersonali ;
     Button notifiche;
-    Button esperienza;
+    Button annunciosalvato;
     Button assistenza;
     Button annuncio;
 
@@ -40,11 +41,11 @@ public class ModificaProfilo extends AppCompatActivity {
             }
         });
 
-        esperienza = findViewById(R.id.esperienza);
-        esperienza.setOnClickListener(new View.OnClickListener() {
+        annunciosalvato = findViewById(R.id.annunciSalvatiStudente);
+        annunciosalvato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent d = new Intent(ModificaProfilo.this, ProponiEsperieza.class);
+                Intent d = new Intent(ModificaProfilo.this, Salvati.class);
                 startActivity(d);
             }
         });

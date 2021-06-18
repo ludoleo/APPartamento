@@ -32,10 +32,10 @@
         android:text="@string/etichetta10" />
 
     <Button
-        android:id="@+id/esperienza"
+        android:id="@+id/annunciSalvatiStudente"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:text="@string/Bottone6" />
+        android:text="Annunci Salvati" />
 
     <TextView
         android:id="@+id/textView7"
