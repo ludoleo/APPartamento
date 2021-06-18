@@ -103,11 +103,12 @@ public class Salvati extends ListActivity {
                 .getMenuInfo();
         String PreferitiNomeAnnuncio = info.toString();
         switch (item.getItemId()) {
+            // cancello dalla list view l'elemento
             case DELETE_MENU_OPTION:
                 db.delete("PREFERITI", "Nomeannuncio" +     PreferitiNomeAnnuncio, null);
                 updateListView();
                 return true;
-
+            // Riporta all'activity per aggiornare i dati, nella nostra può essere inutile
             case UPDATE_MENU_OPTION:
                 Cursor tmpCursor = db.query(Preferiti.PreferitiMetaData.TABLE_NAME,
                         Preferiti.PreferitiMetaData.COLUMNS, "NomeAnnuncio" + PreferitiNomeAnnuncio, null, null, null,
