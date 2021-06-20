@@ -16,7 +16,7 @@ public class Preferiti  implements Parcelable {
         public static String TABLE_NAME = "Annunci Preferiti";
         public static String[] COLUMNS = new String[] { NomeAnnuncio, idProprietario, idCasa, TipologiaAlloggio,Prezzo,Spesestraordinarie,Indirizzo };
     }
-
+   // DA FARE CON ANNUNCIO ?
     public static final Parcelable.Creator<Preferiti> CREATOR = new Parcelable.Creator<Preferiti>() {
         @Override
         public Preferiti createFromParcel(Parcel source) {

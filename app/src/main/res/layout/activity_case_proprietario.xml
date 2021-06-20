@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="Le tue case"
+        android:text="@string/case1"
         android:textColor="@color/black"
         android:textSize="20dp"
         android:textStyle="bold" />
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="inserisciCasa"
-        android:text="Aggiungi nuova casa" />
+        android:text="@string/Bcase2" />
 
     <ListView
         android:id="@+id/lv_case_prop"

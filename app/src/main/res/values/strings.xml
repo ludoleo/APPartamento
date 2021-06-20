@@ -29,10 +29,16 @@
     <string name="tipologia">Tipologia</string>
     <string name="etichettaPaypal">Per la tua prenotazione il proprietario richiede il pagamento di un ticket, che ti verrà rimborsato una volta avvenuta la visita</string>
     <string name="etichettaImportoPaypal">Il proprietario richiede un importo di 5 euro per la prenotazione di questa visita</string>
-    <string name="facebook_app_id">513976396407275</string>
-    <string name="fb_login_protocol_scheme">fb513976396407275</string>
-    <string name="channel_name">APPartamento_channel</string>
+    <string name="facebook_app_id" translatable="false">513976396407275</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb513976396407275</string>
+    <string name="channel_name" translatable="false">APPartamento_channel</string>
     <string name="channel_description">Descrizione canale</string>
+    <string name="assistenza1">Centro Assistenza APPartamento non esistare a contattarci per qualsiasi problema</string>
+    <string name="assistenza2">Per eventuali problemi puoi contattarci al nostro indirizzo e-mail :  Appartamento@gmail.com </string>
+    <string name="case1">Le tue case</string>
+    <string name="Bcase2">Aggiungi nuova casa</string>
+    <string name="Prenotazioni1">Prenotazioni</string>
+
 
     <string-array name="hobby">
         <item>Giochi da tavolo</item>
@@ -63,7 +69,7 @@
         <item>18:00-20:00</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="title_activity_messaggi">MessaggiActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

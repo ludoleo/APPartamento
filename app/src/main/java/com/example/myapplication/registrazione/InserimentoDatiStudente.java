@@ -2,6 +2,7 @@ package com.example.myapplication.registrazione;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -240,5 +241,32 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         et_indirizzoLaurea.setText("");
         cb_primaEsperienza.setChecked(false);
     }
+    //Metodi di Call Back
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        Log.d("OGGI","Chiamato OnSaveInstanceState");
+        outState.putString("chiave",et_nome.getText().toString());
+        outState.putString("chiavecognome",et_cognome.getText().toString());
+        outState.putString("chiaveDescrizione",et_descrizioneS.getText().toString());
+        outState.putString("chiaveNumero",et_numTelefono.getText().toString());
+        outState.putString("chiaveIndirizzo",et_indirizzoLaurea.getText().toString());
+        outState.putString("ChiaveUni",et_universita.getText().toString());
+        // il Checked(?)
+}
 
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d("OGGI","Chiamato OnSRestoreInstanceState");
+        // un po' diverso non mi permette di trovare saveState
+        et_nome.setText(savedInstanceState.getString("chiave"));
+        et_cognome.setText(savedInstanceState.getString("chiavecognome"));
+        et_descrizioneS.setText(savedInstanceState.getString("chiaveDescrizione"));
+        et_numTelefono.setText(savedInstanceState.getString("chiaveNumero"));
+        et_indirizzoLaurea.setText(savedInstanceState.getString("chiaveIndirizzo"));
+        et_universita.setText(savedInstanceState.getString("chiaveUni"));
+
+
+    }
 }

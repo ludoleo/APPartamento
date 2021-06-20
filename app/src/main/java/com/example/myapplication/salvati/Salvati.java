@@ -21,6 +21,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.profilo.ProfiloAnnuncio;
 import com.example.myapplication.ricercalloggio.ListaAnnunci;
 import com.google.firebase.database.DatabaseReference;
@@ -29,13 +30,16 @@ import com.google.firebase.database.FirebaseDatabase;
 public class Salvati extends ListActivity {
     private final static String TAG_LOG = "PreferitiManagerSQL";
     private final static int DB_VERSION = 1;
+    // menù
     private final static int CREATE_ACTIVITY_RESULT = 1;
     private final static int UPDATE_ACTIVITY_RESULT = 2;
     private final static int DELETE_MENU_OPTION = 1;
     private final static int VEDI_ANNUNCIO = 2;
+    // Gestione dei metadati
     private String[] FROMS = new String[] { Preferiti.PreferitiMetaData.NomeAnnuncio,
        Preferiti.PreferitiMetaData.idProprietario, Preferiti.PreferitiMetaData.idCasa, Preferiti.PreferitiMetaData.TipologiaAlloggio, Preferiti.PreferitiMetaData.Prezzo, Preferiti.PreferitiMetaData.Spesestraordinarie,
             Preferiti.PreferitiMetaData.Indirizzo};
+    //  collegamento con layout
     private int[] TOS = new int[] { R.id.Nomeannpref, R.id.idproppref,R.id.idcasapref,
            R.id.tipologiapref, R.id.prezzopref, R.id.speseextrapref,R.id.indirizzopref };
     private SQLiteDatabase db;
@@ -81,13 +85,13 @@ public class Salvati extends ListActivity {
         cursor.close();
         db.close();
     }
-
+// creo menù
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(Menu.FIRST, Menu.FIRST, Menu.FIRST, "Aggiungi nuovo preferito");
         return true;
     }
-
+// dico cosa deve fare il menù
     @Override
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -95,6 +99,7 @@ public class Salvati extends ListActivity {
         startActivityForResult(createIntent, CREATE_ACTIVITY_RESULT);
         return true;
     }
+    // menù contestuale
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
@@ -116,15 +121,16 @@ public class Salvati extends ListActivity {
                 db.delete("PREFERITI", "Nomeannuncio" +     PreferitiNomeAnnuncio, null);
                 updateListView();
                 return true;
-            // Riporta all'activity per aggiornare i dati, nella nostra può essere inutile
+            // Riporta all'activity dell'annuncio
                case VEDI_ANNUNCIO:
                {
                    database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
                    myRef = database.getReference();
                    idAnnuncio = getIntent().getExtras().getString("idAnnuncio");
                    Intent intent = new Intent(Salvati.this,ProfiloAnnuncio.class);
+                   startActivity(intent);
                }
-
+               // Riportava alla Edit Text, al fine di aggiornare i dati , cosa inutile per noi (?)
                /* Cursor tmpCursor = db.query(Preferiti.PreferitiMetaData.TABLE_NAME,
                         Preferiti.PreferitiMetaData.COLUMNS, "NomeAnnuncio" + PreferitiNomeAnnuncio, null, null, null,
                         null);
@@ -155,13 +161,14 @@ public class Salvati extends ListActivity {
                 return super.onContextItemSelected(item);
         }
     }
-
+    // CallBack di StartActivity() che collega l'intent in arrivo con i dati del preferito con la list view
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (resultCode) {
             case Activity.RESULT_OK:
-                Bundle extra = data.getBundleExtra("PreferitiBundle");
+                Bundle extra = data.getBundleExtra("preferiti");
+                //Preferiti o Annuncio ?
                 Preferiti preferiti = (Preferiti) extra.getParcelable("preferiti");
                 String sql="";
                 switch (requestCode) {

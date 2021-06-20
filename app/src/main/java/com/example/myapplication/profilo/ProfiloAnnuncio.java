@@ -40,6 +40,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     private final static int CANCEL_MENU_OPTION = 1;
     private static final String TAG ="Il preferito " ;
     private String idPreferito;
+    //  PREFERITI O ANNUNCIO ?
     private Preferiti preferiti;
 
 
@@ -92,7 +93,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         et_num_bagni = (TextView) findViewById(R.id.et_num_bagni);
         descrizioneAnnuncio = (TextView) findViewById(R.id.descrizioneAnnuncio);
         initUI();
-        // gestione del Preferito
+        // Gestione del Preferito
         idPreferito = getIntent().getExtras().getString("idAnnuncio");
        aggiornaSchermata();
         Bundle prefBundle = getIntent().getBundleExtra("preferito");
@@ -242,10 +243,12 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                 Intent data = new Intent();
                 Bundle PreferitiBundle = getIntent().getExtras();
                 idAnnuncio = PreferitiBundle.getString("idAnnuncio");
+                // devo settare i dati al Bundle
 
                 while(annuncio.equals(null) || proprietario.equals(null) || casa.equals(null))
                     caricaDati();
                 aggiornaSchermata();
+                // Qua da aggiungere parcellizabile ad Annuncio
                 PreferitiBundle.putParcelable("preferiti", preferiti);
                 data.putExtra("preferiti", PreferitiBundle);
                 setResult(Activity.RESULT_OK, data);
