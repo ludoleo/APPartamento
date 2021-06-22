@@ -15,8 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-
-
+        <activity android:name=".ricercalloggio.Preferiti"></activity>
         <activity android:name=".messaggi.MessaggiActivity" />
 
         <service
@@ -88,7 +87,6 @@
         <activity android:name=".recensione.RecensioniStudenteEsterneList" />
         <activity android:name=".recensione.RecensioniStudentInterne" />
         <activity android:name=".registrazione.RegistrationActivity" />
-        <activity android:name=".salvati.Salvati" />
         <activity android:name=".prenotazione.VisitaVirtuale" />
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".MainActivity" />

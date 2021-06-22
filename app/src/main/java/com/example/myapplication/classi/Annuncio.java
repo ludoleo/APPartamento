@@ -1,14 +1,27 @@
 package com.example.myapplication.classi;
 
 import android.location.Address;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.ImageView;
 
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-
+// NUOVO
 public class Annuncio {
+    public static class AnnuncioMetaData {
+        public static String NOME_ANNUNCIO = "_id";
+        public static String IDPROPRIETARIO = "prop";
+        public static String IDCASA = "casa";
+        public static String TIPOLOGIA = "tipologia";
+        public static String PREZZO = "prezzo";
+        public static String SPESE = "spese_extra";
+        public static String INDIRIZZO = "indirizzo";
+        public static String TABLE_NAME = "Preferiti";
+        public static String[] COLUMNS = new String[] { NOME_ANNUNCIO, IDPROPRIETARIO, IDCASA, TIPOLOGIA,PREZZO,SPESE,INDIRIZZO };
+    }
 
     private String nomeAnnuncio;
     private String  idProprietario;
@@ -133,3 +146,4 @@ public class Annuncio {
         return ""+idCasa+" "+prezzoMensile+" Euro/mese";
     }
 }
+

@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.myapplication.ricercalloggio.Preferiti;
 import com.example.myapplication.R;
-import com.example.myapplication.salvati.Salvati;
 
 public class ModificaProfilo extends AppCompatActivity {
     Button infopersonali ;
@@ -45,7 +45,7 @@ public class ModificaProfilo extends AppCompatActivity {
         annunciosalvato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent d = new Intent(ModificaProfilo.this, Salvati.class);
+                Intent d = new Intent(ModificaProfilo.this, Preferiti.class);
                 startActivity(d);
             }
         });

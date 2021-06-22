@@ -2,24 +2,22 @@ package com.example.myapplication.profilo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Parcelable;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.ricercalloggio.Preferiti;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.classi.Studente;
-import com.example.myapplication.classi.Utente;
 import com.example.myapplication.prenotazione.PrenotazioneActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.salvati.Preferiti;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,9 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class ProfiloAnnuncio extends AppCompatActivity {
 
@@ -39,9 +34,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     private final static int SAVE_MENU_OPTION = 0;
     private final static int CANCEL_MENU_OPTION = 1;
     private static final String TAG ="Il preferito " ;
-    private String idPreferito;
-    //  PREFERITI O ANNUNCIO ?
-    private Preferiti preferiti;
+    private CheckBox IsPrefetito;
 
 
     //parametri necessari per riempire la pagina
@@ -93,16 +86,9 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         et_num_bagni = (TextView) findViewById(R.id.et_num_bagni);
         descrizioneAnnuncio = (TextView) findViewById(R.id.descrizioneAnnuncio);
         initUI();
-        // Gestione del Preferito
-        idPreferito = getIntent().getExtras().getString("idAnnuncio");
-       aggiornaSchermata();
-        Bundle prefBundle = getIntent().getBundleExtra("preferito");
-        if (prefBundle != null) {
-            preferiti = (Preferiti) prefBundle.getParcelable("preferiti");
-            aggiornaSchermata();
-        } else {
-            preferiti = new Preferiti();
-        }
+        // preferito
+        IsPrefetito = (CheckBox) findViewById(R.id.IsPreferito);
+
     }
 
 
@@ -226,40 +212,22 @@ public class ProfiloAnnuncio extends AppCompatActivity {
             Toast.makeText(this, "Devi essere uno studente per effettuare una prenotazione", Toast.LENGTH_SHORT).show();
         }
     }
-        // SE E' PREFERITO ALLORA ESEGUI QUESTO CODICE?
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            menu.add(Menu.FIRST, SAVE_MENU_OPTION, Menu.FIRST,
-                    "AGGIUNGI AI PREFERITI");
-            menu.add(Menu.FIRST + 1, CANCEL_MENU_OPTION, Menu.FIRST + 1,
-                    "CANCEL OPTION");
-            return true;
-        }
+    // PREFERITI
+    public void PreferitoIsChecked() {
+        if(IsPrefetito.isChecked()){
+        Annuncio preferito = new Annuncio();
+        String nomeannuncio = preferito.getIdAnnuncio() ;
+        creapreferito (preferito);
 
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-                int itemId = item.getItemId();
-                 if (itemId == SAVE_MENU_OPTION) {
-                Intent data = new Intent();
-                Bundle PreferitiBundle = getIntent().getExtras();
-                idAnnuncio = PreferitiBundle.getString("idAnnuncio");
-                // devo settare i dati al Bundle
+    }
+    }
+    // se non mettevo (Parcelable ) mi dava errore
+    private void creapreferito(Annuncio preferito) {
+        Intent data = new Intent(this,Preferiti.class);
+        data.putExtra("idAnnuncio", (Parcelable) preferito);
+        startActivity(data);
+    }
 
-                while(annuncio == null || proprietario == null || casa == null)
-                    caricaDati();
-                aggiornaSchermata();
-                // Qua da aggiungere parcellizabile ad Annuncio
-                PreferitiBundle.putParcelable("preferiti", preferiti);
-                data.putExtra("preferiti", PreferitiBundle);
-                setResult(Activity.RESULT_OK, data);
-                finish();
-                return true;
-            } else if (itemId == CANCEL_MENU_OPTION) {
-                finish();
-                return true;
-            } else {
-                return super.onOptionsItemSelected(item);
-            }
 
-        }
 }
+
