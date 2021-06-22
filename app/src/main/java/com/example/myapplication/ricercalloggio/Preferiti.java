@@ -43,14 +43,17 @@ public class Preferiti extends ListActivity {
     private final static int UPDATE_ACTIVITY_RESULT = 2;
     private final static int DELETE_MENU_OPTION = 1;
     private final static int ORDINA_PREZZO = 2;
+    // Prendo riferimento ai metadati della classe Annuncio
     private String[] FROMS = new String[] { Annuncio.AnnuncioMetaData.NOME_ANNUNCIO,
-            Annuncio.AnnuncioMetaData.IDPROPRIETARIO, Annuncio.AnnuncioMetaData.IDCASA, Annuncio.AnnuncioMetaData.TIPOLOGIA, Annuncio.AnnuncioMetaData.PREZZO, Annuncio.AnnuncioMetaData.SPESE, Annuncio.AnnuncioMetaData.INDIRIZZO};
+            Annuncio.AnnuncioMetaData.IDPROPRIETARIO, Annuncio.AnnuncioMetaData.IDCASA, Annuncio.AnnuncioMetaData.TIPOLOGIA,
+            Annuncio.AnnuncioMetaData.PREZZO, Annuncio.AnnuncioMetaData.SPESE, Annuncio.AnnuncioMetaData.INDIRIZZO};
+    // Riferimento al layout di riga
     private int[] TOS = new int[] { R.id.nomePreferito, R.id.IDPP,
             R.id.IDCP, R.id.PP,R.id.SP,R.id.IP };
     private SQLiteDatabase db;
     private Cursor cursor;
     private CursorAdapter adapter;
-
+ // On Create (Firebase,SQlite)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,18 +75,18 @@ public class Preferiti extends ListActivity {
         getListView().setAdapter(adapter);
         registerForContextMenu(getListView());
     }
-
+  // OnStart
     @Override
     protected void onStart() {
         super.onStart();
         updateListView();
     }
-
+   // OnStop
     @Override
     protected void onStop() {
         super.onStop();
     }
-
+// OnDestroy
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -96,7 +99,7 @@ public class Preferiti extends ListActivity {
         menu.add(Menu.FIRST, Menu.FIRST, Menu.FIRST, "Guarda altri annunci");
         return true;
     }
-
+  // Dico cosa deve fare il menù sopra
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -104,7 +107,7 @@ public class Preferiti extends ListActivity {
         startActivityForResult(createIntent, CREATE_ACTIVITY_RESULT);
         return true;
     }
-// menù contestuale (quali query)
+// menù contestuale (quali query possiamo fare (?))
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
@@ -119,12 +122,15 @@ public class Preferiti extends ListActivity {
                 .getMenuInfo();
         long preferitoId = prefe.id;
         switch (item.getItemId()) {
+            // elimina la riga
             case DELETE_MENU_OPTION:
                 db.delete("Preferiti", "_id=" + preferitoId, null);
                 updateListView();
                 return true;
+                // ordina in base al prezzzo
              case ORDINA_PREZZO:
-               db.query(Annuncio.AnnuncioMetaData.TABLE_NAME,
+               //db.query("Preferiti","prezzo","_id",null,"prezzo",null,null);
+                cursor = db.query(Annuncio.AnnuncioMetaData.TABLE_NAME,
                         Annuncio.AnnuncioMetaData.COLUMNS, "_id=" + preferitoId, null,"prezzo",null,
                         null);
 

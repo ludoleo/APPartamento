@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
 import com.example.myapplication.recensione.RecensioniStudenteEsterneList;
 import com.example.myapplication.classi.Inquilino;
@@ -99,11 +100,12 @@ public class ProfiloStudente extends AppCompatActivity {
 
                     Studente student  = datasnapshot.getValue(Studente.class);
 
-                   //if(student.getImageURL().equals("default")){
+                   if(student.getImageURL().equals("default")){
                   immagineStudente.setImageResource(R.mipmap.ic_launcher);
-                    //  } else
-                    // Aggiungere dependecies GLIDE
-                     // Glide.with(getContext()).load(student.getImageURL()).into(immagineStudente);
+                     } else
+                    // Codice vorrebbe getContext, ma non esiste
+
+                    Glide.with(getBaseContext()).load(student.getImageURL()).into(immagineStudente);
 
                }
 
