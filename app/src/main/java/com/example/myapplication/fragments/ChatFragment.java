@@ -7,13 +7,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Chat;
+import com.example.myapplication.classi.Token;
 import com.example.myapplication.classi.Utente;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +29,7 @@ import java.util.List;
 
 public class ChatFragment extends Fragment {
 
+    private static final String TAG = "CHAT_FRAGMENT" ;
     private RecyclerView recyclerView;
 
     private UserAdapter userAdapter;
@@ -40,11 +44,16 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        //TODO non mostra nulla
+        Log.i(TAG,"PASSO DA QUI");
+
         View view = inflater.inflate(R.layout.fragment_chat,container, false);
 
         recyclerView = view.findViewById(R.id.recycle_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         usersList = new ArrayList<>();
 
@@ -75,23 +84,34 @@ public class ChatFragment extends Fragment {
             }
         });
 
+        //updateToken(FirebaseInstanceID.getInstance().getTokn);
+
         return view;
     }
+
+    private void updateToken(String token) {
+        reference.child("Token");
+        Token token1 = new Token(token);
+        reference.child(firebaseUser.getUid()).setValue(token);
+    }
+
 
     private void leggiChat() {
 
         mUtenti = new ArrayList<>();
-        //TODO scorrere e prendere l'utemte loggato che può essere proprietario o studente
-        reference = FirebaseDatabase.getInstance().getReference("Utenti");
+        //TODO scorrere e prendere l'utente loggato che può essere proprietario o studente
+        reference = FirebaseDatabase.getInstance().getReference("Utenti").child("Proprietari");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUtenti.clear();
 
+                Log.i(TAG,"PASSO DA QUI");
                 for(DataSnapshot snapshot2 : snapshot.getChildren()) {
                     Utente utente = snapshot2.getValue(Utente.class);
 
+                    Log.i(TAG,"CHAT CON "+utente.getEmail());
                     //mostra un utente per chat
                     for(String id : usersList) {
                         if(utente.getIdUtente().equals(id)) {

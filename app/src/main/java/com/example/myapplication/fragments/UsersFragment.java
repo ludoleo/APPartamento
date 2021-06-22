@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ import java.util.List;
 public class UsersFragment extends Fragment {
 
 
+    private static final String TAG = "FRAGMENT_USER" ;
     private RecyclerView recyclerView;
      UserAdapter userAdapter;
     private List<Utente> mUtente;
@@ -70,15 +72,25 @@ public class UsersFragment extends Fragment {
 
                 for (DataSnapshot studentiSnapshot : snapshot.getChildren()) {
 
+                    Log.i(TAG,"Connesso utente "+firebaseUser.getEmail()+" "+firebaseUser.getUid());
+                    Log.i(TAG, "Studente in db "+studentiSnapshot.getKey());
+
                     if (studentiSnapshot.getKey().compareTo(firebaseUser.getUid()) == 0) {
-                        //TODO aggiungi i proprietari alla lista di utenti
+                        Log.i(TAG, "Entro nell'if ");
+                        //TODO aggiungi i proprietari alla lista di utenti, collegare con click sull'annuncio(DA CAPIRE)
                         myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                                 for (DataSnapshot proprietari : snapshot.getChildren()) {
-                                    Proprietario proprietario = snapshot.getValue(Proprietario.class);
+                                    Proprietario proprietario = proprietari.getValue(Proprietario.class);
+                                    Log.i(TAG,"Aggiunto proprietario "+proprietario.getNome());
                                     mUtente.add(proprietario);
+
+                                    Log.i(TAG, "Dimensione di mutente "+mUtente.size());
+
+                                    userAdapter = new UserAdapter(getContext(), mUtente);
+                                    recyclerView.setAdapter(userAdapter);
                                 }
                             }
 
@@ -91,13 +103,13 @@ public class UsersFragment extends Fragment {
                         });
 
                     } else {
-                        myRef.child("Utenti").child("Studentu").addValueEventListener(new ValueEventListener() {
+                        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                for (DataSnapshot proprietari : snapshot.getChildren()) {
-                                    Studente studente = snapshot.getValue(Studente.class);
-                                    mUtente.add(studente);
+                                for (DataSnapshot studenti : snapshot.getChildren()) {
+                                    Studente studente = studenti.getValue(Studente.class);
+                                   // mUtente.add(studente);
                                 }
                             }
 
@@ -110,8 +122,7 @@ public class UsersFragment extends Fragment {
                     }
 
                 }
-                userAdapter = new UserAdapter(getContext(), mUtente);
-                recyclerView.setAdapter(userAdapter);
+
 
             }
 

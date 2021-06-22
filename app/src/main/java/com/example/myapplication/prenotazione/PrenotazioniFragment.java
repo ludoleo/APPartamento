@@ -39,6 +39,7 @@ public class PrenotazioniFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment MainFragment.
      */
+
     // TODO: Rename and change types and number of parameters
     public static PrenotazioniFragment newInstance(String param1, String param2) {
         PrenotazioniFragment fragment = new PrenotazioniFragment();

@@ -1,12 +1,15 @@
 package com.example.myapplication.classi;
 
+
+import java.util.Objects;
+
 public class Chat {
 
     private String sender;
     private String receiver;
     private String text_message;
 
-    public Chat(String sender, String receiver, String text_message) {
+    public Chat(String receiver, String sender, String text_message) {
         this.sender = sender;
         this.receiver = receiver;
         this.text_message = text_message;
@@ -38,4 +41,7 @@ public class Chat {
     public void setText_message(String text_message) {
         this.text_message = text_message;
     }
+
+
 }
+

@@ -9,12 +9,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
+import com.example.myapplication.home.CaseProprietario;
+import com.example.myapplication.profilo.ProfiloAnnuncio;
+import com.example.myapplication.registrazione.InserimentoDatiAnnuncio;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +35,7 @@ public class ListaAnnunci extends AppCompatActivity {
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +71,7 @@ public class ListaAnnunci extends AppCompatActivity {
 
     private void aggiorna() {
 
-        ListView listView = (ListView) findViewById(R.id.lv_elencoAnnunci);
+        listView = (ListView) findViewById(R.id.lv_elencoAnnunci);
         CustomItem[] items = createItems();
 
         ArrayAdapter<CustomItem> arrayAdapter = new ArrayAdapter<CustomItem>(
@@ -90,6 +95,23 @@ public class ListaAnnunci extends AppCompatActivity {
             }
         };
         listView.setAdapter(arrayAdapter);
+        //aggista-------
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                //TODO prendo l'id della casa che ho cliccato vado ad aggiungi annuncio, pushando con l'intent l'id
+                CustomItem annuncio = (CustomItem) adapterView.getItemAtPosition(pos);
+                String nomeCasa = annuncio.nomeCasa;
+                creaAnnuncio(nomeCasa);
+            }
+        });
+    }
+
+    private void creaAnnuncio(String casa) {
+        Intent intent = new Intent(this, ProfiloAnnuncio.class);
+        //TODO cosa mi conviene passare, idAnnuncio
+        intent.putExtra("idAnnuncio", casa);
+        startActivity(intent);
     }
 
     public void visualizzaMappa(View view) {

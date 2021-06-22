@@ -33,13 +33,27 @@
                 app:srcCompat="@drawable/ic_baseline_home_24"
                 tools:ignore="VectorDrawableCompat" />
 
-            <Button
-                android:id="@+id/cambiaImmagineProp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cambia Immagine " />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-            <TextView
+        <Button
+            android:id="@+id/cambiaImmagineProp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cambia Immagine " />
+
+        <Button
+            android:id="@+id/aggiungiCasa"
+            android:layout_width="222dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="aggiungiNuovaCasa"
+            android:text="Aggiungi Casa" />
+    </LinearLayout>
+
+    <TextView
                 android:id="@+id/text_nomeP"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
@@ -66,6 +80,7 @@
                 android:text="Case proprietario" />
 
             <ListView
+                android:id="@+id/lv_case_prop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </ListView>

@@ -91,6 +91,7 @@ public class ProfiloStudente extends AppCompatActivity {
            // forse da aggiungere questo, ma in realtà myref c'è già(più sotto, sempre in OnCreate)--> myRef = FirebaseDatabase.getInstance().getReference("Studenti").child(user.getUid());
             database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
             mAuth = FirebaseAuth.getInstance();
+            user = mAuth.getCurrentUser();
             myRef = database.getReference();
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -394,7 +395,7 @@ public class ProfiloStudente extends AppCompatActivity {
 
     public void laTuaCasa(View view) {
         Intent intent = new Intent(this, ProfiloCasa.class);
-        intent.putExtra("idStudente", user.getUid());
+        intent.putExtra("idStudente", idUtente);
         startActivity(intent);
     }
 

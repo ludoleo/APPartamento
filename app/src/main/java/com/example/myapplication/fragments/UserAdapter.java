@@ -2,6 +2,7 @@ package com.example.myapplication.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>  {
 
+    private static final String TAG = "USER_ADAPTER";
     private Context mContext;
     private List<Utente> mUser;
 
@@ -39,6 +41,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>  {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         Utente user = mUser.get(position);
+        Log.i(TAG,"USER é "+user.getEmail());
         holder.username.setText(user.getNome() + " " + user.getCognome());
         // if(user.getImageURL().equals("default")) {
         holder.profile_image.setImageResource(R.mipmap.ic_launcher);
@@ -46,7 +49,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>  {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(mContext, MessaggiActivity.class);
+                Log.i(TAG,"USER che invio a messaggi activity "+user.getIdUtente());
                 intent.putExtra("userId", user.getIdUtente());
                 mContext.startActivity(intent);
             }

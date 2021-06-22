@@ -25,4 +25,7 @@ public class Proprietario extends Utente{
     public void setImmagineProfilo(ImageView immagineProfilo) {
         this.immagineProfilo = immagineProfilo;
     }
+
+
+
 }

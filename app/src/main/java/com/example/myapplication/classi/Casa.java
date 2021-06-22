@@ -1,6 +1,5 @@
 package com.example.myapplication.classi;
 
-import android.location.Address;
 
 import java.util.Objects;
 

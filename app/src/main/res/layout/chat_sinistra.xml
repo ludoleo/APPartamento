@@ -18,7 +18,7 @@
         android:layout_marginLeft="5dp"
         android:text="Ciao"
         android:id="@+id/mostra_messaggio"
-        android:textSize="10dp"
+        android:textSize="10sp"
         android:padding="8dp"
         android:background="@drawable/background_sinistra"
 

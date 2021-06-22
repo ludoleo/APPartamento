@@ -10,15 +10,21 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.widget.TableLayout;
+import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.fragments.ChatFragment;
 import com.example.myapplication.fragments.UsersFragment;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
 public class ChatActivity extends AppCompatActivity {
+
+    FirebaseUser utente;
+    TextView username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,10 @@ public class ChatActivity extends AppCompatActivity {
 
         TabLayout tableLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.view_pager);
+        username = findViewById(R.id.username);
+        utente = FirebaseAuth.getInstance().getCurrentUser();
+        username.setText(utente.getEmail());
+
 
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 

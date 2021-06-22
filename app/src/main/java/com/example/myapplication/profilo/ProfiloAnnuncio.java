@@ -125,7 +125,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
             //gestisci la cosa - errore nel putExtra
             return;}
         //con questo metodo sono sicuro di caricare tutte le liste
-        while(annuncio.equals(null) || proprietario.equals(null) || casa.equals(null))
+        while(annuncio == null || proprietario == null || casa==null)
             caricaDati();
         aggiornaSchermata();
     }
@@ -146,7 +146,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
 
     private void caricaDati() {
 
-        if(annuncio.equals(null)){
+        if(annuncio==null){
             myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -161,7 +161,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                 }
             });
         }
-        if(!annuncio.equals(null) && casa.equals(null)){
+        if(annuncio!=null && casa == null){
                 myRef.child("Case").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -177,7 +177,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                     }
                 });
         }
-        if(!annuncio.equals(null) && !casa.equals(null) && proprietario.equals(null)){
+        if(annuncio != null && casa != null && proprietario==null){
             myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -245,7 +245,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                 idAnnuncio = PreferitiBundle.getString("idAnnuncio");
                 // devo settare i dati al Bundle
 
-                while(annuncio.equals(null) || proprietario.equals(null) || casa.equals(null))
+                while(annuncio == null || proprietario == null || casa == null)
                     caricaDati();
                 aggiornaSchermata();
                 // Qua da aggiungere parcellizabile ad Annuncio

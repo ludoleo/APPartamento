@@ -24,7 +24,7 @@
             android:padding="8dp"
             android:id="@+id/mostra_messaggio"
             android:layout_alignParentEnd="true"
-            android:textSize="10dp"
+            android:textSize="10sp"
             android:textColor="@color/rosso_scuro"
             android:background="@drawable/background_destra"
             android:layout_alignParentRight="true" />
