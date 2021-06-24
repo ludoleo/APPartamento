@@ -23,8 +23,14 @@ import com.example.myapplication.R;
 import com.example.myapplication.classi.Chat;
 import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.classi.Utente;
+import com.example.myapplication.fragments.APIService;
 import com.example.myapplication.fragments.MessageAdapter;
 import com.example.myapplication.home.Home;
+import com.example.myapplication.notifiche.Client;
+import com.example.myapplication.notifiche.DatiNotifica;
+import com.example.myapplication.notifiche.Mittente;
+import com.example.myapplication.notifiche.RispostaNotifica;
+import com.example.myapplication.notifiche.Token;
 import com.example.myapplication.profilo.ProfiloStudente;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,11 +38,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 // creo l'activity che mi fa permettere di chattare-----------------------------------
@@ -60,6 +71,10 @@ public class MessaggiActivity extends AppCompatActivity {
 
     Intent intent;
 
+    APIService apiService;
+
+    boolean notifica = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +94,8 @@ public class MessaggiActivity extends AppCompatActivity {
         });
 
          */
+
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         recyclerView = findViewById(R.id.recycle_view);
         recyclerView.setHasFixedSize(true);
@@ -105,8 +122,10 @@ public class MessaggiActivity extends AppCompatActivity {
 
 
         btn_send.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+                notifica = true;
                 String msg = text_send.getText().toString();
                 if(!msg.equals("")) {
                     Log.i(TAG, "MESSAGGIO DA UTENTE "+user.getEmail()+" A UTENTE "+idUtente);
@@ -159,8 +178,8 @@ public class MessaggiActivity extends AppCompatActivity {
 
         reference.child("Chat").push().setValue(chat);
         //aggiunge utente a fragment chat------------parte 16 tutorial ottimizza
-        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist")
-                .child(user.getUid())
+        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference();
+                chatRef.child("ChatList").child(user.getUid())
                 .child(idUtente);
 
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -176,6 +195,65 @@ public class MessaggiActivity extends AppCompatActivity {
 
             }
         });
+
+        //notifche messaggio
+        final String messaggio = message;
+
+        myRef.child("Utenti").child("Studenti").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Utente utente = snapshot.getValue(Utente.class);
+                inviaNotifica(receiver, utente.getEmail(),message);
+                notifica = false;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void inviaNotifica(String receiver, String email, String message) {
+
+        DatabaseReference reference = myRef.child("Token");
+        Query query = reference.orderByKey().equalTo(receiver);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for ( DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    Token token = snapshot.getValue(Token.class);
+                    DatiNotifica dati = new DatiNotifica(user.getUid(), R.mipmap.ic_launcher, email+": "+message, "Nuovo Messaggio",
+                            idUtente);
+
+                    Mittente mittente = new Mittente(dati,token.getToken());
+
+                    apiService.inviaNotifica(mittente)
+                            .enqueue(new Callback<RispostaNotifica>() {
+                                @Override
+                                public void onResponse(Call<RispostaNotifica> call, Response<RispostaNotifica> response) {
+                                    if(response.code() == 200) {
+                                        if(response.body().successo != 1) {
+                                            Toast.makeText(MessaggiActivity.this, "Fallito", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<RispostaNotifica> call, Throwable t) {
+
+                                }
+                            });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     public void leggiMessaggio(String myId, String userID, String imageURL) {

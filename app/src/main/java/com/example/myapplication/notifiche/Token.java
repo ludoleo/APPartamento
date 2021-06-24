@@ -1,4 +1,4 @@
-package com.example.myapplication.classi;
+package com.example.myapplication.notifiche;
 
 public class Token {
 

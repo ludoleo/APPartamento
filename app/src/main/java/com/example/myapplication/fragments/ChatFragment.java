@@ -14,7 +14,8 @@ import android.view.ViewGroup;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Chat;
-import com.example.myapplication.classi.Token;
+import com.example.myapplication.classi.Proprietario;
+import com.example.myapplication.notifiche.Token;
 import com.example.myapplication.classi.Utente;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,25 +59,32 @@ public class ChatFragment extends Fragment {
 
         usersList = new ArrayList<>();
 
-        reference = FirebaseDatabase.getInstance().getReference("Chat");
+        reference = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
 
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.child("Chat").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 usersList.clear();
 
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Log.i(TAG,"PASSO QUI "+dataSnapshot.toString());
                     Chat chat = dataSnapshot.getValue(Chat.class);
 
+                    Log.i(TAG,"Sender "+firebaseUser.getUid()+" "+chat.getSender()+" "+chat.getReceiver());
                     if(chat.getSender().equals(firebaseUser.getUid())) {
+                        Log.i(TAG,"ENTRO NELL'IF");
                         usersList.add(chat.getReceiver());
+
                     }
                     if(chat.getReceiver().equals(firebaseUser.getUid())) {
                         usersList.add(chat.getSender());
+
                     }
                 }
 
+                Log.i(TAG,"ListaChat "+usersList.toString());
                 leggiChat();
+
             }
 
             @Override
@@ -84,7 +93,8 @@ public class ChatFragment extends Fragment {
             }
         });
 
-        //updateToken(FirebaseInstanceID.getInstance().getTokn);
+        //molti dubbi su questo metodo!!!!!!!!
+        updateToken(FirebaseMessaging.getInstance().getToken().toString());
 
         return view;
     }
@@ -92,7 +102,7 @@ public class ChatFragment extends Fragment {
     private void updateToken(String token) {
         reference.child("Token");
         Token token1 = new Token(token);
-        reference.child(firebaseUser.getUid()).setValue(token);
+        reference.child("Token").child(firebaseUser.getUid()).setValue(token);
     }
 
 
@@ -100,9 +110,7 @@ public class ChatFragment extends Fragment {
 
         mUtenti = new ArrayList<>();
         //TODO scorrere e prendere l'utente loggato che può essere proprietario o studente
-        reference = FirebaseDatabase.getInstance().getReference("Utenti").child("Proprietari");
-
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUtenti.clear();
@@ -111,7 +119,7 @@ public class ChatFragment extends Fragment {
                 for(DataSnapshot snapshot2 : snapshot.getChildren()) {
                     Utente utente = snapshot2.getValue(Utente.class);
 
-                    Log.i(TAG,"CHAT CON "+utente.getEmail());
+                    Log.i(TAG,"CHAT CON "+utente.getNome()+" "+utente.getCognome());
                     //mostra un utente per chat
                     for(String id : usersList) {
                         if(utente.getIdUtente().equals(id)) {

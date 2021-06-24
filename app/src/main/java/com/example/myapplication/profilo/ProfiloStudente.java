@@ -94,27 +94,7 @@ public class ProfiloStudente extends AppCompatActivity {
             mAuth = FirebaseAuth.getInstance();
             user = mAuth.getCurrentUser();
             myRef = database.getReference();
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
 
-                    Studente student  = datasnapshot.getValue(Studente.class);
-
-                   if(student.getImageURL().equals("default")){
-                  immagineStudente.setImageResource(R.mipmap.ic_launcher);
-                     } else
-                    // Codice vorrebbe getContext, ma non esiste
-
-                    Glide.with(getBaseContext()).load(student.getImageURL()).into(immagineStudente);
-
-               }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             storageReference= FirebaseStorage.getInstance().getReference("Uploads");
 
 
@@ -184,6 +164,28 @@ public class ProfiloStudente extends AppCompatActivity {
             popola(idUtente);
 
             studentIsInquilino();
+
+        myRef.child("Utenti").child("Studenti").child(idUtente).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+
+                Studente student  = datasnapshot.getValue(Studente.class);
+
+                if(student.getImageURL().compareTo("default")==0){
+                    immagineStudente.setImageResource(R.mipmap.ic_launcher);
+                } else {
+                    // Codice vorrebbe getContext, ma non esiste
+
+                    Glide.with(getBaseContext()).load(student.getImageURL()).into(immagineStudente);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     //METODO CHE DISATTIVA IL PULSANTE SE LO STUDENTE NON E' UN INQUILINO
