@@ -42,20 +42,16 @@ public class InserimentoDatiStudente extends AppCompatActivity {
     private static final String si = "SI";
     private static final String no = "NO";
 
-    private EditText et_nome;
-    private EditText et_cognome;
+    EditText et_nome,  et_cognome;
+    EditText et_descrizioneS, et_numTelefono, et_universita, et_indirizzoLaurea;
 
-    private EditText et_descrizioneS;
-    private EditText et_numTelefono;
-    private EditText et_universita;
-    private EditText et_indirizzoLaurea;
-
-    private RadioButton rb_triennale;
-    private RadioButton rb_magistrale;
+    RadioButton rb_triennale, rb_magistrale;
 
     private CheckBox cb_primaEsperienza;
     private String studenteSenzaAlloggio;
 
+    boolean controlloEmail;
+    boolean controlloEmailCompletato;
 
    //Database
    private FirebaseDatabase database;
@@ -87,6 +83,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
+
 
         Log.i(TAG, "ref del db è : "+myRef.toString());
 
@@ -146,88 +143,49 @@ public class InserimentoDatiStudente extends AppCompatActivity {
             }
         }
 
-        //TODO controllare il metodo, controlla anche studente con se stesso (?)
-        //controlloStudente(email);
+        controlloEmail = true;
+        controlloEmailCompletato = false;
+        while(!controlloEmailCompletato){
+            controlloStudente(email);}
+        if(controlloEmail){
+            Studente studente = new Studente(idStudente, nome, cognome, telefono, email, descrizione, primaEsperienza,
+                    universita, tipologia, indirizzoLaurea, studenteSenzaAlloggio, imageURL, "");
 
+            DatabaseReference studenteAggiunto = myRef.child("Utenti").child("Studenti").child(idStudente);
+            studenteAggiunto.setValue(studente);
 
-        Studente studente = new Studente(idStudente, nome,cognome,telefono,email , descrizione,primaEsperienza,
-                universita,tipologia,indirizzoLaurea,studenteSenzaAlloggio,imageURL);
+            Log.i(TAG, "Studente " + studente.getNome() + " " + studente.getCognome());
+            myRef.child("Chiavi").child(idStudente).setValue(email);
+            clear();
 
-        DatabaseReference studenteAggiunto = myRef.child("Utenti").child("Studenti").child(idStudente);
-        studenteAggiunto.setValue(studente);
-
-        Log.i(TAG, "Studente "+studente.getNome()+" "+studente.getCognome());
-        //String key = studenteAggiunto.getKey(); // Estraggo la chiave assegnata allo studente
-        myRef.child("Chiavi").child(idStudente).setValue(email);
-        clear();
-
-        //leggiChild();
-
-
-        Intent intent = new Intent(this, ProfiloStudente.class);
-        intent.putExtra("idUtente",idStudente);
-        startActivity(intent);
-
-
+            Intent intent = new Intent(this, InserimentoHobbyStudente.class);
+            //intent.putExtra("idUtente", idStudente);
+            startActivity(intent);
+        }
     }
 
     public void controlloStudente(String email) {
+
+        controlloEmail = true;
+        controlloEmailCompletato = false;
 
         myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentiSnapshot: dataSnapshot.getChildren()) {
-
                     Studente studenteFiglio = studentiSnapshot.getValue(Studente.class);
                     if(studenteFiglio.getEmail().compareTo(email)==0) {
+                        controlloEmail = false;
                         Toast.makeText(InserimentoDatiStudente.this, "Attenzione "+email+"già presente, inserire nuova email!", Toast.LENGTH_SHORT).show();
                     }
                     Log.i(TAG,"Studente :"+studenteFiglio.getNome());
                 }
+
+                controlloEmailCompletato = true;
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // ...
-            }
-        });
-    }
-
-    private void leggiChild() {
-
-        myRef.child("Studenti").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-               Studente studente = snapshot.getValue(Studente.class);
-                Log.i(TAG, "Aggiunto studente " + studente.toString());
-                //inviaNotifica(studente.getMatricola(), studente.getNome(), studente.getCognome());
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Studente studente = snapshot.getValue(Studente.class);
-                Log.i(TAG, "Modificato studente " + studente.toString());
-                //inviaNotifica(studente.getMatricola(), studente.getNome(), studente.getCognome());
-            }
-
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                 Studente studente = snapshot.getValue(Studente.class);
-                Log.i(TAG, "Rimosso studente "+studente.toString());
-                //tvMessaggio.setText("Rimosso studente "+studente.toString());
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }

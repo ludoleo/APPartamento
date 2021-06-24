@@ -45,6 +45,31 @@
         <item>Scacchi</item>
         <item>Cucina</item>
         <item>Musei</item>
+        <item>Sport</item>
+        <item>Calcio</item>
+        <item>Fitness</item>
+        <item>Musica</item>
+        <item>Feste</item>
+        <item>Libri</item>
+        <item>Videogiochi</item>
+    </string-array>
+
+    <string-array name="servizi">
+        <item>Aria Condizionata</item>
+        <item>Balcone</item>
+        <item>Cucina</item>
+        <item>Forno</item>
+        <item>Frigorifero e Freezer</item>
+        <item>Lavastoviglie</item>
+        <item>Lavatrice</item>
+        <item>Piatti e Posate</item>
+        <item>Posto Auto</item>
+        <item>Riscaldamento</item>
+        <item>Sky</item>
+        <item>Televisone</item>
+        <item>Terrazzina o Veranda</item>
+        <item>Ventilatori portatili</item>
+        <item>Wi-fi</item>
     </string-array>
 
     <string-array name="ProblemiAssistenza">
@@ -68,6 +93,7 @@
         <item>16:00-18:00</item>
         <item>18:00-20:00</item>
     </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="title_activity_messaggi">MessaggiActivity</string>

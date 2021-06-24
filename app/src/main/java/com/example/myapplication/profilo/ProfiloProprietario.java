@@ -170,7 +170,6 @@ public class ProfiloProprietario extends AppCompatActivity {
             }
         });
 
-
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -190,7 +189,6 @@ public class ProfiloProprietario extends AppCompatActivity {
 
     private void aggiorna() {
 
-        //TODO aggiungere on option item selection che permette di cliccare
         listView = (ListView) findViewById(R.id.lv_case_prop);
         ProfiloProprietario.CustomItem[] items = createItems();
 
@@ -230,6 +228,7 @@ public class ProfiloProprietario extends AppCompatActivity {
                 //TODO prendo l'id della casa che ho cliccato vado ad aggiungi annuncio, pushando con l'intent l'id
                 ProfiloProprietario.CustomItem casa = (ProfiloProprietario.CustomItem) adapterView.getItemAtPosition(pos);
                 String nomeCasa = casa.nomeCasa;
+                //TODO dovrebbe portare al profilo della casa e non alla creazione di un'annuncio
                 creaAnnuncio(nomeCasa);
             }
         });
@@ -254,9 +253,9 @@ public class ProfiloProprietario extends AppCompatActivity {
         int size = listaCase.size();
 
         Log.i(TAG, "Size lista case "+listaCase.size());
-        ProfiloProprietario.CustomItem[] items = new ProfiloProprietario.CustomItem[size]; //numero di annunci possibili
+        ProfiloProprietario.CustomItem[] items = new ProfiloProprietario.CustomItem[size];
         for (int i = 0; i < items.length; i++) {
-            //mi prendo il riferimento all'annuncio
+
             Casa a = listaCase.get(i);
 
             items[i] = new ProfiloProprietario.CustomItem();
