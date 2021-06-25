@@ -109,6 +109,7 @@ public class ListaAnnunci extends AppCompatActivity {
 
     private void creaAnnuncio(String casa) {
         Intent intent = new Intent(this, ProfiloAnnuncio.class);
+        Log.i(TAG,"VADO A CASA "+casa);
         //TODO cosa mi conviene passare, idAnnuncio
         intent.putExtra("idAnnuncio", casa);
         startActivity(intent);
