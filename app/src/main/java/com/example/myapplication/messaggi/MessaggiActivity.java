@@ -221,14 +221,14 @@ public class MessaggiActivity extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for ( DataSnapshot snapshot1 : snapshot.getChildren()) {
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     Token token = snapshot.getValue(Token.class);
                     DatiNotifica dati = new DatiNotifica(user.getUid(), R.mipmap.ic_launcher, email+": "+message, "Nuovo Messaggio",
                             idUtente);
 
                     Mittente mittente = new Mittente(dati,token.getToken());
 
-                    apiService.inviaNotifica(mittente)
+                            apiService.inviaNotifica(mittente)
                             .enqueue(new Callback<RispostaNotifica>() {
                                 @Override
                                 public void onResponse(Call<RispostaNotifica> call, Response<RispostaNotifica> response) {
@@ -245,8 +245,8 @@ public class MessaggiActivity extends AppCompatActivity {
 
                                 }
                             });
-                }
-            }
+                         }
+                    }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

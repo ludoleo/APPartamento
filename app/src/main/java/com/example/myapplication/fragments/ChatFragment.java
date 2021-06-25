@@ -74,17 +74,14 @@ public class ChatFragment extends Fragment {
                     if(chat.getSender().equals(firebaseUser.getUid())) {
                         Log.i(TAG,"ENTRO NELL'IF");
                         usersList.add(chat.getReceiver());
-
                     }
                     if(chat.getReceiver().equals(firebaseUser.getUid())) {
                         usersList.add(chat.getSender());
-
                     }
                 }
 
                 Log.i(TAG,"ListaChat "+usersList.toString());
                 leggiChat();
-
             }
 
             @Override
@@ -117,6 +114,7 @@ public class ChatFragment extends Fragment {
 
                 Log.i(TAG,"PASSO DA QUI");
                 for(DataSnapshot snapshot2 : snapshot.getChildren()) {
+
                     Utente utente = snapshot2.getValue(Utente.class);
 
                     Log.i(TAG,"CHAT CON "+utente.getNome()+" "+utente.getCognome());
@@ -132,7 +130,6 @@ public class ChatFragment extends Fragment {
                             } else {
                                 mUtenti.add(utente);
                             }
-
                         }
                     }
                 }
@@ -145,6 +142,5 @@ public class ChatFragment extends Fragment {
 
             }
         });
-
     }
 }

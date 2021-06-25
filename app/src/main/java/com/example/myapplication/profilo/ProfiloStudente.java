@@ -87,14 +87,11 @@ public class ProfiloStudente extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo_studente);
 
-
-
            // forse da aggiungere questo, ma in realtà myref c'è già(più sotto, sempre in OnCreate)--> myRef = FirebaseDatabase.getInstance().getReference("Studenti").child(user.getUid());
             database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
             mAuth = FirebaseAuth.getInstance();
             user = mAuth.getCurrentUser();
             myRef = database.getReference();
-
             storageReference= FirebaseStorage.getInstance().getReference("Uploads");
 
 
@@ -120,19 +117,15 @@ public class ProfiloStudente extends AppCompatActivity {
                         String [] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
                         // show popup for runtime permission
                         requestPermissions(permission,PERMISSION_CODE);
-
                     }
                     else { // permission alredy granted
                         CambiaImmagine();
                     }
-
                 }
                 else { // system os is less then Marshmallow
                     CambiaImmagine();
-
+                    }
                 }
-            }
-
             });
 
             modifica = findViewById(R.id.modificaProfilo);
@@ -175,9 +168,7 @@ public class ProfiloStudente extends AppCompatActivity {
                     immagineStudente.setImageResource(R.mipmap.ic_launcher);
                 } else {
                     // Codice vorrebbe getContext, ma non esiste
-
                     Glide.with(getBaseContext()).load(student.getImageURL()).into(immagineStudente);
-
                 }
             }
 
@@ -208,8 +199,6 @@ public class ProfiloStudente extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
-
     }
     // PERMESSI PT2
 
@@ -229,10 +218,8 @@ public class ProfiloStudente extends AppCompatActivity {
                     // permission denied
                     Toast.makeText(this,"Permission Denied!",Toast.LENGTH_SHORT).show();
                 }
-
             }
         }
-
     }
     // CAMBIO IMMAGINE
     private void CambiaImmagine() {
@@ -261,14 +248,12 @@ public class ProfiloStudente extends AppCompatActivity {
             if (UploadTask != null && UploadTask.isInProgress())    {
                 Toast.makeText(ProfiloStudente.this,"Upload in Progress", LENGTH_SHORT).show();
             } else{
-
-
                 Log.i("ProfiloStud","passo da qui");
                 // forse da togliere
             //immagineStudente.setImageURI(ImageUri);
             UploadImage(ImageUri);
+                }
             }
-        }
         }
         // GESTIONE DELL UPLOAD
 
@@ -318,19 +303,15 @@ public class ProfiloStudente extends AppCompatActivity {
                    pd.dismiss();
                }
            });
-
-
-        } else {
+        }
+        else {
             Toast.makeText(ProfiloStudente.this,"Nessuna immagine selezionata", LENGTH_SHORT).show();
         }
-
     }
-
 
     private void popola(String idUtente) {
 
-            Log.i(TAG, "Sono in popola");
-
+        Log.i(TAG, "Sono in popola");
 
         myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
 
@@ -349,7 +330,6 @@ public class ProfiloStudente extends AppCompatActivity {
                         Studente studente = figlio.getValue(Studente.class);
                         Log.i(TAG, "Profilo dello studente" + studente.toString());
 
-
                         text_nome.setText(studente.getNome());
                         text_cognome.setText(studente.getCognome());
                         text_telefono.setText(studente.getTelefono());
@@ -367,8 +347,6 @@ public class ProfiloStudente extends AppCompatActivity {
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
             }
         });
-
-
     }
 
     @Override
@@ -402,8 +380,6 @@ public class ProfiloStudente extends AppCompatActivity {
         intent.putExtra("idStudente", idUtente);
         startActivity(intent);
     }
-
-
 }
 
 

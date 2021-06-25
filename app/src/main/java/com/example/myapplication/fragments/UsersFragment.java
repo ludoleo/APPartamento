@@ -37,7 +37,7 @@ public class UsersFragment extends Fragment {
 
     private static final String TAG = "FRAGMENT_USER" ;
     private RecyclerView recyclerView;
-     UserAdapter userAdapter;
+    UserAdapter userAdapter;
     private List<Utente> mUtente;
     FirebaseUser firebaseUser;
     FirebaseDatabase database;
@@ -56,7 +56,6 @@ public class UsersFragment extends Fragment {
         mUtente = new ArrayList<>();
 
         readUser();
-
         return view;
     }
 
@@ -98,8 +97,6 @@ public class UsersFragment extends Fragment {
                             public void onCancelled(@NonNull DatabaseError error) {
 
                             }
-
-
                         });
 
                     } else {
@@ -117,21 +114,15 @@ public class UsersFragment extends Fragment {
                             public void onCancelled(@NonNull DatabaseError error) {
 
                             }
-
                         });
                     }
-
                 }
-
-
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-            }
+                }
             });
-
-    }
+        }
 }

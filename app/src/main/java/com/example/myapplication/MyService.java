@@ -69,8 +69,6 @@ public class MyService extends FirebaseMessagingService {
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
             creaNotifica();
-
-
         }
 
         // Check if message contains a notification payload.
@@ -79,7 +77,6 @@ public class MyService extends FirebaseMessagingService {
 
             creaNotifica();
         }
-
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
@@ -115,10 +112,6 @@ public class MyService extends FirebaseMessagingService {
             i = j;
         }
         notificationManager.notify(i,builder.build());
-
-
-
-
     }
 
     private void creaNotifica() {
@@ -141,8 +134,6 @@ public class MyService extends FirebaseMessagingService {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(idNotifica, builder.build());
             idNotifica++;
-
-
         }
         else {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
@@ -156,8 +147,6 @@ public class MyService extends FirebaseMessagingService {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(idNotifica, builder.build());
             idNotifica++;
-
         }
-
     }
 }
