@@ -6,11 +6,11 @@
     tools:context=".prenotazione.PrenotazioniFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <ListView
+        android:id="@+id/lv_titoloElencoPrenotazione"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="20dp"
-        android:textColor="@color/black"
-        android:id="@+id/tv_titoloElencoPrenotazione" />
+        android:layout_height="wrap_content">
+    </ListView>
 
 </FrameLayout>

@@ -147,13 +147,13 @@
             android:textStyle="bold"
             android:padding="10dp"/>
 
-        <LinearLayout
+        <ListView
             android:id="@+id/arrayListServizi"
-            android:orientation="vertical"
+            android:scrollbars="none"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            ></LinearLayout>
+            ></ListView>
 
         <TextView
             android:id="@+id/posizione"
@@ -175,6 +175,7 @@
             android:layout_height="wrap_content"
             android:onClick="prenota"
             android:text="Prenota visita"
+            android:visibility="gone"
             android:padding="15dp"
             android:layout_gravity="center"
             />

@@ -53,9 +53,6 @@ public class ElencoPrenotazioni extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
-    private List<Prenotazione> listaPrenotazioniAttuali = new LinkedList<Prenotazione>();
-    private List<Prenotazione> listaPrenotazioniCancellate = new LinkedList<Prenotazione>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +68,7 @@ public class ElencoPrenotazioni extends AppCompatActivity {
 
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("Attuali");
-        arrayList.add("Cancellate");
+        arrayList.add("In Sospeso");
 
         prepareViewPager(viewPager,arrayList);
         tabLayout.setupWithViewPager(viewPager);
@@ -82,27 +79,6 @@ public class ElencoPrenotazioni extends AppCompatActivity {
         //autenticazione
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-        //metto in una lista tutti gli annunci
-        myRef.child("Prenotazioni").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot annData: dataSnapshot.getChildren()) {
-                    Prenotazione p = annData.getValue(Prenotazione.class);
-                    if(p.getEmailProprietario().compareTo(user.getUid())==0 ||
-                        p.getIdStudente().compareTo(user.getUid())==0) {
-                        if (p.isCancellata())
-                            listaPrenotazioniCancellate.add(p);
-                        else{
-                            if(p.isConfermata())
-                                listaPrenotazioniAttuali.add(p);
-                        }
-                    }
-                }
-                aggiorna();
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
     }
 
     private void prepareViewPager(ViewPager viewPager, ArrayList<String> arrayList) {
@@ -117,10 +93,6 @@ public class ElencoPrenotazioni extends AppCompatActivity {
         }
 
         viewPager.setAdapter(adapter);
-    }
-
-    private void aggiorna() {
-
     }
 
     private class MainAdapter extends FragmentPagerAdapter {

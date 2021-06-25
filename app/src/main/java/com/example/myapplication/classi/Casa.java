@@ -11,12 +11,13 @@ public class Casa {
     private int numeroBagni;
     private int numeroStanze;
     private float valutazione;
-    private String proprietario; //ne salvo l'id
+    private String proprietario;
+    private String servizi;
 
     public Casa(){}
 
     public Casa(String nomeCasa, String indirizzo, int numeroOspiti, int numeroBagni, int numeroStanze,
-                String proprietario) {
+                String proprietario, String servizi) {
         this.nomeCasa = nomeCasa;
         this.indirizzo = indirizzo;
         this.numeroOspiti = numeroOspiti;
@@ -24,7 +25,12 @@ public class Casa {
         this.numeroStanze = numeroStanze;
         this.valutazione = 0;
         this.proprietario = proprietario;
+        this.servizi=servizi;
     }
+
+    public String getServizi() {return servizi;}
+
+    public void setServizi(String servizi) {this.servizi = servizi;}
 
     public String getNomeCasa() {
         return nomeCasa;

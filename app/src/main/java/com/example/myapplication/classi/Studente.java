@@ -8,7 +8,7 @@ public class Studente extends Utente {
     private String universita;
     private String tipologiaLaurea; //triennale o magistrale
     private String indirizzoLaurea;
-    private List<String> hobby = new LinkedList<>();
+    private String hobby;
     private String senzaAlloggio; // non è un inquilino
     private String imageURL; // Associo immagine
 
@@ -17,13 +17,14 @@ public class Studente extends Utente {
     }
 
     public Studente(String id, String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza,
-                    String universita, String tipologiaLaurea, String indirizzoLaurea, String senzaAlloggio,String imageURL) {
+                    String universita, String tipologiaLaurea, String indirizzoLaurea, String senzaAlloggio,String imageURL, String hobby) {
         super(id,nome, cognome, telefono, email, descrizione, primaEsperienza);
         this.universita = universita;
         this.tipologiaLaurea = tipologiaLaurea;
         this.indirizzoLaurea = indirizzoLaurea;
         this.senzaAlloggio = senzaAlloggio;
         this.imageURL = imageURL;
+        this.hobby = hobby;
     }
 
     public String getUniversita() {
@@ -50,11 +51,11 @@ public class Studente extends Utente {
         this.indirizzoLaurea = indirizzoLaurea;
     }
 
-    public List<String> getHobby() {
+    public String getHobby() {
         return hobby;
     }
 
-    public void setHobby(List<String> hobby) {
+    public void setHobby(String hobby) {
         this.hobby = hobby;
     }
 
@@ -66,9 +67,6 @@ public class Studente extends Utente {
         this.senzaAlloggio = senzaAlloggio;
     }
 
-    public void aggiungiHobby(String hobby) {
-        this.hobby.add(hobby);
-    }
     // IMMAGINE
     public String getImageURL ()  {
         return imageURL;

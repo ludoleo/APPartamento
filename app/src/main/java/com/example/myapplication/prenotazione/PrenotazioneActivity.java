@@ -81,21 +81,25 @@ public class PrenotazioneActivity extends AppCompatActivity {
             Toast.makeText(this, "Effettua il login per prenotare una visita", Toast.LENGTH_SHORT).show();
             return; }
         Bundle bundle = getIntent().getExtras();
-        String emailStudente="";
-        String emailProprietario="";
+        String nomeUtente1="";
+        String emailUtente1="";
+        String nomeUtente2="";
+        String emailUtente2="";
         String idAnnuncio="";
         String fasciaOraria="";
         dataSelzionata = new Date(calendarView.getDate());
         try {
-            emailStudente = bundle.getString("emailStudente");
-            emailProprietario = bundle.getString("emailProprietario");
+            emailUtente1 = bundle.getString("emailUtente1");
+            nomeUtente1 = bundle.getString("nomeUtente1");
+            emailUtente2 = bundle.getString("emailUtente2");
+            nomeUtente2 = bundle.getString("nomeUtente2");
             idAnnuncio = bundle.getString("idAnnuncio");
             fasciaOraria = spinnerFasciaOraria.getSelectedItem().toString();
         }catch (Exception e){
             Toast.makeText(this, "Errore nel ricevere i dati", Toast.LENGTH_SHORT).show();}
         //Aggiungiamo la prenotazione
-        Prenotazione prenotazione = new Prenotazione("",emailStudente,emailProprietario,idAnnuncio,dataSelzionata,
-                                    false,false,false,fasciaOraria,false);
+        Prenotazione prenotazione = new Prenotazione(emailUtente1,nomeUtente1, emailUtente2,nomeUtente2,
+                idAnnuncio,dataSelzionata, false,false,false,fasciaOraria,false);
 
         //todo notifica al proprietario e creazione delle chat, bisogna prendere il token del proprietario
         DatabaseReference preAdd = myRef.child("Prenotazioni").push();
@@ -113,7 +117,7 @@ public class PrenotazioneActivity extends AppCompatActivity {
     private void inviaNotifica() {
 
         //TODO Intent che mi apre l'app al tocco sulla notifica
-        Intent intent = new Intent(this, ChatActivity.class);
+        Intent intent = new Intent(this, ElencoPrenotazioni.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         //salva intent per utilizzarlo al momento dell'apertura della notifica

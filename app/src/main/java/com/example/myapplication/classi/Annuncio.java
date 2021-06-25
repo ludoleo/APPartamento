@@ -10,7 +10,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 // NUOVO
-public class Annuncio {
+public class Annuncio
+
+{
     public static class AnnuncioMetaData {
         public static String NOME_ANNUNCIO = "_id";
         public static String IDPROPRIETARIO = "prop";

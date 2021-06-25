@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,20 +42,14 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     private Annuncio annuncio;
     private Proprietario proprietario;
     private Casa casa;
+    private Studente studente;
 
     private String idAnnuncio="";
 
-    TextView et_nomeAnnuncio;
-    TextView et_punteggio;
-    TextView et_numRecensioni;
-    TextView et_indirizzo;
-    TextView et_tipologiaStanza;
-    TextView et_prezzo;
-    TextView et_proprietario;
-    TextView et_ospiti;
-    TextView et_numeroCamere;
-    TextView et_num_bagni;
-    TextView descrizioneAnnuncio;
+    TextView et_nomeAnnuncio, et_punteggio, et_numRecensioni, et_indirizzo,
+            et_tipologiaStanza, et_prezzo, et_proprietario, et_ospiti, et_numeroCamere, et_num_bagni, descrizioneAnnuncio;
+
+    Button b_prenota;
 
     //Database
     private FirebaseDatabase database;
@@ -85,6 +80,8 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         et_numeroCamere = (TextView) findViewById(R.id.et_numeroCamere);
         et_num_bagni = (TextView) findViewById(R.id.et_num_bagni);
         descrizioneAnnuncio = (TextView) findViewById(R.id.descrizioneAnnuncio);
+        b_prenota = (Button) findViewById(R.id.b_prenota);
+        b_prenota.setVisibility(View.GONE);
         initUI();
         // preferito
         IsPrefetito = (CheckBox) findViewById(R.id.IsPreferito);
@@ -103,6 +100,26 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         annuncio = null;
         proprietario = null;
         casa = null;
+        studente = null;
+
+        while(studente==null){
+            myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot studentiSnapshot: dataSnapshot.getChildren()) {
+                        Studente stud = studentiSnapshot.getValue(Studente.class);
+                        if(stud.getIdUtente().compareTo(user.getUid())==0){
+                            studente = stud;
+                            //rendi visibile il tasto per prenotare
+                            b_prenota.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
 
         Bundle bundle = getIntent().getExtras();
         idAnnuncio = bundle.getString("idAnnuncio");
@@ -198,8 +215,10 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                         Studente a = studenti.getValue(Studente.class);
                         if(a.getEmail().compareTo(email)==0){
                             intent.putExtra("idAnnuncio", annuncio.getIdAnnuncio());
-                            intent.putExtra("emailProprietario", proprietario.getEmail());
-                            intent.putExtra("emailStudente", email);
+                            intent.putExtra("emailUtente2", proprietario.getEmail());
+                            intent.putExtra("nomeUtente2", proprietario.getNome());
+                            intent.putExtra("emailUtente1", email);
+                            intent.putExtra("nomeUtente1", studente.getNome());
                             startActivity(intent);
                         }
                     }

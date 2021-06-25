@@ -1,13 +1,17 @@
 package com.example.myapplication.classi;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
 public class Prenotazione {
 
-    private String idPrenotazione;
-    private String emailStudente;
-    private String emailProprietario;
+
+    private String emailUtente1;
+    private String nomeUtente1;
+    private String emailUtente2;
+    private String nomeUtente2;
     private String idAnnuncio;
     private Date dataPrenotazione;
     private boolean confermata;
@@ -20,13 +24,14 @@ public class Prenotazione {
 
     public Prenotazione(){}
 
-    public Prenotazione(String idPrenotazione, String idStudente, String emailProprietario,
+    public Prenotazione(String emailUtente1, String nomeUtente1, String emailUtente2, String nomeUtente2,
                         String idAnnuncio, Date dataPrenotazione, boolean terminata,
                         boolean cancellata, boolean pagata, String orario, boolean confermata) {
 
-        this.idPrenotazione = idPrenotazione;
-        this.emailStudente = idStudente;
-        this.emailProprietario = emailProprietario;
+        this.emailUtente1 = emailUtente1;
+        this.nomeUtente1 = nomeUtente1;
+        this.emailUtente2 = emailUtente2;
+        this.nomeUtente2 = nomeUtente2;
         this.idAnnuncio = idAnnuncio;
         this.dataPrenotazione = dataPrenotazione;
         this.terminata = terminata;
@@ -34,6 +39,22 @@ public class Prenotazione {
         this.pagata = pagata;
         this.orario = orario;
         this.confermata = confermata;
+    }
+
+    public String getNomeUtente1() {
+        return nomeUtente1;
+    }
+
+    public void setNomeUtente1(String nomeUtente1) {
+        this.nomeUtente1 = nomeUtente1;
+    }
+
+    public String getNomeUtente2() {
+        return nomeUtente2;
+    }
+
+    public void setNomeUtente2(String nomeUtente2) {
+        this.nomeUtente2 = nomeUtente2;
     }
 
     public boolean isConfermata() {
@@ -44,31 +65,23 @@ public class Prenotazione {
         this.confermata = confermata;
     }
 
-    public String getIdStudente() {
-        return emailStudente; }
+    public String getEmailUtente1() {
+        return emailUtente1; }
 
-    public void setIdStudente(String idStudente) {
-        this.emailStudente = idStudente; }
+    public void setEmailUtente1(String idStudente) {
+        this.emailUtente1 = idStudente; }
 
-    public String getEmailProprietario() {
-        return emailProprietario; }
+    public String getEmailUtente2() {
+        return emailUtente2; }
 
-    public void setEmailProprietario(String emailProprietario) {
-        this.emailProprietario = emailProprietario; }
+    public void setEmailUtente2(String emailProprietario) {
+        this.emailUtente2 = emailProprietario; }
 
     public String getIdAnnuncio() {
         return idAnnuncio; }
 
     public void setIdAnnuncio(String idAnnuncio) {
         this.idAnnuncio = idAnnuncio; }
-
-    public String getIdPrenotazione() {
-        return idPrenotazione;
-    }
-
-    public void setIdPrenotazione(String idPrenotazione) {
-        this.idPrenotazione = idPrenotazione;
-    }
 
     public Date getDataPrenotazione() {
         return dataPrenotazione;
@@ -107,16 +120,10 @@ public class Prenotazione {
     public void setOrario(String orario) {
         this.orario = orario; }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Prenotazione)) return false;
-        Prenotazione that = (Prenotazione) o;
-        return getIdPrenotazione().equals(that.getIdPrenotazione());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getIdPrenotazione());
+    public String getDataOra() {
+        DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy");
+        String strDate = dateFormat.format(this.dataPrenotazione);
+        strDate = strDate + " - " + this.orario;
+        return strDate;
     }
 }
