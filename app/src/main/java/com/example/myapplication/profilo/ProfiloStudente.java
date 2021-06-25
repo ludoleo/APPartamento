@@ -74,7 +74,10 @@ public class ProfiloStudente extends AppCompatActivity {
     private TextView username;
 
 
+
     public DatabaseReference myRef;
+    // per foto
+    
     public FirebaseDatabase database;
     private String idUtente;
 
@@ -156,6 +159,7 @@ public class ProfiloStudente extends AppCompatActivity {
             text_univerista = (TextView) findViewById(R.id.text_universita);
             text_indirizzoLaure = (TextView) findViewById(R.id.text_indirizzoLaurea);
             username = (TextView) findViewById(R.id.username);
+            
 
             idUtente = getIntent().getExtras().getString("idUtente");
 
@@ -180,7 +184,7 @@ public class ProfiloStudente extends AppCompatActivity {
                     immagineStudente.setImageResource(R.mipmap.ic_launcher);
                 } else {
                     // Codice vorrebbe getContext, ma non esiste
-                    Glide.with(getBaseContext()).load(student.getImageURL()).into(immagineStudente);
+                    Glide.with(getApplicationContext()).load(student.getImageURL()).into(immagineStudente);
                 }
             }
 
@@ -249,24 +253,7 @@ public class ProfiloStudente extends AppCompatActivity {
 
         return  mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
-  // RISPOSTA AL FOR RESULT
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == IMAG_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
-            ImageUri = data.getData();
-            // set image to image view
-            // immagineprop.setImageURI(data.getData()); codice reale
-            if (UploadTask != null && UploadTask.isInProgress())    {
-                Toast.makeText(ProfiloStudente.this,"Upload in Progress", LENGTH_SHORT).show();
-            } else{
-                Log.i("ProfiloStud","passo da qui");
-                // forse da togliere
-            //immagineStudente.setImageURI(ImageUri);
-            UploadImage(ImageUri);
-                }
-            }
-        }
+
         // GESTIONE DELL UPLOAD
 
     private void UploadImage(Uri ImageUri){
@@ -294,12 +281,13 @@ public class ProfiloStudente extends AppCompatActivity {
                    if (task.isSuccessful()){
                        Uri DownloadUri = task.getResult();
                        String mUri = DownloadUri.toString();
-
-                       myRef = FirebaseDatabase.getInstance().getReference("Studenti").child(user.getUid());
+                       // ho modificato qua
+                       myRef = FirebaseDatabase.getInstance().getReference("Utenti").child("studenti").child(user.getUid());
                        HashMap<String,Object> map = new HashMap<>();
                        map.put("imageURL",mUri);
                        myRef.updateChildren(map);
                        pd.dismiss();
+                       
                    }
                    else {
                        Toast.makeText(ProfiloStudente.this,"Error", LENGTH_SHORT).show();
@@ -318,6 +306,27 @@ public class ProfiloStudente extends AppCompatActivity {
         }
         else {
             Toast.makeText(ProfiloStudente.this,"Nessuna immagine selezionata", LENGTH_SHORT).show();
+        }
+    }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == IMAG_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+            ImageUri = data.getData();
+            // set image to image view
+            // immagineprop.setImageURI(data.getData()); codice reale
+            if (UploadTask != null && UploadTask.isInProgress())    {
+                Toast.makeText(ProfiloStudente.this,"Upload in Progress", LENGTH_SHORT).show();
+            } else{
+                Log.i("ProfiloStud","passo da qui");
+                // forse da togliere
+                //immagineStudente.setImageURI(ImageUri);
+                UploadImage(ImageUri);
+
+            }
         }
     }
 
@@ -348,6 +357,8 @@ public class ProfiloStudente extends AppCompatActivity {
                         text_descrizione.setText(studente.getDescrizione());
                         text_univerista.setText(studente.getUniversita());
                         text_indirizzoLaure.setText(studente.getIndirizzoLaurea());
+
+
                         username.setText(studente.getNome()+" "+studente.getCognome());
                     }
                 }

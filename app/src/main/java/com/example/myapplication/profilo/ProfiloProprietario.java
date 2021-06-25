@@ -3,6 +3,8 @@ package com.example.myapplication.profilo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -13,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -50,39 +53,39 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProfiloProprietario extends AppCompatActivity {
 
     private static final String TAG = "PROFILO PROPRIETARIO";
     Button cambiaImmagine;
-    ImageView immagineprop;
+    private CircleImageView immagineprop;
     private static final int IMAG_PICK_CODE = 1000;
     private static final int PERMISSION_CODE = 1001;
-    FirebaseStorage storage;
-    StorageReference storageRef;
+    private Uri imageUri;
+    StorageReference storageReference;
 
     TextView text_nomeP, text_cognomeP, text_emailP;
-    private Uri ImageUri ;
 
     private DatabaseReference myRef;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
-
     private String idUtente;
-    private String uriImm;
 
     private List<Casa> listaCase = new ArrayList<>();
     ListView listView;
 
-
     private Proprietario proprietario;
-    //String url;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,12 +93,28 @@ public class ProfiloProprietario extends AppCompatActivity {
         setContentView(R.layout.activity_profilo_proprietario);
 
         cambiaImmagine = findViewById(R.id.cambiaImmagineProp);
-        immagineprop = findViewById(R.id.immaginePropriet);
+        immagineprop = findViewById(R.id.immagineProfiloProp);
+        cambiaImmagine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_DENIED){
+                        // permission not granted
+                        String [] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                        // show popup for runtime permission
+                        requestPermissions(permission,PERMISSION_CODE);
+                    }
+                    else { // permission alredy granted
+                        CambiaImmagine();
+                    }
+                }
+                else { // system os is less then Marshmallow
+                    CambiaImmagine();
+                }
 
-        storage = FirebaseStorage.getInstance("gs://appartamento-81c2d.appspot.com");
-        //storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference storageRef = storage.getReference();
-        Log.i("Storage", "StorageRef è: "+storageRef);
+            }
+        });
 
         text_nomeP = (TextView) findViewById(R.id.text_nomeP);
         text_cognomeP = (TextView) findViewById(R.id.text_cognomeP);
@@ -109,6 +128,17 @@ public class ProfiloProprietario extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+        // storage
+        storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference profileRef = storageReference.child("Proprietari/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(immagineprop);
+            }
+        });
+
+
 
         //TODO aggiungere controllo se esiste un utente loggato o no e prendere l'id utente o tramite intent o tramite user
 
@@ -119,30 +149,45 @@ public class ProfiloProprietario extends AppCompatActivity {
             idUtente = getIntent().getExtras().getString("idProprietario");
         initUI(idUtente);
 
-        cambiaImmagine.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void CambiaImmagine() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,IMAG_PICK_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == IMAG_PICK_CODE && resultCode == RESULT_OK && data != null && data.getData() != null){
+            Uri imageUri = data.getData();
+            uploadImageToFirebase(imageUri);
+        }
+    }
+
+    private void uploadImageToFirebase(Uri imageUri) {
+        // upload image to firebaseStorage
+        final StorageReference fileRef = storageReference.child("Propietari/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
+        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onClick(View v) {
-                // check runtime permission
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                        ==PackageManager.PERMISSION_DENIED){
-                        // permission not granted
-                        String [] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                        // show popup for runtime permission
-                        requestPermissions(permission,PERMISSION_CODE);
-
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(immagineprop);
                     }
-                    else { // permission alredy granted
-                        pickimagefromGallery();
-                }
-
+                });
             }
-                else { // system os is less then Marshmallow
-                    pickimagefromGallery();
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ProfiloProprietario.this, "Upload non effettuato", Toast.LENGTH_SHORT).show();
 
-                }
             }
         });
+
     }
 
     private void initUI(String idUtente) {
@@ -188,6 +233,7 @@ public class ProfiloProprietario extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
+
 
     private void aggiorna() {
 
@@ -276,95 +322,6 @@ public class ProfiloProprietario extends AppCompatActivity {
     }
 
 
-    private Uri convertiURI() {
-
-        Uri urip = Uri.parse("url");
-        return urip;
-
-    }
-
-    private void pickimagefromGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,IMAG_PICK_CODE);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
-            case PERMISSION_CODE : {
-                if(grantResults.length > 0 && grantResults[0] ==
-                PackageManager.PERMISSION_GRANTED){
-                    // permission sono garantite
-                    pickimagefromGallery();
-                }
-                else {
-                   // permission denied
-                    Toast.makeText(this,"Permission Denied!",Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        }
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == IMAG_PICK_CODE && resultCode == RESULT_OK){
-            ImageUri = data.getData();
-            // set image to image view
-           // immagineprop.setImageURI(data.getData()); codice reale
-
-            Log.i("ProfiloProp","passo da qui");
-            immagineprop.setImageURI(ImageUri);
-            uploadimagetoFirebase(ImageUri);
-
-        }
-    }
-
-    // gestisco le varie estensioni
-
-    private String getFileExtention(Uri uri){
-        ContentResolver contentResolver = getContentResolver();
-
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-
-        return  mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
-
-    // effettuo l'upload su Firebase
-
-    private void uploadimagetoFirebase(Uri imageUri) {
-        final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Upload effettuato");
-        pd.show();
-
-        if(ImageUri != null){
-            StorageReference FileReference = FirebaseStorage.getInstance().getReference().child("ProfiloPropietario").child(System.currentTimeMillis()+"."+getFileExtention(ImageUri));
-            //storageRef.child(mAuth.getCurrentUser().getUid()+"."+getFileExtention(ImageUri));
-            FileReference.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                    FileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                           String url = uri.toString();
-
-                            Log.d("Dowload Url", url);
-                            pd.dismiss();
-                            Toast.makeText(ProfiloProprietario.this,"Image upload successfull",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                }
-            });
-        }
-    }
-
-    // option menù per aggiungere nuova casa o effettuare il logout
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -390,6 +347,24 @@ public class ProfiloProprietario extends AppCompatActivity {
 
 
     }*/
+    // permission foto
+@Override
+public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    switch (requestCode){
+        case PERMISSION_CODE : {
+            if(grantResults.length > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED){
+                // permission sono garantite
+                CambiaImmagine();
+            }
+            else {
+                // permission denied
+                Toast.makeText(this,"Permission Denied!",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+}
 
 
     public void goHome(View view) {

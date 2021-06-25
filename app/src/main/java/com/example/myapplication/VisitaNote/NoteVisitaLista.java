@@ -50,7 +50,7 @@ NoteVisitaLista extends ListActivity {
         // eseguo
         cursor = db.rawQuery(sql, null);
 
-        adapter = new SimpleCursorAdapter(this, R.layout.activity_note_visita_lista, cursor, FROMS, TOS, SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+        adapter = new SimpleCursorAdapter(this, R.layout.visita_note_row, cursor, FROMS, TOS, SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
         getListView().setAdapter(adapter);
         registerForContextMenu(getListView());
