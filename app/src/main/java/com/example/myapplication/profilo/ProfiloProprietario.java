@@ -15,6 +15,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
@@ -361,27 +363,34 @@ public class ProfiloProprietario extends AppCompatActivity {
             });
         }
     }
-        /*StorageReference fileRef = storageReference.child("profile.jpg");
-        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(ProfiloProprietario.this,"Image Uploaded",Toast.LENGTH_SHORT).show();
-                // fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() { DEVO MODIFICARE buil.gradle Module agg Picasso con --> implementation 'com.squareup.picasso:picasso:2.71828'
-                //   @Override
-                // public void onSuccess(Uri uri) {
-                //   Picasso.get.load(uri).into(immagineprop)
-                // }
-                // });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(ProfiloProprietario.this,"Failed",Toast.LENGTH_SHORT).show();
 
-            }
-        });
+    // option menù per aggiungere nuova casa o effettuare il logout
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+/*
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.aggiungiCasa:
+                startActivity(new Intent(ProfiloProprietario.this,InserimentoDatiCasa.class));
+                finish();
+                return true;
+            case R.id.logout:
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(ProfiloProprietario.this,Home.class));
+                finish();
+                return true;
+
+        }
+        return false;
+
 
     }*/
+
 
     public void goHome(View view) {
         Intent intent = new Intent(this, Home.class);

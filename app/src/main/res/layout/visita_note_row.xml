@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content" android:orientation="vertical"
+    android:id="@+id/ZonaSQL" android:layout_width="fill_parent">
+
+    <ImageView
+        android:id="@+id/note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_red_light"
+        android:src="@android:drawable/ic_menu_edit" />
+
+    <TextView android:id="@+id/NomemainSQL" android:text="Nome" android:layout_height="fill_parent" android:layout_width="fill_parent"></TextView>
+
+    <TextView
+        android:id="@+id/ValutazionemainSQL"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Valutazione"></TextView>
+
+    <TextView
+        android:id="@+id/PrezzomainSQL"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Prezzo"></TextView>
+
+    <TextView
+        android:id="@+id/ZonasmainSQL"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Zona"></TextView>
+
+    <TextView
+        android:id="@+id/Link_registrazioneMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Link Registrazione" />
+</LinearLayout>

@@ -7,6 +7,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +24,8 @@ import com.example.myapplication.classi.RecensioneCasa;
 import com.example.myapplication.classi.RecensioneUtente;
 import com.example.myapplication.classi.Utente;
 import com.example.myapplication.home.Home;
+import com.example.myapplication.profilo.ProfiloProprietario;
+import com.example.myapplication.profilo.ProfiloStudente;
 import com.example.myapplication.registrazione.InserimentoDatiCasa;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -158,6 +162,7 @@ public class RecensioniProprietarioInterne extends AppCompatActivity {
         rateCount.setText("");
 
     }
+
 }
 
                /* if(fromUser)

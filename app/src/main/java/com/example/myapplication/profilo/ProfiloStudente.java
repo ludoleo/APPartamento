@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.myapplication.VisitaNote.NoteVisitaLista;
 import com.example.myapplication.R;
 import com.example.myapplication.recensione.RecensioniStudenteEsterneList;
 import com.example.myapplication.classi.Inquilino;
@@ -59,6 +60,7 @@ public class ProfiloStudente extends AppCompatActivity {
     Button recensioni;
     Button modifica;
     Button laTuaCasa;
+    Button note;
 
     ImageButton immagineStudente ;
 
@@ -128,12 +130,22 @@ public class ProfiloStudente extends AppCompatActivity {
                 }
             });
 
-            modifica = findViewById(R.id.modificaProfilo);
+           // bottone modifica
+            modifica = (Button) findViewById(R.id.modificaProfilo);
             modifica.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent a = new Intent(ProfiloStudente.this, ModificaProfilo.class);
                     startActivity(a);
+                }
+            });
+          // bottone note
+            note= (Button) findViewById(R.id.noteButton);
+            note.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ProfiloStudente.this, NoteVisitaLista.class);
+                    startActivity(intent);
                 }
             });
 
