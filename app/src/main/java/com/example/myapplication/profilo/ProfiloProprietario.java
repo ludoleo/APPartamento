@@ -293,6 +293,7 @@ public class ProfiloProprietario extends AppCompatActivity {
     }
 
     private void creaAnnuncio(String casa) {
+
         Intent intent = new Intent(this, ProfiloCasa.class);
         intent.putExtra("nomeCasa", casa);
         startActivity(intent);

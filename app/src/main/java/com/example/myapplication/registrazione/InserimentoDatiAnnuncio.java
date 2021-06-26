@@ -137,11 +137,12 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
             return;}
 
         //CREO ANNUNCIO
-        Annuncio annuncio = new Annuncio(idAnnuncio,user.getUid().toString(), nomeCasa, data, tipologia,prezzo,speseStraordinarie, casa.getIndirizzo(),casa.getCoordinate());
+        Annuncio annuncio = new Annuncio(idAnnuncio,user.getUid().toString(), nomeCasa, data, tipologia,prezzo,speseStraordinarie, casa.getIndirizzo());
         DatabaseReference annuncioAggiunto = myRef.child("Annunci").push();
         annuncioAggiunto.setValue(annuncio);
 
         //PULISCO I CAMPI
+        et_nomeAnnuncio.setText("");
         et_prezzo.setText("");
         et_speseStraordinarie.setText("");
         Intent intent = new Intent(this, Home.class);

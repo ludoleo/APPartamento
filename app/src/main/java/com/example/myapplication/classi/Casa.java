@@ -15,12 +15,13 @@ public class Casa {
     private float valutazione;
     private String proprietario;
     private String servizi;
-    private LatLng coordinate;
+    private double lat;
+    private double lng;
 
     public Casa(){}
 
     public Casa(String nomeCasa, String indirizzo, int numeroOspiti, int numeroBagni, int numeroStanze,
-                String proprietario, String servizi, LatLng coordinate) {
+                String proprietario, String servizi, double lat, double lng) {
         this.nomeCasa = nomeCasa;
         this.indirizzo = indirizzo;
         this.numeroOspiti = numeroOspiti;
@@ -29,12 +30,10 @@ public class Casa {
         this.valutazione = 0;
         this.proprietario = proprietario;
         this.servizi=servizi;
-        this.coordinate = coordinate;
+        this.lat = lat;
+        this.lng = lng;
+
     }
-
-    public LatLng getCoordinate() {return coordinate;}
-
-    public void setCoordinate(LatLng coordinate) {this.coordinate = coordinate;}
 
     public String getServizi() {return servizi;}
 
@@ -96,11 +95,13 @@ public class Casa {
         this.proprietario = proprietario;
     }
 
+    public double getLat() {return lat;}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getNomeCasa());
-    }
+    public void setLat(double lat) {this.lat = lat;}
+
+    public double getLng() { return lng; }
+
+    public void setLng(double lng) { this.lng = lng;}
 
     @Override
     public String toString() {

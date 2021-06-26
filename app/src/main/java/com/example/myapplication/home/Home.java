@@ -68,40 +68,41 @@ public class Home extends AppCompatActivity {
             Log.i(TAG, "Connesso utente già registrato " + user.getEmail());
             String idUtente = user.getUid();
 
-            // myRef.child("Utenti").child("Studenti").child(idUtente);
-            myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
+                myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
 
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    boolean flag = false;
-                    Log.i(TAG, "funziona " + idUtente);
+                        boolean flag = false;
+                        Log.i(TAG, "funziona " + idUtente);
 
-                    // Get Post object and use the values to update the UI
-                    for (DataSnapshot figlio : dataSnapshot.getChildren()) {
+                        // Get Post object and use the values to update the UI
+                        for (DataSnapshot figlio : dataSnapshot.getChildren()) {
 
-                        Log.i(TAG, "Studente " + figlio.getKey() + "/n");
+                            Log.i(TAG, "Studente " + figlio.getKey() + "/n");
 
-                        if (figlio.getKey().compareTo(idUtente) == 0) {
-                            Log.i(TAG, "Entra nell'if del DB studente ");
-                            flag = true;
+                            if (figlio.getKey().compareTo(idUtente) == 0) {
+                                Log.i(TAG, "Entra nell'if del DB studente ");
+                                flag = true;
+                            }
                         }
+                        if (!flag) {
+                            Log.i(TAG, "Entra nell'if del flag false ");
+                            vaiProfiloProprietario(idUtente);
+                        } else
+                            vaiProfiloStudente(idUtente);
+
+
                     }
-                    if (!flag) {
-                        Log.i(TAG, "Entra nell'if del flag false ");
-                        vaiProfiloProprietario(idUtente);
-                    } else
-                        vaiProfiloStudente(idUtente);
 
-                }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Getting Post failed, log a message
+                        Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                    }
+                });
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    // Getting Post failed, log a message
-                    Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                }
-            });
-        }
     }
 
     public void messaggi(View view) {

@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
+import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.Proprietario;
@@ -27,14 +29,24 @@ public class ProfiloCasa extends AppCompatActivity {
     private Casa casa;
     private Proprietario proprietario;
     private Inquilino inquilino;
-    private List<Inquilino> coinquilini;
-    int i;
+
+    List<Casa> listaCase;
+    List<Studente> listaStudenti;
+    List<Proprietario> listaProprietario;
+    //todo devo considerare gli inquilini
+    List<Inquilino> listaInquilini;
+    List<Studente> coinquilini;
+
     TextView laTuaCasa, ilProprietario, valutazioneProprietario, valutazioneCasa;
+    Button b_aggiungiInquilino, b_aggiungiAnnuncio;
+
     //DATABASE
     FirebaseUser user;
     FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    //VARIABILE DI CONTROLLO
+    int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,30 +61,23 @@ public class ProfiloCasa extends AppCompatActivity {
         ilProprietario = (TextView) findViewById(R.id.tv_proprietarioLaTuaCasa);
         valutazioneProprietario = (TextView) findViewById(R.id.tv_valutazioneProprietarioCasaTua);
         valutazioneCasa = (TextView) findViewById(R.id.tv_valutazioneCasaTua);
+
+        b_aggiungiAnnuncio = (Button) findViewById(R.id.button_aggiungiAnnuncio);
+        b_aggiungiInquilino = (Button) findViewById(R.id.button_aggiungiInquilino);
+        //lirendo visibili solo al proprietario loggayo
+        b_aggiungiInquilino.setVisibility(View.GONE);
+        b_aggiungiAnnuncio.setVisibility(View.GONE);
         initUI();
         caricaSchermata();
     }
 
     private void caricaSchermata() {
 
-        List<Studente> listaStudentiCoinquilini;
-        if(!inquilino.equals(null) && !casa.equals(null) && !proprietario.equals(null) && !coinquilini.equals(null)){
-            listaStudentiCoinquilini = new LinkedList<>();
-            i = 0;
-            while(i<coinquilini.size()){
-                myRef.child("Studenti").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot studenti : dataSnapshot.getChildren()) {
-                            Studente s = studenti.getValue(Studente.class);
-                            if (s.getIdUtente().compareTo(coinquilini.get(i).getStudente())==0)
-                                listaStudentiCoinquilini.add(s); }
-                        i++;
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+            if(user.getUid()!=null){
+                if(user.getUid().compareTo(proprietario.getIdUtente())==0){
+                    b_aggiungiInquilino.setVisibility(View.VISIBLE);
+                    b_aggiungiAnnuncio.setVisibility(View.VISIBLE);
+                }
             }
             //CARICO IL NOME DELLA CASA
             laTuaCasa.setText(casa.getNomeCasa());
@@ -81,9 +86,6 @@ public class ProfiloCasa extends AppCompatActivity {
             ilProprietario.setText("Host: "+proprietario.getNome());
             valutazioneProprietario.setText(""+proprietario.getValutazione());
             //TODO LIST VIEW CON I COINQULINI(STUDENTI) I ED I PROPRIETARI
-        } else{
-            //STAMPA ERRORE
-        }
     }
 
     private void initUI() {
@@ -92,72 +94,94 @@ public class ProfiloCasa extends AppCompatActivity {
         casa = null;
         proprietario = null;
         coinquilini = null;
+        i=0;
 
-        while(inquilino == null || casa == null || proprietario == null || coinquilini == null) {
+        //listaInquilini = new LinkedList<Inquilino>();
+        listaCase = new LinkedList<Casa>();
+        listaProprietario = new LinkedList<Proprietario>();
+        listaStudenti = new LinkedList<Studente>();
 
-            if (inquilino == null) {
-                myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot inquilini : dataSnapshot.getChildren()) {
-                            Inquilino i = inquilini.getValue(Inquilino.class);
-                            if (i.getStudente().compareTo(user.getUid()) == 0 && i.getDataFine().equals(null))
-                                inquilino = i;
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+        /*
+        myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot inquilini : dataSnapshot.getChildren()) {
+                    Inquilino i = inquilini.getValue(Inquilino.class);
+                    listaInquilini.add(i);
+                }
             }
-            if (inquilino != null && casa == null) {
-                myRef.child("Case").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot listaCase : dataSnapshot.getChildren()) {
-                            Casa i = listaCase.getValue(Casa.class);
-                            if (i.getNomeCasa().compareTo(inquilino.getCasa()) == 0)
-                                casa = i;
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
             }
-            if (inquilino != null && proprietario == null) {
-                myRef.child("Proprietari").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot props : dataSnapshot.getChildren()) {
-                            Proprietario i = props.getValue(Proprietario.class);
-                            if (i.getIdUtente().compareTo(inquilino.getProprietario()) == 0)
-                                proprietario = i;
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+        });
+         */
+        myRef.child("Case").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot lcase : dataSnapshot.getChildren()) {
+                    Casa i = lcase.getValue(Casa.class);
+                    listaCase.add(i);
+                }
+                i++;
             }
-            if (casa != null) {
-                coinquilini = new LinkedList<>();
-                myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot inquilini : dataSnapshot.getChildren()) {
-                            Inquilino i = inquilini.getValue(Inquilino.class);
-                            if (i.getCasa().compareTo(user.getUid()) == 0 && i.getDataFine().equals(null))
-                                coinquilini.add(i);
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot props : dataSnapshot.getChildren()) {
+                    Proprietario i = props.getValue(Proprietario.class);
+                    listaProprietario.add(i);
+                }
+                i++;
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot inquilini : dataSnapshot.getChildren()) {
+                    Studente i = inquilini.getValue(Studente.class);
+                    listaStudenti.add(i);
+                }
+                i++;
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        verificaCaricamentoDati();
+        caricaSchermata();
+    }
+
+    private void verificaCaricamentoDati() {
+        if(i==3){
+            String nomeCasa = getIntent().getExtras().getString("nomeCasa");
+            for(Casa c : listaCase){
+                    if(c.getNomeCasa().compareTo(nomeCasa)==0)
+                        casa = c;
+            }
+            for(Proprietario p : listaProprietario){
+                if(p.getIdUtente().compareTo(casa.getProprietario())==0)
+                    proprietario = p;
+            }
+            //todo metodi per trovare i coinquilini, ricorda di modificare i
+        }else{
+            try {
+                Thread.sleep(1000);//1000 milliseconds is one second.
+                verificaCaricamentoDati();
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
             }
         }
     }
+
     private void recensioniCasa(View v){
 
     }
@@ -168,4 +192,9 @@ public class ProfiloCasa extends AppCompatActivity {
 
     }
 
+    public void aggiungiAnnuncio(View view) {
+    }
+
+    public void aggiungiInquilino(View view) {
+    }
 }

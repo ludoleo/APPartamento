@@ -51,8 +51,8 @@ public class InserimentoDatiCasa extends AppCompatActivity {
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-    private boolean controlloCasaUguale=false;
-    private boolean controlloCompletato=false;
+
+    List<String> listaCase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,14 +83,27 @@ public class InserimentoDatiCasa extends AppCompatActivity {
                 startActivityForResult(intent,100);
             }
         });
-
         //database
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
         //autenticazione
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+        update();
+    }
 
+    private void update() {
+        listaCase = new LinkedList<>();
+        myRef.child("Case").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot annData: dataSnapshot.getChildren()) {
+                    Casa ann = annData.getValue(Casa.class);
+                    listaCase.add(ann.getNomeCasa());}
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
 
     @Override
@@ -134,50 +147,31 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         }
 
         //CONTROLLI SUL NOME DELLA CASA
-        controlloCompletato = false;
-        controlloCasaUguale = false;
-
-        while(!controlloCompletato){
-            myRef.child("Case").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
-                        Casa casaFiglio = caseSnapshot.getValue(Casa.class);
-                        if(casaFiglio.getNomeCasa().compareTo(et_nomeCasa.getText().toString())==0){
-                            stampaErroreCasaUguale();
-                            controlloCasaUguale = true;
-                        }
-                    }
-                    controlloCompletato = true;
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
+        boolean controlloCasaUguale = false;
+        if(listaCase.contains(nomeCasa)){
+            controlloCasaUguale = true;
+            Toast.makeText(this, "Errore il nome della casa è già esistente", Toast.LENGTH_SHORT);
         }
         //Se non vi è la casa uguale
         if(!controlloCasaUguale){
             //CREO L'OGGETTO CASA
             String proprietario = user.getUid();
-            Casa casa = new Casa(nomeCasa, viaCasa, numeroOspiti, numeroBagni, numeroStanze, proprietario,"",coordinate);
+            Casa casa = new Casa(nomeCasa, viaCasa, numeroOspiti, numeroBagni, numeroStanze, proprietario,"",coordinate.latitude,coordinate.longitude);
             //eseguo il push
             DatabaseReference casaAggiunta = myRef.child("Case").push();
             casaAggiunta.setValue(casa);
             Log.i(TAG, "Casa " + casa.getNomeCasa());
+            update();
             clear();
             Intent intent = new Intent(this, InserimentoServiziCasa.class);
             intent.putExtra("nomeCasa",nomeCasa);
             startActivity(intent);
         }
     }
-
     private void clear() {
         et_nomeCasa.setText("");
         et_numeroBagni.setText("");
         et_numeroStanze.setText("");
         et_numeroOspiti.setText("");
-    }
-    private void stampaErroreCasaUguale() {
-        Toast.makeText(this, "Errore il nome della casa è già esistente", Toast.LENGTH_SHORT);
     }
 }

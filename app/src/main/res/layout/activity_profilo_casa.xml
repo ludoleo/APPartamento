@@ -40,9 +40,24 @@
         android:onClick="recensioniProprietario"
         android:drawableRight="@drawable/ic_baseline_star"
         />
+    <Button
+        android:id="@+id/button_aggiungiAnnuncio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="aggiungiAnnuncio"
+        android:text="Aggiungi Annuncio">
+    </Button>
     <ListView
         android:id="@+id/lv_inquiliniLaTuaCasa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     </ListView>
+    <Button
+        android:id="@+id/button_aggiungiInquilino"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="aggiungiInquilino"
+        android:text="Aggiungi Annuncio">
+    </Button>
+
 </LinearLayout>

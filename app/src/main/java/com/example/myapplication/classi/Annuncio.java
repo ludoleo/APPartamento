@@ -35,14 +35,14 @@ public class Annuncio
     private Integer prezzoMensile;
     private String speseStraordinarie;
     private String indirizzo;
-    private LatLng coordinate;
+
     //TODO creare un metodo per aggiungere i servizi e le immagini
     private List<ImageView> listaImmagini = new LinkedList<>();
 
     public Annuncio(){}
 
     public Annuncio(String nomeAnnuncio, String proprietario, String casa, Date dataAnnuncio,
-                    String tipologiaAlloggio, Integer prezzoMensile, String speseStraordinarie, String indirizzo, LatLng coordinate) {
+                    String tipologiaAlloggio, Integer prezzoMensile, String speseStraordinarie, String indirizzo) {
         this.nomeAnnuncio = nomeAnnuncio;
         this.idProprietario = proprietario;
         this.idCasa = casa;
@@ -51,7 +51,7 @@ public class Annuncio
         this.prezzoMensile = prezzoMensile;
         this.speseStraordinarie = speseStraordinarie;
         this.indirizzo = indirizzo;
-        this.coordinate = coordinate;
+
     }
 
     public String getNomeAnnuncio() {return nomeAnnuncio;}
@@ -65,10 +65,6 @@ public class Annuncio
     public String getIdCasa() {return idCasa;}
 
     public void setIdCasa(String idCasa) {this.idCasa = idCasa;}
-
-    public LatLng getCoordinate() {return coordinate;}
-
-    public void setCoordinate(LatLng coordinate) {this.coordinate = coordinate;}
 
     public void setListaImmagini(List<ImageView> listaImmagini) {this.listaImmagini = listaImmagini;}
 
