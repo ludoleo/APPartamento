@@ -5,6 +5,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,14 +35,14 @@ public class Annuncio
     private Integer prezzoMensile;
     private String speseStraordinarie;
     private String indirizzo;
+    private LatLng coordinate;
     //TODO creare un metodo per aggiungere i servizi e le immagini
     private List<ImageView> listaImmagini = new LinkedList<>();
-    private List<String> listaServizi = new LinkedList<>();
 
     public Annuncio(){}
 
     public Annuncio(String nomeAnnuncio, String proprietario, String casa, Date dataAnnuncio,
-                    String tipologiaAlloggio, Integer prezzoMensile, String speseStraordinarie, String indirizzo) {
+                    String tipologiaAlloggio, Integer prezzoMensile, String speseStraordinarie, String indirizzo, LatLng coordinate) {
         this.nomeAnnuncio = nomeAnnuncio;
         this.idProprietario = proprietario;
         this.idCasa = casa;
@@ -48,8 +50,27 @@ public class Annuncio
         this.tipologiaAlloggio = tipologiaAlloggio;
         this.prezzoMensile = prezzoMensile;
         this.speseStraordinarie = speseStraordinarie;
-        this.indirizzo = "";
+        this.indirizzo = indirizzo;
+        this.coordinate = coordinate;
     }
+
+    public String getNomeAnnuncio() {return nomeAnnuncio;}
+
+    public void setNomeAnnuncio(String nomeAnnuncio) {this.nomeAnnuncio = nomeAnnuncio;}
+
+    public String getIdProprietario() {return idProprietario;}
+
+    public void setIdProprietario(String idProprietario) {this.idProprietario = idProprietario; }
+
+    public String getIdCasa() {return idCasa;}
+
+    public void setIdCasa(String idCasa) {this.idCasa = idCasa;}
+
+    public LatLng getCoordinate() {return coordinate;}
+
+    public void setCoordinate(LatLng coordinate) {this.coordinate = coordinate;}
+
+    public void setListaImmagini(List<ImageView> listaImmagini) {this.listaImmagini = listaImmagini;}
 
     public String getIdAnnuncio() {
         return nomeAnnuncio;
@@ -115,33 +136,12 @@ public class Annuncio
         this.listaImmagini.add(immagine);
     }
 
-    public List<String> getListaServizi() {
-        return listaServizi;
-    }
-
-    public void addServizio(String servizio) {
-        this.listaServizi.add(servizio);
-    }
-
     public String getIndirizzo() {
         return indirizzo;
     }
 
     public void setIndirizzo(String indirizzo) {
         this.indirizzo = indirizzo;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Annuncio)) return false;
-        Annuncio annuncio = (Annuncio) o;
-        return getIdAnnuncio().equals(annuncio.getIdAnnuncio());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getIdAnnuncio());
     }
 
     public String toString(){
