@@ -15,6 +15,8 @@ public class VisitaVirtuale extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visita_virtuale);
         TextView GoogleMeet = (TextView) findViewById(R.id.GoogleMeet);
+        // link a google
         Linkify.addLinks(GoogleMeet,Linkify.WEB_URLS);
+
     }
 }
