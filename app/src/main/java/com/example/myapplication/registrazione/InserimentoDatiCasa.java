@@ -9,13 +9,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.home.Home;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.AddressComponent;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
@@ -37,18 +40,19 @@ import java.util.Locale;
 public class InserimentoDatiCasa extends AppCompatActivity {
 
     private static final String TAG = "CASA";
-    //Nome
-     EditText et_nomeCasa;
-    //Posizione
-     EditText et_viaCasa;
-    //Caratteristiche principali
-     EditText et_numeroBagni, et_numeroStanze, et_numeroOspiti;
+
+    EditText et_nomeCasa, et_viaCasa;
+    LatLng coordinate;
+    EditText et_numeroBagni, et_numeroStanze, et_numeroOspiti;
+    TextView coordinateCasa;
     //Autenticazione
     public FirebaseUser user;
     public FirebaseAuth mAuth;
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    private boolean controlloCasaUguale=false;
+    private boolean controlloCompletato=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         et_numeroBagni = (EditText) findViewById(R.id.et_numeroBagni);
         et_numeroStanze = (EditText) findViewById(R.id.et_numeroStanze);
         et_numeroOspiti = (EditText) findViewById(R.id.et_numeroOspiti);
+        coordinateCasa = (TextView) findViewById(R.id.tv_coordinate_casa);
 
         Places.initialize(getApplicationContext(),"AIzaSyBCyadRVH_uGnvM79GNR49RowBbyE4hkYg");
         et_viaCasa.setFocusable(false);
@@ -94,15 +99,15 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         if(requestCode == 100 && resultCode == RESULT_OK){
             Place place = Autocomplete.getPlaceFromIntent(data);
             et_viaCasa.setText(place.getAddress());
-            //todo in teoria già qua possiamo salvarci le coordinate della casa senza utilizzare il geocoder.
+            coordinate = place.getLatLng();
+            coordinateCasa.setText(""+coordinate.toString());
         }else if(resultCode == AutocompleteActivity.RESULT_ERROR){
             Status status = Autocomplete.getStatusFromIntent(data);
             Toast.makeText(getApplicationContext(),status.getStatusMessage(),Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void caricaDati() {
-        //todo gestire l'oggetto Place per ricavarne le coordinate
+    public void caricaCasa(View view) {
         String nomeCasa = et_nomeCasa.getText().toString();
         String viaCasa = et_viaCasa.getText().toString();
         int numeroBagni = 0;
@@ -119,7 +124,6 @@ public class InserimentoDatiCasa extends AppCompatActivity {
             Toast.makeText(this, "Attenzione errore nei valori numerici", Toast.LENGTH_SHORT).show();
             return;
         }
-
         // controllo sulla presenza dei valori forniti dal proprietario
         if (nomeCasa.compareTo("") == 0) {
             Toast.makeText(this, "Attenzione aggiungi il nome della casa", Toast.LENGTH_SHORT).show();
@@ -129,36 +133,42 @@ public class InserimentoDatiCasa extends AppCompatActivity {
             return;
         }
 
-        //CREO L'OGGETTO CASA
-        String proprietario = user.getUid();
-        Casa casa = new Casa(nomeCasa, viaCasa, numeroOspiti, numeroBagni, numeroStanze, proprietario,"");
-        //eseguo il push
-        DatabaseReference casaAggiunta = myRef.child("Case").push();
-        casaAggiunta.setValue(casa);
-        Log.i(TAG, "Casa " + casa.getNomeCasa());
-        clear();
-        Intent intent = new Intent(this, InserimentoDatiAnnuncio.class);
-        startActivity(intent);
-    }
+        //CONTROLLI SUL NOME DELLA CASA
+        controlloCompletato = false;
+        controlloCasaUguale = false;
 
-    public void caricaCasa(View view) {
-
-        myRef.child("Case").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
-                    Casa casaFiglio = caseSnapshot.getValue(Casa.class);
-                    if(casaFiglio.getNomeCasa().compareTo(et_nomeCasa.getText().toString())==0){
-                        stampaErroreCasaUguale();
-                        return;
+        while(!controlloCompletato){
+            myRef.child("Case").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
+                        Casa casaFiglio = caseSnapshot.getValue(Casa.class);
+                        if(casaFiglio.getNomeCasa().compareTo(et_nomeCasa.getText().toString())==0){
+                            stampaErroreCasaUguale();
+                            controlloCasaUguale = true;
+                        }
                     }
+                    controlloCompletato = true;
                 }
-                caricaDati();
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+        //Se non vi è la casa uguale
+        if(!controlloCasaUguale){
+            //CREO L'OGGETTO CASA
+            String proprietario = user.getUid();
+            Casa casa = new Casa(nomeCasa, viaCasa, numeroOspiti, numeroBagni, numeroStanze, proprietario,"",coordinate);
+            //eseguo il push
+            DatabaseReference casaAggiunta = myRef.child("Case").push();
+            casaAggiunta.setValue(casa);
+            Log.i(TAG, "Casa " + casa.getNomeCasa());
+            clear();
+            Intent intent = new Intent(this, InserimentoServiziCasa.class);
+            intent.putExtra("nomeCasa",nomeCasa);
+            startActivity(intent);
+        }
     }
 
     private void clear() {

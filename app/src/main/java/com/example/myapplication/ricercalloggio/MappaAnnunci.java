@@ -35,11 +35,12 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
     private static final String TAG = "Mappe";
     private MapView mapView;
     GoogleMap gmap;
-    Geocoder geocoder;
 
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    //VARIABILI DI CONTROLLO
+    boolean annunciCaricati;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,21 +99,24 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
 
         //SALVO TUTTI GLI ANNUNCI IN UNA LISTA
         List<Annuncio> listaAnnunci = new ArrayList<>();
-
-        myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot annData: dataSnapshot.getChildren()) {
-                    Annuncio ann = annData.getValue(Annuncio.class);
-                    listaAnnunci.add(ann);}
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
-        });
+        annunciCaricati = false;
+        while(!annunciCaricati){
+            myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot annData: dataSnapshot.getChildren()) {
+                        Annuncio ann = annData.getValue(Annuncio.class);
+                        listaAnnunci.add(ann);}
+                 annunciCaricati = true;
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
+            });
+        }
 
         //SCORRO LA LISTA PER CREARE UN MARKER PER OGNI ANNUNCIO
         for(Annuncio a : listaAnnunci){
-            MarkerOptions mo = new MarkerOptions().position(geocoding(a.getIndirizzo()));
+            MarkerOptions mo = new MarkerOptions().position(a.getCoordinate());
             mo.title(""+a.getPrezzoMensile()+"€");
             gmap.addMarker(mo);
         }
@@ -122,19 +126,6 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
         gmap.addMarker(new MarkerOptions().position(poliTo));
     }
 
-    private LatLng geocoding(String indirizzo) {
-        try {
-            List<Address> addresses = geocoder.getFromLocationName(indirizzo, 5);
-            if (addresses == null)
-                return null;
-            Address location = addresses.get(0);
-            LatLng destinazione = new LatLng(location.getLatitude(), location.getLongitude());
-            return destinazione;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -155,4 +146,7 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
     protected void onPause() {
         super.onPause();
         mapView.onPause(); }
+
+    public void modificaFiltri(View view) {
+    }
 }

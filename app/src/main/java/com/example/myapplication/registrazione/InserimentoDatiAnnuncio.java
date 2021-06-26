@@ -52,6 +52,7 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
     private DatabaseReference myRef;
     // case proprietario
     TextView textViewNomeCasa;
+    Casa casa;
     List<String> listaAnnunci = new LinkedList<>();
 
     @Override
@@ -76,6 +77,7 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
 
         textViewNomeCasa = (TextView) findViewById(R.id.tv_nomeCasa);
         textViewNomeCasa.setText(getIntent().getExtras().getString("nomeCasa"));
+        String nomeCasa = getIntent().getExtras().getString("nomeCasa");
         //carico gli annunci
         myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
             @Override
@@ -89,6 +91,22 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+        //prendo il riferimento della casa
+        myRef.child("Case").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
+                    Casa casaFiglio = caseSnapshot.getValue(Casa.class);
+                    if(casaFiglio.getNomeCasa().compareTo(nomeCasa)==0){
+                        casa = casaFiglio;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
     }
 
     public void caricaAnnuncio(View view) {
@@ -117,24 +135,12 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
         if(listaAnnunci.contains(idAnnuncio)){
             Toast.makeText(this, "Esiste già un tuo annuncio con lo stesso nome", Toast.LENGTH_SHORT).show();
             return;}
+
         //CREO ANNUNCIO
-        Annuncio annuncio = new Annuncio(idAnnuncio,user.getUid().toString(), nomeCasa, data, tipologia,prezzo,speseStraordinarie, "");
-        myRef.child("Case").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
-                    Casa casaFiglio = caseSnapshot.getValue(Casa.class);
-                    if(casaFiglio.getNomeCasa().compareTo(nomeCasa)==0){
-                        annuncio.setIndirizzo(casaFiglio.getIndirizzo());
-                    }
-                }
-                DatabaseReference annuncioAggiunto = myRef.child("Annunci").push();
-                annuncioAggiunto.setValue(annuncio);
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+        Annuncio annuncio = new Annuncio(idAnnuncio,user.getUid().toString(), nomeCasa, data, tipologia,prezzo,speseStraordinarie, casa.getIndirizzo(),casa.getCoordinate());
+        DatabaseReference annuncioAggiunto = myRef.child("Annunci").push();
+        annuncioAggiunto.setValue(annuncio);
+
         //PULISCO I CAMPI
         et_prezzo.setText("");
         et_speseStraordinarie.setText("");

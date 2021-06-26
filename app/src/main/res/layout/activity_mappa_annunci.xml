@@ -7,39 +7,61 @@
     android:orientation="vertical"
     tools:context=".ricercalloggio.MappaAnnunci">
 
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical">
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal">
             <Button
                 android:id="@+id/b_back_mappa_case"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:onClick="indietro"
                 android:text="@string/indietro" />
+             <Button
+                 android:id="@+id/b_filtri_mappa"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:onClick="modificaFiltri"
+                 android:layout_margin="10dp"
+                 android:text="Filtri" />
+             <Button
+                android:id="@+id/lista_case"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="listaCase"
+                android:text="Lista case"
+                android:layout_margin="10dp" />
+     </LinearLayout>
 
-            <com.google.android.gms.maps.MapView
+        <com.google.android.gms.maps.MapView
                 android:id="@+id/mapView"
                 android:layout_width="match_parent"
                 android:layout_height="486dp" />
 
-            <Button
-                android:id="@+id/prenotaz"
+            <TextView
+                android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="visualizzaCasa"
-                android:text="Visualizza casa" />
+                android:text="" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="" />
 
             <Button
-                android:id="@+id/lista_case"
-                android:layout_width="match_parent"
+                android:id="@+id/prenotaz"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="listaCase"
-                android:text="Lista case" />
+                android:onClick="visualizzaCasa"
+                android:text="Visualizza Annuncio" />
         </LinearLayout>
 
 </ScrollView>

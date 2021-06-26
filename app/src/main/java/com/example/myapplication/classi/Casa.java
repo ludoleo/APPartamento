@@ -1,6 +1,8 @@
 package com.example.myapplication.classi;
 
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.Objects;
 
 public class Casa {
@@ -13,11 +15,12 @@ public class Casa {
     private float valutazione;
     private String proprietario;
     private String servizi;
+    private LatLng coordinate;
 
     public Casa(){}
 
     public Casa(String nomeCasa, String indirizzo, int numeroOspiti, int numeroBagni, int numeroStanze,
-                String proprietario, String servizi) {
+                String proprietario, String servizi, LatLng coordinate) {
         this.nomeCasa = nomeCasa;
         this.indirizzo = indirizzo;
         this.numeroOspiti = numeroOspiti;
@@ -26,7 +29,12 @@ public class Casa {
         this.valutazione = 0;
         this.proprietario = proprietario;
         this.servizi=servizi;
+        this.coordinate = coordinate;
     }
+
+    public LatLng getCoordinate() {return coordinate;}
+
+    public void setCoordinate(LatLng coordinate) {this.coordinate = coordinate;}
 
     public String getServizi() {return servizi;}
 
