@@ -93,9 +93,9 @@ public class ProfiloCasa extends AppCompatActivity {
         proprietario = null;
         coinquilini = null;
 
-        while(inquilino.equals(null) || casa.equals(null) || proprietario.equals(null) || coinquilini.equals(null)) {
+        while(inquilino == null || casa == null || proprietario == null || coinquilini == null) {
 
-            if (inquilino.equals(null)) {
+            if (inquilino == null) {
                 myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -110,7 +110,7 @@ public class ProfiloCasa extends AppCompatActivity {
                     }
                 });
             }
-            if (!inquilino.equals(null) && casa.equals(null)) {
+            if (inquilino != null && casa == null) {
                 myRef.child("Case").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -125,7 +125,7 @@ public class ProfiloCasa extends AppCompatActivity {
                     }
                 });
             }
-            if (!inquilino.equals(null) && proprietario.equals(null)) {
+            if (inquilino != null && proprietario == null) {
                 myRef.child("Proprietari").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -140,7 +140,7 @@ public class ProfiloCasa extends AppCompatActivity {
                     }
                 });
             }
-            if (!casa.equals(null)) {
+            if (casa != null) {
                 coinquilini = new LinkedList<>();
                 myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
                     @Override

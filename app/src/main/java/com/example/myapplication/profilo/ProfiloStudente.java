@@ -23,7 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.myapplication.VisitaNote.NoteVisitaLista;
+import com.example.myapplication.visitaNote.NoteVisitaLista;
 import com.example.myapplication.R;
 import com.example.myapplication.recensione.RecensioniStudenteEsterneList;
 import com.example.myapplication.classi.Inquilino;
@@ -77,7 +77,7 @@ public class ProfiloStudente extends AppCompatActivity {
 
     public DatabaseReference myRef;
     // per foto
-    
+
     public FirebaseDatabase database;
     private String idUtente;
 
@@ -159,7 +159,7 @@ public class ProfiloStudente extends AppCompatActivity {
             text_univerista = (TextView) findViewById(R.id.text_universita);
             text_indirizzoLaure = (TextView) findViewById(R.id.text_indirizzoLaurea);
             username = (TextView) findViewById(R.id.username);
-            
+
 
             idUtente = getIntent().getExtras().getString("idUtente");
 
@@ -254,6 +254,27 @@ public class ProfiloStudente extends AppCompatActivity {
         return  mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
+    /*
+  // RISPOSTA AL FOR RESULT
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == IMAG_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+            ImageUri = data.getData();
+            // set image to image view
+            immagineStudente.setImageURI(data.getData());
+            if (UploadTask != null && UploadTask.isInProgress())    {
+                Toast.makeText(ProfiloStudente.this,"Upload in Progress", LENGTH_SHORT).show();
+            } else{
+                Log.i("ProfiloStud","passo da qui");
+                // forse da togliere
+            immagineStudente.setImageURI(ImageUri);
+            UploadImage(ImageUri);
+                }
+            }
+        }
+
+     */
         // GESTIONE DELL UPLOAD
 
     private void UploadImage(Uri ImageUri){
@@ -287,7 +308,7 @@ public class ProfiloStudente extends AppCompatActivity {
                        map.put("imageURL",mUri);
                        myRef.updateChildren(map);
                        pd.dismiss();
-                       
+
                    }
                    else {
                        Toast.makeText(ProfiloStudente.this,"Error", LENGTH_SHORT).show();

@@ -96,13 +96,6 @@ public class Casa {
         this.proprietario = proprietario;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Casa)) return false;
-        Casa casa = (Casa) o;
-        return getNomeCasa().equals(casa.getNomeCasa());
-    }
 
     @Override
     public int hashCode() {

@@ -51,12 +51,6 @@ public class Inquilino {
         this.dataFine = dataFine;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Inquilino)) return false;
-        Inquilino inquilino = (Inquilino) o;
-        return getStudente().equals(inquilino.getStudente()); }
 
     @Override
     public int hashCode() {

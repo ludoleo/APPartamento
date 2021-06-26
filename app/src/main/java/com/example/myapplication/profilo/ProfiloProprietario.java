@@ -129,17 +129,26 @@ public class ProfiloProprietario extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         // storage
-        storageReference = FirebaseStorage.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance("gs://appartamento-81c2d.appspot.com").getReference();
+        Log.i(TAG,"STorage "+storageReference);
 
         StorageReference profileRef = storageReference.child("Proprietari/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        Log.i(TAG,"profile ref "+profileRef);
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>(
+
+        ) {
             @Override
             public void onSuccess(Uri uri) {
+                Log.i(TAG,"URI"+uri);
                 Picasso.get().load(uri).into(immagineprop);
             }
+            }).addOnFailureListener(new OnFailureListener() {
+
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+            // Handle any errors
+            }
         });
-
-
 
         //TODO aggiungere controllo se esiste un utente loggato o no e prendere l'id utente o tramite intent o tramite user
 
@@ -284,7 +293,7 @@ public class ProfiloProprietario extends AppCompatActivity {
     }
 
     private void creaAnnuncio(String casa) {
-        Intent intent = new Intent(this, InserimentoDatiAnnuncio.class);
+        Intent intent = new Intent(this, ProfiloCasa.class);
         intent.putExtra("nomeCasa", casa);
         startActivity(intent);
     }

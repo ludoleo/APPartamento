@@ -94,13 +94,6 @@ public class Utente {
         this.primaEsperienza = primaEsperienza;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Utente)) return false;
-        Utente utente = (Utente) o;
-        return getEmail().equals(utente.getEmail());
-    }
 
     @Override
     public int hashCode() {

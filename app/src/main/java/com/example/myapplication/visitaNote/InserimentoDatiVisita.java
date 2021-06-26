@@ -1,4 +1,4 @@
-package com.example.myapplication.VisitaNote;
+package com.example.myapplication.visitaNote;
 
 import androidx.appcompat.app.AppCompatActivity;
 

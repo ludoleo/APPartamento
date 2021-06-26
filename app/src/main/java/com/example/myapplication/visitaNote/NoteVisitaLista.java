@@ -1,4 +1,4 @@
-package com.example.myapplication.VisitaNote;
+package com.example.myapplication.visitaNote;
 
 import android.app.Activity;
 import android.app.ListActivity;
@@ -17,8 +17,6 @@ import android.widget.CursorAdapter;
 import android.widget.SimpleCursorAdapter;
 
 import com.example.myapplication.R;
-import com.example.myapplication.VisitaNote.InserimentoDatiVisita;
-import com.example.myapplication.VisitaNote.Note;
 
 public class
 NoteVisitaLista extends ListActivity {

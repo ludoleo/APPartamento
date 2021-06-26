@@ -93,6 +93,8 @@
         <activity android:name=".registrazione.RegistrationActivity" />
         <activity android:name=".prenotazione.VisitaVirtuale" />
         <activity android:name=".login.LoginActivity" />
+        <activity android:name=".visitaNote.InserimentoDatiVisita"/>
+        <activity android:name=".visitaNote.NoteVisitaLista"/>
         <activity android:name=".MainActivity" />
     </application>
 
