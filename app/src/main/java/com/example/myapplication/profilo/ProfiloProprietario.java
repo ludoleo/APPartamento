@@ -130,6 +130,7 @@ public class ProfiloProprietario extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         // storage
         storageReference = FirebaseStorage.getInstance().getReference();
+
         StorageReference profileRef = storageReference.child("Proprietari/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override

@@ -17,7 +17,15 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.338" />
+        app:layout_constraintVertical_bias="0.343" />
+
+    <TextView
+        android:id="@+id/GoogleMeet"
+        android:layout_width="405dp"
+        android:layout_height="81dp"
+        android:text="It is now possible to create a new meet by going to this url: http://meet.google.com/new  "
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="274dp" />
 
     <Button
         android:id="@+id/googleMeet"
@@ -40,4 +48,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.72" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
