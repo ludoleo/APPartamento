@@ -11,7 +11,7 @@ public class Note implements Parcelable {
         public static String PREZZOCONCORDATO= "prezzo";
         public static String ZONA = "zona";
         public static String LINK = "link";
-        public static String TABLE_NAME = "Team";
+        public static String TABLE_NAME = "Note";
         public static String[] COLUMNS = new String[] { ID, NOME, VALUTAZIONE, PREZZOCONCORDATO, ZONA,LINK };
     }
 

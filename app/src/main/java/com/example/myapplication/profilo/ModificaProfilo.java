@@ -12,8 +12,8 @@ import com.example.myapplication.R;
 
 public class ModificaProfilo extends AppCompatActivity {
     Button infopersonali ;
-    Button notifiche;
-    Button annunciosalvato;
+    Button note;
+    Button recensioni;
     Button assistenza;
     Button annuncio;
 
@@ -32,8 +32,8 @@ public class ModificaProfilo extends AppCompatActivity {
             }
         });
 
-        notifiche = findViewById(R.id.notifiche);
-        notifiche.setOnClickListener(new View.OnClickListener() {
+        recensioni = findViewById(R.id.RecProfile);
+        recensioni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent c = new Intent(ModificaProfilo.this, Notifiche.class);
@@ -41,8 +41,8 @@ public class ModificaProfilo extends AppCompatActivity {
             }
         });
 
-        annunciosalvato = findViewById(R.id.annunciSalvatiStudente);
-        annunciosalvato.setOnClickListener(new View.OnClickListener() {
+        note = findViewById(R.id.VediNV);
+        note.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent d = new Intent(ModificaProfilo.this, Preferiti.class);

@@ -32,6 +32,7 @@ import com.example.myapplication.home.Home;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,8 +45,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.widget.Toast.*;
 
@@ -57,12 +61,12 @@ public class ProfiloStudente extends AppCompatActivity {
     private Uri ImageUri;
     private StorageTask UploadTask;
 
-    Button recensioni;
+    Button change;
     Button modifica;
     Button laTuaCasa;
     Button note;
 
-    ImageButton immagineStudente ;
+    CircleImageView immagineStudente ;
 
 
     private TextView text_nome;
@@ -97,21 +101,30 @@ public class ProfiloStudente extends AppCompatActivity {
             mAuth = FirebaseAuth.getInstance();
             user = mAuth.getCurrentUser();
             myRef = database.getReference();
-            storageReference= FirebaseStorage.getInstance().getReference("Uploads");
+            //STORAGE
+        storageReference = FirebaseStorage.getInstance().getReference();
+        Log.i(TAG,"STorage "+storageReference);
 
+        StorageReference profileRef = storageReference.child("Proprietari/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
+        Log.i(TAG,"profile ref "+profileRef);
 
-        recensioni = findViewById(R.id.recensioni);
-        recensioni.setOnClickListener(new View.OnClickListener() {
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ProfiloStudente.this, RecensioniStudenteEsterneList.class);
-                startActivity(i);
+            public void onSuccess(Uri uri) {
+                Log.i(TAG,"URI"+uri);
+                Picasso.get().load(uri).into(immagineStudente);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
             }
         });
 
-        immagineStudente = findViewById(R.id.ImmagineProfiloStudente);
+
+        change = findViewById(R.id.changestudent);
         // IMMAGINE PERMESSI
-        immagineStudente.setOnClickListener(new View.OnClickListener() {
+        change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // check runtime permission
@@ -142,15 +155,6 @@ public class ProfiloStudente extends AppCompatActivity {
                     startActivity(a);
                 }
             });
-          // bottone note
-            note= (Button) findViewById(R.id.noteButton);
-            note.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(ProfiloStudente.this, NoteVisitaLista.class);
-                    startActivity(intent);
-                }
-            });
 
             text_nome = (TextView) findViewById(R.id.text_nome);
             text_cognome = (TextView) findViewById(R.id.text_cognome);
@@ -174,7 +178,7 @@ public class ProfiloStudente extends AppCompatActivity {
 
             studentIsInquilino();
 
-        myRef.child("Utenti").child("Studenti").child(idUtente).addValueEventListener(new ValueEventListener() {
+       /* myRef.child("Utenti").child("Studenti").child(idUtente).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
 
@@ -192,7 +196,7 @@ public class ProfiloStudente extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        });*/
     }
 
     //METODO CHE DISATTIVA IL PULSANTE SE LO STUDENTE NON E' UN INQUILINO
@@ -245,92 +249,6 @@ public class ProfiloStudente extends AppCompatActivity {
         startActivityForResult(intent,IMAG_REQUEST);
 
         }
-        // GESTIONE ESTENSIONE
-    private String getFileExtention(Uri uri){
-        ContentResolver contentResolver = getContentResolver();
-
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-
-        return  mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
-
-    /*
-  // RISPOSTA AL FOR RESULT
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == IMAG_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
-            ImageUri = data.getData();
-            // set image to image view
-            immagineStudente.setImageURI(data.getData());
-            if (UploadTask != null && UploadTask.isInProgress())    {
-                Toast.makeText(ProfiloStudente.this,"Upload in Progress", LENGTH_SHORT).show();
-            } else{
-                Log.i("ProfiloStud","passo da qui");
-                // forse da togliere
-            immagineStudente.setImageURI(ImageUri);
-            UploadImage(ImageUri);
-                }
-            }
-        }
-
-     */
-        // GESTIONE DELL UPLOAD
-
-    private void UploadImage(Uri ImageUri){
-        final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Upload effettuato");
-        pd.show();
-
-        if(ImageUri != null){
-
-           final StorageReference FileReference =storageReference.child(System.currentTimeMillis()
-                   + "." +getFileExtention(ImageUri));
-           UploadTask = FileReference.putFile(ImageUri);
-           // Anche a lui rimaneva così
-           UploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-               @Override
-               public Task<Uri>then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                   if (!task.isSuccessful()){
-                       throw task.getException();
-                   }
-                   return FileReference.getDownloadUrl();
-               }
-           }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-               @Override
-               public void onComplete(@NonNull Task<Uri> task) {
-                   if (task.isSuccessful()){
-                       Uri DownloadUri = task.getResult();
-                       String mUri = DownloadUri.toString();
-                       // ho modificato qua
-                       myRef = FirebaseDatabase.getInstance().getReference("Utenti").child("studenti").child(user.getUid());
-                       HashMap<String,Object> map = new HashMap<>();
-                       map.put("imageURL",mUri);
-                       myRef.updateChildren(map);
-                       pd.dismiss();
-
-                   }
-                   else {
-                       Toast.makeText(ProfiloStudente.this,"Error", LENGTH_SHORT).show();
-                       pd.dismiss();
-                   }
-
-               }
-
-           }).addOnFailureListener(new OnFailureListener() {
-               @Override
-               public void onFailure(@NonNull Exception e) {
-                   Toast.makeText(ProfiloStudente.this,e.getMessage(), LENGTH_SHORT).show();
-                   pd.dismiss();
-               }
-           });
-        }
-        else {
-            Toast.makeText(ProfiloStudente.this,"Nessuna immagine selezionata", LENGTH_SHORT).show();
-        }
-    }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -350,6 +268,31 @@ public class ProfiloStudente extends AppCompatActivity {
             }
         }
     }
+
+    private void UploadImage(Uri imageUri) {
+        final StorageReference fileRef = storageReference.child("Propietari/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
+        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(immagineStudente);
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ProfiloStudente.this, "Upload non effettuato", Toast.LENGTH_SHORT).show();
+
+            }
+
+        });
+    }
+
+
+
 
     private void popola(String idUtente) {
 

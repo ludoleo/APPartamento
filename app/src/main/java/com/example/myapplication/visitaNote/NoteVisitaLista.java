@@ -22,7 +22,7 @@ public class
 NoteVisitaLista extends ListActivity {
     private final static String TAG_LOG = "NoteSQLite";
     private final static int DB_VERSION = 1;
-    // CRUD
+
     private final static int CREATE_ACTIVITY_RESULT = 1;
     private final static int UPDATE_ACTIVITY_RESULT = 2;
     private final static int DELETE_MENU_OPTION = 1;
@@ -55,7 +55,7 @@ NoteVisitaLista extends ListActivity {
 
         //Preparo la Query
         String sql = "SELECT _id, nome, valutazione, prezzo, zona, link FROM Note";
-        // eseguo
+
         cursor = db.rawQuery(sql, null);
 
         adapter = new SimpleCursorAdapter(this, R.layout.visita_note_row, cursor, FROMS, TOS, SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);

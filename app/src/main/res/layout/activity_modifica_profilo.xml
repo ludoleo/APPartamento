@@ -20,10 +20,10 @@
         android:text="@string/Bottone3" />
 
     <Button
-        android:id="@+id/notifiche"
+        android:id="@+id/RecProfile"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:text="@string/Bottone4" />
+        android:text="RECENSIONI" />
 
     <TextView
         android:id="@+id/textView6"
@@ -32,10 +32,10 @@
         android:text="@string/etichetta10" />
 
     <Button
-        android:id="@+id/annunciSalvatiStudente"
+        android:id="@+id/VediNV"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:text="Annunci Salvati" />
+        android:text="NOTE SULLE VISITE" />
 
     <TextView
         android:id="@+id/textView7"

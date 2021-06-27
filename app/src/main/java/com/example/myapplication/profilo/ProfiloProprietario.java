@@ -194,8 +194,8 @@ public class ProfiloProprietario extends AppCompatActivity {
                 Toast.makeText(ProfiloProprietario.this, "Upload non effettuato", Toast.LENGTH_SHORT).show();
 
             }
-        });
 
+    });
     }
 
     private void initUI(String idUtente) {

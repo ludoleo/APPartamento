@@ -24,61 +24,40 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="159dp">
 
-        <ImageButton
-            android:id="@+id/ImmagineProfiloStudente"
-            android:layout_width="190dp"
-            android:layout_height="159dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginRight="18dp"
-            android:contentDescription="TODO"
-            android:onClick="CambiaImmagine"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/recensioni"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_face_24" />
 
-        <Button
-            android:id="@+id/noteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Vai alle tue note"
-            tools:layout_editor_absoluteX="223dp"
-            tools:layout_editor_absoluteY="111dp" />
+        <de.hdodenhof.circleimageview.CircleImageView
 
-        <Button
-            android:id="@+id/recensioni"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginRight="80dp"
-            android:text="@string/Bottone1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/immagineProfiloProp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginLeft="130dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+            app:civ_border_color="@color/design_default_color_primary"
+            app:civ_border_width="2dp" />
 
         <ImageButton
             android:id="@+id/button_home3"
             android:layout_width="47dp"
             android:layout_height="38dp"
+            android:layout_marginRight="10dp"
             android:background="@color/rosso_mattone"
             android:fadingEdge="horizontal|vertical"
             android:onClick="goHome"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.997"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.033"
-            app:srcCompat="@drawable/ic_baseline_home_24"
-            tools:ignore="VectorDrawableCompat" />
+            android:visibility="visible" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/changestudent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="310dp"
+            android:text="Change Image " />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
