@@ -120,7 +120,7 @@ public class ListaAnnunci extends AppCompatActivity {
         startActivity(intent);}
 
     //Gestione del CustomItem
-    private static class CustomItem {
+    protected static class CustomItem {
         public String nomeCasa;
         public String prezzoCasa;
     }
@@ -141,7 +141,7 @@ public class ListaAnnunci extends AppCompatActivity {
         }
         return items;
     }
-    private static class ViewHolder{
+    protected static class ViewHolder{
         public TextView nomeCasaView;
         public TextView prezzoCasaView;
     }

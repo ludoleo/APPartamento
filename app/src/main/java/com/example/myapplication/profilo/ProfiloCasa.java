@@ -81,7 +81,6 @@ public class ProfiloCasa extends AppCompatActivity {
 
         //listaInquilini = new LinkedList<Inquilino>();
         listaStudenti = new LinkedList<Studente>();
-
         riferimentoCasa();
 
         /*
@@ -118,6 +117,7 @@ public class ProfiloCasa extends AppCompatActivity {
     }
 
     private void riferimentoCasa() {
+
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -151,11 +151,12 @@ public class ProfiloCasa extends AppCompatActivity {
                 ilProprietario.setText("Host: "+proprietario.getNome());
                 valutazioneProprietario.setText(""+proprietario.getValutazione());
                 //il proprietario è l'user
-                if(proprietario.getIdUtente().compareTo(user.getUid())==0){
-                    b_aggiungiAnnuncio.setVisibility(View.VISIBLE);
-                    b_aggiungiInquilino.setVisibility(View.VISIBLE);
+                if(user!=null) {
+                    if (proprietario.getIdUtente().compareTo(user.getUid()) == 0) {
+                        b_aggiungiAnnuncio.setVisibility(View.VISIBLE);
+                        b_aggiungiInquilino.setVisibility(View.VISIBLE);
+                    }
                 }
-
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
