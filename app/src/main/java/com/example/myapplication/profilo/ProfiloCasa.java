@@ -68,17 +68,11 @@ public class ProfiloCasa extends AppCompatActivity {
         b_aggiungiInquilino.setVisibility(View.GONE);
         b_aggiungiAnnuncio.setVisibility(View.GONE);
         initUI();
-        caricaSchermata();
+
     }
 
     private void caricaSchermata() {
-
-            if(user.getUid()!=null){
-                if(user.getUid().compareTo(proprietario.getIdUtente())==0){
-                    b_aggiungiInquilino.setVisibility(View.VISIBLE);
-                    b_aggiungiAnnuncio.setVisibility(View.VISIBLE);
-                }
-            }
+            //todo controllo utente
             //CARICO IL NOME DELLA CASA
             laTuaCasa.setText(casa.getNomeCasa());
             valutazioneCasa.setText(""+casa.getValutazione());

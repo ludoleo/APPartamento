@@ -176,27 +176,4 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
     public void modificaFiltri(View view) {
 
     }
-    //GEOCODING
-    public LatLng geocoding(String strAddress) throws IOException {
-        Geocoder coder = new Geocoder(this);
-        List<Address> address;
-        LatLng p1 = null;
-        try {
-            address = coder.getFromLocationName(strAddress,5);
-            Log.i("mylog", "geocoding "+address.toString());
-            if (address==null) {
-                return null;
-            }
-            Address location=address.get(0);
-            location.getLatitude();
-            location.getLongitude();
-            p1 = new LatLng((double) (location.getLatitude()),
-                    (double) (location.getLongitude()));
-            Log.i("mylog", p1.toString());
-            return p1;
-        }catch (IOException e) {
-            Log.e("errore", "Unable connect to Geocoder", e);
-        }
-        return null;
-    }
 }

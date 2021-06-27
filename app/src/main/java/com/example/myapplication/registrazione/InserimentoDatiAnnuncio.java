@@ -4,14 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +14,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.registrazione.InserimentoDatiCasa;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +21,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -114,7 +111,11 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
         String nomeCasa = getIntent().getExtras().getString("nomeCasa") ;
         String tipologia = spTipologiaPostoLetto.getSelectedItem().toString();
         String nomeAnnuncio = et_nomeAnnuncio.getText().toString();
+
         Date data = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss");
+        String strDate = dateFormat.format(data);
+
         Integer prezzo = 0;
 
         try {prezzo = Integer.parseInt(et_prezzo.getText().toString().trim());}
@@ -137,7 +138,7 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
             return;}
 
         //CREO ANNUNCIO
-        Annuncio annuncio = new Annuncio(idAnnuncio,user.getUid().toString(), nomeCasa, data, tipologia,prezzo,speseStraordinarie, casa.getIndirizzo());
+        Annuncio annuncio = new Annuncio(idAnnuncio,user.getUid().toString(), nomeCasa, strDate, tipologia,prezzo,speseStraordinarie, casa.getIndirizzo());
         DatabaseReference annuncioAggiunto = myRef.child("Annunci").push();
         annuncioAggiunto.setValue(annuncio);
 

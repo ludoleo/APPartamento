@@ -1,16 +1,10 @@
 package com.example.myapplication.classi;
 
-import android.location.Address;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.widget.ImageView;
 
-import com.google.android.gms.maps.model.LatLng;
-
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
+
 // NUOVO
 public class Annuncio
 
@@ -30,7 +24,7 @@ public class Annuncio
     private String nomeAnnuncio;
     private String  idProprietario;
     private String idCasa;
-    private Date dataAnnuncio;
+    private String dataAnnuncio;
     private String tipologiaAlloggio;
     private Integer prezzoMensile;
     private String speseStraordinarie;
@@ -41,7 +35,7 @@ public class Annuncio
 
     public Annuncio(){}
 
-    public Annuncio(String nomeAnnuncio, String proprietario, String casa, Date dataAnnuncio,
+    public Annuncio(String nomeAnnuncio, String proprietario, String casa, String dataAnnuncio,
                     String tipologiaAlloggio, Integer prezzoMensile, String speseStraordinarie, String indirizzo) {
         this.nomeAnnuncio = nomeAnnuncio;
         this.idProprietario = proprietario;
@@ -92,11 +86,11 @@ public class Annuncio
         this.idCasa = casa;
     }
 
-    public Date getDataAnnuncio() {
+    public String getDataAnnuncio() {
         return dataAnnuncio;
     }
 
-    public void setDataAnnuncio(Date dataAnnuncio) {
+    public void setDataAnnuncio(String dataAnnuncio) {
         this.dataAnnuncio = dataAnnuncio;
     }
 
