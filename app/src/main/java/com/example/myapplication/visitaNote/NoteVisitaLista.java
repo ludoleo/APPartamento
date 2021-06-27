@@ -41,8 +41,18 @@ NoteVisitaLista extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_note_visita_lista);
+
         db = dbHelper.getWritableDatabase();
+
+        initUI();
+
+
+    }
+
+    private void initUI() {
+
         //Preparo la Query
         String sql = "SELECT _id, nome, valutazione, prezzo, zona, link FROM Note";
         // eseguo
@@ -54,11 +64,14 @@ NoteVisitaLista extends ListActivity {
         registerForContextMenu(getListView());
     }
 
+    /*
     @Override
     protected void onStart() {
         super.onStart();
         updateListView();
     }
+
+     */
 
     @Override
     protected void onStop() {

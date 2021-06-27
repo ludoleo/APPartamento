@@ -42,6 +42,7 @@ public class UsersFragment extends Fragment {
     FirebaseUser firebaseUser;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    boolean flag;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +53,7 @@ public class UsersFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycle_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        flag = false;
 
         mUtente = new ArrayList<>();
 
@@ -61,9 +63,11 @@ public class UsersFragment extends Fragment {
 
     private void readUser() {
 
+
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
+
 
         myRef.child("Utenti").child("Studenti").addValueEventListener (new ValueEventListener() {
             @Override
@@ -71,22 +75,24 @@ public class UsersFragment extends Fragment {
 
                 for (DataSnapshot studentiSnapshot : snapshot.getChildren()) {
 
-                    Log.i(TAG,"Connesso utente "+firebaseUser.getEmail()+" "+firebaseUser.getUid());
-                    Log.i(TAG, "Studente in db "+studentiSnapshot.getKey());
+                    Log.i(TAG, "Connesso utente " + firebaseUser.getEmail() + " " + firebaseUser.getUid());
+                    Log.i(TAG, "Utente in db " + studentiSnapshot.getKey());
 
                     if (studentiSnapshot.getKey().compareTo(firebaseUser.getUid()) == 0) {
-                        Log.i(TAG, "Entro nell'if ");
-                        //TODO aggiungi i proprietari alla lista di utenti, collegare con click sull'annuncio(DA CAPIRE)
+                        flag = true;
+                    }
+                }
+                    if(flag) {
                         myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                                 for (DataSnapshot proprietari : snapshot.getChildren()) {
                                     Proprietario proprietario = proprietari.getValue(Proprietario.class);
-                                    Log.i(TAG,"Aggiunto proprietario "+proprietario.getNome());
+                                    Log.i(TAG, "Aggiunto proprietario " + proprietario.getNome());
                                     mUtente.add(proprietario);
 
-                                    Log.i(TAG, "Dimensione di mutente "+mUtente.size());
+                                    Log.i(TAG, "Dimensione di mutente " + mUtente.size());
 
                                     userAdapter = new UserAdapter(getContext(), mUtente);
                                     recyclerView.setAdapter(userAdapter);
@@ -98,15 +104,21 @@ public class UsersFragment extends Fragment {
 
                             }
                         });
-
-                    } else {
+                    }
+                    else
                         myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                                 for (DataSnapshot studenti : snapshot.getChildren()) {
                                     Studente studente = studenti.getValue(Studente.class);
-                                   // mUtente.add(studente);
+                                    Log.i(TAG, "Aggiunto studente " + studente.getNome());
+                                    mUtente.add(studente);
+
+                                    Log.i(TAG, "Dimensione di mutente " + mUtente.size());
+
+                                    userAdapter = new UserAdapter(getContext(), mUtente);
+                                    recyclerView.setAdapter(userAdapter);
                                 }
                             }
 
@@ -115,8 +127,6 @@ public class UsersFragment extends Fragment {
 
                             }
                         });
-                    }
-                }
             }
 
             @Override
@@ -125,4 +135,5 @@ public class UsersFragment extends Fragment {
                 }
             });
         }
+
 }

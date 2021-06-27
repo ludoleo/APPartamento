@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Chat;
 import com.example.myapplication.classi.Proprietario;
+import com.example.myapplication.classi.Studente;
 import com.example.myapplication.notifiche.Token;
 import com.example.myapplication.classi.Utente;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,6 +40,7 @@ public class ChatFragment extends Fragment {
 
     FirebaseUser firebaseUser;
     DatabaseReference reference;
+    boolean flag;
 
     private List<String> usersList;
 
@@ -47,7 +49,7 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         //TODO non mostra nulla
-        Log.i(TAG,"PASSO DA QUI");
+        Log.i(TAG,"PASSO DA QUI 1");
 
         View view = inflater.inflate(R.layout.fragment_chat,container, false);
 
@@ -59,6 +61,8 @@ public class ChatFragment extends Fragment {
 
         usersList = new ArrayList<>();
 
+        flag = false;
+
         reference = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
 
         reference.child("Chat").addValueEventListener(new ValueEventListener() {
@@ -67,7 +71,7 @@ public class ChatFragment extends Fragment {
                 usersList.clear();
 
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Log.i(TAG,"PASSO QUI "+dataSnapshot.toString());
+                    Log.i(TAG,"PASSO QUI 2  "+dataSnapshot.toString());
                     Chat chat = dataSnapshot.getValue(Chat.class);
 
                     Log.i(TAG,"Sender "+firebaseUser.getUid()+" "+chat.getSender()+" "+chat.getReceiver());
@@ -106,41 +110,103 @@ public class ChatFragment extends Fragment {
     private void leggiChat() {
 
         mUtenti = new ArrayList<>();
-        //TODO scorrere e prendere l'utente loggato che può essere proprietario o studente
-        reference.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
+        //TODO scorrere e prendere l'utente loggato che può essere proprietario o studente aggiungi flag
+
+        reference.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mUtenti.clear();
+                for (DataSnapshot studentiSnapshot : snapshot.getChildren()) {
 
-                Log.i(TAG,"PASSO DA QUI");
-                for(DataSnapshot snapshot2 : snapshot.getChildren()) {
 
-                    Utente utente = snapshot2.getValue(Utente.class);
-
-                    Log.i(TAG,"CHAT CON "+utente.getNome()+" "+utente.getCognome());
-                    //mostra un utente per chat
-                    for(String id : usersList) {
-                        if(utente.getIdUtente().equals(id)) {
-                            if(mUtenti.size() != 0 ) {
-                                for ( Utente u :mUtenti) {
-                                    if(!utente.getIdUtente().equals(u.getIdUtente())) {
-                                        mUtenti.add(utente);
-                                    }
-                                }
-                            } else {
-                                mUtenti.add(utente);
-                            }
-                        }
+                    if (studentiSnapshot.getKey().compareTo(firebaseUser.getUid()) == 0) {
+                        flag = true;
                     }
                 }
-                userAdapter = new UserAdapter(getContext(), mUtenti);
-                recyclerView.setAdapter(userAdapter);
-            }
+                if(flag) {
+                    Log.i(TAG, "UTENTE LOGGATO é STUDENTE ");
 
+                    reference.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            mUtenti.clear();
+
+                            Log.i(TAG,"PASSO DA QUI 3");
+                            for(DataSnapshot snapshot2 : snapshot.getChildren()) {
+
+                                Utente utente = snapshot2.getValue(Utente.class);
+
+                                Log.i(TAG,"CHAT CON "+utente.getNome()+" "+utente.getCognome());
+                                //mostra un utente per chat
+                                for(String id : usersList) {
+                                    if(utente.getIdUtente().equals(id)) {
+                                        if(mUtenti.size() != 0 ) {
+                                            for ( Utente u :mUtenti) {
+                                                if(!utente.getIdUtente().equals(u.getIdUtente())) {
+                                                    mUtenti.add(utente);
+                                                }
+                                            }
+                                        } else {
+                                            mUtenti.add(utente);
+                                        }
+                                    }
+                                }
+                            }
+                            userAdapter = new UserAdapter(getContext(), mUtenti);
+                            recyclerView.setAdapter(userAdapter);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+                else {
+                    Log.i(TAG, "UTENTE LOGGATO é PROPRIETARIO ");
+
+                    reference.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            mUtenti.clear();
+
+                            Log.i(TAG,"PASSO DA QUI 3");
+                            for(DataSnapshot snapshot2 : snapshot.getChildren()) {
+
+                                Utente utente = snapshot2.getValue(Utente.class);
+
+                                Log.i(TAG,"CHAT CON "+utente.getNome()+" "+utente.getCognome());
+                                //mostra un utente per chat
+                                for(String id : usersList) {
+                                    if(utente.getIdUtente().equals(id)) {
+                                        if(mUtenti.size() != 0 ) {
+                                            for ( Utente u :mUtenti) {
+                                                if(!utente.getIdUtente().equals(u.getIdUtente())) {
+                                                    mUtenti.add(utente);
+                                                }
+                                            }
+                                        } else {
+                                            mUtenti.add(utente);
+                                        }
+                                    }
+                                }
+                            }
+                            userAdapter = new UserAdapter(getContext(), mUtenti);
+                            recyclerView.setAdapter(userAdapter);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+
+
     }
 }

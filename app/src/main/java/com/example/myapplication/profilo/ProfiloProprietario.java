@@ -129,21 +129,19 @@ public class ProfiloProprietario extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         // storage
-        storageReference = FirebaseStorage.getInstance("gs://appartamento-81c2d.appspot.com").getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
         Log.i(TAG,"STorage "+storageReference);
 
         StorageReference profileRef = storageReference.child("Proprietari/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
         Log.i(TAG,"profile ref "+profileRef);
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>(
 
-        ) {
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Log.i(TAG,"URI"+uri);
                 Picasso.get().load(uri).into(immagineprop);
             }
             }).addOnFailureListener(new OnFailureListener() {
-
             @Override
             public void onFailure(@NonNull Exception exception) {
             // Handle any errors
