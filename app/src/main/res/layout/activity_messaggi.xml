@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     tools:context=".messaggi.MessaggiActivity">
 
 
@@ -21,17 +22,17 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:background="@color/rosso_mattone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tabIndicatorColor="@color/white"
-            app:tabSelectedTextColor="@color/white"
-            app:tabTextColor="@color/white" />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@color/rosso_mattone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabIndicatorColor="@color/white"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/white" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view"
@@ -42,29 +43,29 @@
         android:layout_marginTop="2dp" />
 
     <RelativeLayout
+        android:id="@+id/bottom_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:id="@+id/bottom_send"
         android:layout_alignParentBottom="true"
+        android:background="@color/white"
         android:padding="5dp">
 
         <EditText
+            android:id="@+id/text_send"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/text_send"
-            android:background="@android:color/transparent"
-            android:hint="Scrivi un messaggio..."
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/btn_send"
-            android:layout_centerVertical="true" />
+            android:background="@android:color/transparent"
+            android:hint="Scrivi un messaggio..." />
 
         <ImageButton
+            android:id="@+id/btn_send"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:id="@+id/btn_send"
-            android:background="@drawable/ic_action_name"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:background="@drawable/ic_action_name"
             tools:ignore="RtlCompat" />
 
 

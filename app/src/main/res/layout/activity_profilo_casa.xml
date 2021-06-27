@@ -4,60 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
     tools:context=".profilo.ProfiloCasa">
+
     <TextView
         android:id="@+id/tv_laTuaCasa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="La tua Casa!"
-        android:textSize="30sp"
-        />
+        android:textSize="30sp" />
+
     <TextView
         android:id="@+id/tv_valutazioneCasaTua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:drawableRight="@drawable/ic_baseline_star"
         android:onClick="recensioniCasa"
-        android:text=""
-        android:drawableRight="@drawable/ic_baseline_star" />
+        android:padding="10dp"
+        android:text="" />
+
     <TextView
         android:id="@+id/tv_proprietarioLaTuaCasa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Il proprirtario della tua casa"
-        android:textSize="20sp"
-        android:padding="10dp"
-        android:onClick="profiloProprietario"
         android:drawableLeft="@drawable/ic_baseline_home"
-        />
+        android:onClick="profiloProprietario"
+        android:padding="10dp"
+        android:text="Il proprirtario della tua casa"
+        android:textSize="20sp" />
+
     <TextView
         android:id="@+id/tv_valutazioneProprietarioCasaTua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text=""
-        android:onClick="recensioniProprietario"
         android:drawableRight="@drawable/ic_baseline_star"
-        />
+        android:onClick="recensioniProprietario"
+        android:padding="10dp"
+        android:text="" />
+
     <Button
         android:id="@+id/button_aggiungiAnnuncio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="aggiungiAnnuncio"
-        android:text="Aggiungi Annuncio">
-    </Button>
+        android:text="Aggiungi Annuncio"></Button>
+
     <ListView
         android:id="@+id/lv_inquiliniLaTuaCasa"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="wrap_content"></ListView>
+
     <Button
         android:id="@+id/button_aggiungiInquilino"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="aggiungiInquilino"
-        android:text="Aggiungi Inquilino">
-    </Button>
+        android:text="Aggiungi Inquilino"></Button>
 
 </LinearLayout>

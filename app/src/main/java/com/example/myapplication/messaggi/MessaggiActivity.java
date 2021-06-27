@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Chat;
 import com.example.myapplication.classi.Proprietario;
+import com.example.myapplication.classi.Studente;
 import com.example.myapplication.classi.Utente;
 import com.example.myapplication.fragments.APIService;
 import com.example.myapplication.fragments.MessageAdapter;
@@ -31,6 +32,7 @@ import com.example.myapplication.notifiche.DatiNotifica;
 import com.example.myapplication.notifiche.Mittente;
 import com.example.myapplication.notifiche.RispostaNotifica;
 import com.example.myapplication.notifiche.Token;
+import com.example.myapplication.profilo.ProfiloCasa;
 import com.example.myapplication.profilo.ProfiloStudente;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -74,14 +76,14 @@ public class MessaggiActivity extends AppCompatActivity {
     APIService apiService;
 
     boolean notifica = false;
+    boolean flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messaggi);
 
-        /*
-        Toolbar toolbar = findViewById(R.id.toolbar2);
+        /* Toolbar toolbar = findViewById(R.id.toolbar2);
         getSupportActionBar();
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -91,9 +93,7 @@ public class MessaggiActivity extends AppCompatActivity {
             public void onClick(View view) {
                 finish();
             }
-        });
-
-         */
+        });  */
 
         apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
@@ -111,15 +111,15 @@ public class MessaggiActivity extends AppCompatActivity {
         btn_send = findViewById(R.id.btn_send);
         text_send = findViewById(R.id.text_send);
 
+        myRef = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
         intent = getIntent();
         idUtente = intent.getStringExtra("userId");
+        flag = false;
 
         Log.i(TAG,"IDUTENTE DESTINATARIO CHAT "+idUtente);
 
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-
-
 
         btn_send.setOnClickListener(new View.OnClickListener() {
 
@@ -138,23 +138,71 @@ public class MessaggiActivity extends AppCompatActivity {
         });
 
 
+
         //TODO controllare se i messaggi sono verso gli studenti o i proprietari, nonn va bene così
 
-        myRef = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/")
-                .getReference("Utenti").child("Proprietari").child(idUtente);
-        myRef.addValueEventListener(new ValueEventListener() {
+
+        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Proprietario proprietario = snapshot.getValue(Proprietario.class);
-                Log.i(TAG,"DESTINATARIO "+proprietario.getNome()+" "+proprietario.getCognome());
-                username.setText(proprietario.getNome()+" "+proprietario.getCognome());
-                //profile_image.setImageResource(R.mipmap.ic_launcher);
+                for (DataSnapshot studentiSnapshot : snapshot.getChildren()) {
 
-                Log.i(TAG,"USER "+user.getEmail()+" PROPRIETARIO "+proprietario.getEmail()+" "+idUtente);
-                leggiMessaggio(user.getUid(), proprietario.getIdUtente(), "immagineURL");
-            }
+                    Log.i(TAG, "Connesso utente " + user.getEmail() + " " + user.getUid());
+                    Log.i(TAG, "Utente che scorro in db " + studentiSnapshot.getKey());
+
+                    if (studentiSnapshot.getKey().compareTo(user.getUid()) == 0) {
+                        flag = true;
+                    }
+                }
+                    if(flag) {
+                        Log.i(TAG, "UTENTE LOGGATO é STUDENTE ");
+                        Log.i(TAG,"CHAT CON PROPRIETARIO "+idUtente+" PERCORSO "+myRef.toString());
+
+                        myRef.child("Utenti").child("Proprietari").child(idUtente).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Utente proprietario = snapshot.getValue(Utente.class);
+                                Log.i(TAG, "DESTINATARIO PROPRIETARIO " + proprietario.getNome() + " " + proprietario.getCognome());
+                                username.setText(proprietario.getNome() + " " + proprietario.getCognome());
+                                //profile_image.setImageResource(R.mipmap.ic_launcher);
+
+                                Log.i(TAG, "USER " + user.getEmail() + " PROPRIETARIO " + proprietario.getEmail() + " " + idUtente);
+                                leggiMessaggio(user.getUid(), proprietario.getIdUtente(), "immagineURL");
+                            }
 
 
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                    else {
+                        //LOGGATO COME PROPRIETARIO
+                        myRef.child("Utenti").child("Studenti").child(idUtente).addValueEventListener(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Log.i(TAG,"SONO NELL ELSE destinatario studente"+idUtente+" mittente "+user.getEmail());
+
+                                Studente studente = snapshot.getValue(Studente.class);
+                                Log.i(TAG,"DESTINATARIO "+studente.getNome()+" "+studente.getCognome());
+                                //username.setText(studente.getNome()+" "+studente.getCognome());
+                               // profile_image.setImageResource(R.mipmap.ic_launcher);
+                                username.setText(studente.getNome()+" "+studente.getCognome());
+
+                               // Log.i(TAG,"USER "+user.getEmail()+" PROPRIETARIO "+studente.getEmail()+" "+idUtente);
+                                leggiMessaggio(user.getUid(), idUtente, "immagineURL");
+                            }
+
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -199,12 +247,49 @@ public class MessaggiActivity extends AppCompatActivity {
         //notifche messaggio
         final String messaggio = message;
 
-        myRef.child("Utenti").child("Studenti").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Utente utente = snapshot.getValue(Utente.class);
-                inviaNotifica(receiver, utente.getEmail(),message);
-                notifica = false;
+                for (DataSnapshot studentiSnapshot : snapshot.getChildren()) {
+
+                    Log.i(TAG, "Connesso utente " + user.getEmail() + " " + user.getUid());
+                    Log.i(TAG, "Utente in db " + studentiSnapshot.getKey());
+
+                    if (studentiSnapshot.getKey().compareTo(user.getUid()) == 0) {
+                        //utente loggato è studente
+                        myRef.child("Utenti").child("Studenti").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Utente utente = snapshot.getValue(Utente.class);
+                                inviaNotifica(receiver, utente.getEmail(),message);
+                                notifica = false;
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                    else {
+                        //utente loggato è proprietario
+                        myRef.child("Utenti").child("Proprietari").child(user.getUid()).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                Utente utente = snapshot.getValue(Utente.class);
+                                inviaNotifica(receiver, utente.getEmail(),message);
+                                notifica = false;
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                    }
+
+                }
             }
 
             @Override
@@ -212,6 +297,7 @@ public class MessaggiActivity extends AppCompatActivity {
 
             }
         });
+
     }
 
     private void inviaNotifica(String receiver, String email, String message) {
