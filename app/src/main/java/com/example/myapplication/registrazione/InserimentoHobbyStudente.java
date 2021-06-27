@@ -28,7 +28,8 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
 
     ListView listView;
     ArrayAdapter<String> arrayAdapter;
-    Studente studente;
+    String itemSelected="";
+
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
@@ -52,20 +53,6 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         myRef = database.getReference();
 
-        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot studentiSnapshot: dataSnapshot.getChildren()) {
-                    Studente studenteFiglio = studentiSnapshot.getValue(Studente.class);
-                    if(studenteFiglio.getIdUtente().compareTo(user.getUid())==0) {
-                        studente = studenteFiglio;
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
     }
 
     @Override
@@ -76,17 +63,21 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
     }
 
     public void selezionaElementi(View view) {
-        String itemSelected="";
+
         for(int i=0;i<listView.getCount();i++){
             if(listView.isItemChecked(i)){
                 itemSelected += listView.getItemIdAtPosition(i)+"-";
             }
         }
 
-        //TODO effettuare l'update del database
+        itemSelected = itemSelected.substring(0,itemSelected.length()-1);
 
-        Intent intent = new Intent(this, ProfiloStudente.class);
+        myRef.child("Utenti").child("Studenti").child(getIntent().getExtras().getString("idUtente")).
+                child("hobby").setValue(itemSelected);
+
+        Intent intent = new Intent(InserimentoHobbyStudente.this, ProfiloStudente.class);
         intent.putExtra("idUtente", user.getUid());
         startActivity(intent);
+
     }
 }

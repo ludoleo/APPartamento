@@ -184,7 +184,6 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
                 aggiornaListView(annunciCasa);
-
                 //ABBIAMO LA CASA E GLI ANNUNCI PER LA CASA
                 b_visualizzaCasa.setVisibility(View.VISIBLE);
                 b_visualizzaCasa.setText("Vedi "+casa.getNomeCasa());

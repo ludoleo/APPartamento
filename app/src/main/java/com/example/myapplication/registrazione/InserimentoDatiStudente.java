@@ -50,9 +50,6 @@ public class InserimentoDatiStudente extends AppCompatActivity {
     private CheckBox cb_primaEsperienza;
     private String studenteSenzaAlloggio;
 
-    boolean controlloEmail;
-    boolean controlloEmailCompletato;
-
    //Database
    private FirebaseDatabase database;
    private DatabaseReference myRef;
@@ -143,51 +140,39 @@ public class InserimentoDatiStudente extends AppCompatActivity {
             }
         }
 
-        controlloEmail = true;
-        controlloEmailCompletato = false;
-        while(!controlloEmailCompletato){
-            controlloStudente(email);}
-        if(controlloEmail){
-            Studente studente = new Studente(idStudente, nome, cognome, telefono, email, descrizione, primaEsperienza,
-                    universita, tipologia, indirizzoLaurea, studenteSenzaAlloggio, imageURL, "");
-
-            DatabaseReference studenteAggiunto = myRef.child("Utenti").child("Studenti").child(idStudente);
-            studenteAggiunto.setValue(studente);
-
-            Log.i(TAG, "Studente " + studente.getNome() + " " + studente.getCognome());
-            myRef.child("Chiavi").child(idStudente).setValue(email);
-            clear();
-
-            Intent intent = new Intent(this, InserimentoHobbyStudente.class);
-            //intent.putExtra("idUtente", idStudente);
-            startActivity(intent);
-        }
-    }
-
-    public void controlloStudente(String email) {
-
-        controlloEmail = true;
-        controlloEmailCompletato = false;
-
         myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentiSnapshot: dataSnapshot.getChildren()) {
                     Studente studenteFiglio = studentiSnapshot.getValue(Studente.class);
                     if(studenteFiglio.getEmail().compareTo(email)==0) {
-                        controlloEmail = false;
                         Toast.makeText(InserimentoDatiStudente.this, "Attenzione "+email+"già presente, inserire nuova email!", Toast.LENGTH_SHORT).show();
+                        return;
                     }
                     Log.i(TAG,"Studente :"+studenteFiglio.getNome());
                 }
 
-                controlloEmailCompletato = true;
+                Studente studente = new Studente(idStudente, nome, cognome, telefono, email, descrizione, primaEsperienza,
+                        universita, tipologia, indirizzoLaurea, studenteSenzaAlloggio, imageURL, "");
+
+                DatabaseReference studenteAggiunto = myRef.child("Utenti").child("Studenti").child(idStudente);
+                studenteAggiunto.setValue(studente);
+
+                Log.i(TAG, "Studente " + studente.getNome() + " " + studente.getCognome());
+                myRef.child("Chiavi").child(idStudente).setValue(email);
+                clear();
+
+                Intent intent = new Intent(InserimentoDatiStudente.this, InserimentoHobbyStudente.class);
+                intent.putExtra("idUtente", idStudente);
+                startActivity(intent);
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
     }
 
     private void clear(){
