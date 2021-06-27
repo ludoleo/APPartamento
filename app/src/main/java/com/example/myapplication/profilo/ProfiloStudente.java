@@ -105,7 +105,7 @@ public class ProfiloStudente extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         Log.i(TAG,"STorage "+storageReference);
 
-        StorageReference profileRef = storageReference.child("Proprietari/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
+        StorageReference profileRef = storageReference.child("Studenti/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
         Log.i(TAG,"profile ref "+profileRef);
 
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -254,23 +254,14 @@ public class ProfiloStudente extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == IMAG_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
-            ImageUri = data.getData();
-            // set image to image view
-            // immagineprop.setImageURI(data.getData()); codice reale
-            if (UploadTask != null && UploadTask.isInProgress())    {
-                Toast.makeText(ProfiloStudente.this,"Upload in Progress", LENGTH_SHORT).show();
-            } else{
-                Log.i("ProfiloStud","passo da qui");
-                // forse da togliere
-                //immagineStudente.setImageURI(ImageUri);
-                UploadImage(ImageUri);
+            Uri imageUri = data.getData();
+            UploadImage(imageUri);
+        }
 
             }
-        }
-    }
 
     private void UploadImage(Uri imageUri) {
-        final StorageReference fileRef = storageReference.child("Propietari/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
+        final StorageReference fileRef = storageReference.child("Studenti/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -290,8 +281,6 @@ public class ProfiloStudente extends AppCompatActivity {
 
         });
     }
-
-
 
 
     private void popola(String idUtente) {
