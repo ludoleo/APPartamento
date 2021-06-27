@@ -188,8 +188,8 @@ public class MessaggiActivity extends AppCompatActivity {
                                 Studente studente = snapshot.getValue(Studente.class);
                                 Log.i(TAG,"DESTINATARIO "+studente.getNome()+" "+studente.getCognome());
                                 //username.setText(studente.getNome()+" "+studente.getCognome());
-                                profile_image.setImageResource(R.mipmap.ic_launcher);
-                                username.setText(idUtente);
+                               // profile_image.setImageResource(R.mipmap.ic_launcher);
+                                username.setText(studente.getNome()+" "+studente.getCognome());
 
                                // Log.i(TAG,"USER "+user.getEmail()+" PROPRIETARIO "+studente.getEmail()+" "+idUtente);
                                 leggiMessaggio(user.getUid(), idUtente, "immagineURL");

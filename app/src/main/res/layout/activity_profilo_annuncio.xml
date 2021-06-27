@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/sfondo_activity"
     android:fillViewport="true"
     android:orientation="vertical"
     tools:context=".profilo.ProfiloAnnuncio">
@@ -12,15 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/et_nomeAnnuncio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="15dp"
             android:text=""
             android:textColor="#D3000000"
             android:textSize="40sp"
-            android:textStyle="bold"
-            android:padding="15dp"/>
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,20 +34,20 @@
                 android:id="@+id/et_punteggio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
-                android:textSize="20sp"
-                android:padding="5dp"/>
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/et_numRecensioni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
-                android:textSize="20sp"
-                android:padding="5dp"/>
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -54,10 +56,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="5dp"
             android:text=""
             android:textColor="#D3000000"
-            android:textSize="20sp"
-            android:padding="5dp"/>
+            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,30 +72,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
-                android:textSize="20sp"
-                android:padding="5dp"/>
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/et_prezzo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
-                android:textSize="20sp"
-                android:padding="5dp"/>
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/et_proprietario"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
-                android:textSize="16sp"
-                android:padding="5dp"/>
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -108,70 +110,68 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
                 android:textSize="16sp"
-                android:textStyle="italic"
-                android:padding="5dp"/>
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/et_numeroCamere"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:padding="5dp"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/et_num_bagni"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
                 android:textSize="16sp"
-                android:textStyle="italic"
-                android:padding="5dp"/>
+                android:textStyle="italic" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/servizi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="Elenco dei servizi"
             android:textColor="#D3000000"
             android:textSize="25sp"
-            android:textStyle="bold"
-            android:padding="10dp"/>
+            android:textStyle="bold" />
 
         <ListView
             android:id="@+id/arrayListServizi"
-            android:scrollbars="none"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            ></ListView>
+            android:scrollbars="none"></ListView>
 
         <TextView
             android:id="@+id/descrizioneAnnuncio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Qui andrà una descrizione della casa. Vi saranno informazioni scritte dal proprietario sulle pricipali caratteristiche dell'abitazione e sul perchè debba essere scelta"
-            android:padding="15dp"/>
+            android:padding="15dp"
+            android:text="Qui andrà una descrizione della casa. Vi saranno informazioni scritte dal proprietario sulle pricipali caratteristiche dell'abitazione e sul perchè debba essere scelta" />
 
         <Button
             android:id="@+id/b_prenota"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="prenota"
-            android:text="Prenota visita"
-            android:visibility="gone"
-            android:padding="15dp"
             android:layout_gravity="center"
-            />
+            android:onClick="prenota"
+            android:padding="15dp"
+            android:text="Prenota visita"
+            android:visibility="gone" />
 
         <CheckBox
             android:id="@+id/IsPreferito"
