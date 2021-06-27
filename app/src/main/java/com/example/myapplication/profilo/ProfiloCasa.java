@@ -2,6 +2,7 @@ package com.example.myapplication.profilo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.classi.Studente;
+import com.example.myapplication.registrazione.InserimentoDatiAnnuncio;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,9 +32,9 @@ public class ProfiloCasa extends AppCompatActivity {
     private Proprietario proprietario;
     private Inquilino inquilino;
 
-    List<Casa> listaCase;
+
+    //List<Casa> listaCase;
     List<Studente> listaStudenti;
-    List<Proprietario> listaProprietario;
     //todo devo considerare gli inquilini
     List<Inquilino> listaInquilini;
     List<Studente> coinquilini;
@@ -45,8 +47,6 @@ public class ProfiloCasa extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference myRef;
-    //VARIABILE DI CONTROLLO
-    int i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,7 @@ public class ProfiloCasa extends AppCompatActivity {
         myRef = database.getReference();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+
         laTuaCasa = (TextView) findViewById(R.id.tv_laTuaCasa);
         ilProprietario = (TextView) findViewById(R.id.tv_proprietarioLaTuaCasa);
         valutazioneProprietario = (TextView) findViewById(R.id.tv_valutazioneProprietarioCasaTua);
@@ -71,29 +72,17 @@ public class ProfiloCasa extends AppCompatActivity {
 
     }
 
-    private void caricaSchermata() {
-            //todo controllo utente
-            //CARICO IL NOME DELLA CASA
-            laTuaCasa.setText(casa.getNomeCasa());
-            valutazioneCasa.setText(""+casa.getValutazione());
-            //CARICO IL PROPRIETARIO E LA SUA VALUTAZIONE MEDIA
-            ilProprietario.setText("Host: "+proprietario.getNome());
-            valutazioneProprietario.setText(""+proprietario.getValutazione());
-            //TODO LIST VIEW CON I COINQULINI(STUDENTI) I ED I PROPRIETARI
-    }
-
     private void initUI() {
 
         inquilino = null;
         casa = null;
         proprietario = null;
         coinquilini = null;
-        i=0;
 
         //listaInquilini = new LinkedList<Inquilino>();
-        listaCase = new LinkedList<Casa>();
-        listaProprietario = new LinkedList<Proprietario>();
         listaStudenti = new LinkedList<Studente>();
+
+        riferimentoCasa();
 
         /*
         myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
@@ -109,33 +98,9 @@ public class ProfiloCasa extends AppCompatActivity {
             }
         });
          */
-        myRef.child("Case").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot lcase : dataSnapshot.getChildren()) {
-                    Casa i = lcase.getValue(Casa.class);
-                    listaCase.add(i);
-                }
-                i++;
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-        myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot props : dataSnapshot.getChildren()) {
-                    Proprietario i = props.getValue(Proprietario.class);
-                    listaProprietario.add(i);
-                }
-                i++;
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
 
+
+        /*
         myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -149,31 +114,53 @@ public class ProfiloCasa extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
-        verificaCaricamentoDati();
-        caricaSchermata();
+*/
     }
 
-    private void verificaCaricamentoDati() {
-        if(i==3){
-            String nomeCasa = getIntent().getExtras().getString("nomeCasa");
-            for(Casa c : listaCase){
-                    if(c.getNomeCasa().compareTo(nomeCasa)==0)
-                        casa = c;
+    private void riferimentoCasa() {
+        myRef.child("Case").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot lcase : dataSnapshot.getChildren()) {
+                    Casa i = lcase.getValue(Casa.class);
+                    if(i.getNomeCasa().compareTo(getIntent().getExtras().getString("nomeCasa"))==0){
+                        casa=i;
+                    }
+                }
+                //CARICO IL NOME DELLA CASA
+                laTuaCasa.setText(casa.getNomeCasa());
+                valutazioneCasa.setText(""+casa.getValutazione());
+                riferimentoProprietario();
             }
-            for(Proprietario p : listaProprietario){
-                if(p.getIdUtente().compareTo(casa.getProprietario())==0)
-                    proprietario = p;
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
             }
-            //todo metodi per trovare i coinquilini, ricorda di modificare i
-        }else{
-            try {
-                Thread.sleep(1000);//1000 milliseconds is one second.
-                verificaCaricamentoDati();
-            } catch(InterruptedException ex) {
-                Thread.currentThread().interrupt();
+        });
+
+    }
+
+    private void riferimentoProprietario() {
+        myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot props : dataSnapshot.getChildren()) {
+                    Proprietario i = props.getValue(Proprietario.class);
+                    if(casa.getProprietario().compareTo(i.getIdUtente())==0)
+                        proprietario = i;
+                }
+                ilProprietario.setText("Host: "+proprietario.getNome());
+                valutazioneProprietario.setText(""+proprietario.getValutazione());
+                //il proprietario è l'user
+                if(proprietario.getIdUtente().compareTo(user.getUid())==0){
+                    b_aggiungiAnnuncio.setVisibility(View.VISIBLE);
+                    b_aggiungiInquilino.setVisibility(View.VISIBLE);
+                }
+
             }
-        }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     private void recensioniCasa(View v){
@@ -187,6 +174,9 @@ public class ProfiloCasa extends AppCompatActivity {
     }
 
     public void aggiungiAnnuncio(View view) {
+        Intent intent = new Intent(this, InserimentoDatiAnnuncio.class);
+        intent.putExtra("nomeCasa", casa.getNomeCasa());
+        startActivity(intent);
     }
 
     public void aggiungiInquilino(View view) {
