@@ -45,46 +45,28 @@
                 android:layout_margin="10dp" />
      </LinearLayout>
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapView"
-            android:layout_width="match_parent"
-            android:layout_height="417dp" />
+
         <com.google.android.gms.maps.MapView
                 android:id="@+id/mapView"
                 android:layout_width="match_parent"
                 android:layout_height="486dp" />
 
         <Button
-            android:id="@+id/prenotaz"
+            android:id="@+id/visualizzaCasa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="visualizzaCasa"
-            android:text="Visualizza casa" />
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="" />
+            android:text="" />
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="" />
+        <ListView
+            android:id="@+id/listaAnnunciCasa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ListView>
 
-        <Button
-            android:id="@+id/lista_case"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="listaCase"
-            android:text="Lista case" />
+
     </LinearLayout>
-            <Button
-                android:id="@+id/prenotaz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="visualizzaCasa"
-                android:text="Visualizza Annuncio" />
-        </LinearLayout>
+
+  </LinearLayout>
 
 </ScrollView>

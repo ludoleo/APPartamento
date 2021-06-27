@@ -44,8 +44,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     private Casa casa;
     private Studente studente;
 
-    private String idAnnuncio="";
-
     TextView et_nomeAnnuncio, et_punteggio, et_numRecensioni, et_indirizzo,
             et_tipologiaStanza, et_prezzo, et_proprietario, et_ospiti, et_numeroCamere, et_num_bagni, descrizioneAnnuncio;
 
@@ -102,35 +100,83 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         casa = null;
         studente = null;
 
-        while(studente==null){
+        if(user!=null) {
+            //VALUTA SE L'UTENTE LOGGATO E' UNO STUDENTE
             myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot studentiSnapshot: dataSnapshot.getChildren()) {
+                    for (DataSnapshot studentiSnapshot : dataSnapshot.getChildren()) {
                         Studente stud = studentiSnapshot.getValue(Studente.class);
-                        if(stud.getIdUtente().compareTo(user.getUid())==0){
+                        if (stud.getEmail().compareTo(user.getEmail()) == 0) {
                             studente = stud;
                             //rendi visibile il tasto per prenotare
                             b_prenota.setVisibility(View.VISIBLE);
                         }
                     }
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
         }
 
-        Bundle bundle = getIntent().getExtras();
-        idAnnuncio = bundle.getString("idAnnuncio");
+        riferimentoAnnuncio(getIntent().getExtras().getString("idAnnuncio"));
 
-        if(idAnnuncio.compareTo("")==0){
-            //gestisci la cosa - errore nel putExtra
-            return;}
-        //con questo metodo sono sicuro di caricare tutte le liste
-        while(annuncio == null || proprietario == null || casa==null)
-            caricaDati();
-        aggiornaSchermata();
+    }
+
+    private void riferimentoAnnuncio(String idAnnuncio) {
+
+        myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot annunciSnapshot: dataSnapshot.getChildren()) {
+                    Annuncio a = annunciSnapshot.getValue(Annuncio.class);
+                    if(a.getIdAnnuncio().compareTo(idAnnuncio)==0)
+                        annuncio = a;
+                }
+                riferimentoCasa();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void riferimentoCasa() {
+
+        myRef.child("Case").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
+                    Casa a = caseSnapshot.getValue(Casa.class);
+                    if(annuncio.getCasa().compareTo(a.getNomeCasa())==0)
+                        casa = a;
+                }
+                riferimentoProprietario();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private void riferimentoProprietario() {
+
+        myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot proprietarioSnapshot: dataSnapshot.getChildren()) {
+                    Proprietario a = proprietarioSnapshot.getValue(Proprietario.class);
+                    if(casa.getProprietario().compareTo(proprietarioSnapshot.getKey())==0)
+                        proprietario = a;
+                }
+                aggiornaSchermata();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     private void aggiornaSchermata() {
@@ -141,61 +187,12 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         et_tipologiaStanza.setText(annuncio.getTipologiaAlloggio());
         et_prezzo.setText(annuncio.getPrezzoMensile()+"€");
         et_proprietario.setText(proprietario.getNome());
-        et_ospiti.setText(casa.getNumeroOspiti());
-        et_numeroCamere.setText(casa.getNumeroStanze());
-        et_num_bagni.setText(casa.getNumeroBagni());
+        et_ospiti.setText("#ospiti "+casa.getNumeroOspiti());
+        et_numeroCamere.setText("#stanze "+casa.getNumeroStanze());
+        et_num_bagni.setText("#bagni "+casa.getNumeroBagni());
         descrizioneAnnuncio.setText(annuncio.getSpeseStraordinarie());
     }
 
-    private void caricaDati() {
-
-        if(annuncio==null){
-            myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot annunciSnapshot: dataSnapshot.getChildren()) {
-                        Annuncio a = annunciSnapshot.getValue(Annuncio.class);
-                        if(a.getIdAnnuncio().compareTo(idAnnuncio)==0)
-                            annuncio = a;
-                    }
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
-        }
-        if(annuncio!=null && casa == null){
-                myRef.child("Case").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
-                            Casa a = caseSnapshot.getValue(Casa.class);
-                            if(annuncio.getCasa().compareTo(a.getNomeCasa())==0)
-                                casa = a;
-
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-        }
-        if(annuncio != null && casa != null && proprietario==null){
-            myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot proprietarioSnapshot: dataSnapshot.getChildren()) {
-                        Proprietario a = proprietarioSnapshot.getValue(Proprietario.class);
-                        if(casa.getProprietario().compareTo(proprietarioSnapshot.getKey())==0)
-                            proprietario = a;
-                    }
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                }
-            });
-        }
-    }
 
     public void prenota(View view) {
 

@@ -16,7 +16,7 @@
             android:id="@+id/et_nomeAnnuncio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nome dell'appartamento"
+            android:text=""
             android:textColor="#D3000000"
             android:textSize="40sp"
             android:textStyle="bold"
@@ -32,7 +32,7 @@
                 android:id="@+id/et_punteggio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="punteggio"
+                android:text=""
                 android:textColor="#D3000000"
                 android:textSize="20sp"
                 android:padding="5dp"/>
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="(#recensioni)"
+                android:text=""
                 android:textColor="#D3000000"
                 android:textSize="20sp"
                 android:padding="5dp"/>
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="localita"
+            android:text=""
             android:textColor="#D3000000"
             android:textSize="20sp"
             android:padding="5dp"/>
@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="tipologiaStanza"
+                android:text=""
                 android:textColor="#D3000000"
                 android:textSize="20sp"
                 android:padding="5dp"/>
@@ -80,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="prezzo"
+                android:text=""
                 android:textColor="#D3000000"
                 android:textSize="20sp"
                 android:padding="5dp"/>
@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="proprietario"
+                android:text=""
                 android:textColor="#D3000000"
                 android:textSize="16sp"
                 android:padding="5dp"/>
@@ -108,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="ospiti"
+                android:text=""
                 android:textColor="#D3000000"
                 android:textSize="16sp"
                 android:textStyle="italic"
@@ -119,7 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="numero camere"
+                android:text=""
                 android:textColor="#D3000000"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -130,7 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="numero bagni"
+                android:text=""
                 android:textColor="#D3000000"
                 android:textSize="16sp"
                 android:textStyle="italic"
@@ -154,13 +154,6 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             ></ListView>
-
-        <TextView
-            android:id="@+id/posizione"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Posizione"
-            android:padding="10dp"/>
 
         <TextView
             android:id="@+id/descrizioneAnnuncio"
