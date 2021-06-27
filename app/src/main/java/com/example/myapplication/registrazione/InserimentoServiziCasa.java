@@ -1,9 +1,11 @@
 package com.example.myapplication.registrazione;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -26,6 +28,8 @@ public class InserimentoServiziCasa extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     String itemSelected="";
+    String[] data = getResources().getStringArray(R.array.servizi);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,6 @@ public class InserimentoServiziCasa extends AppCompatActivity {
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
 
-        String[] data = getResources().getStringArray(R.array.servizi);
         listView = (ListView) findViewById(R.id.listView_hobby);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice,
                 data);
@@ -55,11 +58,12 @@ public class InserimentoServiziCasa extends AppCompatActivity {
 
         for(int i=0;i<listView.getCount();i++){
             if(listView.isItemChecked(i)){
-                itemSelected += listView.getItemIdAtPosition(i)+"-";
+                itemSelected += data[(int)listView.getItemIdAtPosition(i)]+"-";
             }
         }
-        //todo carica nel DB questi valori
+        // da sistemare
         String nomeCasa = getIntent().getExtras().getString("nomeCasa");
+        myRef.child("Case").child(getIntent().getExtras().getString("idCasa")).child("servizi").setValue(itemSelected);
         Intent intent = new Intent(this, InserimentoDatiAnnuncio.class);
         intent.putExtra("nomeCasa",nomeCasa);
         startActivity(intent);

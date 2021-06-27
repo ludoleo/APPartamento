@@ -160,10 +160,13 @@ public class InserimentoDatiCasa extends AppCompatActivity {
             //eseguo il push
             DatabaseReference casaAggiunta = myRef.child("Case").push();
             casaAggiunta.setValue(casa);
+
+
             Log.i(TAG, "Casa " + casa.getNomeCasa());
             update();
             clear();
             Intent intent = new Intent(this, InserimentoServiziCasa.class);
+            intent.putExtra("idCasa", casaAggiunta.getKey());
             intent.putExtra("nomeCasa",nomeCasa);
             startActivity(intent);
         }

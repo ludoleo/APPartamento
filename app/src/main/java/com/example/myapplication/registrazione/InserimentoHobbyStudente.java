@@ -35,6 +35,7 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
     private DatabaseReference myRef;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+    String[] data = getResources().getStringArray(R.array.hobby);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
         setContentView(R.layout.activity_inserimento_hobby_studente);
         setTitle("Seleziona i tuoi hobby");
 
-        String[] data = getResources().getStringArray(R.array.hobby);
+
         listView = (ListView) findViewById(R.id.listView_hobby);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice,
                 data);
@@ -66,7 +67,7 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
 
         for(int i=0;i<listView.getCount();i++){
             if(listView.isItemChecked(i)){
-                itemSelected += listView.getItemIdAtPosition(i)+"-";
+                itemSelected += data[(int)listView.getItemIdAtPosition(i)]+"-";
             }
         }
 
