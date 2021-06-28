@@ -101,17 +101,18 @@ public class ProfiloStudente extends AppCompatActivity {
             mAuth = FirebaseAuth.getInstance();
             user = mAuth.getCurrentUser();
             myRef = database.getReference();
+            immagineStudente = findViewById(R.id.immagineProfiloStud);
             //STORAGE
         storageReference = FirebaseStorage.getInstance().getReference();
         Log.i(TAG,"STorage "+storageReference);
 
-        StorageReference profileRef = storageReference.child("Studenti/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
+        StorageReference profileRef = storageReference.child("Studenti/"+user.getUid()+"/profile.jpg");
         Log.i(TAG,"profile ref "+profileRef);
 
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Log.i(TAG,"URI"+uri);
+                Log.i(TAG,"URI "+uri);
                 Picasso.get().load(uri).into(immagineStudente);
             }
         }).addOnFailureListener(new OnFailureListener() {

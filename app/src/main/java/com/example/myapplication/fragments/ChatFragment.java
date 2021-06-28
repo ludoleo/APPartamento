@@ -117,24 +117,19 @@ public class ChatFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot studentiSnapshot : snapshot.getChildren()) {
 
-
                     if (studentiSnapshot.getKey().compareTo(firebaseUser.getUid()) == 0) {
                         flag = true;
                     }
                 }
                 if(flag) {
                     Log.i(TAG, "UTENTE LOGGATO é STUDENTE ");
-
                     reference.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        public void onDataChange(@NonNull DataSnapshot snapshotP) {
                             mUtenti.clear();
-
-                            Log.i(TAG,"PASSO DA QUI 3");
-                            for(DataSnapshot snapshot2 : snapshot.getChildren()) {
-
+                            Log.i(TAG,"PASSO DA QUI 3-logstud");
+                            for(DataSnapshot snapshot2 : snapshotP.getChildren()) {
                                 Utente utente = snapshot2.getValue(Utente.class);
-
                                 Log.i(TAG,"CHAT CON "+utente.getNome()+" "+utente.getCognome());
                                 //mostra un utente per chat
                                 for(String id : usersList) {
@@ -166,26 +161,24 @@ public class ChatFragment extends Fragment {
 
                     reference.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        public void onDataChange(@NonNull DataSnapshot snapshotS) {
                             mUtenti.clear();
-
-                            Log.i(TAG,"PASSO DA QUI 3");
-                            for(DataSnapshot snapshot2 : snapshot.getChildren()) {
-
-                                Utente utente = snapshot2.getValue(Utente.class);
-
-                                Log.i(TAG,"CHAT CON "+utente.getNome()+" "+utente.getCognome());
+                            Log.i(TAG,"PASSO DA QUI 3-log-prop");
+                            for(DataSnapshot figli : snapshotS.getChildren()) {
+                                Utente utente2 = figli.getValue(Utente.class);
+                                Log.i(TAG,"CHAT CON "+utente2.getNome()+" "+utente2.getCognome());
                                 //mostra un utente per chat
                                 for(String id : usersList) {
-                                    if(utente.getIdUtente().equals(id)) {
+                                    Log.i(TAG,"ID "+id+" MUTENTI "+mUtenti+" USER LIST "+usersList);
+                                    if(utente2.getIdUtente().equals(id)) {
                                         if(mUtenti.size() != 0 ) {
                                             for ( Utente u :mUtenti) {
-                                                if(!utente.getIdUtente().equals(u.getIdUtente())) {
-                                                    mUtenti.add(utente);
+                                                if(!utente2.getIdUtente().equals(u.getIdUtente())) {
+                                                    mUtenti.add(utente2);
                                                 }
                                             }
                                         } else {
-                                            mUtenti.add(utente);
+                                            mUtenti.add(utente2);
                                         }
                                     }
                                 }
