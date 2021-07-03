@@ -3,6 +3,7 @@ package com.example.myapplication.registrazione;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,16 +27,18 @@ import com.google.firebase.database.ValueEventListener;
 
 public class InserimentoHobbyStudente extends AppCompatActivity {
 
+    private static final String TAG = "InserimentoHobbyStudente";
     ListView listView;
     ArrayAdapter<String> arrayAdapter;
     String itemSelected="";
 
     //Database
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
-    private FirebaseAuth mAuth;
-    private FirebaseUser user;
-    String[] data = getResources().getStringArray(R.array.hobby);
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    String idUtente = "";
+
+    String[] hobby = {"Giochi da tavolo", "Scacchi", "Cucina", "Fotografia",
+                        "Musei", "Sport", "Calcio", "Fitness", "Libri", "Videogiochi"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +46,14 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
         setContentView(R.layout.activity_inserimento_hobby_studente);
         setTitle("Seleziona i tuoi hobby");
 
-
         listView = (ListView) findViewById(R.id.listView_hobby);
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice,
-                data);
+                hobby);
         listView.setAdapter(arrayAdapter);
 
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
         myRef = database.getReference();
-
+        idUtente = getIntent().getExtras().getString("idUtente");
     }
 
     @Override
@@ -63,21 +63,24 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("LongLogTag")
     public void selezionaElementi(View view) {
+
 
         for(int i=0;i<listView.getCount();i++){
             if(listView.isItemChecked(i)){
-                itemSelected += data[(int)listView.getItemIdAtPosition(i)]+"-";
+                itemSelected += hobby[(int)listView.getItemIdAtPosition(i)]+"-";
             }
         }
 
         itemSelected = itemSelected.substring(0,itemSelected.length()-1);
-
-        myRef.child("Utenti").child("Studenti").child(getIntent().getExtras().getString("idUtente")).
+        Log.i(TAG, ""+itemSelected);
+        Log.i(TAG, ""+idUtente);
+        myRef.child("Utenti").child("Studenti").child(idUtente).
                 child("hobby").setValue(itemSelected);
 
-        Intent intent = new Intent(InserimentoHobbyStudente.this, ProfiloStudente.class);
-        intent.putExtra("idUtente", user.getUid());
+        Intent intent = new Intent(this, ProfiloStudente.class);
+        intent.putExtra("idUtente", idUtente);
         startActivity(intent);
 
     }

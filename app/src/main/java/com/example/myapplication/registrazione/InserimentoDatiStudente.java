@@ -51,9 +51,10 @@ public class InserimentoDatiStudente extends AppCompatActivity {
     private String studenteSenzaAlloggio;
 
    //Database
-   private FirebaseDatabase database;
-   private DatabaseReference myRef;
-
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    FirebaseAuth mAuth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +81,8 @@ public class InserimentoDatiStudente extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
-
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
 
         Log.i(TAG, "ref del db è : "+myRef.toString());
 
@@ -114,7 +116,6 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         listaElementi.put("imageURL", imageURL);
         //listaElementi.put("Prima Esperienza",primaEsperienza);
 
-
         Log.i(TAG,"Questo è l'idStudente "+idStudente);
 
         String tipologia;
@@ -140,38 +141,19 @@ public class InserimentoDatiStudente extends AppCompatActivity {
             }
         }
 
-        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot studentiSnapshot: dataSnapshot.getChildren()) {
-                    Studente studenteFiglio = studentiSnapshot.getValue(Studente.class);
-                    if(studenteFiglio.getEmail().compareTo(email)==0) {
-                        Toast.makeText(InserimentoDatiStudente.this, "Attenzione "+email+"già presente, inserire nuova email!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    Log.i(TAG,"Studente :"+studenteFiglio.getNome());
-                }
+        Studente studente = new Studente(idStudente, nome, cognome, telefono, email, descrizione, primaEsperienza,
+                universita, tipologia, indirizzoLaurea, studenteSenzaAlloggio, imageURL, "");
 
-                Studente studente = new Studente(idStudente, nome, cognome, telefono, email, descrizione, primaEsperienza,
-                        universita, tipologia, indirizzoLaurea, studenteSenzaAlloggio, imageURL, "");
+        DatabaseReference studenteAggiunto = myRef.child("Utenti").child("Studenti").push();
+        studenteAggiunto.setValue(studente);
 
-                DatabaseReference studenteAggiunto = myRef.child("Utenti").child("Studenti").child(idStudente);
-                studenteAggiunto.setValue(studente);
+        Log.i(TAG, "Studente " + studente.getNome() + " " + studente.getCognome());
+        myRef.child("Chiavi").child(idStudente).setValue(email);
+        clear();
 
-                Log.i(TAG, "Studente " + studente.getNome() + " " + studente.getCognome());
-                myRef.child("Chiavi").child(idStudente).setValue(email);
-                clear();
-
-                Intent intent = new Intent(InserimentoDatiStudente.this, InserimentoHobbyStudente.class);
-                intent.putExtra("idUtente", idStudente);
-                startActivity(intent);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+        Intent intent = new Intent(this, InserimentoHobbyStudente.class);
+        intent.putExtra("idUtente", idStudente);
+        startActivity(intent);
 
     }
 
@@ -184,7 +166,8 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         et_indirizzoLaurea.setText("");
         cb_primaEsperienza.setChecked(false);
     }
-    //Metodi di Call Back
+
+
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
@@ -197,7 +180,6 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         outState.putString("ChiaveUni",et_universita.getText().toString());
         // il Checked(?)
 }
-
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -209,7 +191,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         et_numTelefono.setText(savedInstanceState.getString("chiaveNumero"));
         et_indirizzoLaurea.setText(savedInstanceState.getString("chiaveIndirizzo"));
         et_universita.setText(savedInstanceState.getString("chiaveUni"));
-
-
     }
+
+
 }
