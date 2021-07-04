@@ -104,6 +104,7 @@ public class ProfiloStudente extends AppCompatActivity {
             immagineStudente = findViewById(R.id.immagineProfiloStud);
             //STORAGE
         storageReference = FirebaseStorage.getInstance().getReference();
+
         Log.i(TAG,"STorage "+storageReference);
 
         StorageReference profileRef = storageReference.child("Studenti/"+user.getUid()+"/profile.jpg");
@@ -153,6 +154,8 @@ public class ProfiloStudente extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent a = new Intent(ProfiloStudente.this, ModificaProfilo.class);
+                    // da aggiungere per modificare i dati (?)
+                    a.putExtra("idStudente", idUtente);
                     startActivity(a);
                 }
             });
@@ -199,6 +202,7 @@ public class ProfiloStudente extends AppCompatActivity {
             }
         });*/
     }
+
 
     //METODO CHE DISATTIVA IL PULSANTE SE LO STUDENTE NON E' UN INQUILINO
     private void studentIsInquilino() {
