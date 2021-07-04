@@ -59,7 +59,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
        holder.mostra_messaggio.setText(chat.getText_message());
 
-       holder.profile_image.setImageResource(R.mipmap.ic_launcher);
+       holder.profile_image.setImageResource(R.drawable.com_facebook_profile_picture_blank_portrait);
     }
 
 

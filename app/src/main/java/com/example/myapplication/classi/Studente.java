@@ -16,10 +16,6 @@ public class Studente extends Utente {
     public Studente() {
     }
 
-    public Studente(String idUtente, String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza) {
-        super(idUtente, nome, cognome, telefono, email, descrizione, primaEsperienza);
-    }
-
     public Studente(String id, String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza,
                     String universita, String tipologiaLaurea, String indirizzoLaurea, String senzaAlloggio, String imageURL, String hobby) {
         super(id,nome, cognome, telefono, email, descrizione, primaEsperienza);

@@ -78,6 +78,8 @@ public class RegistrationActivity extends AppCompatActivity {
         Log.i(TAG, "Informazioni inserite sono:"+" "+emailutente+" "+passwordUtente+" "+confermaPasswordUtente);
 
 
+        //TODO inserire controllo email, se già presente
+
         if (!emailValida(emailutente)) {
             Toast.makeText(this, "Inserire un email valida", Toast.LENGTH_SHORT).show();
             return;

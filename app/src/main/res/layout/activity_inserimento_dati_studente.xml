@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -40,8 +41,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tipologia di Laurea"
-        android:padding="15dp" />
+        android:padding="15dp"
+        android:text="Tipologia di Laurea" />
 
     <RadioGroup
         android:layout_width="wrap_content"
@@ -52,8 +53,8 @@
             android:id="@+id/radioButtonTriennale"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Triennale"
-            android:checked="true"/>
+            android:checked="true"
+            android:text="Triennale" />
 
         <RadioButton
             android:id="@+id/radioButtonMagistrale"
@@ -66,9 +67,9 @@
         android:id="@+id/et_inidirizzoLaurea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:hint="Indirizzo Laurea"
-        android:padding="15dp"/>
+        android:inputType="textPersonName"
+        android:padding="15dp" />
 
     <EditText
         android:id="@+id/et_descrizioneS"
@@ -76,6 +77,7 @@
         android:layout_height="wrap_content"
         android:hint="Parlami un po' di te..."
         android:padding="15dp" />
+
     <CheckBox
         android:id="@+id/checkBoxPrimaEsperienza"
         android:layout_width="match_parent"

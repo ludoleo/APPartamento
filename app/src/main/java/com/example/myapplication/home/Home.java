@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.myapplication.login.LoginActivity;
 import com.example.myapplication.messaggi.ChatActivity;
@@ -15,6 +16,7 @@ import com.example.myapplication.prenotazione.PrenotazioneActivity;
 import com.example.myapplication.profilo.ProfiloProprietario;
 import com.example.myapplication.profilo.ProfiloStudente;
 import com.example.myapplication.ricercalloggio.MappaAnnunci;
+import com.example.myapplication.ricercalloggio.Preferiti;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -107,6 +109,11 @@ public class Home extends AppCompatActivity {
 
     public void messaggi(View view) {
 
+        if (user == null) {
+            Toast.makeText(this,"Per visualizzare la chat devi prima effettuare il login",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Intent intent = new Intent(Home.this , ChatActivity.class);
         startActivity(intent);
     }
@@ -114,7 +121,7 @@ public class Home extends AppCompatActivity {
     public void salvati(View view) {
 
         //TODO aggiungere activity per case salvate
-        Intent intent = new Intent(Home.this , MappaAnnunci.class);
+        Intent intent = new Intent(Home.this , Preferiti.class);
         startActivity(intent);
     }
 
@@ -126,6 +133,10 @@ public class Home extends AppCompatActivity {
 
     public void esci(View view) {
 
+        if (user == null) {
+            Toast.makeText(this,"Nessun utente loggato",Toast.LENGTH_SHORT).show();
+            return;
+        }
         mAuth.signOut();
 
         Intent intent = new Intent(this, LoginActivity.class);

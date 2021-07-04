@@ -44,7 +44,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>  {
         Log.i(TAG,"USER é "+user.getEmail());
         holder.username.setText(user.getNome() + " " + user.getCognome());
         // if(user.getImageURL().equals("default")) {
-        holder.profile_image.setImageResource(R.mipmap.ic_launcher);
+        holder.profile_image.setImageResource(R.drawable.com_facebook_profile_picture_blank_portrait);
         //} else Glide.with(mContext).load(user.getImageURL()).into(holder.profile_image);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

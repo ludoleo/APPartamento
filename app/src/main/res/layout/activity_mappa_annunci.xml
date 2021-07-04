@@ -36,13 +36,14 @@
                  android:onClick="modificaFiltri"
                  android:layout_margin="10dp"
                  android:text="Filtri" />
-             <Button
-                android:id="@+id/lista_case"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="listaCase"
-                android:text="Lista case"
-                android:layout_margin="10dp" />
+
+         <Button
+             android:id="@+id/lista_case"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_margin="10dp"
+             android:onClick="listaCase"
+             android:text="Lista annunci" />
      </LinearLayout>
 
 

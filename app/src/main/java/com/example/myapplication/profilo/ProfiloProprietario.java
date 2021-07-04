@@ -336,15 +336,18 @@ public class ProfiloProprietario extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
-/*
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
 
+            /*
             case R.id.aggiungiCasa:
                 startActivity(new Intent(ProfiloProprietario.this,InserimentoDatiCasa.class));
                 finish();
                 return true;
+
+             */
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(ProfiloProprietario.this,Home.class));
@@ -355,7 +358,7 @@ public class ProfiloProprietario extends AppCompatActivity {
         return false;
 
 
-    }*/
+    }
     // permission foto
 @Override
 public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

@@ -4,101 +4,109 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@drawable/sfondo_activity"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".registrazione.InserimentoDatiCasa">
 
     <EditText
         android:id="@+id/et_nomeCasa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background"
         android:hint="Scegli il nome della tua casa"
-        android:padding="20dp"
-        android:background="@android:drawable/editbox_background"/>
+        android:padding="20dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Posizione"
         android:padding="10dp"
-        android:textStyle="bold"/>
+        android:text="Posizione"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/et_viaCasa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:hint="Via/Strada/P.zz, numero civico, CAP"
-        android:drawablePadding="16dp"
+        android:background="@android:drawable/editbox_background"
         android:drawableLeft="@drawable/ic_location"
-        android:background="@android:drawable/editbox_background"/>
+        android:drawablePadding="16dp"
+        android:hint="Via/Strada/P.zz, numero civico, CAP"
+        android:padding="20dp" />
 
     <TextView
         android:id="@+id/tv_coordinate_casa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
         android:layout_marginLeft="20dp"
         android:padding="10dp"
-        android:textStyle="bold"/>
+        android:text=""
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Caratteristiche principali (numero)"
         android:padding="10dp"
-        android:textStyle="bold"/>
+        android:text="Caratteristiche principali (numero)"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="fill"
+        android:orientation="horizontal"
         android:paddingBottom="25dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="#Bagni"
             android:padding="10dp"
-            android:textStyle="bold"/>
+            android:text="#Bagni"
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/et_numeroBagni"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:inputType="number"
             android:background="@android:drawable/editbox_background"
-            android:hint="1" />
+            android:hint="1"
+            android:inputType="number"
+            android:padding="10dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="#Stanze"
             android:padding="10dp"
-            android:textStyle="bold"/>
+            android:text="#Stanze"
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/et_numeroStanze"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:inputType="number"
             android:background="@android:drawable/editbox_background"
-            android:hint="3" />
+            android:hint="3"
+            android:inputType="number"
+            android:padding="10dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="#Ospisti"
             android:padding="10dp"
-            android:textStyle="bold"/>
+            android:text="#Ospisti"
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/et_numeroOspiti"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:inputType="number"
             android:background="@android:drawable/editbox_background"
-            android:hint="2" />
+            android:hint="2"
+            android:inputType="number"
+            android:padding="10dp" />
 
     </LinearLayout>
+
     <Button
         android:id="@+id/i_d_p_continua"
         android:layout_width="wrap_content"

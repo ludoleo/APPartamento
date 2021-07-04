@@ -21,7 +21,7 @@
             android:padding="15dp"
             android:text=""
             android:textColor="#D3000000"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -29,6 +29,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="5dp">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Punteggio :" />
 
             <TextView
                 android:id="@+id/et_punteggio"
@@ -40,14 +46,25 @@
                 android:textSize="20sp" />
 
             <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="su" />
+
+            <TextView
                 android:id="@+id/et_numRecensioni"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
                 android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="recensioni" />
 
         </LinearLayout>
 
@@ -55,11 +72,38 @@
             android:id="@+id/et_indirizzo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="5dp"
+            android:padding="6dp"
             android:text=""
             android:textColor="#D3000000"
             android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="3dp">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tipologia stanza" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/prezzo" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Proprietario" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,10 +116,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
+                android:padding="4dp"
                 android:text=""
                 android:textColor="#D3000000"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/et_prezzo"
@@ -85,7 +129,7 @@
                 android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/et_proprietario"
@@ -95,8 +139,36 @@
                 android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ospiti:" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Numero camere:" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Numero bagni:" />
         </LinearLayout>
 
         <LinearLayout
@@ -113,7 +185,7 @@
                 android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="italic" />
 
             <TextView
@@ -124,7 +196,7 @@
                 android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -135,7 +207,7 @@
                 android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textStyle="italic" />
         </LinearLayout>
 
