@@ -1,10 +1,13 @@
 package com.example.myapplication.visitaNote;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -81,6 +84,31 @@ public class InserimentoDatiVisita extends AppCompatActivity {
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+    //Metodi di Call Back
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        Log.d("OGGI","Chiamato OnSaveInstanceState");
+        outState.putString("chiaveN",nome.getText().toString());
+        outState.putString("chiave1N",valutazione.getText().toString());
+        outState.putString("chiave2N",zona.getText().toString());
+        outState.putString("chiave3N",prezzo.getText().toString());
+        outState.putString("chiave4N",link.getText().toString());
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d("OGGI","Chiamato OnSRestoreInstanceState");
+        // un po' diverso non mi permette di trovare saveState
+        nome.setText(savedInstanceState.getString("chiaveN"));
+        valutazione.setText(savedInstanceState.getString("chiave1N"));
+        zona.setText(savedInstanceState.getString("chiave2N"));
+        prezzo.setText(savedInstanceState.getString("chiave3N"));
+        link.setText(savedInstanceState.getString("chiave4N"));
+
     }
 
 }

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -132,6 +133,29 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
         et_cognomeP.setText("");
         et_numTelefonoP.setText("");
         cb_primaEsperienzaP.setChecked(false);
+    }
+    //Metodi di Call Back
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        Log.d("OGGI","Chiamato OnSaveInstanceState");
+        outState.putString("chiaveP",et_nomeP.getText().toString());
+        outState.putString("chiavecognomeP",et_cognomeP.getText().toString());
+        outState.putString("chiaveNumeroP",et_numTelefonoP.getText().toString());
+        outState.putString("chiaveDescrizioneP",et_descrizioneP.getText().toString());
+        // il Checked(?)
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d("OGGI","Chiamato OnSRestoreInstanceState");
+        // un po' diverso non mi permette di trovare saveState
+        et_nomeP.setText(savedInstanceState.getString("chiaveP"));
+        et_cognomeP.setText(savedInstanceState.getString("chiavecognomeP"));
+        et_descrizioneP.setText(savedInstanceState.getString("chiaveDescrizioneP"));
+        et_numTelefonoP.setText(savedInstanceState.getString("chiaveNumeroP"));
+
     }
 
 

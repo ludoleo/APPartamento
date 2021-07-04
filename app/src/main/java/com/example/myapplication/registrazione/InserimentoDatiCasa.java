@@ -1,11 +1,13 @@
 package com.example.myapplication.registrazione;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.location.Address;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -175,5 +177,30 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         et_numeroBagni.setText("");
         et_numeroStanze.setText("");
         et_numeroOspiti.setText("");
+    }
+    //Metodi di Call Back
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        Log.d("OGGI","Chiamato OnSaveInstanceState");
+        outState.putString("chiaveC",et_nomeCasa.getText().toString());
+        outState.putString("chiavenbC",et_numeroBagni.getText().toString());
+        outState.putString("chiavensC",et_numeroStanze.getText().toString());
+        outState.putString("chiavenoC",et_numeroOspiti.getText().toString());
+        // il Checked(?)
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d("OGGI","Chiamato OnSRestoreInstanceState");
+        // un po' diverso non mi permette di trovare saveState
+        et_nomeCasa.setText(savedInstanceState.getString("chiaveC"));
+        et_numeroBagni.setText(savedInstanceState.getString("chiavenbC"));
+        et_numeroStanze.setText(savedInstanceState.getString("chiavensC"));
+        et_numeroOspiti.setText(savedInstanceState.getString("chiavenoC"));
+
+
+
     }
 }

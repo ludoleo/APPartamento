@@ -135,8 +135,8 @@ NoteVisitaLista extends ListActivity {
                             .getColumnIndex(Note.NoteMetaData.ZONA));
                     nota.link=tmpCursor.getString(tmpCursor
                             .getColumnIndex(Note.NoteMetaData.LINK));
-                    NoteBundle.putParcelable("team", nota);
-                    updateIntent.putExtra("team", NoteBundle);
+                    NoteBundle.putParcelable("note", nota);
+                    updateIntent.putExtra("note", NoteBundle);
                     startActivityForResult(updateIntent, UPDATE_ACTIVITY_RESULT);
                 }
                 return true;
