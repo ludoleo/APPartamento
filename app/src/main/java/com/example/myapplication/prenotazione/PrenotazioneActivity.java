@@ -87,7 +87,7 @@ public class PrenotazioneActivity extends AppCompatActivity {
         String idAnnuncio="";
         String fasciaOraria="";
         dataSelzionata = new Date(calendarView.getDate());
-        long dataLong = dataSelzionata.getTime();
+        String dataLong = ""+dataSelzionata.getTime();
         try {
             emailUtente1 = bundle.getString("emailUtente1");
             nomeUtente1 = bundle.getString("nomeUtente1");
