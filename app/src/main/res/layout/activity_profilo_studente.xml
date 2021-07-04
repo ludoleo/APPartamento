@@ -72,41 +72,68 @@
             android:textSize="24sp"
             android:textStyle="normal|bold" />
 
-        <TextView
-            android:id="@+id/text_nome"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"></TextView>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:id="@+id/text_nome"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"></TextView>
+
+            <TextView
+                android:id="@+id/text_cognome"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="@string/etichetta3" />
+
+            <TextView
+                android:id="@+id/text_descrizione"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="@string/etichetta4" />
+
+            <TextView
+                android:id="@+id/text_universita"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="Univeristà" />
+
+            <TextView
+                android:id="@+id/text_indirizzoLaurea"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:text="Indirizzo Laurea" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
 
         <TextView
-            android:id="@+id/text_cognome"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:text="@string/etichetta3" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:id="@+id/tv_hobby_studente">
+        </TextView>
 
-        <TextView
-            android:id="@+id/text_telefono"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:text="@string/etichetta5" />
-
-        <TextView
-            android:id="@+id/text_descrizione"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:text="@string/etichetta4" />
-
-        <TextView
-            android:id="@+id/text_universita"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:text="Univeristà" />
-
-        <TextView
-            android:id="@+id/text_indirizzoLaurea"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:text="Indirizzo Laurea" />
-
+        <ListView
+            android:id="@+id/listView_hobby_profilo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </ListView>
+        </LinearLayout>
+    </LinearLayout>
         <Button
             android:id="@+id/modificaProfilo"
             android:layout_width="match_parent"

@@ -30,7 +30,7 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
     private static final String TAG = "InserimentoHobbyStudente";
     ListView listView;
     ArrayAdapter<String> arrayAdapter;
-    String itemSelected="";
+
 
     //Database
     FirebaseDatabase database;
@@ -66,6 +66,7 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
     @SuppressLint("LongLogTag")
     public void selezionaElementi(View view) {
 
+        String itemSelected="";
 
         for(int i=0;i<listView.getCount();i++){
             if(listView.isItemChecked(i)){

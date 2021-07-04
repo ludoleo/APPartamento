@@ -2,8 +2,6 @@ package com.example.myapplication.classi;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Objects;
 
 public class Prenotazione {
 
@@ -13,7 +11,7 @@ public class Prenotazione {
     private String emailUtente2;
     private String nomeUtente2;
     private String idAnnuncio;
-    private Date dataPrenotazione;
+    private long dataPrenotazione;
     private boolean confermata;
     private boolean terminata;
     private boolean cancellata;
@@ -25,7 +23,7 @@ public class Prenotazione {
     public Prenotazione(){}
 
     public Prenotazione(String emailUtente1, String nomeUtente1, String emailUtente2, String nomeUtente2,
-                        String idAnnuncio, Date dataPrenotazione, boolean terminata,
+                        String idAnnuncio, long dataPrenotazione, boolean terminata,
                         boolean cancellata, boolean pagata, String orario, boolean confermata) {
 
         this.emailUtente1 = emailUtente1;
@@ -83,11 +81,11 @@ public class Prenotazione {
     public void setIdAnnuncio(String idAnnuncio) {
         this.idAnnuncio = idAnnuncio; }
 
-    public Date getDataPrenotazione() {
+    public long getDataPrenotazione() {
         return dataPrenotazione;
     }
 
-    public void setDataPrenotazione(Date dataPrenotazione) {
+    public void setDataPrenotazione(long dataPrenotazione) {
         this.dataPrenotazione = dataPrenotazione; }
 
     public boolean isTerminata() {

@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Prenotazione;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.messaggi.ChatActivity;
 import com.example.myapplication.profilo.ProfiloAnnuncio;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -88,6 +87,7 @@ public class PrenotazioneActivity extends AppCompatActivity {
         String idAnnuncio="";
         String fasciaOraria="";
         dataSelzionata = new Date(calendarView.getDate());
+        long dataLong = dataSelzionata.getTime();
         try {
             emailUtente1 = bundle.getString("emailUtente1");
             nomeUtente1 = bundle.getString("nomeUtente1");
@@ -99,7 +99,7 @@ public class PrenotazioneActivity extends AppCompatActivity {
             Toast.makeText(this, "Errore nel ricevere i dati", Toast.LENGTH_SHORT).show();}
         //Aggiungiamo la prenotazione
         Prenotazione prenotazione = new Prenotazione(emailUtente1,nomeUtente1, emailUtente2,nomeUtente2,
-                idAnnuncio,dataSelzionata, false,false,false,fasciaOraria,false);
+                idAnnuncio, dataLong, false,false,false,fasciaOraria,false);
 
         //todo notifica al proprietario e creazione delle chat, bisogna prendere il token del proprietario
         DatabaseReference preAdd = myRef.child("Prenotazioni").push();

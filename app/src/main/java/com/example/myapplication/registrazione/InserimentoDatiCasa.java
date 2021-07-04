@@ -158,17 +158,16 @@ public class InserimentoDatiCasa extends AppCompatActivity {
             String proprietario = user.getUid();
             Casa casa = new Casa(nomeCasa, viaCasa, numeroOspiti, numeroBagni, numeroStanze, proprietario,"",coordinate.latitude,coordinate.longitude);
             //eseguo il push
-            DatabaseReference casaAggiunta = myRef.child("Case").push();
+            DatabaseReference casaAggiunta = myRef.child("Case").child(nomeCasa);
             casaAggiunta.setValue(casa);
 
-
-            Log.i(TAG, "Casa " + casa.getNomeCasa());
-            update();
-            clear();
+            Log.i(TAG, "Casa " + nomeCasa);
             Intent intent = new Intent(this, InserimentoServiziCasa.class);
-            intent.putExtra("idCasa", casaAggiunta.getKey());
+
             intent.putExtra("nomeCasa",nomeCasa);
             startActivity(intent);
+            update();
+            clear();
         }
     }
     private void clear() {

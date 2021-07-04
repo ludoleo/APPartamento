@@ -17,8 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,23 +63,11 @@ public class ProfiloStudente extends AppCompatActivity {
     private Uri ImageUri;
     private StorageTask UploadTask;
 
-    Button change;
-    Button modifica;
-    Button laTuaCasa;
-    Button note;
-
+    Button change, modifica, laTuaCasa, note;
     CircleImageView immagineStudente ;
-
-
-    private TextView text_nome;
-    private TextView text_cognome;
-    private TextView text_descrizione;
-    private TextView text_telefono;
-    private TextView text_univerista;
-    private TextView text_indirizzoLaure;
-    private TextView username;
-
-
+    TextView text_nome, text_cognome, text_descrizione, text_univerista, text_indirizzoLaure, username, hobbyStudente;
+    ListView listView;
+    ArrayAdapter<String> arrayAdapter;
 
     public DatabaseReference myRef;
     // per foto
@@ -160,11 +150,11 @@ public class ProfiloStudente extends AppCompatActivity {
             text_nome = (TextView) findViewById(R.id.text_nome);
             text_cognome = (TextView) findViewById(R.id.text_cognome);
             text_descrizione = (TextView) findViewById(R.id.text_descrizione);
-            text_telefono = (TextView) findViewById(R.id.text_telefono);
             text_univerista = (TextView) findViewById(R.id.text_universita);
             text_indirizzoLaure = (TextView) findViewById(R.id.text_indirizzoLaurea);
             username = (TextView) findViewById(R.id.username);
-
+            hobbyStudente = (TextView) findViewById(R.id.tv_hobby_studente);
+            listView = (ListView) findViewById(R.id.listView_hobby_profilo);
 
             idUtente = getIntent().getExtras().getString("idUtente");
 
@@ -175,7 +165,42 @@ public class ProfiloStudente extends AppCompatActivity {
             myRef = database.getReference();
             Log.i(TAG, "sono passata da qui "+idUtente);
 
-            popola(idUtente);
+        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Log.i(TAG,"funziona");
+
+                // Get Post object and use the values to update the UI
+                for(DataSnapshot figlio : dataSnapshot.getChildren()) {
+
+                    Log.i(TAG, "Studente "+figlio.getKey()+"/n");
+
+                    if(figlio.getKey().compareTo(idUtente)==0) {
+
+                        Studente studente = figlio.getValue(Studente.class);
+                        Log.i(TAG, "Profilo dello studente" + studente.toString());
+
+                        text_nome.setText(studente.getNome());
+                        text_cognome.setText(studente.getCognome());
+                        text_descrizione.setText(studente.getDescrizione());
+                        text_univerista.setText(studente.getUniversita());
+                        text_indirizzoLaure.setText(studente.getIndirizzoLaurea());
+                        hobbyStudente.setText("Gli hobby di "+studente.getNome());
+                        username.setText(studente.getNome()+" "+studente.getCognome());
+                        //METODO CHE POPOLA LA LISTA DI HOBBY
+                        String[] hobby = studente.getHobby().split("-");
+                        arrayAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.row, hobby);
+                        listView.setAdapter(arrayAdapter);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
             studentIsInquilino();
 
@@ -280,49 +305,6 @@ public class ProfiloStudente extends AppCompatActivity {
 
             }
 
-        });
-    }
-
-
-    private void popola(String idUtente) {
-
-        Log.i(TAG, "Sono in popola");
-
-        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Log.i(TAG,"funziona");
-
-                // Get Post object and use the values to update the UI
-                for(DataSnapshot figlio : dataSnapshot.getChildren()) {
-
-                    Log.i(TAG, "Studente "+figlio.getKey()+"/n");
-
-                    if(figlio.getKey().compareTo(idUtente)==0) {
-
-                        Studente studente = figlio.getValue(Studente.class);
-                        Log.i(TAG, "Profilo dello studente" + studente.toString());
-
-                        text_nome.setText(studente.getNome());
-                        text_cognome.setText(studente.getCognome());
-                        text_telefono.setText(studente.getTelefono());
-                        text_descrizione.setText(studente.getDescrizione());
-                        text_univerista.setText(studente.getUniversita());
-                        text_indirizzoLaure.setText(studente.getIndirizzoLaurea());
-
-
-                        username.setText(studente.getNome()+" "+studente.getCognome());
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-            }
         });
     }
 

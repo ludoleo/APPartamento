@@ -128,6 +128,7 @@ public class ElencoPrenotazioni extends AppCompatActivity {
 
     //alarm------------------------------------------
     //genero un alarm 30' prima dell'orario della prenotazione
+    /*
     public void alarm() {
         intent = new Intent(getApplicationContext(), AlarmBroadcastReceiver.class);
         intent.setAction(ACTION_ALARM);
@@ -163,4 +164,6 @@ public class ElencoPrenotazioni extends AppCompatActivity {
     private void cancelAlarm() {
         alarmManager.cancel(alarmIntent);
     }
+    
+     */
 }
