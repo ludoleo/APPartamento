@@ -11,7 +11,7 @@ public class Prenotazione {
     private String emailUtente2;
     private String nomeUtente2;
     private String idAnnuncio;
-    private long dataPrenotazione;
+    private String dataPrenotazione;
     private boolean confermata;
     private boolean terminata;
     private boolean cancellata;
@@ -23,7 +23,7 @@ public class Prenotazione {
     public Prenotazione(){}
 
     public Prenotazione(String emailUtente1, String nomeUtente1, String emailUtente2, String nomeUtente2,
-                        String idAnnuncio, long dataPrenotazione, boolean terminata,
+                        String idAnnuncio, String dataPrenotazione, boolean terminata,
                         boolean cancellata, boolean pagata, String orario, boolean confermata) {
 
         this.emailUtente1 = emailUtente1;
@@ -81,11 +81,11 @@ public class Prenotazione {
     public void setIdAnnuncio(String idAnnuncio) {
         this.idAnnuncio = idAnnuncio; }
 
-    public long getDataPrenotazione() {
+    public String getDataPrenotazione() {
         return dataPrenotazione;
     }
 
-    public void setDataPrenotazione(long dataPrenotazione) {
+    public void setDataPrenotazione(String dataPrenotazione) {
         this.dataPrenotazione = dataPrenotazione; }
 
     public boolean isTerminata() {
