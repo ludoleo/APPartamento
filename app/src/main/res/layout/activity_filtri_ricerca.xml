@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FiltriRicerca">
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleziona prezzo"
+        android:textSize="20dp"
+        android:padding="15dp"/>
+
+    <SeekBar
+        android:id="@+id/seekBarPrezzo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:max="700"
+        android:progress="375"/>
+
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
+
+       <TextView
+           android:id="@+id/tv_mostraPrezzo"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:padding="15dp">
+       </TextView>
+
+       <TextView
+           android:id="@+id/tv_mostraPrezzo1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:padding="15dp"
+           android:text=" €">
+       </TextView>
+   </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleziona tipologia alloggio"
+        android:textSize="20dp"
+        android:padding="15dp"/>
+
+    <CheckBox
+        android:id="@+id/checkBoxInteroAppartamento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Intero appartamento"
+        android:layout_marginLeft="10dp"/>
+
+    <CheckBox
+        android:id="@+id/checkBoxStanzaSingola"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stanza singola"
+        android:layout_marginLeft="10dp"/>
+
+    <CheckBox
+        android:id="@+id/checkBoxStanzaDoppia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Stanza doppia"
+        android:layout_marginLeft="10dp"/>
+    <CheckBox
+        android:id="@+id/checkBoxPostoLetto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Posto letto"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rating casa"
+        android:textSize="20dp"
+        android:padding="15dp"/>
+
+    <SeekBar
+        android:id="@+id/seekBarRatingCasa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:max="5"
+        android:progress="3"
+        />
+
+    <TextView
+        android:id="@+id/tv_mostraRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+    </TextView>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Conferma"
+        android:layout_margin="10dp"
+        android:onClick="conferma">
+    </Button>
+</LinearLayout>

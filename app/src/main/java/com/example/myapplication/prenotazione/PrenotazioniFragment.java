@@ -41,6 +41,7 @@ public class PrenotazioniFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "Prenotazione";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -58,6 +59,7 @@ public class PrenotazioniFragment extends Fragment {
     ArrayList<String> confermate;
 
     Button b_conferma_prenotazione, b_proponi_altra_data;
+    ListView listView;
 
     public PrenotazioniFragment() {
         // Required empty public constructor
@@ -96,7 +98,22 @@ public class PrenotazioniFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_prenotazioni, container, false);
+        String sTitle = getArguments().getString("title");
+
         listaPrenotazioni = new LinkedList<>();
+        listView = view.findViewById(R.id.lv_titoloElencoPrenotazione);
+
+        b_conferma_prenotazione = view.findViewById(R.id.bottone_conferma_prenotazione);
+        b_proponi_altra_data = view.findViewById(R.id.bottone_proponi_data);
+
         myRef.child("Prenotazioni").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -107,68 +124,48 @@ public class PrenotazioniFragment extends Fragment {
                         listaPrenotazioni.add(prenotazione);
                     }
                 }
-                aggiorna();
+
+                inSospeso = new ArrayList<>();
+                confermate = new ArrayList<>();
+
+                for (Prenotazione p : listaPrenotazioni) {
+                    if (!p.isTerminata() && !p.isCancellata()) {
+                        if (p.isConfermata()){
+                            if(p.getEmailUtente1().compareTo(user.getEmail())==0){
+                                String strConfermata = ""+p.getNomeUtente2()+" ("+p.getEmailUtente2()+") /n"+p.getDataOra()+"/n"+p.getIdAnnuncio();
+                                confermate.add(strConfermata);}
+                            else{
+                                String strConfermata = ""+p.getNomeUtente1()+" ("+p.getEmailUtente1()+") /n"+p.getDataOra()+"/n"+p.getIdAnnuncio();
+                                confermate.add(strConfermata);}
+                        }
+                        else{
+                            if(p.getEmailUtente1().compareTo(user.getEmail())==0){
+                                b_conferma_prenotazione.setVisibility(View.GONE);
+                                b_proponi_altra_data.setVisibility(View.GONE);
+                                String strConfermata = ""+p.getNomeUtente2()+" ("+p.getEmailUtente2()+")"+"/n"+p.getDataOra()+"/n"+p.getIdAnnuncio();
+                                inSospeso.add(strConfermata);}
+                            else{
+                                b_conferma_prenotazione.setVisibility(View.VISIBLE);
+                                b_proponi_altra_data.setVisibility(View.VISIBLE);
+                                String strConfermata = ""+p.getNomeUtente1()+" ("+p.getEmailUtente1()+") /n"+p.getDataOra()+"/n"+p.getIdAnnuncio();
+                                inSospeso.add(strConfermata);}
+                        }
+                    }
+                }
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-    }
-
-    private void aggiorna() {
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_prenotazioni, container, false);
-
-        String sTitle = getArguments().getString("title");
-        ListView listView = view.findViewById(R.id.lv_titoloElencoPrenotazione);
-        b_conferma_prenotazione = view.findViewById(R.id.bottone_conferma_prenotazione);
-        b_proponi_altra_data = view.findViewById(R.id.bottone_proponi_data);
-
-        caricaSchermata(view);
-
-        return view;
-    }
-
-    private void caricaSchermata(View view){
 
 
-        String sTitle = getArguments().getString("title");
-        ListView listView = view.findViewById(R.id.lv_titoloElencoPrenotazione);
+        Log.i(TAG,"funziona" +listaPrenotazioni);
 
-        inSospeso = new ArrayList<>();
-        confermate = new ArrayList<>();
-
-        for (Prenotazione p : listaPrenotazioni) {
-            if (!p.isTerminata() && !p.isCancellata()) {
-                if (p.isConfermata()){
-                    if(p.getEmailUtente1().compareTo(user.getEmail())==0){
-                        String strConfermata = ""+p.getNomeUtente2()+" ("+p.getEmailUtente2()+") /n"+p.getDataOra()+"/n"+p.getIdAnnuncio();
-                        confermate.add(strConfermata);}
-                    else{
-                        String strConfermata = ""+p.getNomeUtente1()+" ("+p.getEmailUtente1()+") /n"+p.getDataOra()+"/n"+p.getIdAnnuncio();
-                        confermate.add(strConfermata);}
-                }
-                else{
-                    if(p.getEmailUtente1().compareTo(user.getEmail())==0){
-                        b_conferma_prenotazione.setVisibility(View.GONE);
-                        b_proponi_altra_data.setVisibility(View.GONE);
-                        String strConfermata = ""+p.getNomeUtente2()+" ("+p.getEmailUtente2()+")"+"/n"+p.getDataOra()+"/n"+p.getIdAnnuncio();
-                        inSospeso.add(strConfermata);}
-                    else{
-                        b_conferma_prenotazione.setVisibility(View.VISIBLE);
-                        b_proponi_altra_data.setVisibility(View.VISIBLE);
-                        String strConfermata = ""+p.getNomeUtente1()+" ("+p.getEmailUtente1()+") /n"+p.getDataOra()+"/n"+p.getIdAnnuncio();
-                        inSospeso.add(strConfermata);}
-                }
-            }
-        }
-
+        /*
         ArrayAdapter<String> arrayAdapter;
+
+
 
         if (sTitle.compareTo("In Sospeso") == 0) {
             arrayAdapter = new ArrayAdapter<String>(getContext(),R.layout.row_lista_prenotazioni_insospeso,
@@ -180,5 +177,8 @@ public class PrenotazioniFragment extends Fragment {
                     R.id.tv_utente_prenotazione_confermata, confermate);
             listView.setAdapter(arrayAdapter);
         }
+*/
+        return view;
     }
+
 }

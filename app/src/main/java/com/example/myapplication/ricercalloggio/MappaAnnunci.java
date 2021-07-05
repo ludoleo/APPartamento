@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.myapplication.FiltriRicerca;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
@@ -33,6 +34,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,6 +47,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallback {
+
+    //FILTRI DEFAULT
+    private static final int PREZZO_MASSIMO = 700;
+    private static final int TUTTE = 0;
 
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final String TAG = "Mappe";
@@ -103,15 +109,23 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void caricaMappa() {
-        for(Casa a : listaCase){
-            MarkerOptions mo = new MarkerOptions();
-            Marker perth = gmap.addMarker(
-                            mo
-                            .position(new LatLng(a.getLat(),a.getLng()))
-                            .draggable(true));
-            gmap.addMarker(mo);
-            perth.setTitle(a.getNomeCasa());
 
+        //CARICO SOLO LE CASE CHE HANNO DEGLI ANNUNCI
+        for(Casa a : listaCase){
+            boolean annucnio = false;
+            for(Annuncio ann : listaAnnunci){
+                if(ann.getCasa().compareTo(a.getNomeCasa())==0)
+                    annucnio = true;
+            }
+            if(annucnio){
+                MarkerOptions mo = new MarkerOptions();
+                Marker perth = gmap.addMarker(
+                        mo
+                                .position(new LatLng(a.getLat(),a.getLng()))
+                                .draggable(true));
+                gmap.addMarker(mo);
+                perth.setTitle(a.getNomeCasa());
+            }
         }
     }
 
@@ -278,6 +292,7 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
         mapView.onPause(); }
 
     public void modificaFiltri(View view) {
-
+        Intent intent = new Intent(this, FiltriRicerca.class);
+        startActivity(intent);
     }
 }
