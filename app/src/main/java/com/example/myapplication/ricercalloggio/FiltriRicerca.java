@@ -1,18 +1,24 @@
-package com.example.myapplication;
+package com.example.myapplication.ricercalloggio;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.example.myapplication.R;
+import com.example.myapplication.ricercalloggio.MappaAnnunci;
+
 public class FiltriRicerca extends AppCompatActivity {
 
     SeekBar seekBarPrezzo, seekBarRatingCasa;
     CheckBox checkBoxInteroAppartamento, checkBoxStanzaSingola, checkBoxStanzaDoppia, checkBoxPostoLetto;
     TextView tv_mostraPrezzo, tv_mostraRating;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +74,25 @@ public class FiltriRicerca extends AppCompatActivity {
         });
     }
 
-
     public void conferma(View view) {
+
+        int prezzo = seekBarPrezzo.getProgress();
+        int rating = seekBarRatingCasa.getProgress();
+
+        boolean intero = checkBoxInteroAppartamento.isChecked();
+        boolean singola = checkBoxStanzaSingola.isChecked();
+        boolean doppia = checkBoxStanzaDoppia.isChecked();
+        boolean posto  = checkBoxPostoLetto.isChecked();
+
+        MappaAnnunci.filtro.prezzo = prezzo;
+        MappaAnnunci.filtro.rating =rating;
+        MappaAnnunci.filtro.intero = intero;
+        MappaAnnunci.filtro.singola =singola;
+        MappaAnnunci.filtro.doppia = doppia;
+        MappaAnnunci.filtro.posto =posto;
+
+        Intent intent = new Intent(this, MappaAnnunci.class);
+        startActivity(intent);
+
     }
 }

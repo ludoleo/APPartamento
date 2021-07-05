@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +15,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.myapplication.FiltriRicerca;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
@@ -32,17 +29,12 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -65,6 +57,7 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
     ListView listView;
     Button b_visualizzaCasa;
     Casa casa;
+    static Filtro filtro = new Filtro();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +74,13 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
         listaAnnunci = new LinkedList<>();
         listaCase = new LinkedList<>();
         initListe();
+
+        filtro.prezzo = PREZZO_MASSIMO;
+        filtro.rating=0;
+        filtro.intero=true;
+        filtro.singola=true;
+        filtro.doppia=true;
+        filtro.posto=true;
     }
 
     private void initListe() {
@@ -110,14 +110,25 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
 
     private void caricaMappa() {
 
+        //PULISCO LA MAPPA
+        gmap.clear();
         //CARICO SOLO LE CASE CHE HANNO DEGLI ANNUNCI
         for(Casa a : listaCase){
             boolean annucnio = false;
             for(Annuncio ann : listaAnnunci){
-                if(ann.getCasa().compareTo(a.getNomeCasa())==0)
+                    //Se per la casa vi è un annuncio
+                if(ann.getCasa().compareTo(a.getNomeCasa())==0
+                   && ann.getPrezzoMensile()<=filtro.prezzo
+                        && a.getValutazione()>=filtro.rating &&
+                        ((ann.getTipologiaAlloggio().equals("Intero appartamento") && filtro.intero)
+                                || (ann.getTipologiaAlloggio().equals("Stanza singola") && filtro.singola)
+                                    || (ann.getTipologiaAlloggio().equals("Stanza doppia") && filtro.doppia)
+                                        || (ann.getTipologiaAlloggio().equals("Posto letto") && filtro.posto))){
                     annucnio = true;
+                }
             }
             if(annucnio){
+                //METTO I FILTRI
                 MarkerOptions mo = new MarkerOptions();
                 Marker perth = gmap.addMarker(
                         mo
@@ -294,5 +305,16 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
     public void modificaFiltri(View view) {
         Intent intent = new Intent(this, FiltriRicerca.class);
         startActivity(intent);
+    }
+
+    protected static class Filtro {
+
+        int prezzo;
+        int rating;
+        boolean intero;
+        boolean singola;
+        boolean doppia;
+        boolean posto;
+
     }
 }
