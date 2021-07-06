@@ -39,7 +39,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableRight="@drawable/ic_baseline_star"
-        android:onClick="recensioniProprietario"
         android:padding="10dp"
         android:text="" />
 
@@ -61,5 +60,16 @@
         android:layout_height="wrap_content"
         android:onClick="aggiungiInquilino"
         android:text="Aggiungi Inquilino"></Button>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Posizione">
+    </TextView>
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapViewCasa"
+        android:layout_width="match_parent"
+        android:layout_height="250dp" />
 
 </LinearLayout>

@@ -11,8 +11,7 @@ import android.widget.Toast;
 import com.example.myapplication.login.LoginActivity;
 import com.example.myapplication.messaggi.ChatActivity;
 import com.example.myapplication.R;
-import com.example.myapplication.prenotazione.ElencoPrenotazioni;
-import com.example.myapplication.prenotazione.PrenotazioneActivity;
+import com.example.myapplication.prenotazione.LeMiePrenotazioni;
 import com.example.myapplication.profilo.ProfiloProprietario;
 import com.example.myapplication.profilo.ProfiloStudente;
 import com.example.myapplication.ricercalloggio.MappaAnnunci;
@@ -127,7 +126,7 @@ public class Home extends AppCompatActivity {
 
     public void prenotazione(View view) {
 
-        Intent intent = new Intent(Home.this , ElencoPrenotazioni.class);
+        Intent intent = new Intent(Home.this , LeMiePrenotazioni.class);
         startActivity(intent);
     }
 

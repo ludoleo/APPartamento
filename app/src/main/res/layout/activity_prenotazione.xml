@@ -8,13 +8,6 @@
     android:orientation="vertical"
     tools:context=".prenotazione.PrenotazioneActivity">
 
-    <Button
-        android:id="@+id/b_exit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="back"
-        android:text="@string/indietro"
-        android:translationY="5dp" />
 
     <CalendarView
         android:id="@+id/calendarView"

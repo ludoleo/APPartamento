@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Prenotazione;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.profilo.ProfiloAnnuncio;
@@ -24,8 +25,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Date;
@@ -46,6 +50,12 @@ public class PrenotazioneActivity extends AppCompatActivity {
     private static final String TAG = "Prenotazione";
     private int idNotifica;
 
+    String idAnnuncio="";
+    String nomeUtente1="";
+    String emailUtente1="";
+    String nomeUtente2="";
+    String emailUtente2="";
+    String fasciaOraria="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +75,8 @@ public class PrenotazioneActivity extends AppCompatActivity {
         initUI();
     }
     private void initUI() {
+
+
         getToken();
     }
 
@@ -76,16 +88,7 @@ public class PrenotazioneActivity extends AppCompatActivity {
 
     public void conferma(View view) {
 
-        if(user.equals(null)){
-            Toast.makeText(this, "Effettua il login per prenotare una visita", Toast.LENGTH_SHORT).show();
-            return; }
         Bundle bundle = getIntent().getExtras();
-        String nomeUtente1="";
-        String emailUtente1="";
-        String nomeUtente2="";
-        String emailUtente2="";
-        String idAnnuncio="";
-        String fasciaOraria="";
         dataSelzionata = new Date(calendarView.getDate());
         String dataLong = ""+dataSelzionata.getTime();
         try {
@@ -97,16 +100,37 @@ public class PrenotazioneActivity extends AppCompatActivity {
             fasciaOraria = spinnerFasciaOraria.getSelectedItem().toString();
         }catch (Exception e){
             Toast.makeText(this, "Errore nel ricevere i dati", Toast.LENGTH_SHORT).show();}
-        //Aggiungiamo la prenotazione
-        Prenotazione prenotazione = new Prenotazione(emailUtente1,nomeUtente1, emailUtente2,nomeUtente2,
-                idAnnuncio, dataLong, false,false,false,fasciaOraria,false);
 
-        //todo notifica al proprietario e creazione delle chat, bisogna prendere il token del proprietario
-        DatabaseReference preAdd = myRef.child("Prenotazioni").push();
-        preAdd.setValue(prenotazione);
-        inviaNotifica();
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
+        //Controllo sulla prenotazione
+        myRef.child("Prenotazioni").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                boolean uguale = false;
+                for (DataSnapshot preData: dataSnapshot.getChildren()) {
+                    Prenotazione p = preData.getValue(Prenotazione.class);
+                    if((p.getEmailUtente1().equals(user.getEmail()) || p.getEmailUtente2().equals(user.getEmail()))
+                        && p.getIdAnnuncio().equals(idAnnuncio))
+                        uguale = true;
+                }
+                if(!uguale){
+                    //Aggiungiamo la prenotazione
+                    Prenotazione prenotazione = new Prenotazione(emailUtente1,nomeUtente1, emailUtente2,nomeUtente2,
+                            idAnnuncio, dataLong, false,false,false,fasciaOraria,false);
+
+                    //todo notifica al proprietario e creazione delle chat, bisogna prendere il token del proprietario
+                    DatabaseReference preAdd = myRef.child("Prenotazioni").push();
+                    preAdd.setValue(prenotazione);
+                    inviaNotifica();
+                    Intent intent = new Intent(PrenotazioneActivity.this, Home.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(PrenotazioneActivity.this, "Sei già prenotato per questo annuncio", Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+
     }
 
     public void annulla(View view) {
@@ -117,7 +141,7 @@ public class PrenotazioneActivity extends AppCompatActivity {
     private void inviaNotifica() {
 
         //TODO Intent che mi apre l'app al tocco sulla notifica
-        Intent intent = new Intent(this, ElencoPrenotazioni.class);
+        Intent intent = new Intent(this, LeMiePrenotazioni.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         //salva intent per utilizzarlo al momento dell'apertura della notifica
@@ -163,7 +187,6 @@ public class PrenotazioneActivity extends AppCompatActivity {
                     }
                 });
     }
-
     //aggiungere il controllo su nuovo token
 
 

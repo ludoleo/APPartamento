@@ -42,7 +42,7 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
 
     //FILTRI DEFAULT
     private static final int PREZZO_MASSIMO = 700;
-    private static final int TUTTE = 0;
+    private static final int RATING_MINIMO = 0;
 
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final String TAG = "Mappe";
@@ -57,7 +57,7 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
     ListView listView;
     Button b_visualizzaCasa;
     Casa casa;
-    static Filtro filtro = new Filtro();
+    static Filtro filtro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,13 +75,16 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
         listaCase = new LinkedList<>();
         initListe();
 
+        filtro = new Filtro();
+
         filtro.prezzo = PREZZO_MASSIMO;
-        filtro.rating=0;
+        filtro.rating= RATING_MINIMO;
         filtro.intero=true;
         filtro.singola=true;
         filtro.doppia=true;
         filtro.posto=true;
     }
+
 
     private void initListe() {
 
@@ -110,8 +113,6 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
 
     private void caricaMappa() {
 
-        //PULISCO LA MAPPA
-        gmap.clear();
         //CARICO SOLO LE CASE CHE HANNO DEGLI ANNUNCI
         for(Casa a : listaCase){
             boolean annucnio = false;
@@ -155,8 +156,6 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
         Intent intent = new Intent(MappaAnnunci.this , ListaAnnunci.class);
         startActivity(intent); }
 
-    //CREAZIONE MAP VIEW
-
     private void createMapView(Bundle savedInstanceState) {
         Bundle mapViewBundle = null;
         if (savedInstanceState != null)
@@ -166,31 +165,24 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
         mapView.getMapAsync(this);
     }
 
+    
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        gmap = googleMap;
 
+        gmap = googleMap;
+        caricaMappa();
         //configurazioni
         gmap.setMinZoomPreference(12);
         gmap.setTrafficEnabled(true);
-
         UiSettings uiSettings = gmap.getUiSettings();
             uiSettings.setZoomControlsEnabled(true);
             uiSettings.setCompassEnabled(true);
             uiSettings.setMapToolbarEnabled(true);
             uiSettings.setMyLocationButtonEnabled(true);
 
-        //SCORRO LA LISTA PER CREARE UN MARKER PER OGNI ANNUNCIO
-        for(Casa a : listaCase){
-            MarkerOptions mo = null;
-            mo = new MarkerOptions().position(new LatLng(a.getLat(),a.getLng()));
-            gmap.addMarker(mo);
-            mo.title(a.getNomeCasa());
-        }
         //Aggiungo coordinate del poli
         LatLng poliTo = new LatLng(45.057856432, 7.65664237342);
         gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(poliTo,15)); // 0-20
-
         gmap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -281,10 +273,27 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
         startActivity(intent);
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
-        mapView.onStart(); }
+        mapView.onStart();
+        if(gmap!=null){
+            gmap.clear();
+            caricaMappa();
+        }
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapView.onResume();
+        if (gmap != null) {
+            gmap.clear();
+            caricaMappa();
+        }
+    }
+
     @Override
     protected void onStop() {
         super.onStop();

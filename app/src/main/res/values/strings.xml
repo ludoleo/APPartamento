@@ -85,6 +85,13 @@
         <item>Posto letto</item>
     </string-array>
 
+    <string-array name="tipoPrenotazione">
+        <item>In Sospeso</item>
+        <item>Confermate</item>
+        <item>Cancellate</item>
+        <item>Terminate</item>
+    </string-array>
+
     <string-array name="fasceOrarie">
         <item>8:00-10:00</item>
         <item>10:00-12:00</item>

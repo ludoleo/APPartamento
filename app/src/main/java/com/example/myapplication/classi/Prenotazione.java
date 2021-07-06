@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 public class Prenotazione {
 
 
+
     private String emailUtente1;
     private String nomeUtente1;
     private String emailUtente2;
@@ -25,6 +26,7 @@ public class Prenotazione {
     public Prenotazione(String emailUtente1, String nomeUtente1, String emailUtente2, String nomeUtente2,
                         String idAnnuncio, String dataPrenotazione, boolean terminata,
                         boolean cancellata, boolean pagata, String orario, boolean confermata) {
+
 
         this.emailUtente1 = emailUtente1;
         this.nomeUtente1 = nomeUtente1;
@@ -120,8 +122,9 @@ public class Prenotazione {
 
     public String getDataOra() {
         DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy");
-        String strDate = dateFormat.format(this.dataPrenotazione);
+        String strDate = dateFormat.format(Long.parseLong(this.dataPrenotazione));
         strDate = strDate + " - " + this.orario;
         return strDate;
     }
+
 }

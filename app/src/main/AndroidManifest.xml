@@ -17,7 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ricercalloggio.FiltriRicerca"></activity>
+        <activity android:name=".CambioPrenotazione"></activity>
+        <activity android:name=".prenotazione.LeMiePrenotazioni" />
+        <activity android:name=".ricercalloggio.FiltriRicerca" />
         <activity android:name=".registrazione.InserimentoServiziCasa" />
         <activity android:name=".registrazione.InserimentoHobbyStudente" />
         <activity android:name=".ricercalloggio.Preferiti" />
@@ -51,7 +53,6 @@
 
         <activity android:name=".profilo.Assistenza" />
         <activity android:name=".home.CaseProprietario" />
-        <activity android:name=".prenotazione.ElencoPrenotazioni" />
         <activity android:name=".home.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
