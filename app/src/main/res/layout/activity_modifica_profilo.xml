@@ -32,6 +32,12 @@
         android:text="@string/etichetta10" />
 
     <Button
+        android:id="@+id/bolletteID"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:text="BOLLETTE" />
+
+    <Button
         android:id="@+id/VediNV"
         android:layout_width="match_parent"
         android:layout_height="72dp"

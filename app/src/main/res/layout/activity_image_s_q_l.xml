@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".BollettaSQL.ImageSQL">
+
+    <EditText
+        android:id="@+id/nome_bolletta"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:text="Inserire nome bolletta" />
+
+    <ImageView
+        android:id="@+id/bolletta"
+        android:layout_width="match_parent"
+        android:layout_height="289dp"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
+    <Button
+        android:id="@+id/bottone_aggiungi_bolletta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aggiungi Nuova Bolletta" />
+
+    <Button
+        android:id="@+id/seleziona_bolletta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Seleziona da galleria " />
+
+</LinearLayout>
