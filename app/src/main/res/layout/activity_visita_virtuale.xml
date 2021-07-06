@@ -17,15 +17,20 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.343" />
+        app:layout_constraintVertical_bias="0.097" />
 
     <TextView
         android:id="@+id/GoogleMeet"
         android:layout_width="405dp"
         android:layout_height="81dp"
         android:text="It is now possible to create a new meet by going to this url: http://meet.google.com/new  "
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="274dp" />
+        tools:layout_editor_absoluteX="6dp"
+        tools:layout_editor_absoluteY="138dp" />
+
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/googleMeet"
@@ -34,9 +39,10 @@
         android:text="Google Meet"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.591" />
+        app:layout_constraintVertical_bias="0.93" />
 
     <Button
         android:id="@+id/whatsapp"
@@ -45,8 +51,9 @@
         android:text="Whatsapp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.897"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.72" />
+        app:layout_constraintVertical_bias="0.942" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

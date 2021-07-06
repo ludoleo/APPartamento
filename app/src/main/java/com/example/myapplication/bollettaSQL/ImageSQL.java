@@ -1,4 +1,4 @@
-package com.example.myapplication.BollettaSQL;
+package com.example.myapplication.bollettaSQL;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -71,7 +71,7 @@ public class ImageSQL extends AppCompatActivity {
                byte[] newBollettaImg = ImageviewToByte(bolletta);
                if(nomebolletta.length() != 0 ){
                    AddData(newbolletta,newBollettaImg);
-                   Intent intent = new Intent(ImageSQL.this, bolletta_main.class);
+                   Intent intent = new Intent(ImageSQL.this, Bolletta_main.class);
                    startActivity(intent);
                }
                else {

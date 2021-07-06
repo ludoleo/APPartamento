@@ -1,15 +1,10 @@
-package com.example.myapplication.BollettaSQL;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.myapplication.bollettaSQL;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Bundle;
-
-import com.google.android.material.tabs.TabLayout;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String Database_Name = "bolletta.db";

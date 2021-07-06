@@ -13,6 +13,7 @@ import com.example.myapplication.messaggi.ChatActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.prenotazione.ElencoPrenotazioni;
 import com.example.myapplication.prenotazione.PrenotazioneActivity;
+import com.example.myapplication.prenotazione.VisitaVirtuale;
 import com.example.myapplication.profilo.ProfiloProprietario;
 import com.example.myapplication.profilo.ProfiloStudente;
 import com.example.myapplication.ricercalloggio.MappaAnnunci;
@@ -121,7 +122,7 @@ public class Home extends AppCompatActivity {
     public void salvati(View view) {
 
         //TODO aggiungere activity per case salvate
-        Intent intent = new Intent(Home.this , Preferiti.class);
+        Intent intent = new Intent(Home.this , VisitaVirtuale.class);
         startActivity(intent);
     }
 

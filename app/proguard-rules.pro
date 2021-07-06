@@ -18,4 +18,9 @@
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
-#-renamesourcefileattribute SourceFile
+
+# Sendbird Calls SDK
+#-keep class com.sendbird.calls.** { *; }
+#-keep class org.webrtc.** { *; }
+#-dontwarn org.webrtc.**
+#-keepattributes InnerClasses

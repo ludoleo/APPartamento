@@ -120,7 +120,8 @@ public class Prenotazione {
 
     public String getDataOra() {
         DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy");
-        String strDate = dateFormat.format(this.dataPrenotazione);
+        Long data = Long.parseLong(this.dataPrenotazione);
+        String strDate = dateFormat.format(data);
         strDate = strDate + " - " + this.orario;
         return strDate;
     }
