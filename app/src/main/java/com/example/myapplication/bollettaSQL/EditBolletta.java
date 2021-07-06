@@ -1,4 +1,4 @@
-package com.example.myapplication.BollettaSQL;
+package com.example.myapplication.bollettaSQL;
 
 import androidx.appcompat.app.AppCompatActivity;
 

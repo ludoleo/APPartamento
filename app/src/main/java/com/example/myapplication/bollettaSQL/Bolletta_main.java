@@ -1,4 +1,4 @@
-package com.example.myapplication.BollettaSQL;
+package com.example.myapplication.bollettaSQL;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -23,7 +22,7 @@ import com.example.myapplication.R;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-public class bolletta_main extends Activity {
+public class Bolletta_main extends Activity {
     DatabaseHelper databaseHelper;
     public ListView listView;
     ArrayList<Bolletta> listData = new ArrayList<>();
@@ -115,7 +114,7 @@ public class bolletta_main extends Activity {
                         itemId = data.getInt(0);
                         BollettaName = data.getString(1);
                         BollettaImg = data.getBlob(2);
-                        Intent Editintent = new Intent(bolletta_main.this,EditBolletta.class);
+                        Intent Editintent = new Intent(Bolletta_main.this,EditBolletta.class);
                         Editintent.putExtra("id",itemId);
                         Editintent.putExtra("name",bolletta.getName());
                         ByteArrayOutputStream bs = new ByteArrayOutputStream();
@@ -124,10 +123,10 @@ public class bolletta_main extends Activity {
                         startActivity(Editintent);
                     }
                     if (itemId > -1){
-                        Toast.makeText(bolletta_main.this,"On Item Click: the id is: "+ itemId+" "+BollettaName+" "+ BollettaImg,Toast.LENGTH_LONG).show();
+                        Toast.makeText(Bolletta_main.this,"On Item Click: the id is: "+ itemId+" "+BollettaName+" "+ BollettaImg,Toast.LENGTH_LONG).show();
                     }
                     else {
-                        Toast.makeText(bolletta_main.this,"No Data",Toast.LENGTH_LONG).show();
+                        Toast.makeText(Bolletta_main.this,"No Data",Toast.LENGTH_LONG).show();
                     }
 
                 }

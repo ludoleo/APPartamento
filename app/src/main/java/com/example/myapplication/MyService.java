@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.sendbird.calls.SendBirdCall;
 
 import static com.example.myapplication.messaggi.App.CHANNEL_ID;
 
@@ -41,7 +42,18 @@ public class MyService extends FirebaseMessagingService {
         if(firebaseUser != null ) {
             updateToken(refreshToken);
         }
-    }
+
+            SendBirdCall.registerPushToken(s, false, e -> {
+                if (e == null) {
+                    // Succeeded to register push token.
+                } else {
+                    // Failed to register push token.
+                }
+            });
+        }
+
+
+
 
     private void updateToken(String refreshToken) {
 
@@ -77,9 +89,15 @@ public class MyService extends FirebaseMessagingService {
 
             creaNotifica();
         }
+
+        if (SendBirdCall.handleFirebaseMessageData(remoteMessage.getData())) {
+
+        } else {
+            // Handle non-SendBirdCall Firebase messages.
+        }
+    }
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
-    }
 
     private void inviaNotifica(RemoteMessage remoteMessage) {
 

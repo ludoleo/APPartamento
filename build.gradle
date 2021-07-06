@@ -16,9 +16,11 @@ buildscript {
 
 allprojects {
     repositories {
+
         google()
         jcenter()
-        mavenCentral()
+        maven { url "https://repo.sendbird.com/public/maven" }
+
     }
 }
 
