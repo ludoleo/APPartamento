@@ -27,7 +27,7 @@ import java.io.InputStream;
 
 public class ImageSQL extends AppCompatActivity {
     EditText nomebolletta;
-    Button scegli,carica;
+    Button scegli,carica,bollette_presenti;
     ImageView bolletta;
     DatabaseHelper databaseHelper;
     final int REQUEST_CODE_GALLERY= 999;
@@ -42,6 +42,7 @@ public class ImageSQL extends AppCompatActivity {
        carica=(Button)findViewById(R.id.bottone_aggiungi_bolletta);
        bolletta=(ImageView)findViewById(R.id.bolletta);
        databaseHelper = new DatabaseHelper(this );
+       // Scegli da Galleria
        scegli.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -62,8 +63,7 @@ public class ImageSQL extends AppCompatActivity {
                }
            }
        });
-
-
+       // Carica sul db
        carica.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -79,6 +79,15 @@ public class ImageSQL extends AppCompatActivity {
                }
            }
            });
+       // Andare alla lista
+       bollette_presenti = (Button)findViewById(R.id.bollette_presenti);
+       bollette_presenti.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent a = new Intent(ImageSQL.this,Bolletta_main.class);
+               startActivity(a);
+           }
+       });
     }
     private void CambiaImmagine() {
         Intent intent = new Intent();
@@ -143,6 +152,7 @@ public class ImageSQL extends AppCompatActivity {
         }
 
     }
+
 
 
 

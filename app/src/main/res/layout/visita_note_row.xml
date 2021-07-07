@@ -4,13 +4,6 @@
     android:layout_height="wrap_content" android:orientation="vertical"
     android:id="@+id/ZonaSQL" android:layout_width="fill_parent">
 
-    <ImageView
-        android:id="@+id/note"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/holo_red_light"
-        android:src="@android:drawable/ic_menu_edit" />
-
     <TextView android:id="@+id/NomemainSQL" android:text="Nome" android:layout_height="fill_parent" android:layout_width="fill_parent"></TextView>
 
     <TextView

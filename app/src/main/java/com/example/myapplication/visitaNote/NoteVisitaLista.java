@@ -29,7 +29,7 @@ NoteVisitaLista extends ListActivity {
     private final static int UPDATE_MENU_OPTION = 2;
     // Riferimento ai metadati tabella SQL
     private String[] FROMS = new String[] { Note.NoteMetaData.NOME,
-            Note.NoteMetaData.VALUTAZIONE, Note.NoteMetaData.PREZZOCONCORDATO, Note.NoteMetaData.ZONA, Note.NoteMetaData.LINK };
+            Note.NoteMetaData.VALUTAZIONE, Note.NoteMetaData.DESCRIZIONE, Note.NoteMetaData.ZONA, Note.NoteMetaData.LINK };
     // riferimento ai dati del layout
     private int[] TOS = new int[] { R.id.NomemainSQL, R.id.ValutazionemainSQL,
             R.id.PrezzomainSQL, R.id.ZonasmainSQL};
@@ -54,7 +54,7 @@ NoteVisitaLista extends ListActivity {
     private void initUI() {
 
         //Preparo la Query
-        String sql = "SELECT _id, nome, valutazione, prezzo, zona, link FROM Note";
+        String sql = "SELECT _id, nome, valutazione, descrizione, zona, link FROM Note";
 
         cursor = db.rawQuery(sql, null);
 
@@ -127,10 +127,10 @@ NoteVisitaLista extends ListActivity {
                     nota.id = Noteid;
                     nota.nome = tmpCursor.getString(tmpCursor
                             .getColumnIndex(Note.NoteMetaData.NOME));
-                    nota.valutazione = tmpCursor.getInt(tmpCursor
+                    nota.valutazione = tmpCursor.getString(tmpCursor
                             .getColumnIndex(Note.NoteMetaData.VALUTAZIONE));
-                    nota.prezzo = tmpCursor.getInt(tmpCursor
-                            .getColumnIndex(Note.NoteMetaData.PREZZOCONCORDATO));
+                    nota.descrizione = tmpCursor.getString(tmpCursor
+                            .getColumnIndex(Note.NoteMetaData.DESCRIZIONE));
                     nota.zona = tmpCursor.getString(tmpCursor
                             .getColumnIndex(Note.NoteMetaData.ZONA));
                     nota.link=tmpCursor.getString(tmpCursor
@@ -155,15 +155,15 @@ NoteVisitaLista extends ListActivity {
                 String sql="";
                 switch (requestCode) {
                     case CREATE_ACTIVITY_RESULT:
-                        sql += "INSERT INTO Note (nome, valutazione, prezzo, zona, link) ";
-                        sql += "VALUES ('"+note.nome+"', '"+note.valutazione+"','"+note.prezzo+"','"+note.zona+"','"+note.link+"')";
+                        sql += "INSERT INTO Note (nome, valutazione, descrizione, zona, link) ";
+                        sql += "VALUES ('"+note.nome+"', '"+note.valutazione+"','"+note.descrizione+"','"+note.zona+"','"+note.link+"')";
                         db.execSQL(sql);
                         break;
                     case UPDATE_ACTIVITY_RESULT:
                         sql += "UPDATE Note ";
                         sql += "SET nome     = '"+note.nome+"', ";
                         sql += "    valutazione     = '"+note.valutazione+"', ";
-                        sql += "    prezzo  = '"+note.prezzo+"', ";
+                        sql += "    descrizione  = '"+note.descrizione+"', ";
                         sql += "    zona = '"+note.zona+"' ";
                         sql += "    link = '"+note.link+"' ";
                         sql += "WHERE _id = '"+note.id+"'";
@@ -179,7 +179,7 @@ NoteVisitaLista extends ListActivity {
     }
 
     private void updateListView() {
-        String sql = "SELECT _id, nome, valutazione, prezzo, zona, link  FROM Note";
+        String sql = "SELECT _id, nome, valutazione, descrizione, zona, link  FROM Note";
         cursor = db.rawQuery(sql, null);
         adapter.changeCursor(cursor);
         adapter.notifyDataSetChanged();
@@ -196,8 +196,8 @@ NoteVisitaLista extends ListActivity {
             sql += "CREATE TABLE \"Note\" (";
             sql += "	    \"_id\" INTEGER PRIMARY KEY AUTOINCREMENT,";
             sql += "	    \"nome\" TEXT NOT NULL,";
-            sql += "	    \"valutazione\" INTEGER NOT NULL,";
-            sql += "	    \"prezzo\" INTEGER NOT NULL,";
+            sql += "	    \"valutazione\" TEXT NOT NULL,";
+            sql += "	    \"descrizione\" TEXT NOT NULL,";
             sql += "	    \"zona\" TEXT";
             sql += "	    \"link\" TEXT";
             sql += ")";
