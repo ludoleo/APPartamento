@@ -55,6 +55,7 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
     String nomeUtente2="";
     String emailUtente2="";
     String fasciaOraria="";
+    String id_prenotazione="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,12 +114,14 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
                 }
                 if(!uguale){
                     //Aggiungiamo la prenotazione
-                    Prenotazione prenotazione = new Prenotazione(emailUtente1,nomeUtente1, emailUtente2,nomeUtente2,
+                    Prenotazione prenotazione = new Prenotazione("",emailUtente1,nomeUtente1, emailUtente2,nomeUtente2,
                             idAnnuncio, dataLong, false,false,false,fasciaOraria,false);
 
                     //todo notifica al proprietario e creazione delle chat, bisogna prendere il token del proprietario
                     DatabaseReference preAdd = myRef.child("Prenotazioni").push();
                     preAdd.setValue(prenotazione);
+                    String key = preAdd.getKey();
+                    myRef.child("Prenotazioni").child(key).child("id").setValue(key);
                     inviaNotifica();
                     Intent intent = new Intent(PrenotazioneCalendarioActivity.this, Home.class);
                     startActivity(intent);

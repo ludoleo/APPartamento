@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 public class Prenotazione {
 
 
-
+    private String id;
     private String emailUtente1;
     private String nomeUtente1;
     private String emailUtente2;
@@ -23,11 +23,11 @@ public class Prenotazione {
 
     public Prenotazione(){}
 
-    public Prenotazione(String emailUtente1, String nomeUtente1, String emailUtente2, String nomeUtente2,
+    public Prenotazione(String id,String emailUtente1, String nomeUtente1, String emailUtente2, String nomeUtente2,
                         String idAnnuncio, String dataPrenotazione, boolean terminata,
                         boolean cancellata, boolean pagata, String orario, boolean confermata) {
 
-
+        this.id = id;
         this.emailUtente1 = emailUtente1;
         this.nomeUtente1 = nomeUtente1;
         this.emailUtente2 = emailUtente2;
@@ -40,6 +40,10 @@ public class Prenotazione {
         this.orario = orario;
         this.confermata = confermata;
     }
+
+    public String getId() { return id; }
+
+    public void setId(String id) {this.id = id;}
 
     public String getNomeUtente1() {
         return nomeUtente1;
