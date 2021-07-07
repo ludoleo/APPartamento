@@ -49,7 +49,6 @@ public class LeMiePrenotazioni extends AppCompatActivity {
     List<Prenotazione> listaPrenotazioni;
     List<Prenotazione> inSospeso;
     List<Prenotazione> confermate;
-    List<Prenotazione> cancellate;
     List<Prenotazione> terminate;
 
 
@@ -78,7 +77,6 @@ public class LeMiePrenotazioni extends AppCompatActivity {
         listaPrenotazioni = new LinkedList<>();
         inSospeso = new LinkedList<>();
         confermate = new LinkedList<>();
-        cancellate = new LinkedList<>();
 
         myRef.child("Prenotazioni").addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,9 +90,7 @@ public class LeMiePrenotazioni extends AppCompatActivity {
                 }
 
                 for (Prenotazione p : listaPrenotazioni) {
-                    if(p.isCancellata())
-                        cancellate.add(p);
-                    else if(p.isConfermata())
+                    if(p.isConfermata())
                         confermate.add(p);
                     else if(p.isTerminata())
                         terminate.add(p);
@@ -118,8 +114,6 @@ public class LeMiePrenotazioni extends AppCompatActivity {
                     caricaListView(inSospeso);
                 }else if(selectedItem.compareTo("Confermate")==0){
                     caricaListView(confermate);
-                }else if(selectedItem.compareTo("Cancellate")==0){
-                    caricaListView(cancellate);
                 }else if(selectedItem.compareTo("Terminate")==0){
                     caricaListView(terminate);
                 }
@@ -159,7 +153,8 @@ public class LeMiePrenotazioni extends AppCompatActivity {
                         (TextView)rowView.findViewById(R.id.tv_emailPrenotazione);
                 TextView daPagare =
                         (TextView)rowView.findViewById(R.id.tv_daPagare);
-
+                TextView id =
+                        (TextView)rowView.findViewById(R.id.tv_id_prenotazione);
 
                 tipoPrenotazione.setText(item.tipoPrenotazione);
                 dataPrenotazione.setText(item.dataPrenotazione);
@@ -167,7 +162,8 @@ public class LeMiePrenotazioni extends AppCompatActivity {
                 nomePrenotazione.setText(item.nomeUtente);
                 emailPrenotazione.setText(item.emailUtente);
                 daPagare.setText(item.isPagata);
-
+                id.setText(item.id);
+                id.setVisibility(View.GONE);
                 return rowView;
             }
         };
@@ -183,7 +179,7 @@ public class LeMiePrenotazioni extends AppCompatActivity {
                 intent.putExtra("tipo", prenotazione.tipoPrenotazione);
                 intent.putExtra("email", prenotazione.emailUtente);
                 intent.putExtra("annuncio", prenotazione.nomeAnnuncio);
-
+                startActivity(intent);
             }
         });
     }
@@ -196,6 +192,7 @@ public class LeMiePrenotazioni extends AppCompatActivity {
         public String emailUtente;
         public String dataPrenotazione;
         public String isPagata;
+        public String id;
     }
     private LeMiePrenotazioni.CustomItem[] createItems(List<Prenotazione> listaPrenotazioni) {
 
@@ -212,9 +209,8 @@ public class LeMiePrenotazioni extends AppCompatActivity {
             else
                 items[i].isPagata = "TICKET DA PAGARE";
             // tipo prenotazione
-            if(a.isCancellata())
-                items[i].tipoPrenotazione = "CANCELLATA";
-            else if(a.isConfermata())
+
+            if(a.isConfermata())
                 items[i].tipoPrenotazione = "CONFERMATA";
             else if(a.isTerminata())
                 items[i].tipoPrenotazione = "TERMINATA";
@@ -236,6 +232,9 @@ public class LeMiePrenotazioni extends AppCompatActivity {
             }
             // annuncio
             items[i].nomeAnnuncio = a.getIdAnnuncio();
+            //id
+            items[i].id = a.getId();
+
         }
         return items;
     }
@@ -246,6 +245,7 @@ public class LeMiePrenotazioni extends AppCompatActivity {
         public TextView emailUtente;
         public TextView dataPrenotazione;
         public TextView daPagare;
+        public TextView id;
     }
 
 }
