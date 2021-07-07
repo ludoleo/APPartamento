@@ -71,7 +71,7 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
 
         Log.i(TAG,"STorage "+storageReference);
-        // devo ricevere ID ANNUNCIO
+        // DEVO ricevere ID ANNUNCIO
 
         StorageReference profileRefe = storageReference.child("Annuncio/"+user.getUid()+"/foto.jpg");
         Log.i(TAG,"profile ref "+profileRefe);
