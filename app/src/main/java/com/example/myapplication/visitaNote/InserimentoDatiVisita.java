@@ -22,7 +22,7 @@ public class InserimentoDatiVisita extends AppCompatActivity {
     private EditText valutazione;
     private EditText zona;
     private EditText link;
-    private EditText prezzo;
+    private EditText descrizione;
 
 
     private Note note;
@@ -35,7 +35,7 @@ public class InserimentoDatiVisita extends AppCompatActivity {
         valutazione = (EditText) findViewById(R.id.VSQL);
         zona = (EditText) findViewById(R.id.ZONASQL);
         link = (EditText) findViewById(R.id.LINKSQL);
-        prezzo =(EditText) findViewById(R.id.PSQL);
+        descrizione =(EditText) findViewById(R.id.PSQL);
 
         Bundle NoteBundle = getIntent().getBundleExtra("note");
 
@@ -44,7 +44,7 @@ public class InserimentoDatiVisita extends AppCompatActivity {
             nome.setText(note.nome);
             valutazione.setText(note.valutazione);
             zona.setText(note.zona);
-            prezzo.setText(note.prezzo);
+            descrizione.setText(note.descrizione);
             link.setText(note.link);
         } else {
             note = new Note();
@@ -68,8 +68,8 @@ public class InserimentoDatiVisita extends AppCompatActivity {
             Bundle NoteBundle = new Bundle();
             note.nome = nome.getText().toString();
             // non so se va bene con gli interi
-            note.valutazione= valutazione.getText().length();
-            note.prezzo= prezzo.getText().length();
+            note.valutazione= valutazione.getText().toString();
+            note.descrizione= descrizione.getText().toString();
             note.zona = zona.getText().toString();
             note.link = link.getText().toString();
 
@@ -93,7 +93,7 @@ public class InserimentoDatiVisita extends AppCompatActivity {
         outState.putString("chiaveN",nome.getText().toString());
         outState.putString("chiave1N",valutazione.getText().toString());
         outState.putString("chiave2N",zona.getText().toString());
-        outState.putString("chiave3N",prezzo.getText().toString());
+        outState.putString("chiave3N",descrizione.getText().toString());
         outState.putString("chiave4N",link.getText().toString());
 
     }
@@ -106,7 +106,7 @@ public class InserimentoDatiVisita extends AppCompatActivity {
         nome.setText(savedInstanceState.getString("chiaveN"));
         valutazione.setText(savedInstanceState.getString("chiave1N"));
         zona.setText(savedInstanceState.getString("chiave2N"));
-        prezzo.setText(savedInstanceState.getString("chiave3N"));
+        descrizione.setText(savedInstanceState.getString("chiave3N"));
         link.setText(savedInstanceState.getString("chiave4N"));
 
     }

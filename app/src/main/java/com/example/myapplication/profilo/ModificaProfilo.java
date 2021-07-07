@@ -17,7 +17,6 @@ public class ModificaProfilo extends AppCompatActivity {
     Button note;
     Button recensioni;
     Button assistenza;
-    Button annuncio;
     Button bolletta;
 
 
@@ -67,14 +66,6 @@ public class ModificaProfilo extends AppCompatActivity {
                 Intent intent = new Intent(ModificaProfilo.this, ImageSQL.class);
             }
         });
-        //annuncio = findViewById(R.id.annuncio);
-        //annuncio.setOnClickListener(new View.OnClickListener() {
-           // @Override
-           // public void onClick(View v) {
-               // Intent f = new Intent(ModificaProfilo.this,Annuncio.class);
-              //  startActivity(f);
-           // }
-       // });
 
     }
 
