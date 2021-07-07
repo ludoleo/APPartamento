@@ -8,11 +8,11 @@ public class Note implements Parcelable {
         public static String ID = "_id";
         public static String NOME = "nome";
         public static String VALUTAZIONE = "valutazione";
-        public static String PREZZOCONCORDATO= "prezzo";
+        public static String DESCRIZIONE= "descrizione";
         public static String ZONA = "zona";
         public static String LINK = "link";
         public static String TABLE_NAME = "Note";
-        public static String[] COLUMNS = new String[] { ID, NOME, VALUTAZIONE, PREZZOCONCORDATO, ZONA,LINK };
+        public static String[] COLUMNS = new String[] { ID, NOME, VALUTAZIONE, DESCRIZIONE, ZONA,LINK };
     }
 
     public static final Parcelable.Creator<Note> CREATOR = new Parcelable.Creator<Note>() {
@@ -30,8 +30,8 @@ public class Note implements Parcelable {
 
     public long id;
     public String nome;
-    public Integer valutazione;
-    public Integer prezzo;
+    public String valutazione;
+    public String descrizione;
     public String zona;
     public String link;
 
@@ -41,8 +41,8 @@ public class Note implements Parcelable {
     private Note(Parcel in) {
         id = in.readLong();
         nome = in.readString();
-        valutazione = in.readInt();
-        prezzo = in.readInt();
+        valutazione = in.readString();
+        descrizione = in.readString();
         zona = in.readString();
         link=in.readString();
     }
@@ -56,8 +56,8 @@ public class Note implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
         dest.writeString(nome);
-        dest.writeInt(valutazione);
-        dest.writeInt(prezzo);
+        dest.writeString(valutazione);
+        dest.writeString(descrizione);
         dest.writeString(zona);
         dest.writeString(link);
 

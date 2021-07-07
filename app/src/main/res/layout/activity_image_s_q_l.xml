@@ -26,12 +26,18 @@
         android:id="@+id/bottone_aggiungi_bolletta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Aggiungi Nuova Bolletta" />
+        android:text="Aggiungi Nuova Bolletta alla lista" />
 
     <Button
         android:id="@+id/seleziona_bolletta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Seleziona da galleria " />
+
+    <Button
+        android:id="@+id/bollette_presenti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Visualizza Bollette Presenti" />
 
 </LinearLayout>
