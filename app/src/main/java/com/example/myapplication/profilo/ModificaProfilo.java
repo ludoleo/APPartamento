@@ -64,6 +64,7 @@ public class ModificaProfilo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ModificaProfilo.this, ImageSQL.class);
+                startActivity(intent);
             }
         });
 
