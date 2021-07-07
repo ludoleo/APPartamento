@@ -17,7 +17,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Prenotazione;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.profilo.ProfiloAnnuncio;
@@ -34,18 +33,18 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Date;
 
-public class PrenotazioneActivity extends AppCompatActivity {
+public class PrenotazioneCalendarioActivity extends AppCompatActivity {
 
     CalendarView calendarView;
     Date dataSelzionata;
     Spinner spinnerFasciaOraria;
 
     //Database
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
+     FirebaseDatabase database;
+     DatabaseReference myRef;
     //Autenticazione
-    public FirebaseUser user;
-    public FirebaseAuth mAuth;
+     FirebaseUser user;
+     FirebaseAuth mAuth;
 
     private static final String TAG = "Prenotazione";
     private int idNotifica;
@@ -121,10 +120,10 @@ public class PrenotazioneActivity extends AppCompatActivity {
                     DatabaseReference preAdd = myRef.child("Prenotazioni").push();
                     preAdd.setValue(prenotazione);
                     inviaNotifica();
-                    Intent intent = new Intent(PrenotazioneActivity.this, Home.class);
+                    Intent intent = new Intent(PrenotazioneCalendarioActivity.this, Home.class);
                     startActivity(intent);
                 }else{
-                    Toast.makeText(PrenotazioneActivity.this, "Sei già prenotato per questo annuncio", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PrenotazioneCalendarioActivity.this, "Sei già prenotato per questo annuncio", Toast.LENGTH_LONG).show();
                 }
             }
             @Override
@@ -134,7 +133,7 @@ public class PrenotazioneActivity extends AppCompatActivity {
     }
 
     public void annulla(View view) {
-        Intent intent = new Intent(this, ProfiloAnnuncio.class);
+        Intent intent = new Intent(this, Home.class);
         startActivity(intent);
     }
 
@@ -180,10 +179,7 @@ public class PrenotazioneActivity extends AppCompatActivity {
                         // Get new FCM registration token
                         String token = task.getResult();
 
-                        // Log and toast
-                        //String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d(TAG, "msg");
-                        Toast.makeText(PrenotazioneActivity.this, "msg", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(PrenotazioneCalendarioActivity.this, "msg", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

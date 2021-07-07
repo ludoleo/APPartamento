@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.myapplication.ProfiloPrenotazione;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Prenotazione;
@@ -133,7 +134,7 @@ public class LeMiePrenotazioni extends AppCompatActivity {
 
     private void caricaListView(List<Prenotazione> listaPrenotazioni) {
 
-        
+
         LeMiePrenotazioni.CustomItem[] items = createItems(listaPrenotazioni);
         ArrayAdapter<LeMiePrenotazioni.CustomItem> arrayAdapter = new ArrayAdapter<LeMiePrenotazioni.CustomItem>(
                 this, R.layout.row_lv_prenotazioni, R.id.tv_tipoPrenotazione, items) {
@@ -177,21 +178,11 @@ public class LeMiePrenotazioni extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 //TODO prendo l'id della casa che ho cliccato vado ad aggiungi annuncio, pushando con l'intent l'id
                 LeMiePrenotazioni.CustomItem prenotazione = (LeMiePrenotazioni.CustomItem) adapterView.getItemAtPosition(pos);
-                String tipo = prenotazione.tipoPrenotazione;
-
-                if(tipo.equals("DA CONFERMARE")){
-                    //INTENT PER CONFERMARE LA PRENOTAZIONE
-
-                }else if(tipo.equals("TERMINATA")){
-                    //INTENT PER AVVIARE LA VISITA VIRTUALE
-
-                }else if(tipo.equals("CONFERMATA")){
-                    //INTENT PER ANNULLARE LA PRENOTAZIONE
-
-                }
-                if(prenotazione.isPagata.equals("TICKET DA PAGARE")){
-                    //INTENT PER PAGARE IL TICKET
-                }
+                Intent intent = new Intent(LeMiePrenotazioni.this, ProfiloPrenotazione.class);
+                //UNA PRENOTAZIONE E' IDENTIFICATA DALL'EMAIL DEGLI UTENTI, DALL'ANNUNCIO E DAL FATTO CHE NON SIA CANCELLATA
+                intent.putExtra("tipo", prenotazione.tipoPrenotazione);
+                intent.putExtra("email", prenotazione.emailUtente);
+                intent.putExtra("annuncio", prenotazione.nomeAnnuncio);
 
             }
         });

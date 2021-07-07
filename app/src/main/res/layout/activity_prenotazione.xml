@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
-    tools:context=".prenotazione.PrenotazioneActivity">
+    tools:context=".prenotazione.PrenotazioneCalendarioActivity">
 
 
     <CalendarView

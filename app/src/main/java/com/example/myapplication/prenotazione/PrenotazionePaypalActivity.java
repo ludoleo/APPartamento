@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.myapplication.R;
-import com.example.myapplication.prenotazione.PrenotazioneActivity;
 
 public class PrenotazionePaypalActivity extends AppCompatActivity {
 
@@ -17,7 +16,7 @@ public class PrenotazionePaypalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_prenotazione_paypal);
     }
     public void back(View view) {
-        Intent intent = new Intent(this, PrenotazioneActivity.class);
+        Intent intent = new Intent(this, PrenotazioneCalendarioActivity.class);
         startActivity(intent);
     }
     

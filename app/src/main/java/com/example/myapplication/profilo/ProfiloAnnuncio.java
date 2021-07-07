@@ -16,7 +16,7 @@ import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.classi.Studente;
-import com.example.myapplication.prenotazione.PrenotazioneActivity;
+import com.example.myapplication.prenotazione.PrenotazioneCalendarioActivity;
 import com.example.myapplication.R;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -197,7 +197,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     public void prenota(View view) {
 
         String email;
-        Intent intent = new Intent(this, PrenotazioneActivity.class);
+        Intent intent = new Intent(this, PrenotazioneCalendarioActivity.class);
 
         if(user.equals(null)){
             Toast.makeText(this, "Effettua il login per prenotare una visita", Toast.LENGTH_SHORT).show();
