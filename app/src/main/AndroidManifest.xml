@@ -106,8 +106,11 @@
         <activity android:name=".prenotazione.VisitaVirtuale" />
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".visitaNote.InserimentoDatiVisita" />
+        <activity android:name=".bollettaSQL.ImageSQL" />
+        <activity android:name=".bollettaSQL.Bolletta_main" />
         <activity android:name=".visitaNote.NoteVisitaLista" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".ImmaginiAnnuncio" />
     </application>
 
 </manifest>

@@ -36,6 +36,7 @@ import java.util.ArrayList;
 
 
 public class ImmaginiAnnuncio extends AppCompatActivity {
+
     private static final String TAG = "Immagine Annuncio";
     private ImageSwitcher ImageIs;
     private Button previsious,next, pickimage ;
@@ -55,6 +56,7 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_immagini_annuncio);
         ImageIs = findViewById(R.id.imageis);
@@ -70,16 +72,17 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
         //STORAGE
         storageReference = FirebaseStorage.getInstance().getReference();
 
+        idAnnuncio = getIntent().getExtras().getString("idAnnuncio");
         Log.i(TAG,"STorage "+storageReference);
         // DEVO ricevere ID ANNUNCIO
 
-        StorageReference profileRefe = storageReference.child("Annuncio/"+user.getUid()+"/foto.jpg");
+        StorageReference profileRefe = storageReference.child("Annuncio/"+idAnnuncio+"/foto.jpg");
         Log.i(TAG,"profile ref "+profileRefe);
         profileRefe.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Log.i(TAG,"URI "+uri);
-                Picasso.get().load(uri).into((Target) ImageIs);
+                //Picasso.get().load(uri).into( ImageIs);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -185,10 +188,11 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
                 if(data.getClipData() != null){
 
                     int count = data.getClipData().getItemCount() ;
+                    //TODO non entra nell'if
                     for (int i = 0;i < count;i ++ ){
                         Uri imageUri = data.getClipData().getItemAt(i).getUri();
                         imageUris.add(imageUri);
-                        UploadImage(imageUri);
+                        UploadImage(imageUri, i);
                     }
 
                 }
@@ -202,7 +206,7 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
                 imageUris.add(imageUri);
                 ImageIs.setImageURI(imageUris.get(0));
                 position = 0;
-                UploadImage(imageUri);
+                //UploadImage(imageUri);
 
 
             }
@@ -212,8 +216,9 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
 
     }
 
-    private void UploadImage(Uri imageUri) {
-        final StorageReference fileRef = storageReference.child("Annuncio/"+mAuth.getCurrentUser().getUid()+"/foto.jpg");
+    private void UploadImage(Uri imageUri, int numero) {
+        Log.i(TAG, "passo qui 2");
+        final StorageReference fileRef = storageReference.child("Annuncio/"+idAnnuncio+"/foto"+numero+".jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

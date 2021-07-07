@@ -15,11 +15,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.SimpleCursorAdapter;
+import com.example.myapplication.visitaNote.Note.NoteMetaData;
 
 import com.example.myapplication.R;
 
-public class
-NoteVisitaLista extends ListActivity {
+public class NoteVisitaLista extends ListActivity {
     private final static String TAG_LOG = "NoteSQLite";
     private final static int DB_VERSION = 1;
 
@@ -28,8 +28,8 @@ NoteVisitaLista extends ListActivity {
     private final static int DELETE_MENU_OPTION = 1;
     private final static int UPDATE_MENU_OPTION = 2;
     // Riferimento ai metadati tabella SQL
-    private String[] FROMS = new String[] { Note.NoteMetaData.NOME,
-            Note.NoteMetaData.VALUTAZIONE, Note.NoteMetaData.DESCRIZIONE, Note.NoteMetaData.ZONA, Note.NoteMetaData.LINK };
+    private String[] FROMS = new String[] { NoteMetaData.NOME,
+            NoteMetaData.VALUTAZIONE, NoteMetaData.DESCRIZIONE, NoteMetaData.ZONA, NoteMetaData.LINK };
     // riferimento ai dati del layout
     private int[] TOS = new int[] { R.id.NomemainSQL, R.id.ValutazionemainSQL,
             R.id.PrezzomainSQL, R.id.ZonasmainSQL};
@@ -46,32 +46,24 @@ NoteVisitaLista extends ListActivity {
 
         db = dbHelper.getWritableDatabase();
 
-        initUI();
-
-
-    }
-
-    private void initUI() {
-
         //Preparo la Query
         String sql = "SELECT _id, nome, valutazione, descrizione, zona, link FROM Note";
 
         cursor = db.rawQuery(sql, null);
-
         adapter = new SimpleCursorAdapter(this, R.layout.visita_note_row, cursor, FROMS, TOS, SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
         getListView().setAdapter(adapter);
         registerForContextMenu(getListView());
     }
 
-    /*
+
     @Override
     protected void onStart() {
         super.onStart();
         updateListView();
     }
 
-     */
+
 
     @Override
     protected void onStop() {
@@ -117,8 +109,8 @@ NoteVisitaLista extends ListActivity {
                 updateListView();
                 return true;
             case UPDATE_MENU_OPTION:
-                Cursor tmpCursor = db.query(Note.NoteMetaData.TABLE_NAME,
-                        Note.NoteMetaData.COLUMNS, "_id=" + Noteid, null, null, null,
+                Cursor tmpCursor = db.query(NoteMetaData.TABLE_NAME,
+                        NoteMetaData.COLUMNS, "_id=" + Noteid, null, null, null,
                         null);
                 if (tmpCursor.moveToNext()) {
                     Intent updateIntent = new Intent(this, InserimentoDatiVisita.class);
@@ -126,15 +118,15 @@ NoteVisitaLista extends ListActivity {
                     Note nota = new Note();
                     nota.id = Noteid;
                     nota.nome = tmpCursor.getString(tmpCursor
-                            .getColumnIndex(Note.NoteMetaData.NOME));
+                            .getColumnIndex(NoteMetaData.NOME));
                     nota.valutazione = tmpCursor.getString(tmpCursor
-                            .getColumnIndex(Note.NoteMetaData.VALUTAZIONE));
+                            .getColumnIndex(NoteMetaData.VALUTAZIONE));
                     nota.descrizione = tmpCursor.getString(tmpCursor
-                            .getColumnIndex(Note.NoteMetaData.DESCRIZIONE));
+                            .getColumnIndex(NoteMetaData.DESCRIZIONE));
                     nota.zona = tmpCursor.getString(tmpCursor
-                            .getColumnIndex(Note.NoteMetaData.ZONA));
+                            .getColumnIndex(NoteMetaData.ZONA));
                     nota.link=tmpCursor.getString(tmpCursor
-                            .getColumnIndex(Note.NoteMetaData.LINK));
+                            .getColumnIndex(NoteMetaData.LINK));
                     NoteBundle.putParcelable("note", nota);
                     updateIntent.putExtra("note", NoteBundle);
                     startActivityForResult(updateIntent, UPDATE_ACTIVITY_RESULT);

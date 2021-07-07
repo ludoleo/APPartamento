@@ -9,12 +9,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String Database_Name = "name.db";
     public static final String Table_Name= "bolletta";
+    long result;
     public DatabaseHelper(Context context){ super(context,Database_Name,null,1);}
 
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE "+Table_Name+"(ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME_TEXT, newimage blob)");
+        result = 0;
 
     }
 
@@ -28,7 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put("nome",nome);
         contentValues.put("newimage",img);
-        long result = db.insert(Table_Name,null,contentValues);
+         result = db.insert(Table_Name,null,contentValues);
         if(result == -1)
         {
             return false;

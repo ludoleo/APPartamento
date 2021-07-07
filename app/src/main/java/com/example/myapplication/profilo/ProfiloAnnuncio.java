@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.ImmaginiAnnuncio;
 import com.example.myapplication.ricercalloggio.Preferiti;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
@@ -245,5 +247,13 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     }
 
 
+    public void inserisciFoto(View view) {
+
+        Log.i(TAG,"Passo da qui");
+        Intent intent = new Intent(ProfiloAnnuncio.this, ImmaginiAnnuncio.class);
+        intent.putExtra("idAnnuncio", annuncio.getIdAnnuncio() );
+        startActivity(intent);
+
+    }
 }
 

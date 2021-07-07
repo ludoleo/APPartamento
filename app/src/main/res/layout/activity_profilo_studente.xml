@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
+    android:scrollbars="vertical"
+    android:verticalScrollbarPosition="right"
     tools:context=".profilo.ProfiloStudente">
 
 
@@ -20,13 +22,13 @@
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="159dp">
+        android:layout_height="wrap_content">
 
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -35,119 +37,137 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginLeft="130dp"
+            android:layout_marginStart="130dp"
             android:scaleType="centerCrop"
             android:src="@drawable/com_facebook_profile_picture_blank_portrait"
-            app:civ_border_color="@color/design_default_color_primary"
+            app:civ_border_color="@color/rosso_scuro"
             app:civ_border_width="2dp" />
-
-        <ImageButton
-            android:id="@+id/button_home3"
-            android:layout_width="47dp"
-            android:layout_height="38dp"
-            android:layout_marginRight="10dp"
-            android:background="@color/rosso_mattone"
-            android:fadingEdge="horizontal|vertical"
-            android:onClick="goHome"
-            android:visibility="visible" />
-
-        <Button
-            android:id="@+id/changestudent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="310dp"
-            android:text="Change Image " />
 
     </RelativeLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="422dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/text_info"
-            android:layout_width="match_parent"
-            android:layout_height="37dp"
-            android:text="@string/etichetta6"
-            android:textSize="24sp"
-            android:textStyle="normal|bold" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
-
-            <TextView
-                android:id="@+id/text_nome"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"></TextView>
-
-            <TextView
-                android:id="@+id/text_cognome"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:text="@string/etichetta3" />
-
-            <TextView
-                android:id="@+id/text_descrizione"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:text="@string/etichetta4" />
-
-            <TextView
-                android:id="@+id/text_universita"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:text="Univeristà" />
-
-            <TextView
-                android:id="@+id/text_indirizzoLaurea"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:text="Indirizzo Laurea" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:id="@+id/tv_hobby_studente">
-        </TextView>
-
-        <ListView
-            android:id="@+id/listView_hobby_profilo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </ListView>
-        </LinearLayout>
-    </LinearLayout>
-        <Button
-            android:id="@+id/modificaProfilo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Bottone2" />
+            android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/button_la_tua_casa"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:onClick="laTuaCasa"
-            android:text="La mia casa" />
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="108dp"
+                android:visibility="visible">
 
-    </LinearLayout>
+                <Button
+                    android:id="@+id/changestudent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change Image " />
+
+                <Button
+                    android:id="@+id/modificaProfilo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:text="@string/Bottone2" />
+
+                <Button
+                    android:id="@+id/button_la_tua_casa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:onClick="laTuaCasa"
+                    android:text="La mia casa" />
+
+                <ImageButton
+                    android:id="@+id/button_home3"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:layout_row="0"
+                    android:layout_column="2"
+                    android:background="@color/rosso_mattone"
+                    android:onClick="goHome"
+                    android:translationX="5dp"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_baseline_home_24"
+                    tools:ignore="VectorDrawableCompat" />
+            </GridLayout>
+
+            <TextView
+                android:id="@+id/text_info"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:text="@string/etichetta6"
+                android:textSize="24sp"
+                android:textStyle="normal|bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_nome"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"></TextView>
+
+                    <TextView
+                        android:id="@+id/text_cognome"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:text="@string/etichetta3" />
+
+                    <TextView
+                        android:id="@+id/text_descrizione"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:text="@string/etichetta4" />
+
+                    <TextView
+                        android:id="@+id/text_universita"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:text="Univeristà" />
+
+                    <TextView
+                        android:id="@+id/text_indirizzoLaurea"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:text="Indirizzo Laurea" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="204dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_hobby_studente"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""></TextView>
+
+                    <ListView
+                        android:id="@+id/listView_hobby_profilo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"></ListView>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

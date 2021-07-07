@@ -14,7 +14,7 @@ import android.widget.EditText;
 
 import com.example.myapplication.R;
 
-public class InserimentoDatiVisita extends AppCompatActivity {
+public class InserimentoDatiVisita extends Activity {
     private final static int SAVE_MENU_OPTION = 0;
     private final static int CANCEL_MENU_OPTION = 1;
 

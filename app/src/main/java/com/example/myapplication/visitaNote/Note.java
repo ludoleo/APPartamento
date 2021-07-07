@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Note implements Parcelable {
+
     public static class NoteMetaData {
         public static String ID = "_id";
         public static String NOME = "nome";
