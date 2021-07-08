@@ -19,5 +19,6 @@ public class PrenotazionePaypalActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PrenotazioneCalendarioActivity.class);
         startActivity(intent);
     }
+
     
 }

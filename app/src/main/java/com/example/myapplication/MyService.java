@@ -17,10 +17,13 @@ import androidx.core.app.NotificationManagerCompat;
 import com.example.myapplication.messaggi.ChatActivity;
 import com.example.myapplication.messaggi.MessaggiActivity;
 import com.example.myapplication.notifiche.Token;
+import com.google.android.gms.cloudmessaging.CloudMessagingReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.google.firebase.iid.internal.FirebaseInstanceIdInternal;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -31,10 +34,47 @@ import static com.example.myapplication.messaggi.App.CHANNEL_ID;
 public class MyService extends FirebaseMessagingService {
 
     private static final String TAG = "MYSERVICE";
+    //SERVE?????
+    public static final String ACTION_MESSAGE_BROADCAST = MyService.class.getName() + "MessageBroadcast";
+    private static final String CHANNEL_ID = "channel1";
 
-    int idNotifica;
+    int idNotifica = 0;
+    public static final Integer NOTIFICATION_REQUESTCODE=101;
+
     public MyService() {
     }
+
+    @Override
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+
+        String inviato = remoteMessage.getData().get("sended");
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(firebaseUser != null && inviato.equals(firebaseUser.getUid()) ) {
+            inviaNotifica(remoteMessage);
+        }
+
+        if (remoteMessage.getData().size() > 0) {
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            creaNotifica(remoteMessage.getData().toString());
+        }
+
+        // Check if message contains a notification payload.
+        if (remoteMessage.getNotification() != null) {
+            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+
+            creaNotifica(remoteMessage.getNotification().getBody());
+        }
+
+        if (SendBirdCall.handleFirebaseMessageData(remoteMessage.getData())) {
+
+        } else {
+            // Handle non-SendBirdCall Firebase messages.
+        }
+    }
+    // Also if you intend on generating your own notifications as a result of a received FCM
+    // message, here is where that should be initiated. See sendNotification method below.
 
     @Override
     public void onNewToken(@NonNull String s) {
@@ -69,37 +109,6 @@ public class MyService extends FirebaseMessagingService {
     }
 
 
-    @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-
-        String inviato = remoteMessage.getData().get("sended");
-
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        if(firebaseUser != null && inviato.equals(firebaseUser.getUid()) ) {
-            inviaNotifica(remoteMessage);
-        }
-
-        if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-            creaNotifica(remoteMessage.getData().toString());
-        }
-
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-
-            creaNotifica(remoteMessage.getNotification().getBody());
-        }
-
-        if (SendBirdCall.handleFirebaseMessageData(remoteMessage.getData())) {
-
-        } else {
-            // Handle non-SendBirdCall Firebase messages.
-        }
-    }
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
 
     private void inviaNotifica(RemoteMessage remoteMessage) {
 

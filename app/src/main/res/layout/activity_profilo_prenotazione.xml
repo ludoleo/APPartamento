@@ -60,6 +60,14 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/visita_virtuale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="visita"
+            android:text="Visita virtuale" />
+
+        <Button
             android:id="@+id/b_pagaPrenotazioneProfilo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

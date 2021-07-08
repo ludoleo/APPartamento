@@ -5,7 +5,6 @@
     android:id="@+id/row_lv_lista_case_proprietario"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sfondo_activity"
     android:orientation="horizontal">
 
     <LinearLayout
