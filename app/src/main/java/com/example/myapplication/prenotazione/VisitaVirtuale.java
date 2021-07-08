@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Utente;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.sendbird.calls.AcceptParams;
 import com.sendbird.calls.AudioDevice;
 import com.sendbird.calls.AuthenticateParams;
@@ -21,11 +22,14 @@ import com.sendbird.calls.DialParams;
 import com.sendbird.calls.DirectCall;
 import com.sendbird.calls.SendBirdCall;
 import com.sendbird.calls.SendBirdException;
+import com.sendbird.calls.User;
+import com.sendbird.calls.handler.AuthenticateHandler;
 import com.sendbird.calls.handler.DialHandler;
 import com.sendbird.calls.handler.DirectCallListener;
 import com.sendbird.calls.handler.SendBirdCallListener;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,11 +61,34 @@ public class VisitaVirtuale extends AppCompatActivity {
         // GoogleMeet = (TextView) findViewById(R.id.GoogleMeet);
 
 
-        DialParams params = new DialParams(CALLEE_ID);
-        params.setVideoCall(true);
-        params.setCallOptions(new CallOptions());
+        AuthenticateParams params = new AuthenticateParams(FirebaseAuth.getInstance().getUid())
+                .setAccessToken(FirebaseMessaging.getInstance().getToken().toString());
 
-        DirectCall call = SendBirdCall.dial(params, new DialHandler() {
+
+        SendBirdCall.authenticate(params, new AuthenticateHandler() {
+            @Override
+            public void onResult(@Nullable User user, @Nullable SendBirdException e) {
+                if(e == null ) {
+                    //l'utente è autenticato correttamente
+                    //Toast.makeText(this, "UTENTE AUTENTICATO CORRETTAMENTE", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        SendBirdCall.addListener(UNIQUE_HANDLER_ID, new SendBirdCallListener() {
+            @Override
+            public void onRinging(@NotNull DirectCall directCall) {
+
+            }
+        });
+
+        //make a call
+        DialParams params2 = new DialParams(CALLEE_ID);
+        params2.setVideoCall(true);
+        params2.setCallOptions(new CallOptions());
+
+
+        DirectCall call = SendBirdCall.dial(params2, new DialHandler() {
             @Override
             public void onResult(DirectCall call, SendBirdException e) {
                 if (e == null) {
@@ -69,6 +96,25 @@ public class VisitaVirtuale extends AppCompatActivity {
                 }
             }
         });
+
+        call.setListener(new DirectCallListener() {
+
+            @Override
+            public void onEstablished(DirectCall call) {
+            }
+
+            @Override
+            public void onConnected(@NotNull DirectCall directCall) {
+
+            }
+
+            @Override
+            public void onEnded(@NotNull DirectCall directCall) {
+
+            }
+        });
+
+        //receive a call
 
         SendBirdCall.addListener(UNIQUE_HANDLER_ID, new SendBirdCallListener() {
             @Override

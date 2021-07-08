@@ -19,6 +19,7 @@
         android:text="Ciao"
         android:id="@+id/mostra_messaggio"
         android:textSize="10sp"
+        android:textColor="@color/rosso_scuro"
         android:padding="8dp"
         android:background="@drawable/background_sinistra"
 
