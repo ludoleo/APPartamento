@@ -4,19 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/row_lv_lista_case"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/sfondo_activity"
+    android:layout_height="60dp"
+    android:layout_gravity="center|top"
+    android:background="@android:drawable/editbox_background"
+    android:gravity="center"
     android:orientation="vertical">
 
         <TextView
             android:id="@+id/textViewNomeCasaLista"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nome Casa" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Nome Casa"
+            android:textColor="@color/rosso_scuro" />
 
         <TextView
             android:id="@+id/textViewPrezzCasaLista"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Prezzo al mese" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Prezzo al mese"
+            android:textColor="@color/rosso_scuro" />
 </LinearLayout>

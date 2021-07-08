@@ -5,8 +5,8 @@
     android:id="@+id/layoustudente"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
-    android:background="@drawable/immagine_app1"
     tools:context=".recensione.RecensioniStudentInterne">
 
         <TextView
@@ -23,9 +23,9 @@
             android:textAppearance="?android:textAppearanceLarge" />
 
         <RatingBar
+            android:id="@+id/RatingBar1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/RatingBar1"/>
+            android:layout_height="wrap_content" />
 
         <EditText
             android:id="@+id/Review1"
@@ -41,24 +41,13 @@
             android:onClick="CaricaRecensioneStudente"
             android:text="Invia"
             android:textAllCaps="false" />
+
         <TextView
+            android:id="@+id/showRating1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:id="@+id/showRating1"
-            android:layout_margin="10dp"/>
-
-
-
-
-
-
-
-
-
-
-
-
+            android:layout_margin="10dp"
+            android:textAppearance="?android:textAppearanceMedium" />
 
 
 </LinearLayout>
