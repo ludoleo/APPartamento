@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
     tools:context=".registrazione.InserimentoServiziCasa">
 
@@ -11,6 +12,6 @@
         android:id="@+id/listView_servizi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:choiceMode="multipleChoice"/>
+        android:choiceMode="multipleChoice" />
 
 </LinearLayout>

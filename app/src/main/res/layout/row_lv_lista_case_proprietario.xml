@@ -5,6 +5,7 @@
     android:id="@+id/row_lv_lista_case_proprietario"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -29,19 +30,20 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="Indirizzo" />
+
             <TextView
                 android:id="@+id/textViewNumeroDiOspiti"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="Numero di ospiti" />
+
             <TextView
                 android:id="@+id/textViewValutazione"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="valuazione"
-                android:padding="5dp"/>
-
+                android:padding="5dp"
+                android:text="valuazione" />
 
 
         </LinearLayout>

@@ -5,12 +5,15 @@
     android:id="@+id/row_lv_lista_case"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     android:orientation="vertical">
+
         <TextView
             android:id="@+id/textViewNomeCasaLista"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nome Casa" />
+
         <TextView
             android:id="@+id/textViewPrezzCasaLista"
             android:layout_width="match_parent"

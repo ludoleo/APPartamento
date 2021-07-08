@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
     tools:context=".bollettaSQL.ImageSQL">
 
@@ -20,7 +21,7 @@
         android:id="@+id/bolletta"
         android:layout_width="match_parent"
         android:layout_height="289dp"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/ic_baseline_add_a_photo_24" />
 
     <Button
         android:id="@+id/bottone_aggiungi_bolletta"

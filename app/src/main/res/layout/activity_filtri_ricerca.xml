@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
     tools:context=".ricercalloggio.FiltriRicerca">
 
@@ -11,102 +12,102 @@
         android:id="@+id/textView5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="15dp"
         android:text="Seleziona prezzo"
-        android:textSize="20dp"
-        android:padding="15dp"/>
+        android:textSize="20dp" />
 
     <SeekBar
         android:id="@+id/seekBarPrezzo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
         android:max="700"
-        android:progress="375"/>
+        android:padding="15dp"
+        android:progress="375"
+        android:thumb="@drawable/ic_baseline_monetization_on_24"
+        app:tickMarkTint="@color/rosso_mattone" />
 
-   <LinearLayout
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-       <TextView
-           android:id="@+id/tv_mostraPrezzo"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:padding="15dp">
-       </TextView>
+        <TextView
+            android:id="@+id/tv_mostraPrezzo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"></TextView>
 
-       <TextView
-           android:id="@+id/tv_mostraPrezzo1"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:padding="15dp"
-           android:text=" €">
-       </TextView>
-   </LinearLayout>
+        <TextView
+            android:id="@+id/tv_mostraPrezzo1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text=" €"></TextView>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="15dp"
         android:text="Seleziona tipologia alloggio"
-        android:textSize="20dp"
-        android:padding="15dp"/>
+        android:textSize="20dp" />
 
     <CheckBox
         android:id="@+id/checkBoxInteroAppartamento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Intero appartamento"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:text="Intero appartamento" />
 
     <CheckBox
         android:id="@+id/checkBoxStanzaSingola"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stanza singola"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:text="Stanza singola" />
 
     <CheckBox
         android:id="@+id/checkBoxStanzaDoppia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stanza doppia"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:text="Stanza doppia" />
+
     <CheckBox
         android:id="@+id/checkBoxPostoLetto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Posto letto"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        android:text="Posto letto" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="15dp"
         android:text="Rating casa"
-        android:textSize="20dp"
-        android:padding="15dp"/>
+        android:textSize="20dp" />
 
     <SeekBar
         android:id="@+id/seekBarRatingCasa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"
         android:max="5"
+        android:padding="15dp"
         android:progress="3"
-        />
+        android:thumb="@drawable/ic_baseline_star_rate_24" />
 
     <TextView
         android:id="@+id/tv_mostraRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="15dp">
-    </TextView>
+        android:padding="15dp"></TextView>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Conferma"
         android:layout_margin="10dp"
-        android:onClick="conferma">
-    </Button>
+        android:onClick="conferma"
+        android:text="Conferma"></Button>
 </LinearLayout>

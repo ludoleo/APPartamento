@@ -3,16 +3,17 @@
     android:id="@+id/RelativeLayout01"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
-    android:padding="12dp" >
+    android:padding="12dp">
 
     <EditText
         android:id="@+id/NSQL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:hint="Nome"
+        android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/textView6"
@@ -25,7 +26,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="number" />
+        android:hint="Valutazione"
+        android:inputType="numberDecimal" />
 
     <TextView
         android:id="@+id/textView7"
@@ -45,15 +47,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Zona" />
+        android:hint="Zona città"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/LINKSQL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Link video" />
+        android:hint="Link"
+        android:inputType="textUri" />
 
 </LinearLayout>

@@ -21,16 +21,22 @@
 
     <TextView
         android:id="@+id/GoogleMeet"
-        android:layout_width="405dp"
-        android:layout_height="81dp"
+        android:layout_width="335dp"
+        android:layout_height="96dp"
         android:text="It is now possible to create a new meet by going to this url: http://meet.google.com/new  "
-        tools:layout_editor_absoluteX="6dp"
-        tools:layout_editor_absoluteY="138dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/videoView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/videoView"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <VideoView
         android:id="@+id/videoView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/googleMeet"

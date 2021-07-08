@@ -1,38 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".MainActivity">
-<ImageSwitcher
-    android:id="@+id/imageis"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="400dp" />
+    android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
+    tools:context=".MainActivity">
 
-<Button
-    android:id="@+id/previsiousBtn"
-    android:text="Previous"
-    android:layout_below="@+id/imageis"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    <ImageSwitcher
+        android:id="@+id/imageis"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:background="@color/quantum_black_divider" />
 
-<Button
-    android:id="@+id/nextBtn"
-    android:text="Next"
-    android:layout_below="@+id/imageis"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentEnd="true"
-    android:layout_alignParentRight="true" />
+    <Button
+        android:id="@+id/previsiousBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageis"
+        android:text="Previous" />
 
-<Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/PickImages"
-    android:text="PickImages"
-    android:layout_alignParentBottom="true" />
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageis"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="Next" />
+
+    <Button
+        android:id="@+id/PickImages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="PickImages" />
 
 
 </RelativeLayout>

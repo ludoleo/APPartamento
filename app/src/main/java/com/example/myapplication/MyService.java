@@ -31,25 +31,28 @@ import static com.example.myapplication.messaggi.App.CHANNEL_ID;
 public class MyService extends FirebaseMessagingService {
 
     private static final String TAG = "MYSERVICE";
+
     int idNotifica;
+    public MyService() {
+    }
 
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        SendBirdCall.registerPushToken(s, false, e -> {
+            if (e == null) {
+                // Succeeded to register push token.
+            } else {
+                // Failed to register push token.
+            }
+        });
+
         String refreshToken = FirebaseMessaging.getInstance().getToken().toString();
         if(firebaseUser != null ) {
             updateToken(refreshToken);
-        }
-
-            SendBirdCall.registerPushToken(s, false, e -> {
-                if (e == null) {
-                    // Succeeded to register push token.
-                } else {
-                    // Failed to register push token.
-                }
-            });
+            }
         }
 
 
@@ -60,13 +63,12 @@ public class MyService extends FirebaseMessagingService {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         DatabaseReference reference = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/")
-                .getReference("Token");
+                .getReference();
         Token token = new Token(refreshToken);
         reference.child("Token").child(firebaseUser.getUid()).setValue(token);
     }
 
-    public MyService() {
-    }
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
@@ -80,14 +82,14 @@ public class MyService extends FirebaseMessagingService {
 
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-            creaNotifica();
+            creaNotifica(remoteMessage.getData().toString());
         }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
 
-            creaNotifica();
+            creaNotifica(remoteMessage.getNotification().getBody());
         }
 
         if (SendBirdCall.handleFirebaseMessageData(remoteMessage.getData())) {
@@ -132,7 +134,7 @@ public class MyService extends FirebaseMessagingService {
         notificationManager.notify(i,builder.build());
     }
 
-    private void creaNotifica() {
+    private void creaNotifica(String testo) {
         //prendi codice da esempio complesso
 
         Intent intent = new Intent(this, ChatActivity.class);
@@ -144,7 +146,7 @@ public class MyService extends FirebaseMessagingService {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                     .setContentTitle("Titolo da settare")
-                    .setContentText("Testo da settare")
+                    .setContentText(testo)
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
@@ -157,7 +159,7 @@ public class MyService extends FirebaseMessagingService {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                     .setContentTitle("Totolo da settare")
-                    .setContentText("Settare testo ")
+                    .setContentText(testo)
                     .setContentIntent(pendingIntent)
                     .setAutoCancel(true)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);

@@ -11,39 +11,71 @@
 
     <EditText
         android:id="@+id/et_nomeP"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nome" />
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="clip_horizontal"
+        android:background="@drawable/background_sinistra"
+        android:hint="Nome"
+        android:padding="10dp"
+        android:textColorHint="@color/rosso_scuro"
+        android:translationX="5dp" />
 
     <EditText
         android:id="@+id/et_cognomeP"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Cognome" />
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:background="@drawable/background_destra"
+        android:hint="Cognome"
+        android:padding="10dp"
+        android:textColorHint="@color/ic_launcher_background"
+        android:translationX="-5dp"
+        android:translationY="10dp" />
 
     <EditText
         android:id="@+id/et_numTelefonoP"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="clip_horizontal"
+        android:background="@drawable/background_sinistra"
         android:hint="Num Telefono"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:padding="10dp"
+        android:textColorHint="@color/rosso_scuro"
+        android:translationX="5dp"
+        android:translationY="20dp" />
 
     <EditText
         android:id="@+id/et_descrizione"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Parlami un po' di te..." />
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:background="@drawable/background_destra"
+        android:hint="Parlami un po' di te..."
+        android:padding="10dp"
+        android:textColorHint="#FFFFFF"
+        android:translationX="-5dp"
+        android:translationY="30dp" />
 
     <CheckBox
         android:id="@+id/cb_primaEsperienzaP"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Prima Esperienza" />
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/background_sinistra"
+        android:padding="5dp"
+        android:text="Prima Esperienza"
+        android:textColor="@color/rosso_scuro"
+        android:textColorHint="@color/rosso_scuro"
+        android:translationY="40dp" />
 
     <Button
         android:id="@+id/i_d_p_continua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="conferma"
-        android:text="Continua" />
+        android:text="Continua"
+        android:translationY="50dp" />
 </LinearLayout>

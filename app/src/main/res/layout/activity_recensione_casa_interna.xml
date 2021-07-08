@@ -5,8 +5,9 @@
     android:id="@+id/casaint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@drawable/sfondo_activity"
 
+    android:orientation="vertical"
     tools:context=".recensione.RecensioneCasaInterna">
 
     <TextView
@@ -23,9 +24,9 @@
         android:textAppearance="?android:textAppearanceLarge" />
 
     <RatingBar
+        android:id="@+id/RatingBar2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/RatingBar2"/>
+        android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/Review2"
@@ -41,22 +42,13 @@
         android:onClick="NuovaRecensioneCasa"
         android:text="Invia"
         android:textAllCaps="false" />
+
     <TextView
+        android:id="@+id/showRating2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:id="@+id/showRating2"
-        android:layout_margin="10dp"/>
-
-
-
-
-
-
-
-
-
-
+        android:layout_margin="10dp"
+        android:textAppearance="?android:textAppearanceMedium" />
 
 
 </LinearLayout>

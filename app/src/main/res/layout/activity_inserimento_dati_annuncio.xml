@@ -11,76 +11,118 @@
 
     <TextView
         android:id="@+id/tv_nomeCasa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/background_sinistra"
         android:padding="10dp"
         android:text=" "
-        android:textStyle="normal" />
+        android:textColor="@color/rosso_scuro"
+        android:textStyle="normal"
+        android:translationY="-5dp" />
 
 
     <EditText
         android:id="@+id/et_nomeAnnuncio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/background_destra"
         android:hint="Inserisci il nome dell'annuncio"
-        android:padding="20dp" />
+        android:inputType="text"
+        android:padding="5dp"
+        android:textColorHint="@color/ic_launcher_background"
+        android:translationY="5dp" />
 
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/background_sinistra"
+        android:gravity="center|left"
+        android:padding="5dp"
         android:text="Tipologia di posto letto"
-        android:textStyle="bold" />
+        android:textColor="@color/rosso_scuro"
+        android:textStyle="bold"
+        android:translationY="15dp" />
 
     <Spinner
         android:id="@+id/spinnerTipologiaPostoLetto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/background_destra"
         android:entries="@array/tipologiaPostiLetto"
         android:padding="5dp"
-        android:paddingLeft="20dp" />
+        android:popupBackground="@drawable/background_destra"
+        android:translationY="25dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="fill"
-        android:orientation="horizontal">
+        android:background="@drawable/background_sinistra"
+        android:orientation="horizontal"
+        android:translationY="35dp">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
+            android:layout_width="122dp"
+            android:layout_height="50dp"
+            android:gravity="left"
+            android:padding="5dp"
             android:text="Prezzo: "
+            android:textColor="@color/rosso_scuro"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_prezzoMensileAnnuncio"
-            android:layout_width="86dp"
-            android:layout_height="match_parent"
+            android:layout_width="122dp"
+            android:layout_height="50dp"
             android:inputType="number"
-            android:padding="20dp" />
+            android:padding="5dp"
+            android:textColor="@color/rosso_scuro"
+            android:textColorHint="@color/rosso_scuro" />
 
         <TextView
-            android:layout_width="101dp"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
+            android:layout_width="122dp"
+            android:layout_height="50dp"
+            android:padding="5dp"
             android:text="Euro"
+            android:textColor="@color/rosso_scuro"
+            android:textColorHint="@color/rosso_scuro"
             android:textStyle="bold" />
 
     </LinearLayout>
 
     <EditText
         android:id="@+id/et_SpeseStraordinarie"
-        android:layout_width="wrap_content"
-        android:layout_height="113dp"
+        android:layout_width="367dp"
+        android:layout_height="120dp"
+        android:layout_gravity="right"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/background_destra"
         android:hint="Inserisci eventuali spese straordinarie che posso riguardare l'appartamento (conguaglio, caparre extra...)"
-        android:padding="10dp" />
+        android:inputType="textMultiLine"
+        android:padding="5dp"
+        android:textColor="@color/ic_launcher_background"
+        android:textColorHint="@color/ic_launcher_background"
+        android:translationY="45dp" />
 
     <Button
         android:id="@+id/i_d_a_continua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="caricaAnnuncio"
-        android:text="Continua" />
+        android:text="Continua"
+        android:translationY="55dp" />
 </LinearLayout>

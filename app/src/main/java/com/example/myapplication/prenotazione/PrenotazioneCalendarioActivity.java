@@ -9,6 +9,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -149,22 +150,48 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
         //salva intent per utilizzarlo al momento dell'apertura della notifica
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-                .setContentTitle("Conferma Prenotazione")
-                .setContentText("Prenotazione da confermare")
-                .setContentIntent(pendingIntent) //passo l'intent da aprire
-                .setAutoCancel(true) //notifica eliminata dopo il click
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT); //priorita per le notifiche
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                    .setContentTitle("Conferma Prenotazione")
+                    .setContentText("Prenotazione da confermare")
+                    .setContentIntent(pendingIntent) //passo l'intent da aprire
+                    .setAutoCancel(true) //notifica eliminata dopo il click
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT); //priorita per le notifiche
 
-        //aggiunta di suono alla notifica
-        Uri suonoNotifica = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        builder.setSound(suonoNotifica);
+            //aggiunta di suono alla notifica
+            Uri suonoNotifica = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            builder.setSound(suonoNotifica);
 
 
-        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-        notificationManagerCompat.notify(idNotifica,builder.build());
+            NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+            notificationManagerCompat.notify(idNotifica, builder.build());
+            idNotifica++;
+
+        }
+
+        else {
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                    .setContentTitle("Conferma Prenotazione")
+                    .setContentText("Prenotazione da confermare")
+                    .setContentIntent(pendingIntent) //passo l'intent da aprire
+                    .setAutoCancel(true) //notifica eliminata dopo il click
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT); //priorita per le notifiche
+
+            //aggiunta di suono alla notifica
+            Uri suonoNotifica = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            builder.setSound(suonoNotifica);
+
+
+            NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
+            notificationManagerCompat.notify(idNotifica, builder.build());
+            idNotifica++;
+
+        }
+
+
     }
 
     //questo è il mio token
@@ -182,6 +209,7 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
                         // Get new FCM registration token
                         String token = task.getResult();
 
+                        Log.i(TAG, "il token è "+token);
                         //Toast.makeText(PrenotazioneCalendarioActivity.this, "msg", Toast.LENGTH_SHORT).show();
                     }
                 });

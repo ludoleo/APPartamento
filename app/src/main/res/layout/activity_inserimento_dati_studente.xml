@@ -10,79 +10,140 @@
 
     <EditText
         android:id="@+id/et_nome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="clip_horizontal"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/background_sinistra"
+        android:gravity="clip_horizontal"
         android:hint="Nome"
-        android:padding="15dp" />
+        android:inputType="textPersonName"
+        android:padding="15dp"
+        android:textColorHint="@color/rosso_scuro"
+        android:translationY="-5dp" />
 
     <EditText
         android:id="@+id/et_cognome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/background_destra"
         android:hint="Cognome"
-        android:padding="15dp" />
+        android:inputType="textPersonName"
+        android:padding="15dp"
+        android:textColorHint="@color/ic_launcher_background" />
 
     <EditText
         android:id="@+id/et_numTelefono"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/background_sinistra"
         android:hint="Telefono"
         android:inputType="phone"
-        android:padding="15dp" />
+        android:padding="15dp"
+        android:textColor="@color/rosso_scuro"
+        android:textColorHint="@color/rosso_scuro"
+        android:translationY="10dp" />
 
     <EditText
         android:id="@+id/et_univerista"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/background_destra"
         android:hint="Università"
         android:inputType="textPersonName"
-        android:padding="15dp" />
+        android:padding="15dp"
+        android:textColorHint="@color/ic_launcher_background"
+        android:translationY="15dp" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/background_sinistra"
+        android:inputType="text"
         android:padding="15dp"
-        android:text="Tipologia di Laurea" />
+        android:text="Tipologia di Laurea"
+        android:textColor="@color/rosso_scuro"
+        android:textColorHint="@color/rosso_scuro"
+        android:translationY="20dp" />
 
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_gravity="right"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/background_destra"
+        android:orientation="horizontal"
+        android:translationY="25dp">
 
         <RadioButton
             android:id="@+id/radioButtonTriennale"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="183dp"
+            android:layout_height="50dp"
             android:checked="true"
-            android:text="Triennale" />
+            android:text="Triennale"
+            android:textColor="@color/ic_launcher_background" />
 
         <RadioButton
             android:id="@+id/radioButtonMagistrale"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Magistrale" />
+            android:layout_width="183dp"
+            android:layout_height="50dp"
+            android:text="Magistrale"
+            android:textColor="@color/ic_launcher_background" />
     </RadioGroup>
 
     <EditText
         android:id="@+id/et_inidirizzoLaurea"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/background_sinistra"
         android:hint="Indirizzo Laurea"
         android:inputType="textPersonName"
-        android:padding="15dp" />
+        android:padding="15dp"
+        android:textColorHint="@color/rosso_scuro"
+        android:translationY="30dp" />
 
     <EditText
         android:id="@+id/et_descrizioneS"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/background_destra"
         android:hint="Parlami un po' di te..."
-        android:padding="15dp" />
+        android:inputType="text"
+        android:padding="15dp"
+        android:textColorHint="@color/ic_launcher_background"
+        android:translationY="35dp" />
 
     <CheckBox
         android:id="@+id/checkBoxPrimaEsperienza"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Prima esperienza da fuori sede" />
+        android:layout_width="367dp"
+        android:layout_height="50dp"
+        android:layout_gravity="left"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/background_sinistra"
+        android:text="Prima esperienza da fuori sede"
+        android:textColor="@color/rosso_scuro"
+        android:translationY="40dp" />
 
     <Button
         android:id="@+id/conferma"
@@ -90,6 +151,7 @@
         android:layout_height="wrap_content"
         android:gravity="center|center_horizontal"
         android:onClick="inviaMessaggio"
-        android:text="Conferma" />
+        android:text="Conferma"
+        android:translationY="50dp" />
 
 </LinearLayout>

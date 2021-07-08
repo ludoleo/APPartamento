@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:text="Inserisci foto annuncio"
             android:onClick="inserisciFoto"
+            android:visibility="invisible"
             android:translationX="70dp" />
 
         <LinearLayout

@@ -42,7 +42,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/rosso_scuro"
-            android:fadingEdge="horizontal"
+            android:fadingEdge="vertical|none"
             android:visibility="visible"
             app:srcCompat="@drawable/ic_baseline_home_24"
             tools:ignore="VectorDrawableCompat" />

@@ -95,7 +95,7 @@ public class MessaggiActivity extends AppCompatActivity {
             }
         });  */
 
-        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
+        //apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         recyclerView = findViewById(R.id.recycle_view);
         recyclerView.setHasFixedSize(true);
@@ -139,7 +139,7 @@ public class MessaggiActivity extends AppCompatActivity {
 
 
 
-        //TODO controllare se i messaggi sono verso gli studenti o i proprietari, nonn va bene così
+        //TODO controllare se i messaggi sono verso gli studenti o i proprietari, non va bene così
 
 
         myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {

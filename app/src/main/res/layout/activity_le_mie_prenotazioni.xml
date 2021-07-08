@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
     tools:context=".prenotazione.LeMiePrenotazioni">
 
@@ -11,24 +12,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/textView19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="LE TUE PRENOTAZIONI" />
+
         <Spinner
             android:id="@+id/spinnerPrenotazione"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/tipoPrenotazione"
             android:padding="5dp"
-            android:paddingLeft="20dp">
-        </Spinner>
+            android:paddingLeft="20dp"></Spinner>
     </LinearLayout>
+
     <ListView
         android:id="@+id/lv_leMiePrenotazioni"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="wrap_content"></ListView>
 
 </LinearLayout>
