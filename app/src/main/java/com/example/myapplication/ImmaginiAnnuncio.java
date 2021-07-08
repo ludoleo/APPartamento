@@ -183,9 +183,8 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_CODE){
-            if(requestCode == Activity.RESULT_OK){
-                if(data.getClipData() != null){
+        if(requestCode == PICK_IMAGE_CODE && resultCode == RESULT_OK && data != null && data.getClipData() != null)
+        {
 
                     int count = data.getClipData().getItemCount() ;
                     //TODO non entra nell'if
@@ -195,12 +194,12 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
                         UploadImage(imageUri, i);
                     }
 
-                }
                 ImageIs.setImageURI(imageUris.get(0));
                 position = 0;
+        }
 
-            }
-            else {
+
+        else {
                 // single image
                 Uri imageUri = data.getData();
                 imageUris.add(imageUri);
@@ -210,11 +209,12 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
 
 
             }
-
-
-        }
-
     }
+
+
+
+
+
 
     private void UploadImage(Uri imageUri, int numero) {
         Log.i(TAG, "passo qui 2");

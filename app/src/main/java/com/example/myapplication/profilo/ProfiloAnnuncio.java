@@ -241,9 +241,10 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     }
     // se non mettevo (Parcelable ) mi dava errore
     private void creapreferito(Annuncio preferito) {
-        Intent data = new Intent(this,Preferiti.class);
-        data.putExtra("idAnnuncio", (Parcelable) preferito);
-        startActivity(data);
+        Intent intent = new Intent(ProfiloAnnuncio.this, Preferiti.class);
+        intent.putExtra("idAnnuncio", annuncio.getIdAnnuncio() );
+        startActivity(intent);
+
     }
 
 

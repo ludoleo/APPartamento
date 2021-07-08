@@ -86,7 +86,7 @@ public class RecensioneCasaInterna extends AppCompatActivity {
             return;
         }
         String recensore = user.getUid();
-        // Può funzionare?
+        //Devo fare un ciclo sull'inquilini della casa?
        String casarecensita = " ";
 
         RecensioneCasa recensioneCasa = new RecensioneCasa(data,descrizione,valutazionemedia,recensore,casarecensita);
@@ -112,7 +112,7 @@ public class RecensioneCasaInterna extends AppCompatActivity {
 
                     if(recensionepropFiglio.getRecensore().compareTo(recensore)==0) {
 
-                        // mi da errore --> Toast.makeText(this,"Recensore già presente contattare l'assistenza",Toast.LENGTH_SHORT).show();
+                 Toast.makeText(RecensioneCasaInterna.this,"Recensore già presente contattare l'assistenza",Toast.LENGTH_SHORT).show();
 
                         cambiaFlag();
                     }

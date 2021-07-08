@@ -32,7 +32,7 @@ public class NoteVisitaLista extends ListActivity {
             NoteMetaData.VALUTAZIONE, NoteMetaData.DESCRIZIONE, NoteMetaData.ZONA, NoteMetaData.LINK };
     // riferimento ai dati del layout
     private int[] TOS = new int[] { R.id.NomemainSQL, R.id.ValutazionemainSQL,
-            R.id.PrezzomainSQL, R.id.ZonasmainSQL};
+            R.id.PrezzomainSQL, R.id.ZonasmainSQL,R.id.LinkregistrazioneMain};
     private SQLiteDatabase db;
     private Cursor cursor;
     private CursorAdapter adapter;

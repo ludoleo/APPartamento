@@ -25,7 +25,7 @@
         android:text="Zona"></TextView>
 
     <TextView
-        android:id="@+id/Link_registrazioneMain"
+        android:id="@+id/LinkregistrazioneMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Link Registrazione" />
