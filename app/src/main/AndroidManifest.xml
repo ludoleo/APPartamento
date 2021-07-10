@@ -27,7 +27,6 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity android:name=".prenotazione.ProfiloPrenotazione" />
-        <activity android:name=".CambioPrenotazione" />
         <activity android:name=".prenotazione.LeMiePrenotazioni" />
         <activity android:name=".ricercalloggio.FiltriRicerca" />
         <activity android:name=".registrazione.InserimentoServiziCasa" />

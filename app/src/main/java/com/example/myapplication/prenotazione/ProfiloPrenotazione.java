@@ -29,6 +29,7 @@ import java.util.Date;
 
 public class ProfiloPrenotazione extends AppCompatActivity {
 
+    private static final String TAG = "PROFILO PRENOTAZIONE" ;
     //Database
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -113,10 +114,23 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                     }
                     //SE IL TICKET E' DA PAGARE
                     if(!prenotazione.isPagata()){
-                        //TODO SE L'UTENTE E' UNO STUDENTE
-                        DatabaseReference dr = myRef.child("Proprietari").child(user.getUid());
-                        if(dr == null)
-                            pagaPrenotazione.setVisibility(View.VISIBLE);
+                        // controllo utente loggato se è studente o no
+                        DatabaseReference dr = myRef.child("Utenti").child("Proprietari").child(user.getUid());
+                        Log.i(TAG, "COS'è dr "+dr.toString());
+                        dr.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (!task.isSuccessful()) {
+                                    Log.e("firebase", "Error getting data", task.getException());
+                                }
+                                else {
+                                  if( task.getResult().getValue() == null) {
+                                      pagaPrenotazione.setVisibility(View.VISIBLE);
+                                  }
+                                }
+                            }
+                        });
+
                     }
                 }
             }

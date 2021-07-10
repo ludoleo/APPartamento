@@ -4,7 +4,7 @@
     <string name="nome">Nome</string>
     <string name="annulla">Annulla</string>
     <string name="conferma">Conferma</string>
-    <string name="indietro">indietro</string>
+    <string name="indietro">Indietro</string>
     <string name="logout" translatable="false">LOGOUT</string>
     <string name="login" translatable="false">LOGIN</string>
     <string name="precedente">Precedente</string>
@@ -42,6 +42,7 @@
     <string name="Bottone7">CENTRO ASSISTENZA</string>
     <string name="etichetta9">Impostazioni Account</string>
     <string name="etichetta10">Gestione Alloggio</string>
+
     <string name="etichetta11">Assistenza</string>
     <string name="etichetta13">Opzione visita virtuale</string>
     <string name="prezzo">Prezzo</string>
@@ -68,6 +69,7 @@
     <string name="pLetto">Posto letto</string>
     <string name="valCasa">Rating casa</string>
     <string name="cambiaImmagine">Cambia Immagine</string>
+    <!-- TODO: Etichetta7 e bottone1 sono la stessa stringa -->
     <string name="laMiaCasa">La mia casa</string>
     <string name="home" translatable="false">Home</string>
     <string name="nomeBolletta">Inserire nome bolletta</string>

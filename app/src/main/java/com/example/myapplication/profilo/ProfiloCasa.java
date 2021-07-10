@@ -89,6 +89,8 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
+        createMapView(savedInstanceState);
+
         laTuaCasa = (TextView) findViewById(R.id.tv_laTuaCasa);
         ilProprietario = (TextView) findViewById(R.id.tv_proprietarioLaTuaCasa);
         valutazioneProprietario = (TextView) findViewById(R.id.tv_valutazioneProprietarioCasaTua);
@@ -100,12 +102,12 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         b_aggiungiInquilino.setVisibility(View.GONE);
         b_aggiungiAnnuncio.setVisibility(View.GONE);
 
-        initUI(savedInstanceState);
+        initUI();
 
     }
 
 
-    private void initUI(Bundle savedInstanceState) {
+    private void initUI() {
 
         inquilino = null;
         casa = null;
@@ -114,7 +116,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 
         //listaInquilini = new LinkedList<Inquilino>();
         listaStudenti = new LinkedList<Studente>();
-        riferimentoCasa(savedInstanceState);
+
 
         /*
         myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
@@ -149,7 +151,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 */
     }
 
-    private void riferimentoCasa(Bundle savedInstanceState) {
+    private void riferimentoCasa() {
 
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
             @Override
@@ -161,15 +163,29 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                     }
                 }
                 //CARICO IL NOME DELLA CASA
-                createMapView(savedInstanceState);
                 laTuaCasa.setText(casa.getNomeCasa());
                 valutazioneCasa.setText(""+casa.getValutazione());
                 riferimentoProprietario();
+
+                //AGGIUNGO LA POSIZIONE DELLA CASA
+                MarkerOptions mo6 = new MarkerOptions();
+                LatLng lCasa = new LatLng(casa.getLat(), casa.getLng());
+                Marker perth6 = gmap.addMarker(mo6
+                        .position(lCasa)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                        .draggable(true));
+                gmap.addMarker(mo6);
+                perth6.setTitle(""+casa.getNomeCasa());
+
+                gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(lCasa, 15));
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
+
     }
 
     private void riferimentoProprietario() {
@@ -225,19 +241,40 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         mapViewCasa.getMapAsync(this);
     }
 
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
         gmap = googleMap;
         //configurazioni
         gmap.setMinZoomPreference(12);
-        gmap.setTrafficEnabled(true);
+        //gmap.setTrafficEnabled(true);
         UiSettings uiSettings = gmap.getUiSettings();
         uiSettings.setZoomControlsEnabled(true);
         uiSettings.setCompassEnabled(true);
         uiSettings.setMapToolbarEnabled(true);
         uiSettings.setMyLocationButtonEnabled(true);
+
+        riferimentoCasa();
         //SELEZIONO LE SEDI PRINCIPALI
+
+        aggiungiMarker(gmap);
+
+
+
+        gmap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                String nome = marker.getTitle();
+                if(!nome.equals(casa.getNomeCasa())){
+                    calcolaPercorso(marker.getPosition());
+                }
+                return false;
+            }
+        });
+    }
+
+    private void aggiungiMarker(GoogleMap gmap) {
 
         //PoliTo sede centrale
         MarkerOptions mo1 = new MarkerOptions();
@@ -280,33 +317,27 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         gmap.addMarker(mo5);
         perth5.setTitle("Campus Luigi Enaudi");
 
-        //AGGIUNGO LA POSIZIONE DELLA CASA
-        MarkerOptions mo6 = new MarkerOptions();
-        LatLng lCasa = new LatLng(casa.getLat(), casa.getLng());
-        Marker perth6 = gmap.addMarker(mo6
-                .position(lCasa)
-                .draggable(true));
-        gmap.addMarker(mo6);
-        perth6.setTitle(""+casa.getNomeCasa());
-
-        gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(lCasa, 15));
-
-        gmap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                String nome = marker.getTitle();
-                if(!nome.equals(casa.getNomeCasa())){
-                    calcolaPercorso(marker.getPosition());
-                }
-                return false;
-            }
-        });
     }
 
 
     public void calcolaPercorso(LatLng destinazione){
 
         polylinePoints.clear();
+        gmap.clear();
+        aggiungiMarker(gmap);
+
+        //AGGIUNGO LA POSIZIONE DELLA CASA
+        MarkerOptions mo6 = new MarkerOptions();
+        LatLng lCasa = new LatLng(casa.getLat(), casa.getLng());
+        Marker perth6 = gmap.addMarker(mo6
+                .position(lCasa)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                .draggable(true));
+        gmap.addMarker(mo6);
+        perth6.setTitle(""+casa.getNomeCasa());
+
+        gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(lCasa, 15));
+
         //PARTO DA DOVE VIENE SEZIONATO
         LatLng latLngCasa = new LatLng(casa.getLat(),casa.getLng());
         polylinePoints.add(latLngCasa);
@@ -335,6 +366,38 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 
         gmap.addPolyline(plo);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mapViewCasa.onStart(); }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mapViewCasa!=null)
+            mapViewCasa.onResume();}
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mapViewCasa!=null)
+            mapViewCasa.onStop(); }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mapViewCasa!=null)
+            mapViewCasa.onDestroy(); }
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        if(mapViewCasa!=null)
+            mapViewCasa.onLowMemory(); }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(mapViewCasa!=null)
+            mapViewCasa.onPause(); }
 
      /*
     ASYNC TASK

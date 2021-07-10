@@ -41,7 +41,7 @@ import java.util.List;
 public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallback {
 
     //FILTRI DEFAULT
-    private static final int PREZZO_MASSIMO = 700;
+    private static final int PREZZO_STANDARD = 550;
     private static final int RATING_MINIMO = 0;
 
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
@@ -57,7 +57,8 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
     ListView listView;
     Button b_visualizzaCasa;
     Casa casa;
-    static Filtro filtro;
+    static Filtro filtro = new Filtro();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,15 +76,10 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
         listaCase = new LinkedList<>();
         initListe();
 
-        filtro = new Filtro();
 
-        filtro.prezzo = PREZZO_MASSIMO;
-        filtro.rating= RATING_MINIMO;
-        filtro.intero=true;
-        filtro.singola=true;
-        filtro.doppia=true;
-        filtro.posto=true;
     }
+
+
 
 
     private void initListe() {
@@ -173,7 +169,7 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
         caricaMappa();
         //configurazioni
         gmap.setMinZoomPreference(12);
-        gmap.setTrafficEnabled(true);
+        //gmap.setTrafficEnabled(true);
         UiSettings uiSettings = gmap.getUiSettings();
             uiSettings.setZoomControlsEnabled(true);
             uiSettings.setCompassEnabled(true);
@@ -325,5 +321,14 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
         boolean doppia;
         boolean posto;
 
+
+        public Filtro() {
+            this.prezzo = PREZZO_STANDARD;
+            this.rating = RATING_MINIMO;
+            this.intero = true;
+            this.singola = true;
+            this.doppia = true;
+            this.posto = true;
+        }
     }
 }

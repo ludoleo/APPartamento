@@ -12,7 +12,7 @@
         android:id="@+id/tv_laTuaCasa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="La tua Casa!"
+        android:text="@string/laMiaCasa"
         android:textSize="30sp" />
 
     <TextView

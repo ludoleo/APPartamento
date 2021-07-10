@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:max="700"
         android:padding="15dp"
-        android:progress="375"
+        android:progress="550"
         android:thumb="@drawable/ic_baseline_monetization_on_24"
         app:tickMarkTint="@color/rosso_mattone" />
 
@@ -101,7 +101,7 @@
         android:layout_height="wrap_content"
         android:max="5"
         android:padding="15dp"
-        android:progress="3"
+        android:progress="0"
         android:thumb="@drawable/ic_baseline_star_rate_24" />
 
     <TextView

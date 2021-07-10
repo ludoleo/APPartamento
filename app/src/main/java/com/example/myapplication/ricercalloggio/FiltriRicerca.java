@@ -34,8 +34,19 @@ public class FiltriRicerca extends AppCompatActivity {
         tv_mostraPrezzo = (TextView) findViewById(R.id.tv_mostraPrezzo);
         tv_mostraRating = (TextView) findViewById(R.id.tv_mostraRating);
 
+
+        checkBoxInteroAppartamento.setChecked(MappaAnnunci.filtro.intero);
+        checkBoxPostoLetto.setChecked(MappaAnnunci.filtro.posto);
+        checkBoxStanzaDoppia.setChecked(MappaAnnunci.filtro.doppia);
+        checkBoxStanzaSingola.setChecked(MappaAnnunci.filtro.singola);
+
+
+        seekBarPrezzo.setProgress(MappaAnnunci.filtro.prezzo);
         tv_mostraPrezzo.setText(""+seekBarPrezzo.getProgress());
+        seekBarRatingCasa.setProgress(MappaAnnunci.filtro.rating);
         tv_mostraRating.setText(""+seekBarRatingCasa.getProgress());
+
+
 
         seekBarPrezzo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progressChangedValuePrezzo = 0;
@@ -54,6 +65,7 @@ public class FiltriRicerca extends AppCompatActivity {
                 tv_mostraPrezzo.setText(""+progressChangedValuePrezzo);
             }
         });
+
 
         seekBarRatingCasa.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             int progressChangedValue = 0;
@@ -90,6 +102,7 @@ public class FiltriRicerca extends AppCompatActivity {
         MappaAnnunci.filtro.singola =singola;
         MappaAnnunci.filtro.doppia = doppia;
         MappaAnnunci.filtro.posto =posto;
+
 
         Intent intent = new Intent(this, MappaAnnunci.class);
         startActivity(intent);
