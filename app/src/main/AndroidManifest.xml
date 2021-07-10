@@ -26,7 +26,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ProfiloPrenotazione" />
+        <activity android:name=".prenotazione.ProfiloPrenotazione" />
         <activity android:name=".CambioPrenotazione" />
         <activity android:name=".prenotazione.LeMiePrenotazioni" />
         <activity android:name=".ricercalloggio.FiltriRicerca" />

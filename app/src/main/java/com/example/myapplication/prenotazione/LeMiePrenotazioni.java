@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +14,9 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.myapplication.ProfiloPrenotazione;
 import com.example.myapplication.R;
-import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Prenotazione;
 import com.example.myapplication.login.LoginActivity;
-import com.example.myapplication.ricercalloggio.ListaAnnunci;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +25,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -179,6 +174,7 @@ public class LeMiePrenotazioni extends AppCompatActivity {
                 intent.putExtra("tipo", prenotazione.tipoPrenotazione);
                 intent.putExtra("email", prenotazione.emailUtente);
                 intent.putExtra("annuncio", prenotazione.nomeAnnuncio);
+                intent.putExtra("id", prenotazione.id);
                 startActivity(intent);
             }
         });

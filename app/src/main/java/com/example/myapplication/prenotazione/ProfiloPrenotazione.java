@@ -1,17 +1,22 @@
-package com.example.myapplication;
+package com.example.myapplication.prenotazione;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.myapplication.R;
 import com.example.myapplication.classi.Prenotazione;
 import com.example.myapplication.prenotazione.VisitaVirtuale;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,8 +44,6 @@ public class ProfiloPrenotazione extends AppCompatActivity {
     Button pagaPrenotazione, confermaPrenotazione, cancellaPrenotazione, modificaPrenotazione, cambiaDataPrenotazione;
     TextView nomeAnnuncio, nomeUtente, emailUtente, dataPrenotazione, tipoPrenotazione, daPagare;
 
-    String email ="";
-    String annuncio ="";
     String tipo="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,47 +80,45 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         user = mAuth.getCurrentUser();
 
         //CERCO IL RIFERIMENTO ALLA PRENOTAZIONE
-        myRef.child("Prenotazioni").addValueEventListener(new ValueEventListener() {
+
+        String id = getIntent().getExtras().getString("id");
+        tipo = getIntent().getExtras().getString("tipo");
+
+        myRef.child("Prenotazioni").child(id).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                tipo = getIntent().getExtras().getString("tipo");
-                for (DataSnapshot annData : dataSnapshot.getChildren()) {
-                    Prenotazione p = annData.getValue(Prenotazione.class);
-                    email = getIntent().getExtras().getString("email");
-                    annuncio = getIntent().getExtras().getString("annuncio");
-                    if(p.getIdAnnuncio().equals(annuncio) && (p.getEmailUtente1().equals(email) && p.getEmailUtente2().equals(user.getEmail()))||
-                            (p.getEmailUtente2().equals(email) && p.getEmailUtente1().equals(user.getEmail())) ) {
-                        prenotazione = p;
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                  prenotazione = task.getResult().getValue(Prenotazione.class);
+
+                  //RIEMPIO LE TEXTVIEW
+                    initTextView();
+
+                    if(tipo.compareTo("IN ATTESA DI CONFERMA")==0){
+                        //SE LA PRENOTAZIONE E' IN ATTESA DI CONFERMA
+                        //posso cancellarla e basta
+                        cancellaPrenotazione.setVisibility(View.VISIBLE);
+                    }else if(tipo.compareTo("DA CONFERMARE")==0){
+                        //SE LA PRENOTAZIONE E' DA CONFERMARE
+                        //posso confermare o modificare la prenotazione
+                        modificaPrenotazione.setVisibility(View.VISIBLE);
+                        confermaPrenotazione.setVisibility(View.VISIBLE);
+                    }
+                    else if(tipo.compareTo("CONFERMATA")==0){
+                        //SE LA PRENOTAZIONE E' CONFERMATA
+                        cancellaPrenotazione.setVisibility(View.VISIBLE);
+                        //METODO PER ACCEDERE ALLA VISITA VIRTUALE
+                    }
+                    //SE IL TICKET E' DA PAGARE
+                    if(!prenotazione.isPagata()){
+                        //TODO SE L'UTENTE E' UNO STUDENTE
+                        DatabaseReference dr = myRef.child("Proprietari").child(user.getUid());
+                        if(dr == null)
+                            pagaPrenotazione.setVisibility(View.VISIBLE);
                     }
                 }
-
-                //RIEMPIO LE TEXTVIEW
-                initTextView();
-
-                if(tipo.compareTo("IN ATTESA DI CONFERMA")==0){
-                    //SE LA PRENOTAZIONE E' IN ATTESA DI CONFERMA
-                    //posso cancellarla e basta
-                    cancellaPrenotazione.setVisibility(View.VISIBLE);
-                }else if(tipo.compareTo("DA CONFERMARE")==0){
-                    //SE LA PRENOTAZIONE E' DA CONFERMARE
-                    //posso confermare o modificare la prenotazione
-                    modificaPrenotazione.setVisibility(View.VISIBLE);
-                    confermaPrenotazione.setVisibility(View.VISIBLE);
-                }
-                else if(tipo.compareTo("CONFERMATA")==0){
-                    //SE LA PRENOTAZIONE E' CONFERMATA
-                    cancellaPrenotazione.setVisibility(View.VISIBLE);
-                    //METODO PER ACCEDERE ALLA VISITA VIRTUALE
-                }
-                //SE IL TICKET E' DA PAGARE
-                if(!prenotazione.isPagata()){
-                    //TODO SE L'UTENTE E' UNO STUDENTE
-                    pagaPrenotazione.setVisibility(View.VISIBLE);
-                }
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
             }
         });
     }

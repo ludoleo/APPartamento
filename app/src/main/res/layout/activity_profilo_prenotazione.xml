@@ -7,7 +7,7 @@
 
     android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
-    tools:context=".ProfiloPrenotazione">
+    tools:context=".prenotazione.ProfiloPrenotazione">
 
     <TextView
         android:id="@+id/textView_nomeAnnuncio"

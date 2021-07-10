@@ -38,8 +38,8 @@ public class ModificaProfilo extends AppCompatActivity {
         recensioni.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent c = new Intent(ModificaProfilo.this, Notifiche.class);
-                startActivity(c);
+              //  Intent c = new Intent(ModificaProfilo.this, Notifiche.class);
+                //  startActivity(c);
             }
         });
 
