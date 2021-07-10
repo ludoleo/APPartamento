@@ -1,5 +1,6 @@
 package com.example.myapplication.ricercalloggio;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
+import com.example.myapplication.classi.Casa;
 import com.example.myapplication.home.CaseProprietario;
 import com.example.myapplication.profilo.ProfiloAnnuncio;
 import com.example.myapplication.registrazione.InserimentoDatiAnnuncio;
@@ -26,12 +28,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ListaAnnunci extends AppCompatActivity {
 
     private static final String TAG = "LISTA";
-    private List<Annuncio> listaAnnunci = new ArrayList<>();
+    private List<Annuncio> listaAnnunci;
+    private List<Casa> listaCasa;
+    private List<Annuncio> annunciPubblicati;
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
@@ -50,23 +55,61 @@ public class ListaAnnunci extends AppCompatActivity {
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
 
+        listaAnnunci = new LinkedList<>();
+        listaCasa = new LinkedList<>();
+
+
         //metto in una lista tutti gli annunci
         myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot annData: dataSnapshot.getChildren()) {
-                    Log.i(TAG, "annuncio");
                     Annuncio ann = annData.getValue(Annuncio.class);
                     listaAnnunci.add(ann);
                 }
 
-                //TODO qui parte l'algoritomo di ricerca ottimale
-                //ricercaOttimale();
-                aggiorna();
+                myRef.child("Case").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot annData: dataSnapshot.getChildren()) {
+                            Casa c = annData.getValue(Casa.class);
+                            listaCasa.add(c);
+                        }
+                        selezionaAnnunci();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
+    }
+
+    private void selezionaAnnunci() {
+
+        annunciPubblicati = new LinkedList<>();
+        for(Annuncio ann : listaAnnunci){
+            for(Casa a : listaCasa){
+                if(ann.getCasa().compareTo(a.getNomeCasa())==0){
+                    if(ann.getPrezzoMensile()<=MappaAnnunci.filtro.prezzo
+                            && a.getValutazione()>=MappaAnnunci.filtro.rating &&
+                            ((ann.getTipologiaAlloggio().equals("Intero appartamento") && MappaAnnunci.filtro.intero)
+                                    || (ann.getTipologiaAlloggio().equals("Stanza singola") && MappaAnnunci.filtro.singola)
+                                    || (ann.getTipologiaAlloggio().equals("Stanza doppia") && MappaAnnunci.filtro.doppia)
+                                    || (ann.getTipologiaAlloggio().equals("Posto letto") && MappaAnnunci.filtro.posto))){
+                        annunciPubblicati.add(ann);
+                    }
+                }
+            }
+        }
+
+        aggiorna();
+
     }
 
     private void aggiorna() {
@@ -102,12 +145,12 @@ public class ListaAnnunci extends AppCompatActivity {
                 //TODO prendo l'id della casa che ho cliccato vado ad aggiungi annuncio, pushando con l'intent l'id
                 CustomItem annuncio = (CustomItem) adapterView.getItemAtPosition(pos);
                 String nomeCasa = annuncio.nomeCasa;
-                creaAnnuncio(nomeCasa);
+                vaiInAnnuncio(nomeCasa);
             }
         });
     }
 
-    private void creaAnnuncio(String casa) {
+    private void vaiInAnnuncio(String casa) {
         Intent intent = new Intent(this, ProfiloAnnuncio.class);
         Log.i(TAG,"VADO A CASA "+casa);
         //TODO cosa mi conviene passare, idAnnuncio
@@ -126,13 +169,13 @@ public class ListaAnnunci extends AppCompatActivity {
     }
     private CustomItem[] createItems() {
 
-        Log.i(TAG, ""+listaAnnunci.size());
-        int size = listaAnnunci.size();
+        Log.i(TAG, ""+annunciPubblicati.size());
+        int size = annunciPubblicati.size();
 
         CustomItem[] items = new CustomItem[size]; //numero di annunci possibili
         for (int i = 0; i < items.length; i++) {
                 //mi prendo il riferimento all'annuncio
-            Annuncio a = listaAnnunci.get(i);
+            Annuncio a = annunciPubblicati.get(i);
 
             items[i] = new CustomItem();
             items[i].nomeCasa = a.getIdAnnuncio();
