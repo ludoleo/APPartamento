@@ -14,11 +14,12 @@
         android:id="@+id/immagineProfiloProp"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_gravity="start"
         android:layout_marginLeft="130dp"
         android:layout_marginTop="20dp"
         android:scaleType="centerCrop"
         android:src="@drawable/com_facebook_profile_picture_blank_portrait"
-        app:civ_border_color="@color/design_default_color_primary"
+        app:civ_border_color="@color/rosso_scuro"
         app:civ_border_width="2dp" />
 
     <ImageButton
@@ -47,7 +48,7 @@
             android:id="@+id/cambiaImmagineProp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cambia Immagine " />
+            android:text="@string/cambiaImmagine" />
 
         <Button
             android:id="@+id/aggiungiCasa"
@@ -55,33 +56,33 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="aggiungiNuovaCasa"
-            android:text="Aggiungi Casa" />
+            android:text="@string/aggiungiCasa" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/text_nomeP"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:text="@string/etichetta2" />
+        android:text="@string/nome" />
 
     <TextView
         android:id="@+id/text_cognomeP"
         android:layout_width="match_parent"
         android:layout_height="52dp"
-        android:text="Cognome" />
+        android:text="@string/cognome" />
 
 
     <TextView
         android:id="@+id/text_emailP"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Email" />
+        android:text="@string/email" />
 
     <TextView
         android:id="@+id/text_view_testo1"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Case proprietario"
+        android:text="@string/caseProprietario"
         android:textColor="@color/black" />
 
     <ListView
@@ -93,7 +94,7 @@
         android:id="@+id/text_view_testo2"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Recensioni Proprietario"
+        android:text="@string/recensioniProprietario"
         android:textColor="@color/black" />
 
     <ListView

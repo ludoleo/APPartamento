@@ -17,21 +17,23 @@
         android:layout_marginLeft="5dp"
         android:background="@drawable/background_sinistra"
         android:gravity="clip_horizontal"
-        android:hint="Nome"
+        android:hint="@string/nome"
         android:inputType="textPersonName"
         android:padding="15dp"
         android:textColorHint="@color/rosso_scuro"
-        android:translationY="-5dp" />
+        android:translationY="-5dp"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/et_cognome"
         android:layout_width="367dp"
         android:layout_height="50dp"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:autofillHints=""
         android:background="@drawable/background_destra"
-        android:hint="Cognome"
+        android:hint="@string/cognome"
         android:inputType="textPersonName"
         android:padding="15dp"
         android:textColorHint="@color/ic_launcher_background" />
@@ -40,26 +42,27 @@
         android:id="@+id/et_numTelefono"
         android:layout_width="367dp"
         android:layout_height="50dp"
-        android:layout_gravity="left"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:background="@drawable/background_sinistra"
-        android:hint="Telefono"
+        android:hint="@string/telefono"
         android:inputType="phone"
         android:padding="15dp"
         android:textColor="@color/rosso_scuro"
         android:textColorHint="@color/rosso_scuro"
-        android:translationY="10dp" />
+        android:translationY="10dp"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/et_univerista"
         android:layout_width="367dp"
         android:layout_height="50dp"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:autofillHints=""
         android:background="@drawable/background_destra"
-        android:hint="Università"
+        android:hint="@string/universita"
         android:inputType="textPersonName"
         android:padding="15dp"
         android:textColorHint="@color/ic_launcher_background"
@@ -68,13 +71,12 @@
     <TextView
         android:layout_width="367dp"
         android:layout_height="50dp"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:background="@drawable/background_sinistra"
-        android:inputType="text"
         android:padding="15dp"
-        android:text="Tipologia di Laurea"
+        android:text="@string/tipoLaurea"
         android:textColor="@color/rosso_scuro"
         android:textColorHint="@color/rosso_scuro"
         android:translationY="20dp" />
@@ -82,7 +84,7 @@
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/background_destra"
@@ -94,14 +96,14 @@
             android:layout_width="183dp"
             android:layout_height="50dp"
             android:checked="true"
-            android:text="Triennale"
+            android:text="@string/triennale"
             android:textColor="@color/ic_launcher_background" />
 
         <RadioButton
             android:id="@+id/radioButtonMagistrale"
             android:layout_width="183dp"
             android:layout_height="50dp"
-            android:text="Magistrale"
+            android:text="@string/magistrale"
             android:textColor="@color/ic_launcher_background" />
     </RadioGroup>
 
@@ -109,11 +111,11 @@
         android:id="@+id/et_inidirizzoLaurea"
         android:layout_width="367dp"
         android:layout_height="50dp"
-        android:layout_gravity="left"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
+        android:autofillHints=""
         android:background="@drawable/background_sinistra"
-        android:hint="Indirizzo Laurea"
+        android:hint="@string/indirizzoLaurea"
         android:inputType="textPersonName"
         android:padding="15dp"
         android:textColorHint="@color/rosso_scuro"
@@ -123,25 +125,25 @@
         android:id="@+id/et_descrizioneS"
         android:layout_width="367dp"
         android:layout_height="50dp"
-        android:layout_gravity="right"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/background_destra"
-        android:hint="Parlami un po' di te..."
+        android:hint="@string/descrizione"
         android:inputType="text"
         android:padding="15dp"
         android:textColorHint="@color/ic_launcher_background"
-        android:translationY="35dp" />
+        android:translationY="35dp"
+        android:autofillHints="" />
 
     <CheckBox
         android:id="@+id/checkBoxPrimaEsperienza"
         android:layout_width="367dp"
         android:layout_height="50dp"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:background="@drawable/background_sinistra"
-        android:text="Prima esperienza da fuori sede"
+        android:text="@string/primaEsperienza"
         android:textColor="@color/rosso_scuro"
         android:translationY="40dp" />
 
@@ -151,7 +153,7 @@
         android:layout_height="wrap_content"
         android:gravity="center|center_horizontal"
         android:onClick="inviaMessaggio"
-        android:text="Conferma"
+        android:text="@string/conferma"
         android:translationY="50dp" />
 
 </LinearLayout>

@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="Scegli i migliori annunci"
+        android:text="@string/scegliAnnunci"
         android:textColor="@color/rosso_scuro"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <ListView
@@ -30,6 +30,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="visualizzaMappa"
-        android:text="Visualizza Mappa" />
+        android:text="@string/mappa" />
 
 </LinearLayout>

@@ -15,7 +15,7 @@
         android:fadingEdge="horizontal"
         android:fontFamily="@font/josefin_sans"
         android:onClick="cercaMappa"
-        android:text="Cerca annunci a Torino"
+        android:text="@string/cercaAnnunci"
         android:textColor="@color/rosso_scuro"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -45,6 +45,7 @@
             android:layout_weight="1"
             android:adjustViewBounds="false"
             android:background="@drawable/ic_outline_home_24"
+            android:contentDescription="@string/home"
             android:fadingEdge="vertical|none"
             android:translationX="-2dp"
             android:visibility="visible"
@@ -60,6 +61,7 @@
             android:layout_marginRight="2dp"
             android:layout_weight="1"
             android:background="@color/rosso_mattone"
+            android:contentDescription="@string/profilo"
             android:onClick="profilo"
             app:srcCompat="@drawable/ic_baseline_face_24"
             tools:ignore="VectorDrawableCompat" />
@@ -74,6 +76,7 @@
             android:layout_marginRight="2dp"
             android:layout_weight="1"
             android:background="@color/rosso_mattone"
+            android:contentDescription="@string/messaggi"
             android:onClick="messaggi"
             app:srcCompat="@drawable/ic_baseline_message_24"
             tools:ignore="VectorDrawableCompat" />
@@ -88,6 +91,7 @@
             android:layout_marginRight="2dp"
             android:layout_weight="1"
             android:background="@drawable/ic_outline_calendar_today_24"
+            android:contentDescription="@string/Prenotazioni1"
             android:onClick="prenotazione"
             tools:ignore="VectorDrawableCompat" />
 
@@ -101,6 +105,7 @@
             android:layout_marginRight="4dp"
             android:layout_weight="1"
             android:background="@color/rosso_scuro"
+            android:contentDescription="@string/logout"
             android:onClick="esci"
             app:srcCompat="@drawable/ic_baseline_exit_to_app_24"
             tools:ignore="VectorDrawableCompat" />

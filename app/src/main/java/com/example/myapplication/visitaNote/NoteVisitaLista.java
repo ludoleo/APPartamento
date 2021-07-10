@@ -57,6 +57,13 @@ public class NoteVisitaLista extends ListActivity {
     }
 
 
+    // Menù con i 3 puntini
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(Menu.FIRST, Menu.FIRST, Menu.FIRST, "Inserisci nuova nota relativa alla Visita");
+        return true;
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -76,12 +83,7 @@ public class NoteVisitaLista extends ListActivity {
         cursor.close();
         db.close();
     }
-    // Menù con i 3 puntini
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(Menu.FIRST, Menu.FIRST, Menu.FIRST, "Inserisci nuova nota relativa alla Visita");
-        return true;
-    }
+
     // Dico cosa deve fare una volta cliccato
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

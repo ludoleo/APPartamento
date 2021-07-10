@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="@string/case1"
-        android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textColor="@color/rosso_scuro"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <Button
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="inserisciCasa"
-        android:text="@string/Bcase2" />
+        android:text="@string/aggiungiCasa" />
 
     <ListView
         android:id="@+id/lv_case_prop"

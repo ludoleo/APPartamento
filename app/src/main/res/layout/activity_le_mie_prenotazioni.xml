@@ -17,15 +17,20 @@
             android:id="@+id/textView19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="LE TUE PRENOTAZIONI" />
+            android:text="@string/tuePrenotazioni" />
 
         <Spinner
             android:id="@+id/spinnerPrenotazione"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/tipoPrenotazione"
+            android:gravity="start"
             android:padding="5dp"
-            android:paddingLeft="20dp"></Spinner>
+            android:paddingStart="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:paddingEnd="10dp"></Spinner>
     </LinearLayout>
 
     <ListView

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">UNIAffitto</string>
-    <string name="etichetta1">Name</string>
+    <string name="nome">Name</string>
     <string name="annulla">cancel</string>
     <string name="conferma">confirm</string>
     <string name="indietro">back</string>
-    <string name="etichetta12">Student Profile</string>
+    <string name="profiloStud">Student Profile</string>
     <string name="etichetta2">name</string>
-    <string name="etichetta3">surname</string>
-    <string name="etichetta4">description</string>
-    <string name="etichetta5">phone</string>
-    <string name="etichetta6">personal information</string>
+    <string name="cognome">surname</string>
+    <string name="descrizione">description</string>
+    <string name="telefono">phone</string>
+    <string name="informazioniPersonali">personal information</string>
     <string name="Bottone1">reviews</string>
-    <string name="Bottone2">edit profile</string>
+    <string name="modificaProfilo">edit profile</string>
     <string name="Etichetta7">reviews</string>
     <string name="Bottone3">GENERAL INFORMATION</string>
     <string name="Bottone4">NOTIFICATION MANAGEMENT</string>
@@ -26,13 +26,15 @@
     <string name="prezzo">price</string>
     <string name="zone">zones</string>
     <string name="tipologia">typology</string>
+    <string name="euro">€</string>
+    <string name="selezionaPrezzo">Select price</string>
     <string name="etichettaPaypal">For your reservation the owner requires the payment of a ticket, which will be reimbursed once the visit has taken place.</string>
     <string name="etichettaImportoPaypal">The owner asks for a reservation fee of 5 euro</string>
     <string name="channel_description">channel description</string>
     <string name="assistenza1">Flat Service Center don\'t hesitate to contact us if you have any problems</string>
     <string name="assistenza2">If you have any problems, please contact us as the following e-mail : APPartamento@gmail.co</string>
     <string name="case1">Your Houses</string>
-    <string name="Bcase2">Add new home</string>
+    <string name="aggiungiCasa">Add new home</string>
     <string name="Prenotazioni1">Bookings</string>
     <string name="title_activity_messaggi">Activity message</string>
     <string name="first_fragment_label">First Fragment</string>
@@ -41,4 +43,16 @@
     <string name="previous">Previous</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment</string>
+    <string name="selTipologiaAlloggio">Select flat type</string>
+    <string name="alarm_notif_text">New notification</string>
+    <string name="profilo">profile</string>
+    <string name="mappa">show map</string>
+    <string name="posizione">position</string>
+    <string name="singola">single room</string>
+    <string name="doppia">double room</string>
+    <string name="ricordami">remember me</string>
+    <string name="registrati">sign up</string>
+    <string name="precedente">previous</string>
+    <string name="successivo">next</string>
+    <string name="universita">university</string>
 </resources>

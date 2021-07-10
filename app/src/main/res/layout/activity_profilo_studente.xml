@@ -63,7 +63,7 @@
                     android:id="@+id/changestudent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Change Image " />
+                    android:text="@string/cambiaImmagine" />
 
                 <Button
                     android:id="@+id/modificaProfilo"
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="1"
-                    android:text="@string/Bottone2" />
+                    android:text="@string/modificaProfilo" />
 
                 <Button
                     android:id="@+id/button_la_tua_casa"
@@ -80,7 +80,7 @@
                     android:layout_row="1"
                     android:layout_column="1"
                     android:onClick="laTuaCasa"
-                    android:text="La mia casa" />
+                    android:text="@string/laMiaCasa" />
 
                 <ImageButton
                     android:id="@+id/button_home3"
@@ -89,6 +89,7 @@
                     android:layout_row="0"
                     android:layout_column="2"
                     android:background="@color/rosso_mattone"
+                    android:contentDescription="@string/home"
                     android:onClick="goHome"
                     android:translationX="5dp"
                     android:visibility="visible"
@@ -100,7 +101,7 @@
                 android:id="@+id/text_info"
                 android:layout_width="match_parent"
                 android:layout_height="37dp"
-                android:text="@string/etichetta6"
+                android:text="@string/informazioniPersonali"
                 android:textSize="24sp"
                 android:textStyle="normal|bold" />
 
@@ -119,31 +120,32 @@
                     <TextView
                         android:id="@+id/text_nome"
                         android:layout_width="match_parent"
-                        android:layout_height="44dp"></TextView>
+                        android:layout_height="44dp"
+                        android:text="@string/nome"></TextView>
 
                     <TextView
                         android:id="@+id/text_cognome"
                         android:layout_width="match_parent"
                         android:layout_height="44dp"
-                        android:text="@string/etichetta3" />
+                        android:text="@string/cognome" />
 
                     <TextView
                         android:id="@+id/text_descrizione"
                         android:layout_width="match_parent"
                         android:layout_height="44dp"
-                        android:text="@string/etichetta4" />
+                        android:text="@string/descrizione" />
 
                     <TextView
                         android:id="@+id/text_universita"
                         android:layout_width="match_parent"
                         android:layout_height="44dp"
-                        android:text="Univeristà" />
+                        android:text="@string/universita" />
 
                     <TextView
                         android:id="@+id/text_indirizzoLaurea"
                         android:layout_width="match_parent"
                         android:layout_height="44dp"
-                        android:text="Indirizzo Laurea" />
+                        android:text="@string/indirizzoLaurea" />
                 </LinearLayout>
 
                 <LinearLayout

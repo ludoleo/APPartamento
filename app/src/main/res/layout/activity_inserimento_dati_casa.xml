@@ -13,38 +13,44 @@
         android:id="@+id/et_nomeCasa"
         android:layout_width="367dp"
         android:layout_height="60dp"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:background="@drawable/background_sinistra"
-        android:hint="Scegli il nome della tua casa"
+        android:gravity="center|start"
+        android:hint="@string/nomeCasa"
+        android:inputType="text"
         android:padding="5dp"
         android:textColorHint="@color/rosso_scuro"
         android:textSize="14sp"
-        android:translationY="-10dp" />
+        android:translationY="-10dp"
+        android:autofillHints="" />
 
     <TextView
         android:layout_width="367dp"
         android:layout_height="50dp"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
-        android:gravity="bottom"
+        android:gravity="bottom|center|end"
         android:padding="5dp"
-        android:text="Posizione"
+        android:text="@string/posizione"
         android:textStyle="bold" />
 
     <EditText
         android:id="@+id/et_viaCasa"
         android:layout_width="367dp"
         android:layout_height="60dp"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:autofillHints=""
         android:background="@drawable/background_destra"
+        android:drawableStart="@drawable/ic_location"
         android:drawableLeft="@drawable/ic_location"
         android:drawablePadding="16dp"
-        android:hint="Via/Strada/P.zz, numero civico, CAP"
+        android:hint="@string/indirizzo"
+        android:inputType="textPostalAddress"
         android:padding="20dp"
         android:textColorHint="@color/ic_launcher_background" />
 
@@ -60,18 +66,18 @@
     <TextView
         android:layout_width="367dp"
         android:layout_height="50dp"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:gravity="bottom"
         android:padding="10dp"
-        android:text="Caratteristiche principali (numero)"
+        android:text="@string/caratteristiche"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="367dp"
         android:layout_height="60dp"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:background="@drawable/background_sinistra"
@@ -82,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="#Bagni"
+            android:text="@string/numBagni"
             android:textColor="@color/rosso_scuro"
             android:textStyle="bold" />
 
@@ -91,17 +97,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/background_destra"
-            android:hint="1"
+            android:hint="@string/numero"
             android:inputType="number"
             android:padding="10dp"
             android:textColor="@color/ic_launcher_background"
-            android:textColorHint="@color/ic_launcher_background" />
+            android:textColorHint="@color/ic_launcher_background"
+            android:autofillHints="" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="#Stanze"
+            android:text="@string/numStanze"
             android:textColor="@color/rosso_scuro"
             android:textStyle="bold" />
 
@@ -109,8 +116,9 @@
             android:id="@+id/et_numeroStanze"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:autofillHints=""
             android:background="@drawable/background_destra"
-            android:hint="3"
+            android:hint="@string/numero"
             android:inputType="number"
             android:padding="10dp"
             android:textColor="@color/ic_launcher_background"
@@ -120,7 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="#Ospisti"
+            android:text="@string/numOspiti"
             android:textColor="@color/rosso_scuro"
             android:textStyle="bold" />
 
@@ -129,10 +137,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/background_destra"
-            android:hint="2"
+            android:hint="@string/numero"
             android:inputType="number"
             android:padding="10dp"
-            android:textColorHint="@color/ic_launcher_background" />
+            android:textColorHint="@color/ic_launcher_background"
+            android:autofillHints="" />
 
     </LinearLayout>
 
@@ -141,6 +150,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="caricaCasa"
-        android:text="Continua"
+        android:text="@string/conferma"
         android:translationY="30dp" />
 </LinearLayout>

@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:text="Seleziona prezzo"
-        android:textSize="20dp" />
+        android:text="@string/selezionaPrezzo"
+        android:textSize="20sp" />
 
     <SeekBar
         android:id="@+id/seekBarPrezzo"
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:text=" €"></TextView>
+            android:text="@string/euro"></TextView>
     </LinearLayout>
 
     <TextView
@@ -50,44 +50,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:text="Seleziona tipologia alloggio"
-        android:textSize="20dp" />
+        android:text="@string/selTipologiaAlloggio"
+        android:textSize="20sp" />
 
     <CheckBox
         android:id="@+id/checkBoxInteroAppartamento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:layout_marginLeft="10dp"
-        android:text="Intero appartamento" />
+        android:layout_marginTop="10dp"
+        android:text="@string/InteroApp"
+        android:layout_marginStart="10dp" />
 
     <CheckBox
         android:id="@+id/checkBoxStanzaSingola"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:text="Stanza singola" />
+        android:text="@string/singola" />
 
     <CheckBox
         android:id="@+id/checkBoxStanzaDoppia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:text="Stanza doppia" />
+        android:text="@string/doppia" />
 
     <CheckBox
         android:id="@+id/checkBoxPostoLetto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:text="Posto letto" />
+        android:text="@string/pLetto" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:text="Rating casa"
-        android:textSize="20dp" />
+        android:text="@string/valCasa"
+        android:textSize="20sp" />
 
     <SeekBar
         android:id="@+id/seekBarRatingCasa"
@@ -109,5 +115,5 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:onClick="conferma"
-        android:text="Conferma"></Button>
+        android:text="@string/conferma"></Button>
 </LinearLayout>

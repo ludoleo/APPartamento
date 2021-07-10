@@ -1,20 +1,40 @@
 <resources>
     <string name="app_name">UNIAffitto</string>
 
-    <string name="etichetta1">Nome</string>
+    <string name="nome">Nome</string>
     <string name="annulla">Annulla</string>
     <string name="conferma">Conferma</string>
     <string name="indietro">indietro</string>
+    <string name="logout" translatable="false">LOGOUT</string>
+    <string name="login" translatable="false">LOGIN</string>
+    <string name="precedente">Precedente</string>
+    <string name="successivo">Successivo</string>
+    <string name="ciao">CIAO! Benvenuto in UNIAffitto</string>
+    <string name="registrati">REGISTRATI</string>
+    <string name="ricordami">Ricordami</string>
+    <string name="oppure">Oppure puoi registrarti</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="passwordDIM">Password Dimenticata</string>
 
-    <string name="etichetta12">Profilo Studente</string>
-    <string name="etichetta2">Nome</string>
-    <string name="etichetta3">Cognome</string>
-    <string name="etichetta4">Descrizione</string>
-    <string name="etichetta5">Telefono</string>
-    <string name="etichetta6">Informazioni personali</string>
+
+    <string name="profiloStud">Profilo Studente</string>
+    <string name="cognome">Cognome</string>
+    <string name="universita">Univeristà</string>
+    <string name="indirizzoLaurea">Indirizzo Laurea</string>
+    <string name="tipoLaurea">Tipologia Laurea</string>
+    <string name="descrizione">Descrizione</string>
+    <string name="telefono">Telefono</string>
+    <string name="email" translatable="false">E-mail</string>
+    <string name="profilo">profilo</string>
+    <string name="messaggi">Messaggi</string>
+    <string name="caseProprietario">Case Proprietario</string>
+    <string name="recensioniProprietario">Recensioni Proprietario</string>
+    <string name="informazioniPersonali">Informazioni personali</string>
     <string name="Bottone1">Recensioni </string>
-    <string name="Bottone2">Modifica Profilo</string>
+    <string name="modificaProfilo">Modifica Profilo</string>
+    <string name="tuePrenotazioni">LE TUE PRENOTAZIONI</string>
     <string name="Etichetta7">Recensioni</string>
+    <string name="cercaAnnunci">Cerca gli annunci a Torino</string>
     <string name="Bottone3">INFORMAZIONI PERSONALI </string>
     <string name="Bottone4">GESTIONE DELLE NOTIFICHE </string>
     <string name="Bottone5">PUBBLICA NUOVO ANNUNCIO </string>
@@ -25,6 +45,10 @@
     <string name="etichetta11">Assistenza</string>
     <string name="etichetta13">Opzione visita virtuale</string>
     <string name="prezzo">Prezzo</string>
+    <string name="selezionaPrezzo">Seleziona prezzo</string>
+    <string name="euro">€</string>
+    <string name="inserisciValutazione">Inserisci valutazione</string>
+    <string name="selTipologiaAlloggio">Seleziona tipologia alloggio</string>
     <string name="zone">Zone</string>
     <string name="tipologia">Tipologia</string>
     <string name="etichettaPaypal">Per la tua prenotazione il proprietario richiede il pagamento di un ticket, che ti verrà rimborsato una volta avvenuta la visita</string>
@@ -36,8 +60,43 @@
     <string name="assistenza1">Centro Assistenza APPartamento non esistare a contattarci per qualsiasi problema</string>
     <string name="assistenza2">Per eventuali problemi puoi contattarci al nostro indirizzo e-mail :  Appartamento@gmail.com </string>
     <string name="case1">Le tue case</string>
-    <string name="Bcase2">Aggiungi nuova casa</string>
+    <string name="aggiungiCasa">Aggiungi nuova casa</string>
     <string name="Prenotazioni1">Prenotazioni</string>
+    <string name="InteroApp">Intero appartamento</string>
+    <string name="singola">Stanza singola</string>
+    <string name="doppia">Stanza doppia</string>
+    <string name="pLetto">Posto letto</string>
+    <string name="valCasa">Rating casa</string>
+    <string name="cambiaImmagine">Cambia Immagine</string>
+    <string name="laMiaCasa">La mia casa</string>
+    <string name="home" translatable="false">Home</string>
+    <string name="nomeBolletta">Inserire nome bolletta</string>
+    <string name="aggiungiBolletta">Aggiungi bolletta alla lista</string>
+    <string name="inserisciImmagine">Aggiungi immagine da galleria</string>
+    <string name="visulizzaBollette">Visualizza bollette presenti</string>
+    <string name="inserisciNomeannuncio">Inserisci il nome dell\'annuncio</string>
+    <string name="selezionaTipologia">Seleziona la tipologia</string>
+    <string name="valoreprezzo" translatable="false">300</string>
+    <string name="spese">Inserisci eventuali spese straordinarie che posso riguardare l\'appartamento (conguaglio, caparre extra...)</string>
+    <string name="nomeCasa">Scegli il nome della tua casa</string>
+    <string name="posizione">Posizione</string>
+    <string name="indirizzo">Via/Strada/P.zz, numero civico, CAP</string>
+    <string name="caratteristiche">Caratteristiche principali (numero)</string>
+    <string name="numBagni">N° Bagni</string>
+    <string name="numero" translatable="false">1</string>
+    <string name="numStanze">N° Stanze</string>
+    <string name="numOspiti">N° Ospiti</string>
+    <string name="primaEsperienza">Prima Esperienza</string>
+    <string name="triennale">Triennale</string>
+    <string name="magistrale">Magistrale</string>
+    <string name="valutazione">Valutazione</string>
+    <string name="link" translatable="false">LINK</string>
+    <string name="scegliAnnunci">Scegli i migliori annunci</string>
+    <string name="mappa">Visualizza mappa</string>
+
+
+
+
 
 
     <string-array name="hobby">
@@ -111,7 +170,8 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="alarm_notif_title">UNIAffitto</string>
+    <string name="alarm_notif_title" translatable="false">UNIAffitto</string>
     <string name="alarm_notif_text">Nuova notifica</string>
+    <string name="etichetta2">nome</string>
 
 </resources>

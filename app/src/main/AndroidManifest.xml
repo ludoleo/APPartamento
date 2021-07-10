@@ -89,7 +89,6 @@
         <activity android:name=".messaggi.ChatActivity" />
         <activity android:name=".profilo.ModificaInfoPersonali" />
         <activity android:name=".profilo.ModificaProfilo" />
-        <activity android:name=".profilo.Notifiche" />
         <activity android:name=".prenotazione.PrenotazioneCalendarioActivity" />
         <activity android:name=".prenotazione.PrenotazionePaypalActivity" />
         <activity android:name=".profilo.ProfiloAnnuncio" />
@@ -104,7 +103,7 @@
         <activity android:name=".registrazione.RegistrationActivity" />
         <activity android:name=".prenotazione.VisitaVirtuale" />
         <activity android:name=".login.LoginActivity" />
-        <activity android:name=".visitaNote.InserimentoDatiVisita" />
+        <activity android:name=".visitaNote.InserimentoDatiVisita"/>
         <activity android:name=".bollettaSQL.ImageSQL" />
         <activity android:name=".bollettaSQL.Bolletta_main" />
         <activity android:name=".visitaNote.NoteVisitaLista" />

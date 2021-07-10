@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageis"
-        android:text="Previous" />
+        android:text="@string/precedente" />
 
     <Button
         android:id="@+id/nextBtn"
@@ -28,14 +28,14 @@
         android:layout_below="@+id/imageis"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:text="Next" />
+        android:text="@string/successivo" />
 
     <Button
         android:id="@+id/PickImages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="PickImages" />
+        android:text="@string/inserisciImmagine" />
 
 
 </RelativeLayout>

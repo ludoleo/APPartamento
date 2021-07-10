@@ -5,6 +5,7 @@
     android:id="@+id/linear1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
     tools:context=".recensione.RecensioniProprietarioInterne">
 
@@ -22,9 +23,9 @@
         android:textAppearance="?android:textAppearanceLarge" />
 
     <RatingBar
+        android:id="@+id/RatingBar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/RatingBar"/>
+        android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/Review"
@@ -40,22 +41,13 @@
         android:onClick="NuovaRecProp"
         android:text="Invia"
         android:textAllCaps="false" />
+
     <TextView
+        android:id="@+id/showRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:id="@+id/showRating"
-        android:layout_margin="10dp"/>
-
-
-
-
-
-
-
-
-
-
+        android:layout_margin="10dp"
+        android:textAppearance="?android:textAppearanceMedium" />
 
 
 </LinearLayout>

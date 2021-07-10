@@ -14,31 +14,33 @@
 
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/nomeBolletta"
         android:inputType="textEmailAddress"
-        android:text="Inserire nome bolletta" />
+        android:autofillHints="" />
 
     <ImageView
         android:id="@+id/bolletta"
         android:layout_width="match_parent"
         android:layout_height="289dp"
+        android:contentDescription="@string/cambiaImmagine"
         app:srcCompat="@drawable/ic_baseline_add_a_photo_24" />
 
     <Button
         android:id="@+id/bottone_aggiungi_bolletta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Aggiungi Nuova Bolletta alla lista" />
+        android:text="@string/aggiungiBolletta" />
 
     <Button
         android:id="@+id/seleziona_bolletta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Seleziona da galleria " />
+        android:text="@string/inserisciImmagine" />
 
     <Button
         android:id="@+id/bollette_presenti"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Visualizza Bollette Presenti" />
+        android:text="@string/visulizzaBollette" />
 
 </LinearLayout>

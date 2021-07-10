@@ -10,6 +10,7 @@ import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 import com.example.myapplication.R;
@@ -111,5 +112,21 @@ public class InserimentoDatiVisita extends Activity {
 
     }
 
+    public void confermaNota(View view) {
+
+        Intent data = new Intent();
+        Bundle NoteBundle = new Bundle();
+        note.nome = nome.getText().toString();
+        // non so se va bene con gli interi
+        note.valutazione= valutazione.getText().toString();
+        note.descrizione= descrizione.getText().toString();
+        note.zona = zona.getText().toString();
+        note.link = link.getText().toString();
+
+        NoteBundle.putParcelable("note", note);
+        data.putExtra("note", NoteBundle);
+        setResult(Activity.RESULT_OK, data);
+        finish();
+    }
 }
 

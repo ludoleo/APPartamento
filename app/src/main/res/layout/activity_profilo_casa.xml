@@ -31,7 +31,7 @@
         android:drawableLeft="@drawable/ic_baseline_home"
         android:onClick="profiloProprietario"
         android:padding="10dp"
-        android:text="Il proprirtario della tua casa"
+        android:text="Il proprietario della tua casa"
         android:textSize="20sp" />
 
     <TextView
