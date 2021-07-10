@@ -27,6 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,40 +64,45 @@ public class ListaAnnunci extends AppCompatActivity {
         //metto in una lista tutti gli annunci
         myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot annData: dataSnapshot.getChildren()) {
                     Annuncio ann = annData.getValue(Annuncio.class);
                     listaAnnunci.add(ann);
                 }
 
-                myRef.child("Case").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot annData: dataSnapshot.getChildren()) {
-                            Casa c = annData.getValue(Casa.class);
-                            listaCasa.add(c);
-                        }
-                        selezionaAnnunci();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(@NotNull DatabaseError databaseError) {}
         });
+        myRef.child("Case").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot casData: snapshot.getChildren()) {
+                    Casa c = casData.getValue(Casa.class);
+                    listaCasa.add(c);
+                    Log.i(TAG," CASA "+ c+" listaCasa "+listaCasa.toString());
+                }
+
+
+                selezionaAnnunci();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 
     private void selezionaAnnunci() {
 
         annunciPubblicati = new LinkedList<>();
-        for(Annuncio ann : listaAnnunci){
-            for(Casa a : listaCasa){
-                if(ann.getCasa().compareTo(a.getNomeCasa())==0){
+        for(Casa a : listaCasa){
+            for(Annuncio ann : listaAnnunci){
+                Log.i(TAG,"ANNUNCIO E CASA "+ann.getIdCasa()+" "+a.getNomeCasa()+"-"+listaCasa.toString()+"-");
+                if(ann.getIdCasa().compareTo(a.getNomeCasa())==0){
                     if(ann.getPrezzoMensile()<=MappaAnnunci.filtro.prezzo
                             && a.getValutazione()>=MappaAnnunci.filtro.rating &&
                             ((ann.getTipologiaAlloggio().equals("Intero appartamento") && MappaAnnunci.filtro.intero)
