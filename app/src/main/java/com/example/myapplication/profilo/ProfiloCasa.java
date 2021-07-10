@@ -477,4 +477,36 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             }
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mapViewCasa.onStart(); }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mapViewCasa!=null)
+          mapViewCasa.onResume();}
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mapViewCasa!=null)
+            mapViewCasa.onStop(); }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mapViewCasa!=null)
+          mapViewCasa.onDestroy(); }
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        if(mapViewCasa!=null)
+          mapViewCasa.onLowMemory(); }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(mapViewCasa!=null)
+         mapViewCasa.onPause(); }
 }
