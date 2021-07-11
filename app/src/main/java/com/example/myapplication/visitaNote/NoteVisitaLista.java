@@ -12,7 +12,7 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.CursorAdapter;
 import android.widget.SimpleCursorAdapter;
 import com.example.myapplication.visitaNote.Note.NoteMetaData;
@@ -49,7 +49,7 @@ public class NoteVisitaLista extends ListActivity {
         //Preparo la Query
         String sql = "SELECT _id, nome, valutazione, descrizione, zona, link FROM Note";
 
-        cursor = db.rawQuery(sql, null);
+        cursor = db.rawQuery(sql,null);
         adapter = new SimpleCursorAdapter(this, R.layout.visita_note_row, cursor, FROMS, TOS, SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
         getListView().setAdapter(adapter);
@@ -102,32 +102,32 @@ public class NoteVisitaLista extends ListActivity {
     }
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+       AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
                 .getMenuInfo();
         long Noteid = info.id;
         switch (item.getItemId()) {
             case DELETE_MENU_OPTION:
-                db.delete("TEAM", "_id=" + Noteid, null);
+                db.delete("NOTE", "_id=" + Noteid, null);
                 updateListView();
                 return true;
             case UPDATE_MENU_OPTION:
-                Cursor tmpCursor = db.query(NoteMetaData.TABLE_NAME,
+                Cursor prefCursor = db.query(NoteMetaData.TABLE_NAME,
                         NoteMetaData.COLUMNS, "_id=" + Noteid, null, null, null,
                         null);
-                if (tmpCursor.moveToNext()) {
+                if (prefCursor.moveToNext()) {
                     Intent updateIntent = new Intent(this, InserimentoDatiVisita.class);
                     Bundle NoteBundle = new Bundle();
                     Note nota = new Note();
                     nota.id = Noteid;
-                    nota.nome = tmpCursor.getString(tmpCursor
+                    nota.nome = prefCursor.getString(prefCursor
                             .getColumnIndex(NoteMetaData.NOME));
-                    nota.valutazione = tmpCursor.getString(tmpCursor
+                    nota.valutazione = prefCursor.getString(prefCursor
                             .getColumnIndex(NoteMetaData.VALUTAZIONE));
-                    nota.descrizione = tmpCursor.getString(tmpCursor
+                    nota.descrizione = prefCursor.getString(prefCursor
                             .getColumnIndex(NoteMetaData.DESCRIZIONE));
-                    nota.zona = tmpCursor.getString(tmpCursor
+                    nota.zona = prefCursor.getString(prefCursor
                             .getColumnIndex(NoteMetaData.ZONA));
-                    nota.link=tmpCursor.getString(tmpCursor
+                    nota.link=prefCursor.getString(prefCursor
                             .getColumnIndex(NoteMetaData.LINK));
                     NoteBundle.putParcelable("note", nota);
                     updateIntent.putExtra("note", NoteBundle);
@@ -187,7 +187,7 @@ public class NoteVisitaLista extends ListActivity {
             Log.i(TAG_LOG, "Inizio Creazione DB");
 
             String sql="";
-            sql += "CREATE TABLE \"Note\" (";
+            sql += "CREATE TABLE \"NOTE\" (";
             sql += "	    \"_id\" INTEGER PRIMARY KEY AUTOINCREMENT,";
             sql += "	    \"nome\" TEXT NOT NULL,";
             sql += "	    \"valutazione\" TEXT NOT NULL,";

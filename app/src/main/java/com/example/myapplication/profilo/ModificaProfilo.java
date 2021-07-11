@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.myapplication.Notes_Prova.EditNotes;
+import com.example.myapplication.SqlNotemain;
 import com.example.myapplication.bollettaSQL.ImageSQL;
 import com.example.myapplication.R;
 import com.example.myapplication.visitaNote.InserimentoDatiVisita;
@@ -47,7 +49,7 @@ public class ModificaProfilo extends AppCompatActivity {
         note.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent d = new Intent(ModificaProfilo.this, InserimentoDatiVisita.class);
+                Intent d = new Intent(ModificaProfilo.this, EditNotes.class);
                 startActivity(d);
             }
         });
@@ -72,7 +74,7 @@ public class ModificaProfilo extends AppCompatActivity {
 
     public void vediNote(View view) {
 
-        Intent intent = new Intent(ModificaProfilo.this, NoteVisitaLista.class);
+        Intent intent = new Intent(ModificaProfilo.this, SqlNotemain.class);
         startActivity(intent);
     }
 }

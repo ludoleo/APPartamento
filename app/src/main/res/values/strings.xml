@@ -100,6 +100,19 @@
 
 
 
+    // da modificare
+
+    <string name="empty_message">Non ci sono Team</string>
+    <string name="name_label">Nome</string>
+    <string name="city_label">Città </string>
+    <string name="country_label">Paese</string>
+    <string name="web_label">Sito</string>
+    <string name="create_option">Inserisci Team</string>
+    <string name="save_option">Salva</string>
+    <string name="cancel_option">Annulla</string>
+    <string name="delete_option">Elimina</string>
+    <string name="update_option">Aggiorna</string>
+
 
     <string-array name="hobby">
         <item>Giochi da tavolo</item>

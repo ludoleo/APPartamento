@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="wrap_content" android:orientation="vertical"
+        android:id="@+id/teamRowLayout" android:layout_width="fill_parent">
+        <TextView android:id="@+id/teamName" android:text="Nome" android:layout_height="fill_parent" android:layout_width="fill_parent"></TextView>
+        <TextView android:layout_height="wrap_content" android:id="@+id/teamCity" android:text="CittÃ " android:layout_width="fill_parent"></TextView>
+        <TextView android:layout_height="wrap_content" android:id="@+id/teamCountry" android:text="Country" android:layout_width="fill_parent"></TextView>
+        <TextView android:layout_height="wrap_content" android:id="@+id/teamWebSite" android:text="Web Site" android:layout_width="fill_parent"></TextView>
+    </LinearLayout>
+
+

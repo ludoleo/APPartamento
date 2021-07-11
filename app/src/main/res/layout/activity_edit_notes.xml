@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <RelativeLayout android:id="@+id/RelativeLayout01"
+        android:layout_width="fill_parent" android:layout_height="fill_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:padding="12dp">
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/nameLabel"
+            android:text="@string/name_label" android:layout_marginTop="18px"></TextView>
+        <EditText android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/nameEdit"
+            android:layout_alignParentRight="true" android:layout_alignBaseline="@+id/nameLabel"
+            android:layout_toRightOf="@+id/nameLabel" android:layout_marginLeft="10px"></EditText>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:id="@+id/cityLabel" android:text="@string/city_label"
+            android:layout_below="@+id/nameLabel" android:layout_marginTop="25px" android:layout_alignRight="@+id/nameLabel"></TextView>
+        <EditText android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/cityEdit"
+            android:layout_below="@+id/nameEdit" android:layout_alignRight="@+id/nameEdit"
+            android:layout_alignLeft="@+id/nameEdit" android:layout_alignBaseline="@+id/cityLabel"></EditText>
+
+        <TextView
+            android:id="@+id/countryLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cityLabel"
+            android:layout_marginTop="25px"
+            android:text="@string/country_label" >
+        </TextView>
+        <EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/countryEdit" android:layout_below="@+id/cityEdit" android:layout_alignLeft="@+id/cityEdit" android:layout_alignRight="@+id/cityEdit" android:layout_alignBaseline="@+id/countryLabel"></EditText>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/countryLabel" android:layout_marginTop="25px" android:id="@+id/webSiteLabel" android:text="@string/web_label" android:layout_alignRight="@+id/countryLabel"></TextView>
+        <EditText android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/webSiteEdit" android:layout_below="@+id/countryEdit" android:layout_alignRight="@+id/countryEdit" android:layout_alignLeft="@+id/countryEdit" android:layout_alignBaseline="@+id/webSiteLabel"></EditText>
+
+    <Button
+        android:id="@+id/buttonlistSql"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:text="Aggiungi a note"/>
+
+"
+
+        android:text="Button" />
+</RelativeLayout>
+
+
