@@ -193,10 +193,22 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         //SI EFFETTUA IL PAGAMENTO
     }
 
-    public void conferma(View view) {
+    public void confermaPrenotazione(View view) {
 
         //LA PRENOTAZIONE DIVENTA CONFERMATA
-        myRef.child("Prenotazioni").child(id).child("confermata").setValue(true);
+        prenotazione.setConfermata(true);
+        DatabaseReference preAdd = myRef.child("Prenotazioni").push();
+        preAdd.setValue(prenotazione);
+        String key = preAdd.getKey();
+        myRef.child("Prenotazioni").child(key).child("id").setValue(key);
+
+        myRef.child("Prenotazioni").child(id).removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+
+            }
+        });
+
         //CALENDARIO
         String[] projection =
                 new String[]{
