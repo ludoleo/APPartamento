@@ -210,6 +210,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         });
 
         //CALENDARIO
+        /*
         String[] projection =
                 new String[]{
                         CalendarContract.Calendars._ID,
@@ -273,6 +274,8 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                 getContentResolver().
                         insert(CalendarContract.Events.CONTENT_URI, values);
 
+
+         */
         Intent i = new Intent(this, LeMiePrenotazioni.class);
         startActivity(i);
     }
