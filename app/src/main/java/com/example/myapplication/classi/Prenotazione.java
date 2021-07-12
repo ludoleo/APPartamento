@@ -14,8 +14,6 @@ public class Prenotazione {
     private String idAnnuncio;
     private long dataPrenotazione;
     private boolean confermata;
-    private boolean terminata;
-    private boolean cancellata;
     private boolean pagata;
     private String orario;
 
@@ -24,8 +22,8 @@ public class Prenotazione {
     public Prenotazione(){}
 
     public Prenotazione(String id, String emailUtente1, String nomeUtente1, String emailUtente2, String nomeUtente2,
-                        String idAnnuncio, long dataPrenotazione, boolean terminata,
-                        boolean cancellata, boolean pagata, String orario, boolean confermata) {
+                        String idAnnuncio, long dataPrenotazione,
+                        boolean pagata, String orario, boolean confermata) {
 
         this.id = id;
         this.emailUtente1 = emailUtente1;
@@ -34,8 +32,6 @@ public class Prenotazione {
         this.nomeUtente2 = nomeUtente2;
         this.idAnnuncio = idAnnuncio;
         this.dataPrenotazione = dataPrenotazione;
-        this.terminata = terminata;
-        this.cancellata = cancellata;
         this.pagata = pagata;
         this.orario = orario;
         this.confermata = confermata;
@@ -93,22 +89,6 @@ public class Prenotazione {
 
     public void setDataPrenotazione(long dataPrenotazione) {
         this.dataPrenotazione = dataPrenotazione; }
-
-    public boolean isTerminata() {
-        return terminata;
-    }
-
-    public void setTerminata(boolean terminata) {
-        this.terminata = terminata;
-    }
-
-    public boolean isCancellata() {
-        return cancellata;
-    }
-
-    public void setCancellata(boolean cancellata) {
-        this.cancellata = cancellata;
-    }
 
     public boolean isPagata() {
         return pagata;

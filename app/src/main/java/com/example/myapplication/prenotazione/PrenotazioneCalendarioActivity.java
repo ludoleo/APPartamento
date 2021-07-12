@@ -127,7 +127,7 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
                 if(!uguale){
                     //Aggiungiamo la prenotazione
                     Prenotazione prenotazione = new Prenotazione("",emailUtente1,nomeUtente1, emailUtente2,nomeUtente2,
-                            idAnnuncio, date, false,false,false,fasciaOraria,false);
+                            idAnnuncio, date,false,fasciaOraria,false);
 
                     //todo notifica al proprietario e creazione delle chat, bisogna prendere il token del proprietario
                     DatabaseReference preAdd = myRef.child("Prenotazioni");
