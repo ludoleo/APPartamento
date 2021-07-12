@@ -8,14 +8,36 @@
     android:orientation="vertical"
     tools:context=".ricercalloggio.ListaAnnunci">
 
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/scegliAnnunci"
+            android:textColor="@color/rosso_scuro"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <Button
+            android:id="@+id/bottone_vedi_casa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="visualizzaMappa"
+            android:text="@string/mappa" />
+
+    </LinearLayout>
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="@string/scegliAnnunci"
-        android:textColor="@color/rosso_scuro"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_gravity="right"
+        android:text="Ordina per prezzo" />
 
     <ListView
         android:id="@+id/lv_elencoAnnunci"
@@ -25,11 +47,5 @@
 
     </ListView>
 
-    <Button
-        android:id="@+id/bottone_vedi_casa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="visualizzaMappa"
-        android:text="@string/mappa" />
 
 </LinearLayout>

@@ -8,8 +8,6 @@ import java.util.List;
 // NUOVO
 public class Annuncio{
 
-
-
     private String nomeAnnuncio;
     private String  idProprietario;
     private String idCasa;

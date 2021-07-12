@@ -8,15 +8,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
+import com.example.myapplication.classi.AnnuncioPrezzoComparator;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.home.CaseProprietario;
 import com.example.myapplication.profilo.ProfiloAnnuncio;
@@ -30,6 +34,8 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,11 +49,20 @@ public class ListaAnnunci extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     ListView listView;
+    Switch switchOrdina;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_annunci);
+        switchOrdina = (Switch) findViewById(R.id.switch1);
+        switchOrdina.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                aggiorna();
+            }
+        });
+
         initUI();
     }
 
@@ -59,7 +74,6 @@ public class ListaAnnunci extends AppCompatActivity {
 
         listaAnnunci = new LinkedList<>();
         listaCasa = new LinkedList<>();
-
 
         //metto in una lista tutti gli annunci
         myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
@@ -116,7 +130,6 @@ public class ListaAnnunci extends AppCompatActivity {
         }
 
         aggiorna();
-
     }
 
     private void aggiorna() {
@@ -176,6 +189,9 @@ public class ListaAnnunci extends AppCompatActivity {
     }
     private CustomItem[] createItems() {
 
+        //ORDINO GLI ANNUCI
+        if(switchOrdina.isChecked())
+            Collections.sort(annunciPubblicati,new AnnuncioPrezzoComparator());
         Log.i(TAG, ""+annunciPubblicati.size());
         int size = annunciPubblicati.size();
 
