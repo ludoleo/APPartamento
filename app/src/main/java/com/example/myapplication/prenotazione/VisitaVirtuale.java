@@ -38,7 +38,6 @@ import java.util.Set;
 
 public class VisitaVirtuale extends AppCompatActivity {
 
-
     private static final int MY_PERMISSIONS_RECORD_AUDIO = 1 ;
     private static final String APP_ID = "67EEFB30-29D0-4E6A-8F5B-BDD9171E120D" ;
     private static final String UNIQUE_HANDLER_ID = "" ;

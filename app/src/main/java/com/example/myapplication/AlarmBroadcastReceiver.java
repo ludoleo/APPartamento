@@ -53,7 +53,8 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
         intent.setAction(ACTION_ALARM);
-        //TODO aggiungere acctivity che manda allarm
+
+        //TODO aggiungere activity che manda allarm
         //PendingIntent alarmIntent = MapsActivity.getAlarmIntent(); esempio
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0,intent,0);
 

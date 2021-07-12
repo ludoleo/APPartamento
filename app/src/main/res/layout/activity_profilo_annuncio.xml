@@ -28,10 +28,10 @@
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Inserisci foto annuncio"
             android:onClick="inserisciFoto"
-            android:visibility="invisible"
-            android:translationX="70dp" />
+            android:text="Inserisci foto annuncio"
+            android:translationX="70dp"
+            android:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"

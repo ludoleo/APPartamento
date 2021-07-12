@@ -1,36 +1,31 @@
 package com.example.myapplication.profilo;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.util.Linkify;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.myapplication.R;
-
-import org.w3c.dom.Text;
 
 
 public class Assistenza extends AppCompatActivity {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assistenza);
+
+        TextView GoogleMeet = (TextView) findViewById(R.id.googleVisita);
+
+         Linkify.addLinks(GoogleMeet,Linkify.WEB_URLS);
+
         //linkificazione
         TextView assistenza1 = (TextView) findViewById(R.id.assistenza1);
         TextView assistenza2 = (TextView) findViewById(R.id.assistenza2);
