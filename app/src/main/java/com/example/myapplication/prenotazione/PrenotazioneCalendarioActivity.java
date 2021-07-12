@@ -132,10 +132,11 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
                             idAnnuncio, date,false,fasciaOraria,false);
 
                     //todo notifica al proprietario e creazione delle chat, bisogna prendere il token del proprietario
-                    DatabaseReference preAdd = myRef.child("Prenotazioni");
+                    DatabaseReference preAdd = myRef.child("Prenotazioni").push();
                     preAdd.setValue(prenotazione);
                     String key = preAdd.getKey();
                     myRef.child("Prenotazioni").child(key).child("id").setValue(key);
+
                     inviaNotifica();
                     Intent intent = new Intent(PrenotazioneCalendarioActivity.this, Home.class);
                     startActivity(intent);

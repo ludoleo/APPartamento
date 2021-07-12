@@ -286,24 +286,35 @@ public class ProfiloPrenotazione extends AppCompatActivity {
     }
 
     public void cambiaData(View view) {
-        //Quando clicco sul cambia data cambio i riferimenti degli utenti
-        // e la data
+
         String email1 = prenotazione.getEmailUtente1();
         String nome1 = prenotazione.getNomeUtente1();
         String email2 = prenotazione.getEmailUtente2();
         String nome2 = prenotazione.getNomeUtente2();
         String ora = spinnerFasciaOraria.getSelectedItem().toString();
         fasciaOraria = spinnerFasciaOraria.getSelectedItem().toString();
-        //CAMBIO I VALORI DI RIFERIMENTO
-        myRef.child("Prenotazioni").child(id).child("emailUtente1").setValue(email2);
-        myRef.child("Prenotazioni").child(id).child("emailUtente2").setValue(email1);
-        myRef.child("Prenotazioni").child(id).child("nomeUtente1").setValue(nome2);
-        myRef.child("Prenotazioni").child(id).child("nomeUtente2").setValue(nome1);
-        myRef.child("Prenotazioni").child(id).child("dataPrenotazione").setValue(date);
-        myRef.child("Prenotazioni").child(id).child("orario").setValue(ora);
 
-        Intent i = new Intent(ProfiloPrenotazione.this, LeMiePrenotazioni.class);
-        startActivity(i);
+        prenotazione.setDataPrenotazione(date);
+        prenotazione.setEmailUtente1(email2);
+        prenotazione.setEmailUtente2(email1);
+        prenotazione.setNomeUtente1(nome2);
+        prenotazione.setNomeUtente2(nome1);
+        prenotazione.setOrario(fasciaOraria);
+
+        DatabaseReference preAdd = myRef.child("Prenotazioni").push();
+        preAdd.setValue(prenotazione);
+        String key = preAdd.getKey();
+        myRef.child("Prenotazioni").child(key).child("id").setValue(key);
+
+        myRef.child("Prenotazioni").child(id).removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Intent i = new Intent(ProfiloPrenotazione.this, LeMiePrenotazioni.class);
+                startActivity(i);
+            }
+        });
+
+
     }
 
     public void visita(View view) {
