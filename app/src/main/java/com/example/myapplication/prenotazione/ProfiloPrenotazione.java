@@ -1,6 +1,7 @@
 package com.example.myapplication.prenotazione;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Prenotazione;
@@ -46,6 +48,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
     TextView nomeAnnuncio, nomeUtente, emailUtente, dataPrenotazione, tipoPrenotazione, daPagare;
 
     String tipo="";
+    String id="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +85,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
 
         //CERCO IL RIFERIMENTO ALLA PRENOTAZIONE
 
-        String id = getIntent().getExtras().getString("id");
+        id = getIntent().getExtras().getString("id");
         tipo = getIntent().getExtras().getString("tipo");
 
         myRef.child("Prenotazioni").child(id).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -163,10 +166,22 @@ public class ProfiloPrenotazione extends AppCompatActivity {
 
     public void conferma(View view) {
         //LA PRENOTAZIONE DIVENTA CONFERMATA
+        myRef.child("Prenotazioni").child(id).child("confermata").setValue(true);
+        Intent i = new Intent(this, LeMiePrenotazioni.class);
+        startActivity(i);
     }
 
     public void cancella(View view) {
         //LA PRENOTAZIONE VIENE CANCELLATA
+        myRef.child("Prenotazioni").child(id).removeValue(new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Toast.makeText(ProfiloPrenotazione.this, "Prenotazione cancellata", Toast.LENGTH_SHORT);
+                Intent i = new Intent(ProfiloPrenotazione.this, LeMiePrenotazioni.class);
+                startActivity(i);
+
+            }
+        });
     }
 
     public void modifica(View view) {
@@ -180,6 +195,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
     }
 
     public void visita(View view) {
+        //implementare il sistema di visita virtuale
         Intent intent = new Intent(this, VisitaVirtuale.class);
         startActivity(intent);
     }
