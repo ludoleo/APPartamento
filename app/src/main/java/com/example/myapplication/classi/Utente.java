@@ -10,13 +10,14 @@ public class Utente {
     private String email;
     private String descrizione;
     private float valutazione;
+    private int numRec;
     private String primaEsperienza;
     private String idUtente;
 
     public Utente() {
     }
 
-    public Utente(String idUtente, String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza) {
+    public Utente(String idUtente, String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza, float valutazione, int numRec) {
 
         this.idUtente = idUtente;
         this.nome = nome;
@@ -24,10 +25,18 @@ public class Utente {
         this.telefono = telefono;
         this.email = email;
         this.descrizione = descrizione;
-        this.valutazione = 0;
+        this.valutazione = valutazione;
         this.primaEsperienza = primaEsperienza;
+        this.numRec = numRec;
     }
 
+    public int getNumRec() {
+        return numRec;
+    }
+
+    public void setNumRec(int numRec) {
+        this.numRec = numRec;
+    }
 
     public String getIdUtente() {
         return idUtente;

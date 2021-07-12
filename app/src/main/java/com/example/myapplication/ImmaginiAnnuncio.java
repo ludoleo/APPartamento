@@ -39,7 +39,7 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
 
     private static final String TAG = "Immagine Annuncio";
     private ImageSwitcher ImageIs;
-    private Button previsious,next, pickimage ;
+    private Button previsious, next, pickimage;
     private ArrayList<Uri> imageUris;
     private static final int PICK_IMAGE_CODE = 100;
     private static final int PERMISSION_CODE = 101;
@@ -73,15 +73,15 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
 
         idAnnuncio = getIntent().getExtras().getString("idAnnuncio");
-        Log.i(TAG,"STorage "+storageReference);
+        Log.i(TAG, "STorage " + storageReference);
         // DEVO ricevere ID ANNUNCIO
 
-        StorageReference profileRefe = storageReference.child("Annuncio/"+idAnnuncio+"/foto.jpg");
-        Log.i(TAG,"profile ref "+profileRefe);
+        StorageReference profileRefe = storageReference.child("Annuncio/" + idAnnuncio + "/foto.jpg");
+        Log.i(TAG, "profile ref " + profileRefe);
         profileRefe.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Log.i(TAG,"URI "+uri);
+                Log.i(TAG, "URI " + uri);
                 //Picasso.get().load(uri).into( ImageIs);
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -90,7 +90,6 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
                 // Handle any errors
             }
         });
-
 
 
         // Button
@@ -104,17 +103,14 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
         });
 
 
-
-
         previsious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(position > 0){
-                    position --;
+                if (position > 0) {
+                    position--;
                     ImageIs.setImageURI(imageUris.get(position));
-                }
-                else {
-                    Toast.makeText(ImmaginiAnnuncio.this ,"No Previous Image",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ImmaginiAnnuncio.this, "No Previous Image", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -122,59 +118,57 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(position <imageUris.size()-1)    {
-                    position ++;
+                if (position < imageUris.size() - 1) {
+                    position++;
                     ImageIs.setImageURI(imageUris.get(position));
 
-                }
-                else {
-                    Toast.makeText(ImmaginiAnnuncio.this ,"No More Image",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ImmaginiAnnuncio.this, "No More Image", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
         pickimage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                        == PackageManager.PERMISSION_DENIED){
-                    // permission not granted
-                    String [] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                    // show popup for runtime permission
-                    requestPermissions(permission,PERMISSION_CODE);
-                }
-                else { // permission alredy granted
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_DENIED) {
+                        // permission not granted
+                        String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                        // show popup for runtime permission
+                        requestPermissions(permission, PERMISSION_CODE);
+                    } else { // permission alredy granted
+                        Pickimagesintent();
+                    }
+                } else { // system os is less then Marshmallow
                     Pickimagesintent();
                 }
-            }
-            else { // system os is less then Marshmallow
-                Pickimagesintent();
-            }
             }
         });
     }
 
 
-    private void Pickimagesintent(){
+    private void Pickimagesintent() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select Image(s)"),PICK_IMAGE_CODE);
+        startActivityForResult(Intent.createChooser(intent, "Select Image(s)"), PICK_IMAGE_CODE);
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
-            case PERMISSION_CODE : {
-                if(grantResults.length > 0 && grantResults[0] ==
-                        PackageManager.PERMISSION_GRANTED){
+        switch (requestCode) {
+            case PERMISSION_CODE: {
+                if (grantResults.length > 0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED) {
                     // permission sono garantite
                     Pickimagesintent();
-                }
-                else {
+                } else {
                     // permission denied
-                    Toast.makeText(this,"Permission Denied!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -183,32 +177,32 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_CODE && resultCode == RESULT_OK && data != null && data.getClipData() != null)
-        {
+        if (requestCode == PICK_IMAGE_CODE) {
+            if (requestCode == Activity.RESULT_OK) {
+                if (data.getClipData() != null) {
 
-                    int count = data.getClipData().getItemCount() ;
-                    //TODO non entra nell'if
-                    for (int i = 0;i < count;i ++ ){
+                    int count = data.getClipData().getItemCount();
+                    for (int i = 0; i < count; i++) {
                         Uri imageUri = data.getClipData().getItemAt(i).getUri();
                         imageUris.add(imageUri);
                         UploadImage(imageUri, i);
                     }
 
+                }
                 ImageIs.setImageURI(imageUris.get(0));
-                position = 0;
-        }
 
-
-        else {
+            } else {
                 // single image
                 Uri imageUri = data.getData();
                 imageUris.add(imageUri);
                 ImageIs.setImageURI(imageUris.get(0));
-                position = 0;
-                //UploadImage(imageUri);
+                UploadImage(imageUri, position);
+                position++;
 
 
             }
+
+        }
     }
 
 
@@ -225,7 +219,7 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into((Target) imageUris);
+                       // Picasso.get().load(uri).into((Target) imageUris);
                     }
                 });
             }

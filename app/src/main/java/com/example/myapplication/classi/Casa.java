@@ -12,6 +12,7 @@ public class Casa {
     private int numeroOspiti;
     private int numeroBagni;
     private int numeroStanze;
+    private int numRec;
     private float valutazione;
     private String proprietario;
     private String servizi;
@@ -21,18 +22,27 @@ public class Casa {
     public Casa(){}
 
     public Casa(String nomeCasa, String indirizzo, int numeroOspiti, int numeroBagni, int numeroStanze,
-                String proprietario, String servizi, double lat, double lng) {
+                String proprietario, String servizi, double lat, double lng , float valutazione, int numRec) {
         this.nomeCasa = nomeCasa;
         this.indirizzo = indirizzo;
         this.numeroOspiti = numeroOspiti;
         this.numeroBagni = numeroBagni;
         this.numeroStanze = numeroStanze;
-        this.valutazione = 0;
+        this.valutazione = valutazione;
         this.proprietario = proprietario;
         this.servizi=servizi;
         this.lat = lat;
         this.lng = lng;
+        this.numRec = numRec;
 
+    }
+
+    public int getNumRec() {
+        return numRec;
+    }
+
+    public void setNumRec(int numRec) {
+        this.numRec = numRec;
     }
 
     public String getServizi() {return servizi;}
