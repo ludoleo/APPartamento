@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Prenotazione;
@@ -32,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class PrenotazioneCalendarioActivity extends AppCompatActivity {
@@ -39,6 +39,7 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
     CalendarView calendarView;
     Date dataSelzionata;
     Spinner spinnerFasciaOraria;
+    Long date;
 
     //Database
      FirebaseDatabase database;
@@ -56,7 +57,7 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
     String nomeUtente2="";
     String emailUtente2="";
     String fasciaOraria="";
-    String id_prenotazione="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,17 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         idNotifica=0;
-        initUI();
+        //Listener
+        date = calendarView.getDate();
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
+                Calendar c = Calendar.getInstance();
+                c.set(i, i1, i2);
+                date = c.getTimeInMillis();
+            }
+        });
+       // initUI();
     }
     private void initUI() {
 
@@ -90,8 +101,7 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
     public void conferma(View view) {
 
         Bundle bundle = getIntent().getExtras();
-        dataSelzionata = new Date(calendarView.getDate());
-        String dataLong = ""+dataSelzionata.getTime();
+
         try {
             emailUtente1 = bundle.getString("emailUtente1");
             nomeUtente1 = bundle.getString("nomeUtente1");
@@ -100,7 +110,8 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
             idAnnuncio = bundle.getString("idAnnuncio");
             fasciaOraria = spinnerFasciaOraria.getSelectedItem().toString();
         }catch (Exception e){
-            Toast.makeText(this, "Errore nel ricevere i dati", Toast.LENGTH_SHORT).show();}
+            //TODO GESTISCI ECCEZIONE
+        }
 
         //Controllo sulla prenotazione
         myRef.child("Prenotazioni").addValueEventListener(new ValueEventListener() {
@@ -116,10 +127,10 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
                 if(!uguale){
                     //Aggiungiamo la prenotazione
                     Prenotazione prenotazione = new Prenotazione("",emailUtente1,nomeUtente1, emailUtente2,nomeUtente2,
-                            idAnnuncio, dataLong, false,false,false,fasciaOraria,false);
+                            idAnnuncio, date, false,false,false,fasciaOraria,false);
 
                     //todo notifica al proprietario e creazione delle chat, bisogna prendere il token del proprietario
-                    DatabaseReference preAdd = myRef.child("Prenotazioni").push();
+                    DatabaseReference preAdd = myRef.child("Prenotazioni");
                     preAdd.setValue(prenotazione);
                     String key = preAdd.getKey();
                     myRef.child("Prenotazioni").child(key).child("id").setValue(key);
@@ -127,7 +138,7 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
                     Intent intent = new Intent(PrenotazioneCalendarioActivity.this, Home.class);
                     startActivity(intent);
                 }else{
-                    Toast.makeText(PrenotazioneCalendarioActivity.this, "Sei già prenotato per questo annuncio", Toast.LENGTH_LONG).show();
+                   // Toast.makeText(PrenotazioneCalendarioActivity.this, "Sei già prenotato per questo annuncio", Toast.LENGTH_LONG).show();
                 }
             }
             @Override

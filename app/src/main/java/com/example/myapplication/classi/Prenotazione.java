@@ -12,7 +12,7 @@ public class Prenotazione {
     private String emailUtente2;
     private String nomeUtente2;
     private String idAnnuncio;
-    private String dataPrenotazione;
+    private long dataPrenotazione;
     private boolean confermata;
     private boolean terminata;
     private boolean cancellata;
@@ -23,8 +23,8 @@ public class Prenotazione {
 
     public Prenotazione(){}
 
-    public Prenotazione(String id,String emailUtente1, String nomeUtente1, String emailUtente2, String nomeUtente2,
-                        String idAnnuncio, String dataPrenotazione, boolean terminata,
+    public Prenotazione(String id, String emailUtente1, String nomeUtente1, String emailUtente2, String nomeUtente2,
+                        String idAnnuncio, long dataPrenotazione, boolean terminata,
                         boolean cancellata, boolean pagata, String orario, boolean confermata) {
 
         this.id = id;
@@ -87,11 +87,11 @@ public class Prenotazione {
     public void setIdAnnuncio(String idAnnuncio) {
         this.idAnnuncio = idAnnuncio; }
 
-    public String getDataPrenotazione() {
+    public long getDataPrenotazione() {
         return dataPrenotazione;
     }
 
-    public void setDataPrenotazione(String dataPrenotazione) {
+    public void setDataPrenotazione(long dataPrenotazione) {
         this.dataPrenotazione = dataPrenotazione; }
 
     public boolean isTerminata() {
@@ -124,11 +124,5 @@ public class Prenotazione {
     public void setOrario(String orario) {
         this.orario = orario; }
 
-    public String getDataOra() {
-        DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy");
-        String strDate = dateFormat.format(Long.parseLong(this.dataPrenotazione));
-        strDate = strDate + " - " + this.orario;
-        return strDate;
-    }
 
 }

@@ -1,10 +1,13 @@
 package com.example.myapplication.prenotazione;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +28,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 public class LeMiePrenotazioni extends AppCompatActivity {
 
+    private static final String TAG = "Data";
     //Autenticazione
     FirebaseUser user;
     FirebaseAuth mAuth;
@@ -45,7 +53,7 @@ public class LeMiePrenotazioni extends AppCompatActivity {
     List<Prenotazione> inSospeso;
     List<Prenotazione> confermate;
     List<Prenotazione> terminate;
-
+    Date ora;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +65,14 @@ public class LeMiePrenotazioni extends AppCompatActivity {
         //autenticazione
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+
         if(user==null){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             return;
         }
+
+        ora = new Date();
         initUI();
     }
 
@@ -72,6 +83,7 @@ public class LeMiePrenotazioni extends AppCompatActivity {
         listaPrenotazioni = new LinkedList<>();
         inSospeso = new LinkedList<>();
         confermate = new LinkedList<>();
+        terminate = new LinkedList<>();
 
         myRef.child("Prenotazioni").addValueEventListener(new ValueEventListener() {
             @Override
@@ -87,7 +99,7 @@ public class LeMiePrenotazioni extends AppCompatActivity {
                 for (Prenotazione p : listaPrenotazioni) {
                     if(p.isConfermata())
                         confermate.add(p);
-                    else if(p.isTerminata())
+                    else if(p.getDataPrenotazione()<ora.getTime())
                         terminate.add(p);
                     else if(!p.isConfermata())
                         inSospeso.add(p);
@@ -190,6 +202,7 @@ public class LeMiePrenotazioni extends AppCompatActivity {
         public String isPagata;
         public String id;
     }
+
     private LeMiePrenotazioni.CustomItem[] createItems(List<Prenotazione> listaPrenotazioni) {
 
         int size = listaPrenotazioni.size();
@@ -205,10 +218,9 @@ public class LeMiePrenotazioni extends AppCompatActivity {
             else
                 items[i].isPagata = "TICKET DA PAGARE";
             // tipo prenotazione
-
             if(a.isConfermata())
                 items[i].tipoPrenotazione = "CONFERMATA";
-            else if(a.isTerminata())
+            else if(a.getDataPrenotazione()<ora.getTime())
                 items[i].tipoPrenotazione = "TERMINATA";
             else if(!a.isConfermata()){
                 if(user.getEmail().compareTo(a.getEmailUtente1())==0)
@@ -216,8 +228,8 @@ public class LeMiePrenotazioni extends AppCompatActivity {
                 else
                     items[i].tipoPrenotazione = "DA CONFERMARE";
             }
-            // data
-            items[i].dataPrenotazione = a.getDataOra();
+
+            items[i].dataPrenotazione = getDataOra(a.getDataPrenotazione(),a.getOrario());
             // nome email
             if(user.getEmail().compareTo(a.getEmailUtente1())==0){
                 items[i].nomeUtente=a.getNomeUtente2();
@@ -242,6 +254,14 @@ public class LeMiePrenotazioni extends AppCompatActivity {
         public TextView dataPrenotazione;
         public TextView daPagare;
         public TextView id;
+    }
+
+    public String getDataOra(Long data, String time) {
+
+        DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy");
+        String strDate = dateFormat.format(data);
+        strDate = strDate + " - " + time;
+        return strDate;
     }
 
 }
