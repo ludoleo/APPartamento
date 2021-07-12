@@ -3,9 +3,16 @@ package com.example.myapplication.prenotazione;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,12 +34,16 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class ProfiloPrenotazione extends AppCompatActivity {
 
-    private static final String TAG = "PROFILO PRENOTAZIONE" ;
+    private static final String TAG = "PROFILO PRENOTAZIONE";
     //Database
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -48,9 +59,9 @@ public class ProfiloPrenotazione extends AppCompatActivity {
     Button pagaPrenotazione, confermaPrenotazione, cancellaPrenotazione, modificaPrenotazione, cambiaDataPrenotazione;
     TextView nomeAnnuncio, nomeUtente, emailUtente, dataPrenotazione, tipoPrenotazione, daPagare;
 
-    String tipo="";
-    String id="";
-    String fasciaOraria="";
+    String tipo = "";
+    String id = "";
+    String fasciaOraria = "";
 
 
     @Override
@@ -90,7 +101,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         calendarViewCambio.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
-                Calendar c = Calendar.getInstance();
+                Calendar c = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"), Locale.ITALY);
                 c.set(i, i1, i2);
                 date = c.getTimeInMillis();
             }
@@ -107,39 +118,36 @@ public class ProfiloPrenotazione extends AppCompatActivity {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                  prenotazione = task.getResult().getValue(Prenotazione.class);
+                } else {
+                    prenotazione = task.getResult().getValue(Prenotazione.class);
 
-                  //RIEMPIO LE TEXTVIEW
+                    //RIEMPIO LE TEXTVIEW
                     initTextView();
 
-                    if(tipo.compareTo("IN ATTESA DI CONFERMA")==0){
+                    if (tipo.compareTo("IN ATTESA DI CONFERMA") == 0) {
                         //SE LA PRENOTAZIONE E' IN ATTESA DI CONFERMA
                         //posso cancellarla e basta
                         cancellaPrenotazione.setVisibility(View.VISIBLE);
-                    }else if(tipo.compareTo("DA CONFERMARE")==0){
+                    } else if (tipo.compareTo("DA CONFERMARE") == 0) {
                         //SE LA PRENOTAZIONE E' DA CONFERMARE
                         //posso confermare o modificare la prenotazione
                         modificaPrenotazione.setVisibility(View.VISIBLE);
                         confermaPrenotazione.setVisibility(View.VISIBLE);
-                    }
-                    else if(tipo.compareTo("CONFERMATA")==0){
+                    } else if (tipo.compareTo("CONFERMATA") == 0) {
                         //SE LA PRENOTAZIONE E' CONFERMATA
                         cancellaPrenotazione.setVisibility(View.VISIBLE);
                         //SE E' PAGATA
-                        if(!prenotazione.isPagata()){
+                        if (!prenotazione.isPagata()) {
                             // controllo utente loggato se è studente o no
                             DatabaseReference dr = myRef.child("Utenti").child("Proprietari").child(user.getUid());
-                            Log.i(TAG, "COS'è dr "+dr.toString());
+                            Log.i(TAG, "COS'è dr " + dr.toString());
                             dr.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if (!task.isSuccessful()) {
                                         Log.e("firebase", "Error getting data", task.getException());
-                                    }
-                                    else {
-                                        if( task.getResult().getValue() == null) {
+                                    } else {
+                                        if (task.getResult().getValue() == null) {
                                             pagaPrenotazione.setVisibility(View.VISIBLE);
                                         }
                                     }
@@ -148,8 +156,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
 
                         }
                         //METODO PER ACCEDERE ALLA VISITA VIRTUALE
-                    }
-                    else if(tipo.compareTo("TERMINATA")==0){
+                    } else if (tipo.compareTo("TERMINATA") == 0) {
                         //TODO METODO PER ESSERE PROMOSSO AD INQULINO
                     }
 
@@ -158,24 +165,24 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         });
     }
 
-  
+
     private void initTextView() {
 
-        //setto il calendario alla data della prenotazione
+        //SETTO IL CALENDARIO
         date = prenotazione.getDataPrenotazione();
         calendarViewCambio.setDate(prenotazione.getDataPrenotazione());
-       //Sistemo le textView
+        //Sistemo le textView
         nomeAnnuncio.setText(prenotazione.getIdAnnuncio());
-        if(prenotazione.getEmailUtente1().compareTo(user.getEmail())==0){
+        if (prenotazione.getEmailUtente1().compareTo(user.getEmail()) == 0) {
             nomeUtente.setText(prenotazione.getNomeUtente2());
             emailUtente.setText(prenotazione.getEmailUtente2());
-        }else{
+        } else {
             nomeUtente.setText(prenotazione.getNomeUtente1());
             emailUtente.setText(prenotazione.getEmailUtente1());
         }
         dataPrenotazione.setText(getDataOra(prenotazione.getDataPrenotazione(), prenotazione.getOrario()));
         tipoPrenotazione.setText(tipo);
-        if(prenotazione.isPagata())
+        if (prenotazione.isPagata())
             daPagare.setText("TICKET PAGATO");
         else
             daPagare.setText("TICKET DA PAGARE");
@@ -187,8 +194,73 @@ public class ProfiloPrenotazione extends AppCompatActivity {
     }
 
     public void conferma(View view) {
+
         //LA PRENOTAZIONE DIVENTA CONFERMATA
         myRef.child("Prenotazioni").child(id).child("confermata").setValue(true);
+        //CALENDARIO
+        String[] projection =
+                new String[]{
+                        CalendarContract.Calendars._ID,
+                        CalendarContract.Calendars.NAME,
+                        CalendarContract.Calendars.ACCOUNT_NAME,
+                        CalendarContract.Calendars.ACCOUNT_TYPE};
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Cursor cursor =
+                getContentResolver().
+                        query(CalendarContract.Calendars.CONTENT_URI,
+                                projection,
+                                CalendarContract.Calendars.VISIBLE + " = 1",
+                                null,
+                                null);
+
+
+        Date d = new Date( prenotazione.getDataPrenotazione());
+        Calendar c = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"), Locale.ITALY);
+        c.setTime(d);
+        int anno = c.get(Calendar.YEAR);
+        int mese = c.get(Calendar.MONTH);
+        int giorno = c.get(Calendar.DAY_OF_MONTH);
+
+        String orario = prenotazione.getOrario();
+        int ora = 0;
+            if(orario.compareTo("8:00-10:00")==0)
+                ora = 8;
+            else if(orario.compareTo("10:00-12:00")==0)
+                ora = 10;
+            else if(orario.compareTo("12:00-14:00")==0)
+                ora = 12;
+            else if(orario.compareTo("14:00-16:00")==0)
+                ora = 14;
+            else if(orario.compareTo("16:00-18:00")==0)
+                ora = 16;
+            else if(orario.compareTo("18:00-20:00")==0)
+                ora = 18;
+
+                            //AGGIUNGERE I PARAMETRI
+        Calendar cal = new GregorianCalendar(anno, mese, giorno);
+        cal.setTimeZone(TimeZone.getDefault());
+        cal.set(Calendar.HOUR, ora);
+        cal.set(Calendar.MINUTE, 0);
+        long dtstart = cal.getTimeInMillis();
+        ContentValues values = new ContentValues();
+        values.put(CalendarContract.Events.DTSTART, dtstart);
+        values.put(CalendarContract.Events.DTEND, dtstart+2*3600*1000); // durata di due ore
+        values.put(CalendarContract.Events.TITLE, "Appuntamento casa");
+        values.put(CalendarContract.Events.CALENDAR_ID, id);
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
+        Uri uri =
+                getContentResolver().
+                        insert(CalendarContract.Events.CONTENT_URI, values);
+
         Intent i = new Intent(this, LeMiePrenotazioni.class);
         startActivity(i);
     }
