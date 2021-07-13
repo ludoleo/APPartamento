@@ -20,7 +20,7 @@ public class RecensioneCasa {
     private float valutazioneQualita;
 
     private float valutazioneMedia;
-   // private boolean recensitoIsProprietario;
+
     private String recensore;
     private String casaRecensita; // id
 

@@ -21,14 +21,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Proprietario;
-import com.example.myapplication.classi.RecensioneUtente;
+import com.example.myapplication.classi.RecensioneStudente;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.registrazione.InserimentoDatiCasa;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -44,8 +43,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,7 +69,7 @@ public class ProfiloProprietario extends AppCompatActivity {
     private String idUtente;
 
     private List<Casa> listaCase = new ArrayList<>();
-    List<RecensioneUtente> listaRecensioniProprietario;
+    List<RecensioneStudente> listaRecensioniProprietario;
     ListView listViewCase, listViewRecensioni;
 
     private Proprietario proprietario;
@@ -147,7 +144,7 @@ public class ProfiloProprietario extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 for (DataSnapshot recPropData : datasnapshot.getChildren()) {
                     // Log.i(TAG, "recensione");
-                    RecensioneUtente rec = recPropData.getValue(RecensioneUtente.class);
+                    RecensioneStudente rec = recPropData.getValue(RecensioneStudente.class);
                     listaRecensioniProprietario.add(rec);
                 }
                 aggiornaRecensioni();
@@ -383,7 +380,7 @@ public class ProfiloProprietario extends AppCompatActivity {
         ProfiloProprietario.CustomItemRecensioni[] items = new ProfiloProprietario.CustomItemRecensioni[size]; //numero di annunci possibili
         for (int i = 0; i < items.length; i++) {
             //mi prendo il riferimento all'annuncio
-            RecensioneUtente rec = listaRecensioniProprietario.get(i);
+            RecensioneStudente rec = listaRecensioniProprietario.get(i);
 
             items[i] = new ProfiloProprietario.CustomItemRecensioni();
             items[i].recensore = rec.getRecensore();

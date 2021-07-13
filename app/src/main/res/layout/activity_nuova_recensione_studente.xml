@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoustudente"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/sfondo_activity"
+    android:orientation="vertical"
+    tools:context=".recensione.NuovaRecensioneStudente">
+
+        <TextView
+            android:id="@+id/ratecount1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceMedium" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textView100"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Pulizia"
+                            android:textAppearance="?android:textAppearanceLarge" />
+
+                        <RatingBar
+                            android:id="@+id/rb_puliziaStud"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textView20"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Rispetto spazi comuni"
+                            android:textAppearance="?android:textAppearanceLarge" />
+
+                        <RatingBar
+                            android:id="@+id/rb_rispettoSpaziComuni"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textView22"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Socialità"
+                            android:textAppearance="?android:textAppearanceLarge" />
+
+                        <RatingBar
+                            android:id="@+id/rb_socialita"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                </TableRow>
+
+        </TableLayout>
+
+        <EditText
+            android:id="@+id/et_recensione"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Scrivi recensione" />
+
+        <Button
+            android:id="@+id/Submit1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:onClick="nuovaRecensioneStudente"
+            android:text="Invia"
+            android:textAllCaps="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="La media della valutazione è" />
+
+                <TextView
+                    android:id="@+id/mediaRec"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textAppearance="?android:textAppearanceMedium" />
+        </LinearLayout>
+
+
+</LinearLayout>

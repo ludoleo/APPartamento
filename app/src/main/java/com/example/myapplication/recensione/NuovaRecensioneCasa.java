@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.RecensioneCasa;
-import com.example.myapplication.classi.RecensioneUtente;
+import com.example.myapplication.classi.RecensioneStudente;
 import com.example.myapplication.profilo.ProfiloCasa;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -56,7 +56,6 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuova_recensione_casa);
-
         this.setTitle("Inserisci nuova recensione");
         initUI();
     }
@@ -64,7 +63,7 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
     private void initUI() {
 
         mediaRecensione =(TextView) findViewById(R.id.showRating2);
-        rb_pulizia = findViewById(R.id.rb_pulizia);
+        rb_pulizia = findViewById(R.id.rb_puliziaStud);
         rb_posizione = findViewById(R.id.rb_posizione);
         rb_qualitaPrezzo = findViewById(R.id.rb_qualitaPrezzo);
 
@@ -142,7 +141,7 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
 
         RecensioneCasa recensioneCasa = new RecensioneCasa(data,descrizione,valorePulizia,valorePosizione,valoreQualita,valutazioneMedia,recensore,nomeCasa);
         //PUSH
-        DatabaseReference recensioneCasaAggiunta = myRef.child("Recensioni_Casa").push();
+        DatabaseReference recensioneCasaAggiunta = myRef.child("Recensioni_Casa").child(nomeCasa).push();
         recensioneCasaAggiunta.setValue(recensioneCasa);
 
         Log.i(TAG, "Recensione aggiunta da" + user.getUid());
@@ -182,15 +181,15 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
 
-                    RecensioneUtente recensionepropFiglio = caseSnapshot.getValue(RecensioneUtente.class);
+                    RecensioneCasa recensioneCasa = caseSnapshot.getValue(RecensioneCasa.class);
 
-                    if(recensionepropFiglio.getRecensore().compareTo(recensore)==0) {
+                    if(recensioneCasa.getRecensore().compareTo(recensore)==0) {
 
                  Toast.makeText(NuovaRecensioneCasa.this,"Recensore già presente contattare l'assistenza",Toast.LENGTH_SHORT).show();
 
                         cambiaFlag();
                     }
-                    Log.i(TAG,"recensore è :"+recensionepropFiglio.getRecensore());
+                    Log.i(TAG,"recensore è :"+recensioneCasa.getRecensore());
                 }
             }
             @Override

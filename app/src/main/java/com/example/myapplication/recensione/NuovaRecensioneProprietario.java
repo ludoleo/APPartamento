@@ -1,32 +1,19 @@
 package com.example.myapplication.recensione;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.classi.Casa;
-import com.example.myapplication.classi.RecensioneCasa;
-import com.example.myapplication.classi.RecensioneUtente;
-import com.example.myapplication.classi.Utente;
+import com.example.myapplication.classi.RecensioneStudente;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.profilo.ProfiloProprietario;
-import com.example.myapplication.profilo.ProfiloStudente;
-import com.example.myapplication.registrazione.InserimentoDatiCasa;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,8 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
-
-import static com.google.firebase.database.core.RepoManager.clear;
 
 public class NuovaRecensioneProprietario extends AppCompatActivity {
     private static final String TAG = "RecensioniProp";
@@ -59,7 +44,7 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recensioni_proprietario_interne);
+        setContentView(R.layout.activity_nuova_recensione_proprietario);
         this.setTitle("Inserisci nuova recensione");
         initUI();
     }
@@ -112,10 +97,10 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
             return;
         }
 
-        RecensioneUtente recensioneprop = new RecensioneUtente(descrizione,valutazionemedia,recensore,recensito,data);
+        //RecensioneStudente recensioneprop = new RecensioneStudente(descrizione,valutazionemedia,recensore,recensito,data);
         //PUSH
         DatabaseReference recensioneAggiunta = myRef.child("Recensioni_Studente").push();
-        recensioneAggiunta.setValue(recensioneprop);
+       // recensioneAggiunta.setValue(recensioneprop);
 
         Log.i(TAG, "Recensione aggiunta da" + user.getUid().toString());
 
@@ -127,12 +112,12 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
 
     public void controlloRensore(String recensore) {
 
-        myRef.child("Recensioni_Studente").addValueEventListener(new ValueEventListener() {
+        myRef.child("Recensioni_Proprietario").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
 
-                    RecensioneUtente recensionepropFiglio = caseSnapshot.getValue(RecensioneUtente.class);
+                    RecensioneStudente recensionepropFiglio = caseSnapshot.getValue(RecensioneStudente.class);
 
                     if(recensionepropFiglio.getRecensore().compareTo(recensore)==0) {
 

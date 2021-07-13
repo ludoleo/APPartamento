@@ -144,24 +144,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             }
         });
 
-        myRef.child("Recensioni_Casa").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot datasnapshots) {
-                for (DataSnapshot recCasaData : datasnapshots.getChildren()) {
-                    // Log.i(TAG, "recensione");
-                    RecensioneCasa recensioneCasa = recCasaData.getValue(RecensioneCasa.class);
-                    listaRecensioniCasa.add(recensioneCasa);
-                }
-                aggiorna();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
 
         /*
         myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
@@ -208,6 +190,23 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                         casa=i;
                     }
                 }
+
+                myRef.child("Recensioni_Casa").child(casa.getNomeCasa()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot datasnapshots) {
+                        for (DataSnapshot recCasaData : datasnapshots.getChildren()) {
+                            // Log.i(TAG, "recensione");
+                            RecensioneCasa recensioneCasa = recCasaData.getValue(RecensioneCasa.class);
+                            listaRecensioniCasa.add(recensioneCasa);
+                        }
+                        aggiorna();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
                 //CARICO IL NOME DELLA CASA
                 laTuaCasa.setText(casa.getNomeCasa());
                 valutazioneCasa.setText("  "+String.format("%.2f" ,casa.getValutazione())+" su "+casa.getNumRec()+" recensioni!");

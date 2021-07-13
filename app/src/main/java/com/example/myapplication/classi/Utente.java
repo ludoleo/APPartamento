@@ -9,7 +9,7 @@ public class Utente {
     private String telefono;
     private String email;
     private String descrizione;
-    private float valutazione;
+    private double valutazione;
     private int numRec;
     private String primaEsperienza;
     private String idUtente;
@@ -17,7 +17,7 @@ public class Utente {
     public Utente() {
     }
 
-    public Utente(String idUtente, String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza, float valutazione, int numRec) {
+    public Utente(String idUtente, String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza, double valutazione, int numRec) {
 
         this.idUtente = idUtente;
         this.nome = nome;
@@ -62,7 +62,7 @@ public class Utente {
         return email;
     }
 
-    public float getValutazione() {
+    public double getValutazione() {
         return valutazione;
     }
 
@@ -82,7 +82,7 @@ public class Utente {
         this.email = email;
     }
 
-    public void setValutazione(float valutazione) {
+    public void setValutazione(double valutazione) {
         this.valutazione = valutazione;
     }
 

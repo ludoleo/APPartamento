@@ -26,9 +26,11 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Inquilino;
-import com.example.myapplication.classi.RecensioneUtente;
+import com.example.myapplication.classi.RecensioneStudente;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.home.Home;
+import com.example.myapplication.recensione.NuovaRecensioneCasa;
+import com.example.myapplication.recensione.NuovaRecensioneStudente;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,13 +60,13 @@ public class ProfiloStudente extends AppCompatActivity {
     private Uri ImageUri;
     private StorageTask UploadTask;
 
-    Button change, modifica, laTuaCasa, note;
+    Button change, modifica, laTuaCasa, note, b_nuovaRecensione;
     CircleImageView immagineStudente ;
     TextView text_nome, text_cognome, text_descrizione, text_univerista, text_indirizzoLaure, username, hobbyStudente;
     ListView listViewHobby, listViewRecensioni;
     ArrayAdapter<String> arrayAdapter;
 
-    List<RecensioneUtente> listaRecensioniUtente;
+    List<RecensioneStudente> listaRecensioniUtente;
 
     public DatabaseReference myRef;
     // per foto
@@ -158,6 +160,8 @@ public class ProfiloStudente extends AppCompatActivity {
             listViewRecensioni = (ListView) findViewById(R.id.listView_recensioni_studente);
             listaRecensioniUtente = new ArrayList<>();
 
+            b_nuovaRecensione = findViewById(R.id.b_nuovaRecensione);
+
             idUtente = getIntent().getExtras().getString("idUtente");
 
             //ASSOCIO IL PULSANTE VAI ALLA MIA CASA
@@ -230,12 +234,12 @@ public class ProfiloStudente extends AppCompatActivity {
 
     private void initUI() {
         // Preparazione ListView per l'elenco delle Recensioni
-        myRef.child("Recensioni_Proprietario").child("recensito").addValueEventListener(new ValueEventListener() {
+        myRef.child("Recensioni_Studente").child(idUtente).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 for (DataSnapshot recPropData : datasnapshot.getChildren()) {
                     // Log.i(TAG, "recensione");
-                    RecensioneUtente rec = recPropData.getValue(RecensioneUtente.class);
+                    RecensioneStudente rec = recPropData.getValue(RecensioneStudente.class);
                     listaRecensioniUtente.add(rec);
                 }
                 aggiorna();
@@ -244,6 +248,16 @@ public class ProfiloStudente extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        b_nuovaRecensione.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent l = new Intent(ProfiloStudente.this, NuovaRecensioneStudente.class);
+                Log.i(TAG,"VADO IN NUOVA REC PER LO STUDENTE: "+idUtente);
+                l.putExtra("idStudente",idUtente);
+                startActivity(l);
             }
         });
 
@@ -411,7 +425,7 @@ public class ProfiloStudente extends AppCompatActivity {
         ProfiloStudente.CustomItem[] items = new ProfiloStudente.CustomItem[size]; //numero di annunci possibili
         for (int i = 0; i < items.length; i++) {
             //mi prendo il riferimento all'annuncio
-            RecensioneUtente rec = listaRecensioniUtente.get(i);
+            RecensioneStudente rec = listaRecensioniUtente.get(i);
 
             items[i] = new ProfiloStudente.CustomItem();
             items[i].recensore = rec.getRecensore();
