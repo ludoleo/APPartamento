@@ -2,7 +2,6 @@ package com.example.myapplication.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,11 +15,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.registrazione.InserimentoDatiAnnuncio;
 import com.example.myapplication.registrazione.InserimentoDatiCasa;
-import com.example.myapplication.ricercalloggio.ListaAnnunci;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,7 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class CaseProprietario extends AppCompatActivity {
@@ -136,7 +132,7 @@ public class CaseProprietario extends AppCompatActivity {
         public String nomeCasa;
         public String indirizzoCasa;
         public int numeroOspiti;
-        public float valutazione;
+        public double valutazione;
     }
 
     private CaseProprietario.CustomItem[] createItems() {

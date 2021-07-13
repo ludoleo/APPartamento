@@ -41,6 +41,7 @@ public class MyService extends FirebaseMessagingService {
     int idNotifica = 0;
     public static final Integer NOTIFICATION_REQUESTCODE=101;
 
+    SendBirdCall sendBirdCall;
 
     public MyService() {
     }
@@ -51,6 +52,7 @@ public class MyService extends FirebaseMessagingService {
         String inviato = remoteMessage.getData().get("sended");
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
 
         if(firebaseUser != null && inviato.equals(firebaseUser.getUid()) ) {
             inviaNotifica(remoteMessage);
@@ -68,7 +70,7 @@ public class MyService extends FirebaseMessagingService {
             creaNotifica(remoteMessage.getNotification().getBody());
         }
 
-        if (SendBirdCall.handleFirebaseMessageData(remoteMessage.getData())) {
+        if (sendBirdCall.handleFirebaseMessageData(remoteMessage.getData())) {
 
         } else {
             // Handle non-SendBirdCall Firebase messages.
@@ -82,7 +84,7 @@ public class MyService extends FirebaseMessagingService {
         super.onNewToken(s);
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        SendBirdCall.registerPushToken(s, false, e -> {
+        sendBirdCall.registerPushToken(s, false, e -> {
             if (e == null) {
                 // Succeeded to register push token.
             } else {

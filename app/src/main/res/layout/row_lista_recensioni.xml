@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/sfondo_activity"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/nomeautore1"
         android:layout_width="match_parent"
-        android:layout_height="34dp"
+        android:layout_height="wrap_content"
         android:text="Nome Autore" />
 
     <TextView
-        android:id="@+id/descrizioneprop1"
+        android:id="@+id/dataRec"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:text="Descrizione" />
+        android:layout_height="wrap_content" />
 
-    <RatingBar
-        android:id="@+id/punteggioprop"
-        android:layout_width="wrap_content"
-        android:layout_height="42dp" />
+    <TextView
+        android:id="@+id/descrizioneRec"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Descrizione"
+        android:textSize="12sp" />
 </LinearLayout>

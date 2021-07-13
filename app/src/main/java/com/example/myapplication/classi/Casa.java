@@ -1,10 +1,6 @@
 package com.example.myapplication.classi;
 
 
-import com.google.android.gms.maps.model.LatLng;
-
-import java.util.Objects;
-
 public class Casa {
 
     private String nomeCasa;
@@ -13,7 +9,7 @@ public class Casa {
     private int numeroBagni;
     private int numeroStanze;
     private int numRec;
-    private float valutazione;
+    private double valutazione;
     private String proprietario;
     private String servizi;
     private double lat;
@@ -89,11 +85,11 @@ public class Casa {
         this.numeroStanze = numeroStanze;
     }
 
-    public float getValutazione() {
+    public double getValutazione() {
         return valutazione;
     }
 
-    public void setValutazione(float valutazione) {
+    public void setValutazione(double valutazione) {
         this.valutazione = valutazione;
     }
 
