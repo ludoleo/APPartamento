@@ -33,6 +33,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class PrenotazioneCalendarioActivity extends AppCompatActivity {
 
@@ -79,7 +81,7 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
-                Calendar c = Calendar.getInstance();
+                Calendar c = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"), Locale.ITALY);
                 c.set(i, i1, i2);
                 date = c.getTimeInMillis();
             }
@@ -130,10 +132,11 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
                             idAnnuncio, date,false,fasciaOraria,false);
 
                     //todo notifica al proprietario e creazione delle chat, bisogna prendere il token del proprietario
-                    DatabaseReference preAdd = myRef.child("Prenotazioni");
+                    DatabaseReference preAdd = myRef.child("Prenotazioni").push();
                     preAdd.setValue(prenotazione);
                     String key = preAdd.getKey();
                     myRef.child("Prenotazioni").child(key).child("id").setValue(key);
+
                     inviaNotifica();
                     Intent intent = new Intent(PrenotazioneCalendarioActivity.this, Home.class);
                     startActivity(intent);
