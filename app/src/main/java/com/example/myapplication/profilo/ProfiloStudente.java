@@ -5,37 +5,32 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.MimeTypeMap;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.myapplication.visitaNote.NoteVisitaLista;
 import com.example.myapplication.R;
-import com.example.myapplication.recensione.RecensioniStudenteEsterneList;
 import com.example.myapplication.classi.Inquilino;
+import com.example.myapplication.classi.RecensioneUtente;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.home.Home;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -49,11 +44,11 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.widget.Toast.*;
 
 public class ProfiloStudente extends AppCompatActivity {
 
@@ -66,8 +61,10 @@ public class ProfiloStudente extends AppCompatActivity {
     Button change, modifica, laTuaCasa, note;
     CircleImageView immagineStudente ;
     TextView text_nome, text_cognome, text_descrizione, text_univerista, text_indirizzoLaure, username, hobbyStudente;
-    ListView listView;
+    ListView listViewHobby, listViewRecensioni;
     ArrayAdapter<String> arrayAdapter;
+
+    List<RecensioneUtente> listaRecensioniUtente;
 
     public DatabaseReference myRef;
     // per foto
@@ -157,7 +154,9 @@ public class ProfiloStudente extends AppCompatActivity {
             text_indirizzoLaure = (TextView) findViewById(R.id.text_indirizzoLaurea);
             username = (TextView) findViewById(R.id.username);
             hobbyStudente = (TextView) findViewById(R.id.tv_hobby_studente);
-            listView = (ListView) findViewById(R.id.listView_hobby_profilo);
+            listViewHobby = (ListView) findViewById(R.id.listView_hobby_profilo);
+            listViewRecensioni = (ListView) findViewById(R.id.listView_recensioni_studente);
+            listaRecensioniUtente = new ArrayList<>();
 
             idUtente = getIntent().getExtras().getString("idUtente");
 
@@ -195,7 +194,7 @@ public class ProfiloStudente extends AppCompatActivity {
                         //METODO CHE POPOLA LA LISTA DI HOBBY
                         String[] hobby = studente.getHobby().split("-");
                         arrayAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.row, hobby);
-                        listView.setAdapter(arrayAdapter);
+                        listViewHobby.setAdapter(arrayAdapter);
                     }
                 }
             }
@@ -205,6 +204,7 @@ public class ProfiloStudente extends AppCompatActivity {
             }
         });
 
+        initUI();
             studentIsInquilino();
 
        /* myRef.child("Utenti").child("Studenti").child(idUtente).addValueEventListener(new ValueEventListener() {
@@ -227,6 +227,28 @@ public class ProfiloStudente extends AppCompatActivity {
             }
         });*/
     }
+
+    private void initUI() {
+        // Preparazione ListView per l'elenco delle Recensioni
+        myRef.child("Recensioni_Proprietario").child("recensito").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                for (DataSnapshot recPropData : datasnapshot.getChildren()) {
+                    // Log.i(TAG, "recensione");
+                    RecensioneUtente rec = recPropData.getValue(RecensioneUtente.class);
+                    listaRecensioniUtente.add(rec);
+                }
+                aggiorna();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
 
 
     //METODO CHE DISATTIVA IL PULSANTE SE LO STUDENTE NON E' UN INQUILINO
@@ -327,22 +349,86 @@ public class ProfiloStudente extends AppCompatActivity {
                 startActivity(new Intent(ProfiloStudente.this,Home.class));
                 finish();
                 return true;
+
+            case R.id.home:
+                startActivity(new Intent(ProfiloStudente.this,Home.class));
+
         }
         return false;
     }
 
-
-    public void goHome(View view) {
-
-            Intent intent = new Intent(this, Home.class);
-            startActivity(intent);
-    }
 
     public void laTuaCasa(View view) {
         Intent intent = new Intent(this, ProfiloCasa.class);
         intent.putExtra("idStudente", idUtente);
         startActivity(intent);
     }
+
+
+    private void aggiorna() {
+
+        ProfiloStudente.CustomItem[] items = createItems();
+        ArrayAdapter<ProfiloStudente.CustomItem> ArrayAdapter = new ArrayAdapter<ProfiloStudente.CustomItem>(
+                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                return getViewNotOptimized(position,convertView,parent); }
+
+            public View getViewNotOptimized(int position, View convertView, ViewGroup par){
+                ProfiloStudente.CustomItem item = getItem(position); // Rif. alla riga attualmente
+                LayoutInflater inflater =
+                        (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
+                TextView recensore =
+                        (TextView)rowView.findViewById(R.id.nomeautore1);
+                TextView descrizione =
+                        (TextView)rowView.findViewById(R.id.descrizioneRec);
+                recensore.setText(item.recensore);
+                descrizione.setText(item.descrizione);
+                TextView dataRec =
+                        (TextView) rowView.findViewById(R.id.dataRec);
+                dataRec.setText(item.dataRec.toString());
+
+                return rowView;
+
+            }
+        };
+        listViewRecensioni.setAdapter(ArrayAdapter);
+    }
+    // CUSTOM ITEM
+    private static class CustomItem {
+        public String recensore;
+        public String descrizione;
+        public Date dataRec;
+
+    }
+
+    private ProfiloStudente.CustomItem[] createItems() {
+
+        //Log.i(TAG, ""+listaRecensioni.size());
+        int size =listaRecensioniUtente.size();
+
+        ProfiloStudente.CustomItem[] items = new ProfiloStudente.CustomItem[size]; //numero di annunci possibili
+        for (int i = 0; i < items.length; i++) {
+            //mi prendo il riferimento all'annuncio
+            RecensioneUtente rec = listaRecensioniUtente.get(i);
+
+            items[i] = new ProfiloStudente.CustomItem();
+            items[i].recensore = rec.getRecensore();
+            items[i].descrizione= rec.getDescrizione();
+            items[i].dataRec= rec.getDataRevisione();
+
+
+        }
+        return items;
+    }
+    private static class ViewHolder{
+        public TextView recensoreView;
+        public TextView descrizioneView;
+        public RatingBar punteggioView;
+    }
+
+
 }
 
 

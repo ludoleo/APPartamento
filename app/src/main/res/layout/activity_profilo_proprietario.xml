@@ -22,23 +22,6 @@
         app:civ_border_color="@color/rosso_scuro"
         app:civ_border_width="2dp" />
 
-    <ImageButton
-        android:id="@+id/button_home3"
-        android:layout_width="47dp"
-        android:layout_height="38dp"
-        android:background="@color/rosso_mattone"
-        android:fadingEdge="horizontal|vertical"
-        android:onClick="goHome"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.997"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.033"
-        app:srcCompat="@drawable/ic_baseline_home_24"
-        tools:ignore="VectorDrawableCompat" />
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,47 +42,65 @@
             android:text="@string/aggiungiCasa" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/text_nomeP"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:text="@string/nome" />
 
-    <TextView
-        android:id="@+id/text_cognomeP"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:text="@string/cognome" />
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/text_emailP"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="@string/email" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/text_view_testo1"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="@string/caseProprietario"
-        android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/text_nomeP"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:text="@string/nome" />
 
-    <ListView
-        android:id="@+id/lv_case_prop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+                <TextView
+                    android:id="@+id/text_cognomeP"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:text="@string/cognome" />
 
-    <TextView
-        android:id="@+id/text_view_testo2"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="@string/recensioniProprietario"
-        android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/text_emailP"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="@string/email" />
+            </LinearLayout>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"></ListView>
+            <TextView
+                android:id="@+id/text_view_testo1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="@string/caseProprietario"
+                android:textColor="@color/black" />
+
+            <ListView
+                android:id="@+id/lv_case_prop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></ListView>
+
+            <TextView
+                android:id="@+id/tv_recensioni"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="@string/recensioniProprietario"
+                android:textColor="@color/black" />
+
+            <ListView
+                android:id="@+id/listView_recensioni_proprietario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></ListView>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

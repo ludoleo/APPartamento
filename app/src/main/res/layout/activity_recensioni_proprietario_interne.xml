@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
-    tools:context=".recensione.RecensioniProprietarioInterne">
+    tools:context=".recensione.NuovaRecensioneProprietario">
 
     <TextView
         android:id="@+id/ratecount"

@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Date;
 
-public class RecensioniStudentInterne extends AppCompatActivity {
+public class NuovaRecensioneStudente extends AppCompatActivity {
     private static final String TAG = "RECENSIONI STUDENTE";
     private TextView rateCount1, showRating1;
     private EditText review1;

@@ -1,22 +1,30 @@
 package com.example.myapplication.profilo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.Proprietario;
+import com.example.myapplication.classi.RecensioneCasa;
 import com.example.myapplication.classi.Studente;
+import com.example.myapplication.recensione.NuovaRecensioneCasa;
 import com.example.myapplication.registrazione.InserimentoDatiAnnuncio;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -39,6 +47,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,6 +55,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -64,9 +74,10 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     //todo devo considerare gli inquilini
     List<Inquilino> listaInquilini;
     List<Studente> coinquilini;
+    List<RecensioneCasa> listaRecensioniCasa;
 
     TextView laTuaCasa, ilProprietario, valutazioneProprietario, valutazioneCasa;
-    Button b_aggiungiInquilino, b_aggiungiAnnuncio;
+    Button b_aggiungiInquilino, b_aggiungiAnnuncio , b_aggiungiRecensione;
     //MAPPA
     MapView mapViewCasa;
     GoogleMap gmap;
@@ -98,9 +109,11 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 
         b_aggiungiAnnuncio = (Button) findViewById(R.id.button_aggiungiAnnuncio);
         b_aggiungiInquilino = (Button) findViewById(R.id.button_aggiungiInquilino);
+        b_aggiungiRecensione = (Button) findViewById(R.id.button_aggiungiRecensione);
         //lirendo visibili solo al proprietario loggayo
         b_aggiungiInquilino.setVisibility(View.GONE);
         b_aggiungiAnnuncio.setVisibility(View.GONE);
+       // b_aggiungiRecensione.setVisibility(View.GONE);
 
         initUI();
 
@@ -116,6 +129,38 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 
         //listaInquilini = new LinkedList<Inquilino>();
         listaStudenti = new LinkedList<Studente>();
+        listaRecensioniCasa = new LinkedList<RecensioneCasa>();
+
+
+        //TODO devo gestire le recensioni e controllare quando visualizzare pulsante aggiungi recensione
+
+        b_aggiungiRecensione.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent l = new Intent(ProfiloCasa.this, NuovaRecensioneCasa.class);
+                Log.i(TAG,"VADO IN NUOVA REC PER LA CASA: "+casa.getNomeCasa());
+                l.putExtra("casa",casa.getNomeCasa());
+                startActivity(l);
+            }
+        });
+
+        myRef.child("Recensioni_Casa").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshots) {
+                for (DataSnapshot recCasaData : datasnapshots.getChildren()) {
+                    // Log.i(TAG, "recensione");
+                    RecensioneCasa recensioneCasa = recCasaData.getValue(RecensioneCasa.class);
+                    listaRecensioniCasa.add(recensioneCasa);
+                }
+                aggiorna();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
 
         /*
@@ -151,6 +196,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 */
     }
 
+
     private void riferimentoCasa() {
 
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
@@ -164,7 +210,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                 }
                 //CARICO IL NOME DELLA CASA
                 laTuaCasa.setText(casa.getNomeCasa());
-                valutazioneCasa.setText(""+casa.getValutazione());
+                valutazioneCasa.setText("  "+String.format("%.2f" ,casa.getValutazione())+" su "+casa.getNumRec()+" recensioni!");
                 riferimentoProprietario();
 
                 //AGGIUNGO LA POSIZIONE DELLA CASA
@@ -368,7 +414,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
-
      /*
     ASYNC TASK
      */
@@ -446,6 +491,63 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                 e.printStackTrace();
             }
         }
+    }
+
+    private void aggiorna() {
+
+        ListView listaRecensioni = (ListView) findViewById(R.id.listRecCasa);
+        ProfiloCasa.CustomItem[] items = createItems();
+        ArrayAdapter<ProfiloCasa.CustomItem> ArrayAdapter = new ArrayAdapter<ProfiloCasa.CustomItem>(
+                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                return getViewNotOptimized(position,convertView,parent); }
+
+            public View getViewNotOptimized(int position, View convertView, ViewGroup par){
+                ProfiloCasa.CustomItem item = getItem(position); // Rif. alla riga attualmente
+                LayoutInflater inflater =
+                        (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
+                TextView recensore =
+                        (TextView)rowView.findViewById(R.id.nomeautore1);
+                TextView descrizione =
+                        (TextView)rowView.findViewById(R.id.descrizioneRec);
+                recensore.setText(item.recensore);
+                descrizione.setText(item.descrizione);
+                TextView dataRec =
+                        (TextView) rowView.findViewById(R.id.dataRec);
+                dataRec.setText(item.dataRec.toString());
+
+                return rowView;
+            }
+        };
+        listaRecensioni.setAdapter(ArrayAdapter);
+    }
+    // CUSTOM ITEM
+    private static class CustomItem {
+        public String recensore;
+        public String descrizione;
+        public Date dataRec;
+
+    }
+    private ProfiloCasa.CustomItem[] createItems() {
+
+        //Log.i(TAG, ""+listaRecensioni.size());
+        int size =listaRecensioniCasa.size();
+
+        ProfiloCasa.CustomItem[] items = new ProfiloCasa.CustomItem[size]; //numero di annunci possibili
+        for (int i = 0; i < items.length; i++) {
+            //mi prendo il riferimento all'annuncio
+            RecensioneCasa rec= listaRecensioniCasa.get(i);
+
+            items[i] = new ProfiloCasa.CustomItem();
+            items[i].recensore = rec.getRecensore();
+            items[i].descrizione= rec.getDescrizione();
+            items[i].dataRec= rec.getDataRevisione();
+
+
+        }
+        return items;
     }
 
     @Override

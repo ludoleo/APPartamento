@@ -34,6 +34,24 @@
         <activity android:name=".registrazione.InserimentoHobbyStudente" />
         <activity android:name=".ricercalloggio.Preferiti" />
         <activity android:name=".messaggi.MessaggiActivity" />
+        <activity android:name=".registrazione.InserimentoDatiAnnuncio" />
+        <activity android:name=".registrazione.InserimentoDatiCasa" />
+        <activity android:name=".login.ScegliUtente" />
+        <activity android:name=".profilo.Assistenza" />
+        <activity android:name=".home.CaseProprietario" />
+        <activity android:name=".home.Home">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".registrazione.InserimentoDatiProprietario" />
+        <activity android:name=".registrazione.InserimentoDatiStudente" />
+        <activity android:name=".profilo.ProfiloCasa" />
+        <activity android:name=".ricercalloggio.ListaAnnunci" />
+        <activity android:name=".ricercalloggio.MappaAnnunci" />
+
 
         <service
             android:name=".MyService"
@@ -53,28 +71,10 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".registrazione.InserimentoDatiAnnuncio" />
-        <activity android:name=".registrazione.InserimentoDatiCasa" />
-        <activity android:name=".login.ScegliUtente" />
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity android:name=".profilo.Assistenza" />
-        <activity android:name=".home.CaseProprietario" />
-        <activity android:name=".home.Home">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".registrazione.InserimentoDatiProprietario" />
-        <activity android:name=".registrazione.InserimentoDatiStudente" />
-        <activity android:name=".profilo.ProfiloCasa" />
-        <activity android:name=".ricercalloggio.ListaAnnunci" />
-        <activity android:name=".ricercalloggio.MappaAnnunci" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -94,12 +94,9 @@
         <activity android:name=".profilo.ProfiloAnnuncio" />
         <activity android:name=".profilo.ProfiloProprietario" />
         <activity android:name=".profilo.ProfiloStudente" />
-        <activity android:name=".recensione.RecensioniCasa" />
-        <activity android:name=".recensione.RecensioniProprietarioInterne" />
-        <activity android:name=".recensione.RecensioneCasaInterna" />
-        <activity android:name=".recensione.RecensioneProprietarioEsterno" />
-        <activity android:name=".recensione.RecensioniStudenteEsterneList" />
-        <activity android:name=".recensione.RecensioniStudentInterne" />
+        <activity android:name=".recensione.NuovaRecensioneProprietario" />
+        <activity android:name=".recensione.NuovaRecensioneCasa" />
+        <activity android:name=".recensione.NuovaRecensioneStudente" />
         <activity android:name=".registrazione.RegistrationActivity" />
         <activity android:name=".prenotazione.VisitaVirtuale" />
         <activity android:name=".login.LoginActivity" />
@@ -108,11 +105,9 @@
         <activity android:name=".bollettaSQL.Bolletta_main" />
         <activity android:name=".visitaNote.NoteVisitaLista" />
         <activity android:name=".SqlNotemain"/>
-        <activity android:name=".Notes_Prova.EditNotes" />
-        <activity android:name=".Notes"
-            tools:ignore="Instantiatable" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ImmaginiAnnuncio" />
+        <activity android:name=".Notes_Prova.EditNotes"/>
     </application>
 
 </manifest>

@@ -19,14 +19,34 @@
         android:id="@+id/tv_valutazioneCasaTua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableRight="@drawable/ic_baseline_star"
-        android:onClick="recensioniCasa"
+        android:drawableLeft="@drawable/ic_baseline_star"
+        android:drawableTint="@color/rosso_scuro"
+        android:textAlignment="center"
         android:padding="10dp"
-        android:text="" />
+        android:text=" "
+        android:textSize="20sp"
+        android:gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/button_aggiungiRecensione"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aggiungi recensione"></Button>
+
+    <TextView
+        android:id="@+id/visualizzaRec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Recensioni ricevute:" />
+
+    <ListView
+        android:id="@+id/listRecCasa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tv_proprietarioLaTuaCasa"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_baseline_home"
         android:onClick="profiloProprietario"
@@ -38,7 +58,8 @@
         android:id="@+id/tv_valutazioneProprietarioCasaTua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableRight="@drawable/ic_baseline_star"
+        android:drawableLeft="@drawable/ic_baseline_star"
+        android:drawableTint="@color/rosso_scuro"
         android:padding="10dp"
         android:text="" />
 

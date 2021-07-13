@@ -3,47 +3,36 @@ package com.example.myapplication.profilo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Proprietario;
-import com.example.myapplication.home.CaseProprietario;
+import com.example.myapplication.classi.RecensioneUtente;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.recensione.RecensioneProprietarioEsterno;
-import com.example.myapplication.recensione.RecensioniProprietarioInterne;
-import com.example.myapplication.registrazione.InserimentoDatiAnnuncio;
 import com.example.myapplication.registrazione.InserimentoDatiCasa;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -53,12 +42,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -82,7 +72,8 @@ public class ProfiloProprietario extends AppCompatActivity {
     private String idUtente;
 
     private List<Casa> listaCase = new ArrayList<>();
-    ListView listView;
+    List<RecensioneUtente> listaRecensioniProprietario;
+    ListView listViewCase, listViewRecensioni;
 
     private Proprietario proprietario;
 
@@ -121,7 +112,10 @@ public class ProfiloProprietario extends AppCompatActivity {
         text_emailP = (TextView) findViewById(R.id.text_emailP);
 
 
-        listView = (ListView) findViewById(R.id.lv_case_prop);
+        listViewCase = (ListView) findViewById(R.id.lv_case_prop);
+
+        listViewRecensioni = (ListView) findViewById(R.id.listView_recensioni_proprietario);
+        listaRecensioniProprietario = new ArrayList<>();
 
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
@@ -148,6 +142,23 @@ public class ProfiloProprietario extends AppCompatActivity {
             }
         });
 
+        myRef.child("Recensioni_Proprietario").child("recensito").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                for (DataSnapshot recPropData : datasnapshot.getChildren()) {
+                    // Log.i(TAG, "recensione");
+                    RecensioneUtente rec = recPropData.getValue(RecensioneUtente.class);
+                    listaRecensioniProprietario.add(rec);
+                }
+                aggiornaRecensioni();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         //TODO aggiungere controllo se esiste un utente loggato o no e prendere l'id utente o tramite intent o tramite user
 
         //sono loggato come proprietario e vedo il mio profilo
@@ -158,6 +169,7 @@ public class ProfiloProprietario extends AppCompatActivity {
         initUI(idUtente);
 
     }
+
 
     private void CambiaImmagine() {
         Intent intent = new Intent();
@@ -245,7 +257,7 @@ public class ProfiloProprietario extends AppCompatActivity {
 
     private void aggiorna() {
 
-        listView = (ListView) findViewById(R.id.lv_case_prop);
+        listViewCase = (ListView) findViewById(R.id.lv_case_prop);
         ProfiloProprietario.CustomItem[] items = createItems();
 
         ArrayAdapter<ProfiloProprietario.CustomItem> arrayAdapter = new ArrayAdapter<ProfiloProprietario.CustomItem>(
@@ -276,9 +288,9 @@ public class ProfiloProprietario extends AppCompatActivity {
                 return rowView;
             }
         };
-        listView.setAdapter(arrayAdapter);
+        listViewCase.setAdapter(arrayAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewCase.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 //TODO prendo l'id della casa che ho cliccato vado ad aggiungi annuncio, pushando con l'intent l'id
@@ -301,7 +313,7 @@ public class ProfiloProprietario extends AppCompatActivity {
         public String nomeCasa;
         public String indirizzoCasa;
         public int numeroOspiti;
-        public float valutazione;
+        public double valutazione;
     }
 
     private ProfiloProprietario.CustomItem[] createItems() {
@@ -323,13 +335,65 @@ public class ProfiloProprietario extends AppCompatActivity {
         }
         return items;
     }
-    private static class ViewHolder{
-        public TextView nomeCasaView;
-        public TextView inidirizzoCasaView;
-        public TextView ospitiCasaView;
-        public TextView valutazioneCasaView;
+
+
+
+    private void aggiornaRecensioni() {
+
+        ProfiloProprietario.CustomItemRecensioni[] items = createItemsRecensioni();
+        ArrayAdapter<ProfiloProprietario.CustomItemRecensioni> ArrayAdapter = new ArrayAdapter<ProfiloProprietario.CustomItemRecensioni>(
+                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                return getViewNotOptimized(position,convertView,parent); }
+
+            public View getViewNotOptimized(int position, View convertView, ViewGroup par){
+                ProfiloProprietario.CustomItemRecensioni item = getItem(position); // Rif. alla riga attualmente
+                LayoutInflater inflater =
+                        (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
+                TextView recensore =
+                        (TextView)rowView.findViewById(R.id.nomeautore1);
+                TextView descrizione =
+                        (TextView)rowView.findViewById(R.id.descrizioneRec);
+                recensore.setText(item.recensore);
+                descrizione.setText(item.descrizione);
+                TextView dataRec =
+                        (TextView) rowView.findViewById(R.id.dataRec);
+                dataRec.setText(item.dataRec.toString());
+
+                return rowView;
+            }
+        };
+        listViewRecensioni.setAdapter(ArrayAdapter);
+    }
+    // CUSTOM ITEM
+    private static class CustomItemRecensioni {
+        public String recensore;
+        public String descrizione;
+        public Date dataRec;
+
     }
 
+    private ProfiloProprietario.CustomItemRecensioni[] createItemsRecensioni() {
+
+        //Log.i(TAG, ""+listaRecensioni.size());
+        int size =listaRecensioniProprietario.size();
+
+        ProfiloProprietario.CustomItemRecensioni[] items = new ProfiloProprietario.CustomItemRecensioni[size]; //numero di annunci possibili
+        for (int i = 0; i < items.length; i++) {
+            //mi prendo il riferimento all'annuncio
+            RecensioneUtente rec = listaRecensioniProprietario.get(i);
+
+            items[i] = new ProfiloProprietario.CustomItemRecensioni();
+            items[i].recensore = rec.getRecensore();
+            items[i].descrizione= rec.getDescrizione();
+            items[i].dataRec= rec.getDataRevisione();
+
+
+        }
+        return items;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -353,6 +417,9 @@ public class ProfiloProprietario extends AppCompatActivity {
                 startActivity(new Intent(ProfiloProprietario.this,Home.class));
                 finish();
                 return true;
+
+            case R.id.home:
+                startActivity(new Intent(ProfiloProprietario.this,Home.class));
 
         }
         return false;
@@ -379,10 +446,6 @@ public void onRequestPermissionsResult(int requestCode, @NonNull String[] permis
 }
 
 
-    public void goHome(View view) {
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
-    }
 
     public void aggiungiNuovaCasa(View view) {
         Intent intent = new Intent(this, InserimentoDatiCasa.class);

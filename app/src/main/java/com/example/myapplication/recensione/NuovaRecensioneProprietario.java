@@ -39,7 +39,7 @@ import java.util.Date;
 
 import static com.google.firebase.database.core.RepoManager.clear;
 
-public class RecensioniProprietarioInterne extends AppCompatActivity {
+public class NuovaRecensioneProprietario extends AppCompatActivity {
     private static final String TAG = "RecensioniProp";
    private TextView rateCount, showRating;
     private EditText review;

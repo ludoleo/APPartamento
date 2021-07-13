@@ -56,7 +56,7 @@
 
             <GridLayout
                 android:layout_width="match_parent"
-                android:layout_height="108dp"
+                android:layout_height="wrap_content"
                 android:visibility="visible">
 
                 <Button
@@ -81,26 +81,12 @@
                     android:layout_column="1"
                     android:onClick="laTuaCasa"
                     android:text="@string/laMiaCasa" />
-
-                <ImageButton
-                    android:id="@+id/button_home3"
-                    android:layout_width="58dp"
-                    android:layout_height="58dp"
-                    android:layout_row="0"
-                    android:layout_column="2"
-                    android:background="@color/rosso_mattone"
-                    android:contentDescription="@string/home"
-                    android:onClick="goHome"
-                    android:translationX="5dp"
-                    android:visibility="visible"
-                    app:srcCompat="@drawable/ic_baseline_home_24"
-                    tools:ignore="VectorDrawableCompat" />
             </GridLayout>
 
             <TextView
                 android:id="@+id/text_info"
                 android:layout_width="match_parent"
-                android:layout_height="37dp"
+                android:layout_height="wrap_content"
                 android:text="@string/informazioniPersonali"
                 android:textSize="24sp"
                 android:textStyle="normal|bold" />
@@ -166,6 +152,25 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"></ListView>
                 </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/recensioni"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Recensioni Studente"
+                    android:textAllCaps="true"
+                    android:textStyle="bold" />
+
+                <ListView
+                    android:id="@+id/listView_recensioni_studente"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
             </LinearLayout>
 
         </LinearLayout>
