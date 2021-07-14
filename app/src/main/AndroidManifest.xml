@@ -13,8 +13,8 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_CALENDAR"/>
-    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
@@ -29,6 +29,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
+        <activity android:name=".prenotazione.PaymentDetails"></activity>
         <activity android:name=".prenotazione.ProfiloPrenotazione" />
         <activity android:name=".prenotazione.LeMiePrenotazioni" />
         <activity android:name=".ricercalloggio.FiltriRicerca" />
@@ -54,7 +55,6 @@
         <activity android:name=".ricercalloggio.ListaAnnunci" />
         <activity android:name=".ricercalloggio.MappaAnnunci" />
 
-
         <service
             android:name=".MyService"
             android:enabled="true"
@@ -76,8 +76,6 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBCyadRVH_uGnvM79GNR49RowBbyE4hkYg" />
@@ -102,16 +100,28 @@
         <activity android:name=".registrazione.RegistrationActivity" />
         <activity android:name=".prenotazione.VisitaVirtuale" />
         <activity android:name=".login.LoginActivity" />
-        <activity android:name=".visitaNote.InserimentoDatiVisita"
-            android:theme="@style/Theme.MyApplication"
-            />
+        <activity
+            android:name=".visitaNote.InserimentoDatiVisita"
+            android:theme="@style/Theme.MyApplication" />
         <activity android:name=".bollettaSQL.ImageSQL" />
         <activity android:name=".bollettaSQL.Bolletta_main" />
         <activity android:name=".visitaNote.NoteVisitaLista" />
-        <activity android:name=".SqlNotemain"/>
+        <activity android:name=".SqlNotemain" />
         <activity android:name=".MainActivity" />
         <activity android:name=".ImmaginiAnnuncio" />
-        <activity android:name=".Notes_Prova.EditNotes"/>
+        <activity android:name=".Notes_Prova.EditNotes" />
+        <activity
+            android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="com.example.myapplication.braintree" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

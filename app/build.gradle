@@ -42,6 +42,12 @@ dependencies {
     //sendbird
     implementation 'com.sendbird.sdk:sendbird-calls:1.6.1'
 
+    //Pagamenti
+    implementation 'org.apache.commons:commons-lang3:3.6'
+    implementation 'com.braintreepayments.api:drop-in:3.7.1'
+    implementation 'com.braintreepayments.gateway:braintree-java:3.6.0'
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
+    implementation 'com.android.volley:volley:1.1.0'
 
     implementation 'com.google.firebase:firebase-storage:20.0.0'
     implementation 'com.google.firebase:firebase-database:19.7.0'

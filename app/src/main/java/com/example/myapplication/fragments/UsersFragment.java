@@ -96,8 +96,6 @@ public class UsersFragment extends Fragment {
 
 
 
-
-
         myRef.child("Utenti").child("Studenti").addValueEventListener (new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
