@@ -57,8 +57,8 @@ public class ProfiloStudente extends AppCompatActivity {
     private static final String TAG = "Profilo Studente";
     private static final int IMAG_REQUEST = 1000;
     private static final int PERMISSION_CODE = 1001;
-    private Uri ImageUri;
-    private StorageTask UploadTask;
+   // private Uri ImageUri;
+    //private StorageTask UploadTask;
 
     Button change, modifica, laTuaCasa, note, b_nuovaRecensione;
     CircleImageView immagineStudente ;
@@ -74,7 +74,6 @@ public class ProfiloStudente extends AppCompatActivity {
     public FirebaseDatabase database;
     private String idUtente;
 
-    FirebaseStorage storage;
     StorageReference storageReference;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
@@ -237,9 +236,9 @@ public class ProfiloStudente extends AppCompatActivity {
         myRef.child("Recensioni_Studente").child(idUtente).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                for (DataSnapshot recPropData : datasnapshot.getChildren()) {
+                for (DataSnapshot recStudData : datasnapshot.getChildren()) {
                     // Log.i(TAG, "recensione");
-                    RecensioneStudente rec = recPropData.getValue(RecensioneStudente.class);
+                    RecensioneStudente rec = recStudData.getValue(RecensioneStudente.class);
                     listaRecensioniUtente.add(rec);
                 }
                 aggiorna();
