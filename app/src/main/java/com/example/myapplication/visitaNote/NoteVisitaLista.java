@@ -187,7 +187,7 @@ public class NoteVisitaLista extends ListActivity {
             Log.i(TAG_LOG, "Inizio Creazione DB");
 
             String sql="";
-            sql += "CREATE TABLE \"NOTE\" (";
+            sql += "CREATE TABLE \"Note\" (";
             sql += "	    \"_id\" INTEGER PRIMARY KEY AUTOINCREMENT,";
             sql += "	    \"nome\" TEXT NOT NULL,";
             sql += "	    \"valutazione\" TEXT NOT NULL,";

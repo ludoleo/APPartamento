@@ -14,11 +14,12 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!---
     <style name="Theme.MyApplication.NoActionBar">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
     </style>
-
+-->
     <style name ="MenuStyle" parent="Theme.AppCompat.Light">
         <item name="android:background">@color/rosso_mattone</item>
         <item name="android:textColor">@android:color/white</item>

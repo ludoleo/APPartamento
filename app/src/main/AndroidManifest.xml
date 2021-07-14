@@ -102,7 +102,9 @@
         <activity android:name=".registrazione.RegistrationActivity" />
         <activity android:name=".prenotazione.VisitaVirtuale" />
         <activity android:name=".login.LoginActivity" />
-        <activity android:name=".visitaNote.InserimentoDatiVisita"/>
+        <activity android:name=".visitaNote.InserimentoDatiVisita"
+            android:theme="@style/Theme.MyApplication"
+            />
         <activity android:name=".bollettaSQL.ImageSQL" />
         <activity android:name=".bollettaSQL.Bolletta_main" />
         <activity android:name=".visitaNote.NoteVisitaLista" />

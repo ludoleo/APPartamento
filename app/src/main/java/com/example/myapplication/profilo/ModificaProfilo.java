@@ -49,7 +49,7 @@ public class ModificaProfilo extends AppCompatActivity {
         note.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent d = new Intent(ModificaProfilo.this, EditNotes.class);
+                Intent d = new Intent(ModificaProfilo.this, NoteVisitaLista.class);
                 startActivity(d);
             }
         });
@@ -74,7 +74,7 @@ public class ModificaProfilo extends AppCompatActivity {
 
     public void vediNote(View view) {
 
-        Intent intent = new Intent(ModificaProfilo.this, SqlNotemain.class);
+        Intent intent = new Intent(ModificaProfilo.this, InserimentoDatiVisita.class);
         startActivity(intent);
     }
 }
