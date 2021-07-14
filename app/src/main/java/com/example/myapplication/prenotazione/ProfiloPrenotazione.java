@@ -192,6 +192,8 @@ public class ProfiloPrenotazione extends AppCompatActivity {
 
     public void effettuaPagamento(View view) {
         //SI EFFETTUA IL PAGAMENTO
+        Intent i = new Intent(this, PrenotazionePaypalActivity.class);
+        startActivity(i);
     }
 
     public void confermaPrenotazione(View view) {
