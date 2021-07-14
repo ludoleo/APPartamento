@@ -12,8 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.classi.RecensioneProprietario;
 import com.example.myapplication.classi.RecensioneStudente;
+import com.example.myapplication.classi.Utente;
 import com.example.myapplication.home.Home;
+import com.example.myapplication.profilo.ProfiloProprietario;
+import com.example.myapplication.profilo.ProfiloStudente;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,15 +29,23 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Date;
 
 public class NuovaRecensioneProprietario extends AppCompatActivity {
+
     private static final String TAG = "RecensioniProp";
-   private TextView rateCount, showRating;
-    private EditText review;
+
+    EditText recensione;
+
+    TextView mediaRecensione;
+
    // private Button submit;
-    private RatingBar ratingbar;
-   private float rateValue;
-   private String temp;
-    String descrizioneRec;
+    private RatingBar rb_disponibilita, rb_flessibilita, rb_generale;
+
+    private float valoreDisponibilita, valoreFlessibilita, valoreGenerale, valutazioneMedia;
+
+    String descrizioneRec, idProprietario;
+
     Boolean flagNomeRecensoreUguale;
+
+    Utente utente;
     // Database
     public DatabaseReference myRef;
     public FirebaseDatabase database;
@@ -50,41 +62,73 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
     }
 
     private void initUI() {
-    rateCount = (TextView) findViewById(R.id.ratecount);
-    review = (EditText) findViewById(R.id.Review);
+
+        mediaRecensione = (TextView) findViewById(R.id.mediaRecPro);
+
+        rb_disponibilita = findViewById(R.id.rb_disponibilita);
+        rb_flessibilita = findViewById(R.id.rb_flessibilita);
+        rb_generale = findViewById(R.id.rb_generale);
+
+        recensione = findViewById(R.id.et_recensioneProp);
+
+        idProprietario = getIntent().getExtras().getString("idProprietario");
+
     //submit = findViewById(R.id.Submit);
-    ratingbar = (RatingBar) findViewById(R.id.RatingBar);
-    showRating = (TextView) findViewById(R.id.showRating);
-    flagNomeRecensoreUguale = false;
+
+        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+        myRef = database.getReference();
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+        flagNomeRecensoreUguale = false;
     // Rating Bar per settare il rating
-        ratingbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        rb_disponibilita.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                rateValue = ratingbar.getRating();
+                valoreDisponibilita = rb_disponibilita.getRating();
+                valutazioneMedia = (valoreDisponibilita+valoreFlessibilita+valoreGenerale)/3;
+                mediaRecensione.setText(Float.toString(valutazioneMedia));
                 Log.i(TAG, "DEscrizione rec"+descrizioneRec);
             }
         });
 
-    database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
-    myRef = database.getReference();
+        rb_flessibilita.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                valoreFlessibilita = rb_flessibilita.getRating();
+                valutazioneMedia = (valoreDisponibilita+valoreFlessibilita+valoreGenerale)/3;
+                mediaRecensione.setText(Float.toString(valutazioneMedia));
+                Log.i(TAG, "DEscrizione rec"+descrizioneRec);
+            }
+        });
 
-    mAuth = FirebaseAuth.getInstance();
-    user = mAuth.getCurrentUser();
+        rb_generale.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                valoreGenerale = rb_disponibilita.getRating();
+                valutazioneMedia = (valoreDisponibilita+valoreFlessibilita+valoreGenerale)/3;
+                mediaRecensione.setText(Float.toString(valutazioneMedia));
+                Log.i(TAG, "DEscrizione rec"+descrizioneRec);
+            }
+        });
+
+
 
     Log.i(TAG,"Utente autenticato è :"+user.getEmail()+user.getUid());
 
     }
 
-    public void NuovaRecProp(View view) {
+    public void nuovaRecProp(View view) {
 
 
-        String descrizione = review.getText().toString();
-        float valutazionemedia = rateValue;
+        descrizioneRec = recensione.getText().toString();
+        //float valutazionemedia = rateValue;
         // Data Recensione
         Date data = new Date();
 
         //controllo sulla descrizione
-        if (descrizione.compareTo("") == 0) {
+        if (descrizioneRec.compareTo("") == 0) {
             Toast.makeText(this, "Attenzione aggiungi recensione", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -97,17 +141,38 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
             return;
         }
 
-        //RecensioneStudente recensioneprop = new RecensioneStudente(descrizione,valutazionemedia,recensore,recensito,data);
+        RecensioneProprietario recensioneProp = new RecensioneProprietario(data, descrizioneRec,valoreDisponibilita,valoreFlessibilita,valoreGenerale,valutazioneMedia,recensore,recensito);
         //PUSH
-        DatabaseReference recensioneAggiunta = myRef.child("Recensioni_Studente").push();
-       // recensioneAggiunta.setValue(recensioneprop);
+        DatabaseReference recensioneProprietarioAggiunta = myRef.child("Recensioni_Proprietario").child(idProprietario).push();
+        recensioneProprietarioAggiunta.setValue(recensioneProp);
 
         Log.i(TAG, "Recensione aggiunta da" + user.getUid().toString());
 
-        PulisciCampi();
+        aggiornoDatiProprietario(idProprietario);
+
+        pulisciCampi();
 
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
+    }
+
+    private void aggiornoDatiProprietario(String idProprietario) {
+
+        int numeroRec = utente.getNumRec()+1;
+
+        Log.i(TAG, "valutazione: "+utente.getValutazione()+"-"+utente.getNumRec()+"-"+valutazioneMedia+"-"+numeroRec);
+
+        double valutazioneMediaAggiornata = ((utente.getValutazione()*utente.getNumRec())+valutazioneMedia)/numeroRec ;
+
+        Log.i(TAG," valutazione media: "+valutazioneMediaAggiornata+ " nuovo numero rec: "+numeroRec);
+
+
+        utente.setValutazione(valutazioneMediaAggiornata);
+        utente.setNumRec(numeroRec);
+
+        myRef.child("Utenti").child("Proprietari").child(idProprietario).child("numRec").setValue(numeroRec);
+        myRef.child("Utenti").child("Proprietari").child(idProprietario).child("valutazione").setValue(valutazioneMediaAggiornata);
+
     }
 
     public void controlloRensore(String recensore) {
@@ -115,9 +180,9 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
         myRef.child("Recensioni_Proprietario").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot proprietarioSnapshot: dataSnapshot.getChildren()) {
 
-                    RecensioneStudente recensionepropFiglio = caseSnapshot.getValue(RecensioneStudente.class);
+                    RecensioneProprietario recensionepropFiglio = proprietarioSnapshot.getValue(RecensioneProprietario.class);
 
                     if(recensionepropFiglio.getRecensore().compareTo(recensore)==0) {
 
@@ -141,10 +206,17 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
     }
 
 
-    private void PulisciCampi() {
-        review.setText("");
-        ratingbar.setRating(0);
-        rateCount.setText("");
+    private void pulisciCampi() {
+
+        recensione.setText("");
+        rb_disponibilita.setRating(0);
+        rb_flessibilita.setRating(0);
+        rb_generale.setRating(0);
+
+        Intent intent = new Intent(this, ProfiloProprietario.class);
+        intent.putExtra("idProprietario",idProprietario);
+        startActivity(intent);
+
 
     }
 

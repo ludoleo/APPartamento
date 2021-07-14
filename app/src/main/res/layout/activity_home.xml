@@ -9,46 +9,40 @@
 
     <TextView
         android:id="@+id/et_cerca"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="284dp"
+        android:layout_height="39dp"
+        android:background="@android:drawable/editbox_background"
+        android:drawableRight="@drawable/ic_outline_search_24"
         android:fadingEdge="horizontal"
         android:fontFamily="@font/josefin_sans"
+        android:gravity="center"
+        android:lineSpacingExtra="8sp"
         android:onClick="cercaMappa"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:text="@string/cercaAnnunci"
+        android:textAllCaps="false"
         android:textColor="@color/rosso_scuro"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:drawableTint="@color/rosso_scuro"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.239" />
+        app:layout_constraintVertical_bias="0.18" />
 
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="47dp"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="335dp"
         android:translationY="-10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.94">
+        app:layout_constraintTop_toBottomOf="@+id/et_cerca"
+        app:layout_constraintVertical_bias="0.0">
 
-        <ImageButton
-            android:id="@+id/button_home"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            android:adjustViewBounds="false"
-            android:background="@drawable/ic_outline_home_24"
-            android:contentDescription="@string/home"
-            android:fadingEdge="vertical|none"
-            android:translationX="-2dp"
-            android:visibility="visible"
-            tools:ignore="VectorDrawableCompat" />
 
         <ImageButton
             android:id="@+id/profilo"
@@ -56,10 +50,10 @@
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"
             android:layout_marginLeft="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_baseline_person_outline_24"
+            android:background="@drawable/ic_baseline_person_outline_red_24"
             android:contentDescription="@string/profilo"
             android:onClick="profilo"
             tools:ignore="VectorDrawableCompat" />
@@ -70,10 +64,10 @@
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"
             android:layout_marginLeft="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_outline_message_24"
+            android:background="@drawable/ic_baseline_mail_outline_24"
             android:onClick="messaggi"
             tools:ignore="VectorDrawableCompat" />
 
@@ -83,10 +77,10 @@
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"
             android:layout_marginLeft="2dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_outline_calendar_today_red_24"
+            android:background="@drawable/ic_outline_edit_calendar_24"
             android:contentDescription="@string/Prenotazioni1"
             android:onClick="prenotazione"
             tools:ignore="VectorDrawableCompat" />
@@ -100,7 +94,7 @@
             android:layout_marginEnd="4dp"
             android:layout_marginRight="4dp"
             android:layout_weight="1"
-            android:background="@drawable/ic_outline_exit_to_app_24"
+            android:background="@drawable/ic_baseline_exit_to_app_red_24"
             android:onClick="esci"
             tools:ignore="VectorDrawableCompat" />
 

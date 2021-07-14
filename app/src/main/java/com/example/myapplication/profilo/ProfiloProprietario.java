@@ -27,8 +27,11 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Proprietario;
+import com.example.myapplication.classi.RecensioneProprietario;
 import com.example.myapplication.classi.RecensioneStudente;
 import com.example.myapplication.home.Home;
+import com.example.myapplication.recensione.NuovaRecensioneProprietario;
+import com.example.myapplication.recensione.NuovaRecensioneStudente;
 import com.example.myapplication.registrazione.InserimentoDatiCasa;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -53,14 +56,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfiloProprietario extends AppCompatActivity {
 
     private static final String TAG = "PROFILO PROPRIETARIO";
-    Button cambiaImmagine;
-    private CircleImageView immagineprop;
-    private static final int IMAG_PICK_CODE = 1000;
+    private static final int IMAG_REQUEST = 1000;
     private static final int PERMISSION_CODE = 1001;
+
+    Button cambiaImmagine, b_nuovaRecensioneProp;
+    CircleImageView immagineProp;
+    TextView text_nomeP, text_cognomeP, text_emailP;
     private Uri imageUri;
     StorageReference storageReference;
 
-    TextView text_nomeP, text_cognomeP, text_emailP;
+    List<RecensioneProprietario> listaRecensioniProprietario;
 
     private DatabaseReference myRef;
     private FirebaseDatabase database;
@@ -69,7 +74,7 @@ public class ProfiloProprietario extends AppCompatActivity {
     private String idUtente;
 
     private List<Casa> listaCase = new ArrayList<>();
-    List<RecensioneStudente> listaRecensioniProprietario;
+
     ListView listViewCase, listViewRecensioni;
 
     private Proprietario proprietario;
@@ -80,8 +85,31 @@ public class ProfiloProprietario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo_proprietario);
 
+        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+        myRef = database.getReference();
+
+        immagineProp = findViewById(R.id.immagineProfiloProp);
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        // storage
+        storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference profileRefer = storageReference.child("Proprietari/"+user.getUid()+"/profile.jpg");
+
+        profileRefer.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Log.i(TAG,"URI"+uri);
+                Picasso.get().load(uri).into(immagineProp);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+
         cambiaImmagine = findViewById(R.id.cambiaImmagineProp);
-        immagineprop = findViewById(R.id.immagineProfiloProp);
         cambiaImmagine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,43 +136,26 @@ public class ProfiloProprietario extends AppCompatActivity {
         text_cognomeP = (TextView) findViewById(R.id.text_cognomeP);
         text_emailP = (TextView) findViewById(R.id.text_emailP);
 
-
         listViewCase = (ListView) findViewById(R.id.lv_case_prop);
 
         listViewRecensioni = (ListView) findViewById(R.id.listView_recensioni_proprietario);
         listaRecensioniProprietario = new ArrayList<>();
 
-        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
-        myRef = database.getReference();
+        b_nuovaRecensioneProp = findViewById(R.id.b_nuovaRecensioneProp);
 
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-        // storage
-        storageReference = FirebaseStorage.getInstance().getReference();
+        idUtente = getIntent().getExtras().getString("idUtente");
         Log.i(TAG,"STorage "+storageReference);
 
-        StorageReference profileRefer = storageReference.child("Proprietari/"+user.getUid()+"/profile.jpg");
         Log.i(TAG,"profile ref "+profileRefer);
 
-        profileRefer.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Log.i(TAG,"URI"+uri);
-                Picasso.get().load(uri).into(immagineprop);
-            }
-            }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-            // Handle any errors
-            }
-        });
 
-        myRef.child("Recensioni_Proprietario").child("recensito").addValueEventListener(new ValueEventListener() {
+
+        myRef.child("Recensioni_Proprietario").child(idUtente).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 for (DataSnapshot recPropData : datasnapshot.getChildren()) {
                     // Log.i(TAG, "recensione");
-                    RecensioneStudente rec = recPropData.getValue(RecensioneStudente.class);
+                    RecensioneProprietario rec = recPropData.getValue(RecensioneProprietario.class);
                     listaRecensioniProprietario.add(rec);
                 }
                 aggiornaRecensioni();
@@ -156,6 +167,16 @@ public class ProfiloProprietario extends AppCompatActivity {
             }
         });
 
+        b_nuovaRecensioneProp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent l = new Intent(ProfiloProprietario.this, NuovaRecensioneProprietario.class);
+                Log.i(TAG,"VADO IN NUOVA REC PER LO STUDENTE: "+idUtente);
+                l.putExtra("idProprietario",idUtente);
+                startActivity(l);
+            }
+        });
+
         //TODO aggiungere controllo se esiste un utente loggato o no e prendere l'id utente o tramite intent o tramite user
 
         //sono loggato come proprietario e vedo il mio profilo
@@ -163,8 +184,28 @@ public class ProfiloProprietario extends AppCompatActivity {
             idUtente = user.getUid();
         else //sono un utente che vuole vedere il profilo del proprietario
             idUtente = getIntent().getExtras().getString("idProprietario");
+
         initUI(idUtente);
 
+    }
+
+    // permission foto
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case PERMISSION_CODE : {
+                if(grantResults.length > 0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED){
+                    // permission sono garantite
+                    CambiaImmagine();
+                }
+                else {
+                    // permission denied
+                    Toast.makeText(this,"Permission Denied!",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
 
@@ -172,13 +213,13 @@ public class ProfiloProprietario extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,IMAG_PICK_CODE);
+        startActivityForResult(intent,IMAG_REQUEST);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == IMAG_PICK_CODE && resultCode == RESULT_OK && data != null && data.getData() != null){
+        if(requestCode == IMAG_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             Uri imageUri = data.getData();
             uploadImageToFirebase(imageUri);
         }
@@ -193,7 +234,7 @@ public class ProfiloProprietario extends AppCompatActivity {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into(immagineprop);
+                        Picasso.get().load(uri).into(immagineProp);
                     }
                 });
             }
@@ -380,7 +421,7 @@ public class ProfiloProprietario extends AppCompatActivity {
         ProfiloProprietario.CustomItemRecensioni[] items = new ProfiloProprietario.CustomItemRecensioni[size]; //numero di annunci possibili
         for (int i = 0; i < items.length; i++) {
             //mi prendo il riferimento all'annuncio
-            RecensioneStudente rec = listaRecensioniProprietario.get(i);
+            RecensioneProprietario rec = listaRecensioniProprietario.get(i);
 
             items[i] = new ProfiloProprietario.CustomItemRecensioni();
             items[i].recensore = rec.getRecensore();
@@ -423,24 +464,7 @@ public class ProfiloProprietario extends AppCompatActivity {
 
 
     }
-    // permission foto
-@Override
-public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    switch (requestCode){
-        case PERMISSION_CODE : {
-            if(grantResults.length > 0 && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED){
-                // permission sono garantite
-                CambiaImmagine();
-            }
-            else {
-                // permission denied
-                Toast.makeText(this,"Permission Denied!",Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-}
+
 
 
 
