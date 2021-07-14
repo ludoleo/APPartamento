@@ -141,7 +141,7 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
                     Intent intent = new Intent(PrenotazioneCalendarioActivity.this, Home.class);
                     startActivity(intent);
                 }else{
-                   // Toast.makeText(PrenotazioneCalendarioActivity.this, "Sei già prenotato per questo annuncio", Toast.LENGTH_LONG).show();
+
                 }
             }
             @Override

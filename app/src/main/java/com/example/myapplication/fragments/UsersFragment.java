@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.classi.Prenotazione;
 import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.classi.Utente;
@@ -29,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -44,6 +46,8 @@ public class UsersFragment extends Fragment {
     DatabaseReference myRef;
     boolean flag;
 
+    private List<Prenotazione> listaPrenotazioni;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,18 +59,43 @@ public class UsersFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         flag = false;
 
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+        myRef = database.getReference();
+
         mUtente = new ArrayList<>();
 
-        readUser();
+        listaPrenotazioni = new LinkedList<>();
+
+        myRef.child("Prenotazioni").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot annData : dataSnapshot.getChildren()) {
+                    Prenotazione prenotazione = annData.getValue(Prenotazione.class);
+                    if (prenotazione.getEmailUtente1().compareTo(firebaseUser.getEmail()) == 0
+                            || prenotazione.getEmailUtente2().compareTo(firebaseUser.getEmail()) == 0) {
+                        //PRENDO TUTTE LE PRENOTAZIONI DELL'UTENTE
+                        listaPrenotazioni.add(prenotazione);
+                    }
+                }
+
+                readUser();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
+
         return view;
     }
 
     private void readUser() {
 
 
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
-        myRef = database.getReference();
+
 
 
         myRef.child("Utenti").child("Studenti").addValueEventListener (new ValueEventListener() {
@@ -90,7 +119,11 @@ public class UsersFragment extends Fragment {
                                 for (DataSnapshot proprietari : snapshot.getChildren()) {
                                     Proprietario proprietario = proprietari.getValue(Proprietario.class);
                                     Log.i(TAG, "Aggiunto proprietario " + proprietario.getNome());
-                                    mUtente.add(proprietario);
+                                    for(Prenotazione pr : listaPrenotazioni){
+                                        if(pr.getEmailUtente1().compareTo(proprietario.getEmail()) == 0
+                                                || pr.getEmailUtente2().compareTo(proprietario.getEmail()) == 0)
+                                            mUtente.add(proprietario);
+                                    }
 
                                     Log.i(TAG, "Dimensione di mutente " + mUtente.size());
 
@@ -113,8 +146,11 @@ public class UsersFragment extends Fragment {
                                 for (DataSnapshot studenti : snapshot.getChildren()) {
                                     Studente studente = studenti.getValue(Studente.class);
                                     Log.i(TAG, "Aggiunto studente " + studente.getNome());
-                                    mUtente.add(studente);
-
+                                    for(Prenotazione pr : listaPrenotazioni){
+                                        if(pr.getEmailUtente1().compareTo(studente.getEmail()) == 0
+                                                || pr.getEmailUtente2().compareTo(studente.getEmail()) == 0)
+                                            mUtente.add(studente);
+                                    }
                                     Log.i(TAG, "Dimensione di mutente " + mUtente.size());
 
                                     userAdapter = new UserAdapter(getContext(), mUtente);

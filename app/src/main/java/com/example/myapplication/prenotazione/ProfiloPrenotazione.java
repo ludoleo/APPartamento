@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Prenotazione;
+import com.example.myapplication.home.Home;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -196,6 +197,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
     public void confermaPrenotazione(View view) {
 
         //LA PRENOTAZIONE DIVENTA CONFERMATA
+        /*
         prenotazione.setConfermata(true);
         DatabaseReference preAdd = myRef.child("Prenotazioni").push();
         preAdd.setValue(prenotazione);
@@ -208,6 +210,8 @@ public class ProfiloPrenotazione extends AppCompatActivity {
 
             }
         });
+        */
+        myRef.child("Prenotazioni").child(id).child("confermata").setValue(true);
 
         //CALENDARIO
         /*
@@ -276,21 +280,15 @@ public class ProfiloPrenotazione extends AppCompatActivity {
 
 
          */
-        Intent i = new Intent(this, LeMiePrenotazioni.class);
+        Intent i = new Intent(this, Home.class);
         startActivity(i);
     }
 
     public void cancella(View view) {
         //LA PRENOTAZIONE VIENE CANCELLATA
-        myRef.child("Prenotazioni").child(id).removeValue(new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                Toast.makeText(ProfiloPrenotazione.this, "Prenotazione cancellata", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(ProfiloPrenotazione.this, LeMiePrenotazioni.class);
-                startActivity(i);
-
-            }
-        });
+        myRef.child("Prenotazioni").child(id).removeValue();
+        Intent i = new Intent(ProfiloPrenotazione.this, Home.class);
+        startActivity(i);
     }
 
     public void modifica(View view) {
@@ -301,6 +299,8 @@ public class ProfiloPrenotazione extends AppCompatActivity {
     }
 
     public void cambiaData(View view) {
+
+        myRef.child("Prenotazioni").child(id).removeValue();
 
         String email1 = prenotazione.getEmailUtente1();
         String nome1 = prenotazione.getNomeUtente1();
@@ -316,18 +316,16 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         prenotazione.setNomeUtente2(nome1);
         prenotazione.setOrario(fasciaOraria);
 
-        DatabaseReference preAdd = myRef.child("Prenotazioni").push();
+        DatabaseReference ref = database.getReference();
+
+        DatabaseReference preAdd = ref.child("Prenotazioni").push();
         preAdd.setValue(prenotazione);
         String key = preAdd.getKey();
-        myRef.child("Prenotazioni").child(key).child("id").setValue(key);
+        ref.child("Prenotazioni").child(key).child("id").setValue(key);
 
-        myRef.child("Prenotazioni").child(id).removeValue(new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                Intent i = new Intent(ProfiloPrenotazione.this, LeMiePrenotazioni.class);
-                startActivity(i);
-            }
-        });
+        Intent i = new Intent(ProfiloPrenotazione.this, Home.class);
+        startActivity(i);
+
 
 
     }
