@@ -107,11 +107,14 @@
             />
         <activity android:name=".bollettaSQL.ImageSQL" />
         <activity android:name=".bollettaSQL.Bolletta_main" />
-        <activity android:name=".visitaNote.NoteVisitaLista" />
-        <activity android:name=".SqlNotemain"/>
+
+        <activity android:name=".visitaNote.NoteVisitaLista"
+            android:theme="@style/Theme.MyApplication"
+            />
+
         <activity android:name=".MainActivity" />
         <activity android:name=".ImmaginiAnnuncio" />
-        <activity android:name=".Notes_Prova.EditNotes"/>
+
     </application>
 
 </manifest>

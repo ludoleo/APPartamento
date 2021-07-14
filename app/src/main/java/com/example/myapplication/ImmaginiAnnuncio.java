@@ -82,7 +82,7 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 Log.i(TAG, "URI " + uri);
-                //Picasso.get().load(uri).into( ImageIs);
+                Picasso.get().load(uri).into((Target) ImageIs);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -219,7 +219,7 @@ public class ImmaginiAnnuncio extends AppCompatActivity {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                       // Picasso.get().load(uri).into((Target) imageUris);
+                      // Picasso.get().load(uri).into((Target) ImageIs);
                     }
                 });
             }

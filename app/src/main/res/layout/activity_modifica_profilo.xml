@@ -48,7 +48,6 @@
         android:id="@+id/noteInserite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="vediNote"
         android:text="Vedi Note inserite" />
 
     <TextView

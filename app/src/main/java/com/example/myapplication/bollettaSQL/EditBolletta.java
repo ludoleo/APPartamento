@@ -11,6 +11,8 @@ import android.widget.ImageView;
 
 import com.example.myapplication.R;
 
+import java.util.Objects;
+
 public class EditBolletta extends AppCompatActivity {
     private EditText edit_text;
     ImageView image;
@@ -28,7 +30,7 @@ public class EditBolletta extends AppCompatActivity {
         if(getIntent().hasExtra("byteArray"))
         {
             Bitmap bitmap = BitmapFactory.decodeByteArray(
-                    getIntent().getByteArrayExtra("byteArray"), 0, getIntent().getByteArrayExtra("byteArray").length);
+                    getIntent().getByteArrayExtra("byteArray"), 0, Objects.requireNonNull(getIntent().getByteArrayExtra("byteArray")).length);
             image.setImageBitmap(bitmap);
 
         }
