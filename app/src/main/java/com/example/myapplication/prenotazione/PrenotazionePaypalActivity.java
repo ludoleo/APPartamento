@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -25,6 +26,9 @@ import com.braintreepayments.api.interfaces.HttpResponseCallback;
 import com.braintreepayments.api.internal.HttpClient;
 import com.braintreepayments.api.models.PayPalRequest;
 import com.example.myapplication.R;
+import com.example.myapplication.home.Home;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,18 +36,25 @@ import java.util.Map;
 public class PrenotazionePaypalActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_PAYMENT = 1;
+    private static final String TAG = "Pagamen";
     EditText etAmount;
     Button btnPay;
     //TODO DA MODIFICARE SE CAMBIO LA DIRECTORY
                                     //metto indirizzo col quale sono collegato
-    final static String IP_ADDRESS = "";
-    final static String get_token = "http://"+IP_ADDRESS+"/Android/Braintree/main.php";
-    final static String send_payment_details = "" + IP_ADDRESS + "/Android/Braintree/checkout.php";
+    //final static String IP_ADDRESS = "192.168.47.175"; //CREA
+    final static String IP_ADDRESS = "10.14.4.151";   //CASA
+    final static String get_token = "http://"+IP_ADDRESS+"/Android/braintree_php/main.php";
+    final static String send_payment_details = "http://" + IP_ADDRESS + "/Android/braintree_php/checkout.php";
 
     String token;
     String amount = "";
-    String currency = "EUR";
     Map<String,String> parameters;
+
+    String id="";
+
+    //Database
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +62,16 @@ public class PrenotazionePaypalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_prenotazione_paypal);
         etAmount = findViewById(R.id.etAmount);
         btnPay = findViewById(R.id.b_paypal);
+
+        id = getIntent().getExtras().getString("id");
+        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+        myRef = database.getReference();
+
         new  HttpRequest().execute();
 
     }
     public void back(View view) {
-        Intent intent = new Intent(this, LeMiePrenotazioni.class);
+        Intent intent = new Intent(this, Home.class);
         startActivity(intent);
     }
 
@@ -117,26 +133,21 @@ public class PrenotazionePaypalActivity extends AppCompatActivity {
                 DropInResult result =
                         data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
                 String paymentMethodNonce = result.getPaymentMethodNonce().getNonce();
-              //  Log.i(TAG, "Result: " + paymentMethodNonce+ " amount "+amount); //write to log
+               Log.i(TAG, "Result: " + paymentMethodNonce+ " amount "+amount); //write to log
                 parameters = new HashMap<>(); // to make transaction
                 parameters.put("amount", amount);
                 parameters.put("payment_method_nonce", paymentMethodNonce);
                 sendPaymentDetails();
             }else if (resultCode == RESULT_CANCELED) {
             // the user canceled
-                //Toast.makeText(MainActivity.this, "Payment cancelled by user",
-                  //      Toast.LENGTH_LONG).show();
-                //Log.d(TAG, "user canceled"); //to write log
+                Log.d(TAG, "user canceled"); //to write log
             } else{
                 Exception error = (Exception)
                         data.getSerializableExtra(DropInActivity.EXTRA_ERROR);
-             //   Toast.makeText(MainActivity.this, "Error!!! Message: " + error.toString(),
-               //         Toast.LENGTH_LONG).show();
-               // Log.d(TAG, "Error : " + error.toString()); //write to log
+                 Log.d(TAG, "Error : " + error.toString()); //write to log
             }
         } else {
-          //  Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_LONG).show();
-           // Log.d(TAG, "Error : "); //write to log
+              Log.d(TAG, "Error : "); //write to log
         }
     }
 
@@ -148,24 +159,23 @@ public class PrenotazionePaypalActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         if (response.contains("Successful")){
-                           // Toast.makeText(MainActivity.this, "Transaction successful", Toast.LENGTH_LONG).show();
-                    // Go to next activity
-                            startActivity(new Intent(PrenotazionePaypalActivity.this, PaymentDetails.class)
-                                    .putExtra("Amount", amount)
-                                    .putExtra("Currency", currency)
-                                    .putExtra("Response", response));
+                            //cambia la prenotazione in pagata
+                            myRef.child("Prenotazioni").child(id).child("pagata").setValue(true);
+                            Toast.makeText(PrenotazionePaypalActivity.this, "Transaction successful", Toast.LENGTH_LONG).show();
+                            Intent i = new Intent(PrenotazionePaypalActivity.this, Home.class);
+                            startActivity(i);
                         }
                         else{
-
+                            Log.i(TAG, "Final Response: " + response.toString());
                         }
                            // Toast.makeText(MainActivity.this, "Transaction failed : " + response.toString(),
                                    // Toast.LENGTH_LONG).show();
-                       // Log.i(TAG, "Final Response: " + response.toString()); //write to log
+                       //write to log
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-            //    Log.i(TAG, "Volley error : " + error.toString());
+             Log.i(TAG, "Volley error : " + error.toString());
             }
         }) {
             @Override
