@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
-import com.example.myapplication.Notes_Prova.EditNotes;
-import com.example.myapplication.SqlNotemain;
 import com.example.myapplication.bollettaSQL.ImageSQL;
 import com.example.myapplication.R;
 import com.example.myapplication.visitaNote.InserimentoDatiVisita;
