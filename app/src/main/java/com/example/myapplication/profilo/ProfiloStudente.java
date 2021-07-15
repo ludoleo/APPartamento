@@ -189,7 +189,7 @@ public class ProfiloStudente extends AppCompatActivity {
                             //username.setText(studente.getNome()+" "+studente.getCognome());
                             //METODO CHE POPOLA LA LISTA DI HOBBY
                             String[] hobby = studente.getHobby().split("-");
-                            arrayAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.row, hobby);
+                            arrayAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.row_item_list_hobby, hobby);
                             listViewHobby.setAdapter(arrayAdapter);
                             //CONTROLLO SE LO STUDENTE SIA UN INQUILINO
                             studentIsInquilino(studente.getEmail());

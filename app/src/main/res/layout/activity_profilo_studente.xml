@@ -82,8 +82,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="5dp">
-
+        android:paddingTop="5dp">>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,30 +91,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="5dp">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
                     android:orientation="vertical"
-                    android:padding="2dp">
-                    android:layout_row="0"
-                    android:layout_column="1"
-                    android:text="@string/modificaProfilo" />
+                    android:paddingBottom="5dp">
 
-                <Button
-                    android:id="@+id/b_rimuoviInquilino"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="1"
-                    android:layout_column="0"
-                    android:onClick="rimuoviInquilino"
-                    android:text="Rimuovi Inquilino" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:orientation="vertical"
+                        android:padding="2dp">
+                        android:layout_row="0"
+                        android:layout_column="1"
+                        android:text="@string/modificaProfilo" />
 
-                </LinearLayout>
+                        <Button
+                            android:id="@+id/b_rimuoviInquilino"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_row="1"
+                            android:layout_column="0"
+                            android:onClick="rimuoviInquilino"
+                            android:text="Rimuovi Inquilino" />
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/text_info"
@@ -215,52 +219,51 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingTop="5dp">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingTop="5dp">
 
-                <View
-                    android:id="@+id/divider3"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@color/rosso_scuro"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp" />
+                        <View
+                            android:id="@+id/divider3"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@color/rosso_scuro"
+                            android:paddingLeft="5dp"
+                            android:paddingTop="5dp" />
 
-                <TextView
-                    android:id="@+id/recensioni"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="Recensioni Studente"
-                    android:textAllCaps="true"
-                    android:textColor="@color/rosso_scuro"
-                    android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/recensioni"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Recensioni Studente"
+                            android:textAllCaps="true"
+                            android:textColor="@color/rosso_scuro"
+                            android:textSize="18sp" />
 
-                <ListView
-                    android:id="@+id/listView_recensioni_studente"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                        <ListView
+                            android:id="@+id/listView_recensioni_studente"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
 
-                <Button
-                    android:id="@+id/b_nuovaRecensione"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:gravity="center_horizontal"
-                    android:padding="5dp"
-                    android:text="Aggiungi recensione" />
+                        <Button
+                            android:id="@+id/b_nuovaRecensione"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_margin="5dp"
+                            android:gravity="center_horizontal"
+                            android:padding="5dp"
+                            android:text="Aggiungi recensione" />
 
-            </LinearLayout>
+                    </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
-
 
 </LinearLayout>
