@@ -12,135 +12,171 @@
     tools:context=".profilo.ProfiloStudente">
 
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="37dp"
-        android:minHeight="?attr/actionBarSize"
-        android:popupTheme="@style/MenuStyle">
-
-        <TextView
-            android:id="@+id/username"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="20sp" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
 
             android:id="@+id/immagineProfiloStud"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_marginLeft="130dp"
-            android:layout_marginStart="130dp"
+            android:layout_gravity="start"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@string/cambiaImmagine"
             android:scaleType="centerCrop"
             android:src="@drawable/com_facebook_profile_picture_blank_portrait"
             app:civ_border_color="@color/rosso_scuro"
             app:civ_border_width="2dp" />
 
+        <LinearLayout
+            android:layout_width="251dp"
+            android:layout_height="match_parent"
+            android:gravity="right"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/text_nome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/nome"
+                android:textAllCaps="true"
+                android:textColor="@color/rosso_scuro"
+                android:textSize="24sp"></TextView>
+
+            <TextView
+                android:id="@+id/text_cognome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                android:text="@string/cognome"
+                android:textAllCaps="true"
+                android:textColor="@color/rosso_scuro"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/rosso_scuro"
+        android:padding="5dp" />
 
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingTop="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible">
-
-                <Button
-                    android:id="@+id/changestudent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cambiaImmagine" />
-
-                <Button
-                    android:id="@+id/modificaProfilo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="0"
-                    android:layout_column="1"
-                    android:text="@string/modificaProfilo" />
-
-                <Button
-                    android:id="@+id/b_nuovaRecensione"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="1"
-                    android:layout_column="0"
-                    android:text="Aggiungi recensione" />
-
-                <Button
-                    android:id="@+id/button_la_tua_casa"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="1"
-                    android:layout_column="1"
-                    android:onClick="laTuaCasa"
-                    android:text="@string/laMiaCasa" />
-            </GridLayout>
-
-            <TextView
-                android:id="@+id/text_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/informazioniPersonali"
-                android:textSize="22sp"
-                android:textStyle="normal|bold" />
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:paddingBottom="5dp">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:orientation="vertical">
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:orientation="vertical"
+                    android:padding="2dp">
 
                     <TextView
-                        android:id="@+id/text_nome"
-                        android:layout_width="match_parent"
-                        android:layout_height="44dp"
-                        android:text="@string/nome"></TextView>
-
-                    <TextView
-                        android:id="@+id/text_cognome"
-                        android:layout_width="match_parent"
-                        android:layout_height="44dp"
-                        android:text="@string/cognome" />
+                        android:id="@+id/text_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="2dp"
+                        android:gravity="center_horizontal"
+                        android:text="@string/informazioniPersonali"
+                        android:textAllCaps="true"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/rosso_scuro"
+                        android:textSize="18sp"
+                        android:textStyle="normal" />
 
                     <TextView
                         android:id="@+id/text_descrizione"
                         android:layout_width="match_parent"
-                        android:layout_height="44dp"
-                        android:text="@string/descrizione" />
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/background_destra"
+                        android:gravity="center"
+                        android:lineSpacingExtra="8sp"
+                        android:padding="5dp"
+                        android:text="@string/descrizione"
+                        android:textColor="@color/ic_launcher_background"
+                        android:textStyle="italic"
+                        android:translationX="2dp"
+                        app:drawableLeftCompat="@drawable/ic_outline_description_24" />
 
                     <TextView
                         android:id="@+id/text_universita"
                         android:layout_width="match_parent"
-                        android:layout_height="44dp"
-                        android:text="@string/universita" />
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/background_sinistra"
+                        android:drawableLeft="@drawable/ic_outline_school_24"
+                        android:gravity="center"
+                        android:lineSpacingExtra="8sp"
+                        android:padding="5dp"
+                        android:text="@string/universita"
+                        android:textColor="@color/rosso_mattone"
+                        android:textStyle="italic"
+                        android:translationX="2dp" />
 
                     <TextView
                         android:id="@+id/text_indirizzoLaurea"
                         android:layout_width="match_parent"
-                        android:layout_height="44dp"
-                        android:text="@string/indirizzoLaurea" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/background_destra"
+                        android:drawableLeft="@drawable/ic_outline_settings_24"
+                        android:gravity="center"
+                        android:lineSpacingExtra="8sp"
+                        android:padding="5dp"
+                        android:text="@string/indirizzoLaurea"
+                        android:textColor="@color/ic_launcher_background"
+                        android:textStyle="italic" />
+
+                    <View
+                        android:id="@+id/divider4"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@color/rosso_scuro"
+                        android:padding="5dp"
+                        android:paddingTop="5dp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="204dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:orientation="vertical">
@@ -149,32 +185,64 @@
                         android:id="@+id/tv_hobby_studente"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""></TextView>
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Hobby"
+                        android:textAllCaps="true"
+                        android:textColor="@color/rosso_scuro"
+                        android:textSize="18sp"></TextView>
 
                     <ListView
                         android:id="@+id/listView_hobby_profilo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"></ListView>
+                        android:layout_width="match_parent"
+                        android:layout_height="105dp"></ListView>
                 </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingTop="5dp">
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/rosso_scuro"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp" />
 
                 <TextView
                     android:id="@+id/recensioni"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="10dp"
                     android:text="Recensioni Studente"
                     android:textAllCaps="true"
-                    android:textStyle="bold" />
+                    android:textColor="@color/rosso_scuro"
+                    android:textSize="18sp" />
 
                 <ListView
                     android:id="@+id/listView_recensioni_studente"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/b_nuovaRecensione"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:text="Aggiungi recensione" />
+
             </LinearLayout>
 
         </LinearLayout>

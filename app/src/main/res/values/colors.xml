@@ -11,4 +11,7 @@
     <color name="rosso_scuro">#A23816</color>
     <color name="sfondo">#F2FFF2EE</color>
     <color name="trasparente">#000000</color>
+    <color name="biancoTrasparente">#F8F8FF</color>
+    <color name="colore"></color>
+    <color name="bianco_trasparente">#50FFFFFF</color>
 </resources>

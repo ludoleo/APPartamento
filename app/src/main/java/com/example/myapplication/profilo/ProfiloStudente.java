@@ -56,7 +56,7 @@ public class ProfiloStudente extends AppCompatActivity {
     private static final int IMAG_REQUEST = 1000;
     private static final int PERMISSION_CODE = 1001;
 
-    Button change, modifica, laTuaCasa, note, b_nuovaRecensione;
+    Button  laTuaCasa, note, b_nuovaRecensione;
     CircleImageView immagineStudente ;
     TextView text_nome, text_cognome, text_descrizione, text_univerista, text_indirizzoLaure, username, hobbyStudente;
     ListView listViewHobby, listViewRecensioni;
@@ -108,9 +108,8 @@ public class ProfiloStudente extends AppCompatActivity {
         });
 
 
-        change = findViewById(R.id.changestudent);
         // IMMAGINE PERMESSI
-        change.setOnClickListener(new View.OnClickListener() {
+        immagineStudente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // check runtime permission
@@ -132,17 +131,6 @@ public class ProfiloStudente extends AppCompatActivity {
                 }
             });
 
-           // bottone modifica
-            modifica = (Button) findViewById(R.id.modificaProfilo);
-            modifica.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent a = new Intent(ProfiloStudente.this, ModificaProfilo.class);
-                    // da aggiungere per modificare i dati (?)
-                    a.putExtra("idStudente", idUtente);
-                    startActivity(a);
-                }
-            });
 
             text_nome = (TextView) findViewById(R.id.text_nome);
             text_cognome = (TextView) findViewById(R.id.text_cognome);
@@ -160,7 +148,6 @@ public class ProfiloStudente extends AppCompatActivity {
             idUtente = getIntent().getExtras().getString("idUtente");
 
             //ASSOCIO IL PULSANTE VAI ALLA MIA CASA
-            laTuaCasa = (Button) findViewById(R.id.button_la_tua_casa);
 
             database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
             myRef = database.getReference();
@@ -189,10 +176,10 @@ public class ProfiloStudente extends AppCompatActivity {
                         text_univerista.setText(studente.getUniversita());
                         text_indirizzoLaure.setText(studente.getIndirizzoLaurea());
                         hobbyStudente.setText("Gli hobby di "+studente.getNome());
-                        username.setText(studente.getNome()+" "+studente.getCognome());
+                      //  username.setText(studente.getNome()+" "+studente.getCognome());
                         //METODO CHE POPOLA LA LISTA DI HOBBY
                         String[] hobby = studente.getHobby().split("-");
-                        arrayAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.row, hobby);
+                        arrayAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.row_item_list_hobby, hobby);
                         listViewHobby.setAdapter(arrayAdapter);
                     }
                 }
@@ -204,7 +191,7 @@ public class ProfiloStudente extends AppCompatActivity {
         });
 
         initUI();
-            studentIsInquilino();
+            //studentIsInquilino();
 
     }
 
@@ -334,22 +321,32 @@ public class ProfiloStudente extends AppCompatActivity {
 
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(ProfiloStudente.this,Home.class));
+                startActivity(new Intent(ProfiloStudente.this, Home.class));
                 finish();
                 return true;
 
             case R.id.home:
-                startActivity(new Intent(ProfiloStudente.this,Home.class));
+                startActivity(new Intent(ProfiloStudente.this, Home.class));
+
+
+                //attenzione al pulsante la mia casa-------------
+            case R.id.la_mia_casa:
+
+                Intent intent = new Intent(this, ProfiloCasa.class);
+                intent.putExtra("idStudente", idUtente);
+                startActivity(intent);
+
+            case R.id.modifica_profilo_studente:
+
+                Intent a = new Intent(ProfiloStudente.this, ModificaProfilo.class);
+                // da aggiungere per modificare i dati (?)
+                a.putExtra("idStudente", idUtente);
+                startActivity(a);
+
+
 
         }
         return false;
-    }
-
-
-    public void laTuaCasa(View view) {
-        Intent intent = new Intent(this, ProfiloCasa.class);
-        intent.putExtra("idStudente", idUtente);
-        startActivity(intent);
     }
 
 
