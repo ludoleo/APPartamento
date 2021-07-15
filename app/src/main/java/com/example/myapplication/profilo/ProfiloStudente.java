@@ -29,7 +29,6 @@ import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.RecensioneStudente;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.recensione.NuovaRecensioneCasa;
 import com.example.myapplication.recensione.NuovaRecensioneStudente;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,7 +41,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
@@ -57,8 +55,6 @@ public class ProfiloStudente extends AppCompatActivity {
     private static final String TAG = "Profilo Studente";
     private static final int IMAG_REQUEST = 1000;
     private static final int PERMISSION_CODE = 1001;
-   // private Uri ImageUri;
-    //private StorageTask UploadTask;
 
     Button change, modifica, laTuaCasa, note, b_nuovaRecensione;
     CircleImageView immagineStudente ;
@@ -210,25 +206,6 @@ public class ProfiloStudente extends AppCompatActivity {
         initUI();
             studentIsInquilino();
 
-       /* myRef.child("Utenti").child("Studenti").child(idUtente).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-
-                Studente student  = datasnapshot.getValue(Studente.class);
-
-                if(student.getImageURL().compareTo("default")==0){
-                    immagineStudente.setImageResource(R.mipmap.ic_launcher);
-                } else {
-                    // Codice vorrebbe getContext, ma non esiste
-                    Glide.with(getApplicationContext()).load(student.getImageURL()).into(immagineStudente);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
     }
 
     private void initUI() {
@@ -286,8 +263,6 @@ public class ProfiloStudente extends AppCompatActivity {
         });
     }
     // PERMESSI PT2
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

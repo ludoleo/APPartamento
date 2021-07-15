@@ -26,10 +26,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
 
         <de.hdodenhof.circleimageview.CircleImageView
 
@@ -43,7 +39,7 @@
             app:civ_border_color="@color/rosso_scuro"
             app:civ_border_width="2dp" />
 
-    </RelativeLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"

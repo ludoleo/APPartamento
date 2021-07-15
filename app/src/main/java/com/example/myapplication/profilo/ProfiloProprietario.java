@@ -28,10 +28,8 @@ import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.classi.RecensioneProprietario;
-import com.example.myapplication.classi.RecensioneStudente;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.recensione.NuovaRecensioneProprietario;
-import com.example.myapplication.recensione.NuovaRecensioneStudente;
 import com.example.myapplication.registrazione.InserimentoDatiCasa;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -62,7 +60,6 @@ public class ProfiloProprietario extends AppCompatActivity {
     Button cambiaImmagine, b_nuovaRecensioneProp;
     CircleImageView immagineProp;
     TextView text_nomeP, text_cognomeP, text_emailP;
-    private Uri imageUri;
     StorageReference storageReference;
 
     List<RecensioneProprietario> listaRecensioniProprietario;
@@ -77,7 +74,7 @@ public class ProfiloProprietario extends AppCompatActivity {
 
     ListView listViewCase, listViewRecensioni;
 
-    private Proprietario proprietario;
+    Proprietario proprietario;
 
 
     @Override
@@ -86,15 +83,16 @@ public class ProfiloProprietario extends AppCompatActivity {
         setContentView(R.layout.activity_profilo_proprietario);
 
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
-        myRef = database.getReference();
-
-        immagineProp = findViewById(R.id.immagineProfiloProp);
-
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-        // storage
+        myRef = database.getReference();
+        immagineProp = findViewById(R.id.immagineProfiloProp);
+
         storageReference = FirebaseStorage.getInstance().getReference();
+
         StorageReference profileRefer = storageReference.child("Proprietari/"+user.getUid()+"/profile.jpg");
+
+        // storage
 
         profileRefer.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -227,7 +225,7 @@ public class ProfiloProprietario extends AppCompatActivity {
 
     private void uploadImageToFirebase(Uri imageUri) {
         // upload image to firebaseStorage
-        final StorageReference fileRef = storageReference.child("Propietari/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
+        final StorageReference fileRef = storageReference.child("Proprietari/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
