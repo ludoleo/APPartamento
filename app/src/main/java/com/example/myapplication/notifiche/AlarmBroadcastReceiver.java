@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.notifiche;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -15,10 +15,11 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.myapplication.R;
 import com.example.myapplication.prenotazione.PrenotazioneCalendarioActivity;
 
-import static com.example.myapplication.MyService.ACTION_MESSAGE_BROADCAST;
-import static com.example.myapplication.messaggi.App.CHANNEL_ID;
+import static com.example.myapplication.notifiche.App.CHANNEL_ID;
+import static com.example.myapplication.notifiche.MyService.ACTION_MESSAGE_BROADCAST;
 
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
