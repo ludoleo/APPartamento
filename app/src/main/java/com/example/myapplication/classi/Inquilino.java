@@ -1,6 +1,5 @@
 package com.example.myapplication.classi;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class Inquilino {
@@ -8,10 +7,11 @@ public class Inquilino {
     private String studente;
     private String casa;
     private String proprietario;
-    private Date dataInizio;
-    private Date dataFine;
+    private long dataInizio;
+    private long dataFine;
 
-    public Inquilino(String studente, String casa, String proprietario, Date dataInizio, Date dataFine) {
+    public Inquilino(){}
+    public Inquilino(String studente, String casa, String proprietario, long dataInizio, long dataFine) {
         this.studente = studente;
         this.casa = casa;
         this.proprietario = proprietario;
@@ -19,13 +19,21 @@ public class Inquilino {
         this.dataFine = dataFine;
     }
 
-    public String getProprietario() {return proprietario;}
+    public String getProprietario() {
+        return proprietario;
+    }
 
-    public void setProprietario(String proprietario) {this.proprietario = proprietario;}
+    public void setProprietario(String proprietario) {
+        this.proprietario = proprietario;
+    }
 
-    public String getCasa() {return casa;}
+    public String getCasa() {
+        return casa;
+    }
 
-    public void setCasa(String casa) {this.casa = casa;}
+    public void setCasa(String casa) {
+        this.casa = casa;
+    }
 
     public String getStudente() {
         return studente;
@@ -35,25 +43,20 @@ public class Inquilino {
         this.studente = studente;
     }
 
-    public Date getDataInizio() {
+    public long getDataInizio() {
         return dataInizio;
     }
 
-    public void setDataInizio(Date dataInizio) {
+    public void setDataInizio(long dataInizio) {
         this.dataInizio = dataInizio;
     }
 
-    public Date getDataFine() {
+    public long getDataFine() {
         return dataFine;
     }
 
-    public void setDataFine(Date dataFine) {
+    public void setDataFine(long dataFine) {
         this.dataFine = dataFine;
     }
 
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getStudente());
-    }
 }

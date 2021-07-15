@@ -114,7 +114,7 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
             boolean annucnio = false;
             for(Annuncio ann : listaAnnunci){
                     //Se per la casa vi è un annuncio
-                if(ann.getCasa().compareTo(a.getNomeCasa())==0
+                if(ann.getIdCasa().compareTo(a.getNomeCasa())==0
                    && ann.getPrezzoMensile()<=filtro.prezzo
                         && a.getValutazione()>=filtro.rating &&
                         ((ann.getTipologiaAlloggio().equals("Intero appartamento") && filtro.intero)

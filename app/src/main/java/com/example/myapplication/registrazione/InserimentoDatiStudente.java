@@ -48,7 +48,6 @@ public class InserimentoDatiStudente extends AppCompatActivity {
     RadioButton rb_triennale, rb_magistrale;
 
     private CheckBox cb_primaEsperienza;
-    private String studenteSenzaAlloggio;
 
    //Database
     FirebaseDatabase database;
@@ -101,7 +100,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         String universita = et_universita.getText().toString();
         String indirizzoLaurea = et_indirizzoLaurea.getText().toString();
         String descrizione = et_descrizioneS.getText().toString();
-        studenteSenzaAlloggio = si;
+
         String imageURL = "default";
 
         //aggiungo le informazioni prese dai dati ad una mappa per gestirne il controllo
@@ -112,7 +111,6 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         listaElementi.put("Università",universita);
         listaElementi.put("Indirizzo di Laurea",indirizzoLaurea);
         listaElementi.put("Descrizione",descrizione);
-        listaElementi.put("Senza Alloggio", studenteSenzaAlloggio);
         listaElementi.put("imageURL", imageURL);
         //listaElementi.put("Prima Esperienza",primaEsperienza);
 
@@ -142,7 +140,7 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         }
 
         Studente studente = new Studente(idStudente, nome, cognome, telefono, email, descrizione, primaEsperienza,
-                universita, tipologia, indirizzoLaurea, studenteSenzaAlloggio, imageURL, "",0,0);
+                universita, tipologia, indirizzoLaurea, imageURL, "",0,0);
 
         DatabaseReference studenteAggiunto = myRef.child("Utenti").child("Studenti").child(idStudente);
         studenteAggiunto.setValue(studente);

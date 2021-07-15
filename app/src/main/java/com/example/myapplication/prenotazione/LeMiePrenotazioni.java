@@ -97,10 +97,11 @@ public class LeMiePrenotazioni extends AppCompatActivity {
                 }
 
                 for (Prenotazione p : listaPrenotazioni) {
-                    if(p.isConfermata())
-                        confermate.add(p);
-                    else if(p.getDataPrenotazione()<ora.getTime())
+
+                    if(p.getDataPrenotazione()<ora.getTime())
                         terminate.add(p);
+                    else if(p.isConfermata())
+                        confermate.add(p);
                     else if(!p.isConfermata())
                         inSospeso.add(p);
                 }
@@ -218,10 +219,11 @@ public class LeMiePrenotazioni extends AppCompatActivity {
             else
                 items[i].isPagata = "TICKET DA PAGARE";
             // tipo prenotazione
-            if(a.isConfermata())
-                items[i].tipoPrenotazione = "CONFERMATA";
-            else if(a.getDataPrenotazione()<ora.getTime())
+            if(a.getDataPrenotazione()<ora.getTime()){
                 items[i].tipoPrenotazione = "TERMINATA";
+            }
+            else if(a.isConfermata())
+                items[i].tipoPrenotazione = "CONFERMATA";
             else if(!a.isConfermata()){
                 if(user.getEmail().compareTo(a.getEmailUtente1())==0)
                     items[i].tipoPrenotazione = "IN ATTESA DI CONFERMA";

@@ -3,16 +3,16 @@ package com.example.myapplication.prenotazione;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
+import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,9 +22,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.classi.Annuncio;
+import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.Prenotazione;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.notifiche.AlarmBroadcastReceiver;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +34,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -40,6 +42,8 @@ import java.time.Year;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -58,13 +62,16 @@ public class ProfiloPrenotazione extends AppCompatActivity {
     Prenotazione prenotazione;
     Long date;
 
-    Button pagaPrenotazione, confermaPrenotazione, cancellaPrenotazione, modificaPrenotazione, cambiaDataPrenotazione;
+    Button pagaPrenotazione, confermaPrenotazione, cancellaPrenotazione, modificaPrenotazione, cambiaDataPrenotazione, promuoviInquilino;
     TextView nomeAnnuncio, nomeUtente, emailUtente, dataPrenotazione, tipoPrenotazione, daPagare;
 
     String tipo = "";
     String id = "";
     String fasciaOraria = "";
-
+    String emailStudente = "";
+    String emailProprietario = "";
+    Annuncio annuncio;
+    List<Inquilino> listaInquilini;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +85,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         cancellaPrenotazione = (Button) findViewById(R.id.b_cancellaPrenotazioneProfilo);
         modificaPrenotazione = (Button) findViewById(R.id.b_modificaPrenotazioneProfilo);
         cambiaDataPrenotazione = (Button) findViewById(R.id.b_cambiaData);
+        promuoviInquilino = (Button) findViewById(R.id.promuoviInquilino);
         //Inizialmente sono disattivati
         calendarViewCambio.setVisibility(View.GONE);
         spinnerFasciaOraria.setVisibility(View.GONE);
@@ -86,6 +94,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         cancellaPrenotazione.setVisibility(View.GONE);
         modificaPrenotazione.setVisibility(View.GONE);
         cambiaDataPrenotazione.setVisibility(View.GONE);
+        promuoviInquilino.setVisibility(View.GONE);
         //INIZIALIZZO LE TEXT VIEW
         nomeAnnuncio = (TextView) findViewById(R.id.textView_nomeAnnuncio);
         nomeUtente = (TextView) findViewById(R.id.textView_nomeUtente);
@@ -99,6 +108,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         //Autenticazione
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+        //Mi prendo le informazioni sugli inquilini
 
         calendarViewCambio.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -110,10 +120,8 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         });
 
         //CERCO IL RIFERIMENTO ALLA PRENOTAZIONE
-
         id = getIntent().getExtras().getString("id");
         tipo = getIntent().getExtras().getString("tipo");
-
 
         myRef.child("Prenotazioni").child(id).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -121,52 +129,103 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
                 } else {
+                    //OTTENGO LA PRENOTAZIONE
                     prenotazione = task.getResult().getValue(Prenotazione.class);
-
-                    //RIEMPIO LE TEXTVIEW
-                    initTextView();
-
-                    if (tipo.compareTo("IN ATTESA DI CONFERMA") == 0) {
-                        //SE LA PRENOTAZIONE E' IN ATTESA DI CONFERMA
-                        //posso cancellarla e basta
-                        cancellaPrenotazione.setVisibility(View.VISIBLE);
-                    } else if (tipo.compareTo("DA CONFERMARE") == 0) {
-                        //SE LA PRENOTAZIONE E' DA CONFERMARE
-                        //posso confermare o modificare la prenotazione
-                        modificaPrenotazione.setVisibility(View.VISIBLE);
-                        confermaPrenotazione.setVisibility(View.VISIBLE);
-                    } else if (tipo.compareTo("CONFERMATA") == 0) {
-                        //SE LA PRENOTAZIONE E' CONFERMATA
-                        cancellaPrenotazione.setVisibility(View.VISIBLE);
-                        //SE E' PAGATA
-                        if (!prenotazione.isPagata()) {
-                            // controllo utente loggato se è studente o no
-                            DatabaseReference dr = myRef.child("Utenti").child("Proprietari").child(user.getUid());
-                            Log.i(TAG, "COS'è dr " + dr.toString());
-                            dr.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                    if (!task.isSuccessful()) {
-                                        Log.e("firebase", "Error getting data", task.getException());
-                                    } else {
-                                        if (task.getResult().getValue() == null) {
-                                            pagaPrenotazione.setVisibility(View.VISIBLE);
-                                        }
-                                    }
+                    //PRENDO GLI INQUILINI PER EVITARE QUALCUNO POSSA ESSERE DUE VOLTE INQUILINO
+                    listaInquilini = new LinkedList<>();
+                    DatabaseReference dr = database.getReference();
+                    dr.child("Inquilini").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot inquiliniSnapshot: dataSnapshot.getChildren()) {
+                                Inquilino in = inquiliniSnapshot.getValue(Inquilino.class);
+                                if(in.getStudente().compareTo(prenotazione.getEmailUtente1())==0
+                                        || in.getStudente().compareTo(prenotazione.getEmailUtente2())==0){
+                                    //LISTA DI STUDENTI PRENOTATI
+                                    listaInquilini.add(in);
                                 }
-                            });
-
+                            }
+                            //QUI ESEGUO TUTTO
+                            caricaPrenotazione();
                         }
-                        //METODO PER ACCEDERE ALLA VISITA VIRTUALE
-                    } else if (tipo.compareTo("TERMINATA") == 0) {
-                        //TODO METODO PER ESSERE PROMOSSO AD INQULINO
-                    }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
+
+                    //ATTIVO I DIVERSI BOTTONI
 
                 }
+
             }
         });
     }
 
+    private void caricaPrenotazione() {
+        //RIEMPIO LE TEXTVIEW
+        initTextView();
+        if (tipo.compareTo("IN ATTESA DI CONFERMA") == 0) {
+            //SE LA PRENOTAZIONE E' IN ATTESA DI CONFERMA
+            cancellaPrenotazione.setVisibility(View.VISIBLE);
+        } else if (tipo.compareTo("DA CONFERMARE") == 0) {
+            //SE LA PRENOTAZIONE E' DA CONFERMARE
+            //posso confermare o modificare la prenotazione
+            modificaPrenotazione.setVisibility(View.VISIBLE);
+            confermaPrenotazione.setVisibility(View.VISIBLE);
+        } else if (tipo.compareTo("CONFERMATA") == 0) {
+            //SE LA PRENOTAZIONE E' CONFERMATA
+            cancellaPrenotazione.setVisibility(View.VISIBLE);
+            //SE E' PAGATA
+            if (!prenotazione.isPagata()) {
+                // controllo utente loggato se è studente o no
+                DatabaseReference drf = myRef.child("Utenti").child("Proprietari").child(user.getUid());
+                drf.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase", "Error getting data", task.getException());
+                        } else {
+                            if (task.getResult().getValue() == null) {
+                                pagaPrenotazione.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+                });
+            }
+        } else if (tipo.compareTo("TERMINATA") == 0) {
+            if(prenotazione.isPagata()){
+                boolean occupato = false;
+                for(Inquilino inquilino : listaInquilini){
+                    if(inquilino.getDataFine()==0)
+                        occupato = true;
+                }
+                if(!occupato){
+                    //SE SEI IL PROPRIETARIO
+                    DatabaseReference drf = database.getReference();
+                    drf.child("Utenti")
+                            .child("Studenti")
+                            .child(user.getUid())
+                            .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            if (!task.isSuccessful()) {
+                                Log.e("firebase", "Error getting data", task.getException());
+                            } else {
+                                if (task.getResult().getValue() == null) {
+                                    promuoviInquilino.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        }
+                    });
+                }
+            }else
+                myRef.child("Prenotazioni").child(id).removeValue();
+        }
+    }
+
+    private void init(){
+
+    }
 
     private void initTextView() {
 
@@ -201,20 +260,6 @@ public class ProfiloPrenotazione extends AppCompatActivity {
     public void confermaPrenotazione(View view) {
 
         //LA PRENOTAZIONE DIVENTA CONFERMATA
-        /*
-        prenotazione.setConfermata(true);
-        DatabaseReference preAdd = myRef.child("Prenotazioni").push();
-        preAdd.setValue(prenotazione);
-        String key = preAdd.getKey();
-        myRef.child("Prenotazioni").child(key).child("id").setValue(key);
-
-        myRef.child("Prenotazioni").child(id).removeValue(new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-
-            }
-        });
-        */
         myRef.child("Prenotazioni").child(id).child("confermata").setValue(true);
 
         //CALENDARIO
@@ -304,6 +349,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
 
     public void cambiaData(View view) {
 
+        //ELIMINO LA VECCHIA PRENOTAZIONE
         myRef.child("Prenotazioni").child(id).removeValue();
 
         String email1 = prenotazione.getEmailUtente1();
@@ -320,8 +366,8 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         prenotazione.setNomeUtente2(nome1);
         prenotazione.setOrario(fasciaOraria);
 
+        //CREO UNA NUOVA PRENOTAZIONE
         DatabaseReference ref = database.getReference();
-
         DatabaseReference preAdd = ref.child("Prenotazioni").push();
         preAdd.setValue(prenotazione);
         String key = preAdd.getKey();
@@ -339,8 +385,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         Intent intent = new Intent(this, VisitaVirtuale.class);
         startActivity(intent);
     }
-
-
+    //METODO CHE 'ABBELLISCE' LA DATA
     public String getDataOra(Long data, String time) {
         DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy");
         String strDate = dateFormat.format(data);
@@ -348,26 +393,48 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         return strDate;
     }
 
-    //crea l'alarm che ricorda la prenotazione confermata----------------------
+    public void promuoviInquilino(View view) {
+        //CREO UN NUOVO INQUILINO
+        /*
+            necessario E-Mail-studente
+            riferimento alla casa
+            riferimento alla data di inizio
+         */
+        //SE MI TROVO IN QUESTO METODO SONO IL PROPRIETARIO
+        //CANCELLO la prenotazione
+        DatabaseReference ref = database.getReference();
+        ref.child("Prenotazioni").child(id).removeValue();
 
-    public void setAlarm(View view) {
-        Intent intentToFire = new Intent(getApplicationContext() , AlarmBroadcastReceiver.class);
-        intentToFire.setAction(AlarmBroadcastReceiver.ACTION_ALARM);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0 , intentToFire , 0);
+        if(user.getEmail().compareTo(prenotazione.getEmailUtente1())==0){
+            emailStudente = prenotazione.getEmailUtente2();
+            emailProprietario = prenotazione.getEmailUtente1();
+        }
+        else{
+            emailStudente = prenotazione.getEmailUtente1();
+            emailProprietario = prenotazione.getEmailUtente2();
+        }
 
-        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        //in millis va settato prima dell'orario della prenotazione confermata
+        Date oggi = new Date();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        //vanno creati gli elementi int di ora minuti e giorno della prenotazione e passati nel set()
-        calendar.set(Calendar.DAY_OF_MONTH, 20);
-        calendar.set(Calendar.MINUTE, 30);
-        //calendar.set();
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), alarmIntent);
-
-        //se devo cancellare un alarm uso alarmManager.cancel(alarmIntent);
+        myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot annunciSnapshot: dataSnapshot.getChildren()) {
+                    Annuncio a = annunciSnapshot.getValue(Annuncio.class);
+                    if(a.getIdAnnuncio().compareTo(prenotazione.getIdAnnuncio())==0)
+                        annuncio = a;
+                }                   //studente, casa, inzio, fine
+                Inquilino inquilino = new Inquilino(emailStudente,annuncio.getIdCasa(),emailProprietario, oggi.getTime(),0);
+                DatabaseReference inquilinoAggiunto = myRef.child("Inquilini").push();
+                inquilinoAggiunto.setValue(inquilino);
+                Intent intent = new Intent(ProfiloPrenotazione.this, Home.class);
+                Toast.makeText(ProfiloPrenotazione.this,"Studente aggiunto come inquilino in casa: "+annuncio.getIdCasa(),Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
     }
 }

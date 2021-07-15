@@ -152,7 +152,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
                     Casa a = caseSnapshot.getValue(Casa.class);
-                    if(annuncio.getCasa().compareTo(a.getNomeCasa())==0)
+                    if(annuncio.getIdCasa().compareTo(a.getNomeCasa())==0)
                         casa = a;
                 }
                 riferimentoProprietario();

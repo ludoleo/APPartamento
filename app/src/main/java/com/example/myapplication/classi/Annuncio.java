@@ -65,14 +65,6 @@ public class Annuncio{
         this.idProprietario = proprietario;
     }
 
-    public String getCasa() {
-        return idCasa;
-    }
-
-    public void setCasa(String casa) {
-        this.idCasa = casa;
-    }
-
     public String getDataAnnuncio() {
         return dataAnnuncio;
     }

@@ -1,0 +1,16 @@
+Index: app/src/main/java/com/example/myapplication/home/LaTuaCasa.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/myapplication/home/LaTuaCasa.java	(revision bf2212f3026bc9d5dbf5bc33964098b2c6fda5b4)
++++ app/src/main/java/com/example/myapplication/home/LaTuaCasa.java	(date 1623956495166)
+@@ -112,7 +112,7 @@
+             //CARICO IL PROPRIETARIO E LA SUA VALUTAZIONE MEDIA
+             ilProprietario.setText("Host: "+proprietario.getNome());
+             valutazioneProprietario.setText(""+proprietario.getValutazione());
+-
++            //TODO LIST VIEW CON I COINQULINI I ED I PROPRIETARI
+         } else{
+             //STAMPA ERRORE
+         }
