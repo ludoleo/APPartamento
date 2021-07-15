@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.notifiche;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,22 +14,17 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.myapplication.R;
 import com.example.myapplication.messaggi.ChatActivity;
 import com.example.myapplication.messaggi.MessaggiActivity;
-import com.example.myapplication.notifiche.Token;
-import com.google.android.gms.cloudmessaging.CloudMessagingReceiver;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceIdReceiver;
-import com.google.firebase.iid.internal.FirebaseInstanceIdInternal;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.sendbird.calls.SendBirdCall;
-
-import static com.example.myapplication.messaggi.App.CHANNEL_ID;
 
 public class MyService extends FirebaseMessagingService {
 
@@ -79,6 +74,9 @@ public class MyService extends FirebaseMessagingService {
     // Also if you intend on generating your own notifications as a result of a received FCM
     // message, here is where that should be initiated. See sendNotification method below.
 
+    
+
+
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
@@ -102,6 +100,7 @@ public class MyService extends FirebaseMessagingService {
 
 
     private void updateToken(String refreshToken) {
+
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 

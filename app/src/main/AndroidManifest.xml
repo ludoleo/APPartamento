@@ -56,7 +56,7 @@
 
 
         <service
-            android:name=".MyService"
+            android:name=".notifiche.MyService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -64,7 +64,7 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".AlarmBroadcastReceiver">
+        <receiver android:name=".notifiche.AlarmBroadcastReceiver">
             <intent-filter>
                 <action android:name="com.example.myapplication" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -108,10 +108,8 @@
         <activity android:name=".bollettaSQL.ImageSQL" />
         <activity android:name=".bollettaSQL.Bolletta_main" />
         <activity android:name=".visitaNote.NoteVisitaLista" />
-        <activity android:name=".SqlNotemain"/>
         <activity android:name=".MainActivity" />
         <activity android:name=".ImmaginiAnnuncio" />
-        <activity android:name=".Notes_Prova.EditNotes"/>
 
         <activity
             android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"

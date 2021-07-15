@@ -45,6 +45,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -178,6 +179,7 @@ public class LoginActivity extends AppCompatActivity {
         String emailUtente = currentUser.getEmail();
         String idUtente = currentUser.getUid();
 
+        getToken();
         Log.i(TAG,"Accesso con Google utente: "+emailUtente+" "+idUtente);
         Intent intent = new Intent(this, ScegliUtente.class);
         intent.putExtra("email", emailUtente);
@@ -214,6 +216,8 @@ public class LoginActivity extends AppCompatActivity {
 
 //questo metodo viene usato solo quando si fa l'accesso con username o password
     private void updateUIGiaRegistrato(FirebaseUser user) {
+
+        getToken();
 
         Log.i(TAG, "Connesso utente già registrato con us e pw "+user.getEmail());
         String idUtente = user.getUid();
@@ -461,5 +465,26 @@ public class LoginActivity extends AppCompatActivity {
         }else
             Toast.makeText(this, "Compila il campo mail per poter ripristinare la password.", Toast.LENGTH_SHORT).show();
 
+    }
+
+    public void getToken(){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+                        myRef.child("Token").child(mAuth.getUid()).setValue(token);
+
+                        // Log and toast
+                        Log.d(TAG, "Il token è: "+token);
+                        Toast.makeText(LoginActivity.this, token, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
