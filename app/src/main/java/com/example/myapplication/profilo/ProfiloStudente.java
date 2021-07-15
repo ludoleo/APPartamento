@@ -31,8 +31,10 @@ import com.example.myapplication.classi.Studente;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.recensione.NuovaRecensioneCasa;
 import com.example.myapplication.recensione.NuovaRecensioneStudente;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,21 +59,22 @@ public class ProfiloStudente extends AppCompatActivity {
     private static final String TAG = "Profilo Studente";
     private static final int IMAG_REQUEST = 1000;
     private static final int PERMISSION_CODE = 1001;
-   // private Uri ImageUri;
-    //private StorageTask UploadTask;
 
-    Button change, modifica, laTuaCasa, note, b_nuovaRecensione;
+    Button change, modifica, laTuaCasa, note, b_nuovaRecensione, rimuoviInquilino;
     CircleImageView immagineStudente ;
     TextView text_nome, text_cognome, text_descrizione, text_univerista, text_indirizzoLaure, username, hobbyStudente;
     ListView listViewHobby, listViewRecensioni;
     ArrayAdapter<String> arrayAdapter;
 
     List<RecensioneStudente> listaRecensioniUtente;
+    //LO STUDENTE PU0' ESSERE INQUILINO
+    Inquilino inquilino;
+     String id_inquilino = "";
+    Studente studente;
 
     public DatabaseReference myRef;
-    // per foto
 
-    public FirebaseDatabase database;
+    private FirebaseDatabase database;
     private String idUtente;
 
     StorageReference storageReference;
@@ -84,19 +87,16 @@ public class ProfiloStudente extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profilo_studente);
 
-           // forse da aggiungere questo, ma in realtà myref c'è già(più sotto, sempre in OnCreate)--> myRef = FirebaseDatabase.getInstance().getReference("Studenti").child(user.getUid());
-            database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
-            mAuth = FirebaseAuth.getInstance();
-            user = mAuth.getCurrentUser();
-            myRef = database.getReference();
-            immagineStudente = findViewById(R.id.immagineProfiloStud);
+        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+        myRef = database.getReference();
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+        immagineStudente = findViewById(R.id.immagineProfiloStud);
             //STORAGE
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        Log.i(TAG,"STorage "+storageReference);
-
         StorageReference profileRef = storageReference.child("Studenti/"+user.getUid()+"/profile.jpg");
-        Log.i(TAG,"profile ref "+profileRef);
 
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -148,6 +148,7 @@ public class ProfiloStudente extends AppCompatActivity {
                 }
             });
 
+            //INIZIALIZZO LE TEXTVIEW E LISTVIEW
             text_nome = (TextView) findViewById(R.id.text_nome);
             text_cognome = (TextView) findViewById(R.id.text_cognome);
             text_descrizione = (TextView) findViewById(R.id.text_descrizione);
@@ -158,80 +159,56 @@ public class ProfiloStudente extends AppCompatActivity {
             listViewHobby = (ListView) findViewById(R.id.listView_hobby_profilo);
             listViewRecensioni = (ListView) findViewById(R.id.listView_recensioni_studente);
             listaRecensioniUtente = new ArrayList<>();
-
-            b_nuovaRecensione = findViewById(R.id.b_nuovaRecensione);
-
-            idUtente = getIntent().getExtras().getString("idUtente");
-
-            //ASSOCIO IL PULSANTE VAI ALLA MIA CASA
+            //INIZIALIZZO I BOTTONI
+            b_nuovaRecensione = (Button) findViewById(R.id.b_nuovaRecensione);
             laTuaCasa = (Button) findViewById(R.id.button_la_tua_casa);
+            rimuoviInquilino = (Button) findViewById(R.id.b_rimuoviInquilino);
+            //PRENDO L'ID_UTENTE
+            idUtente = getIntent().getExtras().getString("idUtente");
+            //VISIBILITA
+            laTuaCasa.setVisibility(View.GONE);
+            rimuoviInquilino.setVisibility(View.GONE);
 
-            database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
-            myRef = database.getReference();
-            Log.i(TAG, "sono passata da qui "+idUtente);
+            myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
 
-        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+                    // Get Post object and use the values to update the UI
+                    for(DataSnapshot figlio : dataSnapshot.getChildren()) {
 
-                Log.i(TAG,"funziona");
+                        if(figlio.getKey().compareTo(idUtente)==0) {
 
-                // Get Post object and use the values to update the UI
-                for(DataSnapshot figlio : dataSnapshot.getChildren()) {
+                            studente = figlio.getValue(Studente.class);
+                            Log.i(TAG, "Profilo dello studente" + studente.toString());
 
-                    Log.i(TAG, "Studente "+figlio.getKey()+"/n");
-
-                    if(figlio.getKey().compareTo(idUtente)==0) {
-
-                        Studente studente = figlio.getValue(Studente.class);
-                        Log.i(TAG, "Profilo dello studente" + studente.toString());
-
-                        text_nome.setText(studente.getNome());
-                        text_cognome.setText(studente.getCognome());
-                        text_descrizione.setText(studente.getDescrizione());
-                        text_univerista.setText(studente.getUniversita());
-                        text_indirizzoLaure.setText(studente.getIndirizzoLaurea());
-                        hobbyStudente.setText("Gli hobby di "+studente.getNome());
-                        username.setText(studente.getNome()+" "+studente.getCognome());
-                        //METODO CHE POPOLA LA LISTA DI HOBBY
-                        String[] hobby = studente.getHobby().split("-");
-                        arrayAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.row, hobby);
-                        listViewHobby.setAdapter(arrayAdapter);
+                            text_nome.setText(studente.getNome());
+                            text_cognome.setText(studente.getCognome());
+                            text_descrizione.setText(studente.getDescrizione());
+                            text_univerista.setText(studente.getUniversita());
+                            text_indirizzoLaure.setText(studente.getIndirizzoLaurea());
+                            hobbyStudente.setText("Gli hobby di "+studente.getNome());
+                            username.setText(studente.getNome()+" "+studente.getCognome());
+                            //METODO CHE POPOLA LA LISTA DI HOBBY
+                            String[] hobby = studente.getHobby().split("-");
+                            arrayAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.row, hobby);
+                            listViewHobby.setAdapter(arrayAdapter);
+                            //CONTROLLO SE LO STUDENTE SIA UN INQUILINO
+                            studentIsInquilino(studente.getEmail());
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-        initUI();
-            studentIsInquilino();
-
-       /* myRef.child("Utenti").child("Studenti").child(idUtente).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-
-                Studente student  = datasnapshot.getValue(Studente.class);
-
-                if(student.getImageURL().compareTo("default")==0){
-                    immagineStudente.setImageResource(R.mipmap.ic_launcher);
-                } else {
-                    // Codice vorrebbe getContext, ma non esiste
-                    Glide.with(getApplicationContext()).load(student.getImageURL()).into(immagineStudente);
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
                 }
-            }
+            });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
+            //PREPARO LE RECENSIONI
+            initListViewRecensioni();
     }
 
-    private void initUI() {
+    private void initListViewRecensioni() {
         // Preparazione ListView per l'elenco delle Recensioni
         myRef.child("Recensioni_Studente").child(idUtente).addValueEventListener(new ValueEventListener() {
             @Override
@@ -262,21 +239,40 @@ public class ProfiloStudente extends AppCompatActivity {
 
     }
 
-
-
     //METODO CHE DISATTIVA IL PULSANTE SE LO STUDENTE NON E' UN INQUILINO
-    private void studentIsInquilino() {
+    private void studentIsInquilino(String email) {
 
-        laTuaCasa.setActivated(false);
         myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 for (DataSnapshot annunciSnapshot: dataSnapshot.getChildren()) {
-                    Inquilino a = annunciSnapshot.getValue(Inquilino.class);
-                    if(a.getStudente().compareTo(user.getUid())==0){
-                        laTuaCasa.setActivated(true);
-                        return;
+                    Inquilino inqui = annunciSnapshot.getValue(Inquilino.class);
+                                //prendo l'email
+                    if(inqui.getStudente().compareTo(studente.getEmail())==0 && inqui.getDataFine()==0){
+                        id_inquilino = annunciSnapshot.getKey();
+                        inquilino = inqui;
+                        laTuaCasa.setVisibility(View.VISIBLE);
+                        //SE SEI PROPRIETARIO VI E' UN TASTO PER TOGLIERTI COME INQUILINO
+                        DatabaseReference drf = database.getReference();
+                        drf.child("Utenti")
+                                .child("Studenti")
+                                .child(user.getUid())
+                                .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (!task.isSuccessful()) {
+                                    Log.e("firebase", "Error getting data", task.getException());
+                                } else {
+                                    if (task.getResult().getValue() == null) {
+                                        //LO USER E' UN PROPRIETARIO
+                                        if(user.getEmail().compareTo(inqui.getProprietario())==0){
+                                            //Abilita rimuovi inquilino
+                                            rimuoviInquilino.setVisibility(View.VISIBLE);
+                                        }
+                                    }
+                                }
+                            }
+                        });
                     }
                 }
             }
@@ -285,10 +281,8 @@ public class ProfiloStudente extends AppCompatActivity {
             }
         });
     }
+
     // PERMESSI PT2
-
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -312,7 +306,6 @@ public class ProfiloStudente extends AppCompatActivity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,IMAG_REQUEST);
-
         }
 
     @Override
@@ -377,7 +370,6 @@ public class ProfiloStudente extends AppCompatActivity {
         startActivity(intent);
     }
 
-
     private void aggiorna() {
 
         ProfiloStudente.CustomItem[] items = createItems();
@@ -408,6 +400,8 @@ public class ProfiloStudente extends AppCompatActivity {
         };
         listViewRecensioni.setAdapter(ArrayAdapter);
     }
+
+
     // CUSTOM ITEM
     private static class CustomItem {
         public String recensore;
@@ -441,7 +435,11 @@ public class ProfiloStudente extends AppCompatActivity {
         public RatingBar punteggioView;
     }
 
-
+    public void rimuoviInquilino(View view) {
+        myRef.child("Inquilini").child(id_inquilino).removeValue();
+        Intent i = new Intent(this, Home.class);
+        startActivity(i);
+    }
 }
 
 

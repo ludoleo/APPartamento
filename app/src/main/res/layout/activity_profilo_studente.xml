@@ -74,12 +74,13 @@
                     android:text="@string/modificaProfilo" />
 
                 <Button
-                    android:id="@+id/b_nuovaRecensione"
+                    android:id="@+id/b_rimuoviInquilino"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_row="1"
                     android:layout_column="0"
-                    android:text="Aggiungi recensione" />
+                    android:onClick="rimuoviInquilino"
+                    android:text="Rimuovi Inquilino" />
 
                 <Button
                     android:id="@+id/button_la_tua_casa"
@@ -179,6 +180,14 @@
                     android:id="@+id/listView_recensioni_studente"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/b_nuovaRecensione"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:text="Aggiungi recensione" />
             </LinearLayout>
 
         </LinearLayout>

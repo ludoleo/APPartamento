@@ -21,12 +21,28 @@
         android:padding="15dp"
         android:text="TextView" />
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
     <TextView
         android:id="@+id/textView_nomeUtente"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:text="TextView" />
+
+    <Button
+        android:id="@+id/promuoviInquilino"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="promuoviInquilino"
+        android:layout_marginLeft="20dp"
+        android:text="Promuovi Inquilino" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView_emailUtente"
@@ -59,7 +75,6 @@
             android:id="@+id/textView_daPagare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:padding="15dp"
             android:text="Da pagare"
             android:textStyle="bold" />
@@ -68,15 +83,16 @@
             android:id="@+id/visita_virtuale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:onClick="visita"
+            android:visibility="gone"
+            android:layout_marginLeft="20dp"
             android:text="Visita virtuale" />
 
         <Button
             android:id="@+id/b_pagaPrenotazioneProfilo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:onClick="effettuaPagamento"
             android:text="Paga"></Button>
     </LinearLayout>

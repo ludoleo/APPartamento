@@ -9,7 +9,6 @@ public class Studente extends Utente {
     private String tipologiaLaurea; //triennale o magistrale
     private String indirizzoLaurea;
     private String hobby;
-    private String senzaAlloggio; // non è un inquilino
     private String imageURL; // Associo immagine
 
 
@@ -17,12 +16,11 @@ public class Studente extends Utente {
     }
 
     public Studente(String id, String nome, String cognome, String telefono, String email, String descrizione, String primaEsperienza ,
-                    String universita, String tipologiaLaurea, String indirizzoLaurea, String senzaAlloggio, String imageURL, String hobby ,float valutazione, int numRec) {
+                    String universita, String tipologiaLaurea, String indirizzoLaurea, String imageURL, String hobby ,float valutazione, int numRec) {
         super(id,nome, cognome, telefono, email, descrizione, primaEsperienza, valutazione, numRec);
         this.universita = universita;
         this.tipologiaLaurea = tipologiaLaurea;
         this.indirizzoLaurea = indirizzoLaurea;
-        this.senzaAlloggio = senzaAlloggio;
         this.imageURL = imageURL;
         this.hobby = hobby;
     }
@@ -57,14 +55,6 @@ public class Studente extends Utente {
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
-    }
-
-    public String getSenzaAlloggio() {
-        return senzaAlloggio;
-    }
-
-    public void setSenzaAlloggio(String senzaAlloggio) {
-        this.senzaAlloggio = senzaAlloggio;
     }
 
     // IMMAGINE
