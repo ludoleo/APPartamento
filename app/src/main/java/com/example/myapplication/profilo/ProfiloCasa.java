@@ -62,17 +62,10 @@ import java.util.List;
 public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "Mappa";
-    private Casa casa;
-    private Proprietario proprietario;
-    private Inquilino inquilino;
-
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
 
 
-    //List<Casa> listaCase;
     List<Studente> listaStudenti;
-    //todo devo considerare gli inquilini
-    List<Inquilino> listaInquilini;
     List<Studente> coinquilini;
     List<RecensioneCasa> listaRecensioniCasa;
 
@@ -90,6 +83,10 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     FirebaseDatabase database;
     DatabaseReference myRef;
 
+    private Casa casa;
+    private Proprietario proprietario;
+    private Inquilino inquilino;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +96,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         myRef = database.getReference();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-
+        //CREAZIONE MAPPA
         createMapView(savedInstanceState);
 
         laTuaCasa = (TextView) findViewById(R.id.tv_laTuaCasa);
@@ -115,24 +112,8 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         b_aggiungiAnnuncio.setVisibility(View.GONE);
        // b_aggiungiRecensione.setVisibility(View.GONE);
 
-        initUI();
-
-    }
-
-
-    private void initUI() {
-
-        inquilino = null;
-        casa = null;
-        proprietario = null;
-        coinquilini = null;
-
-        //listaInquilini = new LinkedList<Inquilino>();
         listaStudenti = new LinkedList<Studente>();
         listaRecensioniCasa = new LinkedList<RecensioneCasa>();
-
-
-        //TODO devo gestire le recensioni e controllare quando visualizzare pulsante aggiungi recensione
 
         b_aggiungiRecensione.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,40 +126,11 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         });
 
 
-        /*
-        myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot inquilini : dataSnapshot.getChildren()) {
-                    Inquilino i = inquilini.getValue(Inquilino.class);
-                    listaInquilini.add(i);
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-         */
 
-
-        /*
-        myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot inquilini : dataSnapshot.getChildren()) {
-                    Studente i = inquilini.getValue(Studente.class);
-                    listaStudenti.add(i);
-                }
-                i++;
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-*/
     }
 
 
+    //RICERCA DEI RIFERIMENTI
     private void riferimentoCasa() {
 
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
@@ -199,7 +151,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                             RecensioneCasa recensioneCasa = recCasaData.getValue(RecensioneCasa.class);
                             listaRecensioniCasa.add(recensioneCasa);
                         }
-                        aggiorna();
+                        aggiornaListViewRecensione();
                     }
 
                     @Override
@@ -207,9 +159,12 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 
                     }
                 });
+
                 //CARICO IL NOME DELLA CASA
                 laTuaCasa.setText(casa.getNomeCasa());
                 valutazioneCasa.setText("  "+String.format("%.2f" ,casa.getValutazione())+" su "+casa.getNumRec()+" recensioni!");
+
+                //CERCO IL RIFERIMENTO AL PROPRIETARIO
                 riferimentoProprietario();
 
                 //AGGIUNGO LA POSIZIONE DELLA CASA
@@ -221,16 +176,48 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                         .draggable(true));
                 gmap.addMarker(mo6);
                 perth6.setTitle(""+casa.getNomeCasa());
-
                 gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(lCasa, 15));
 
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+                //CARICO TUTTI STUDENTI
+                DatabaseReference dtr = database.getReference();
+                dtr.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot inquilini : dataSnapshot.getChildren()) {
+                            Studente i = inquilini.getValue(Studente.class);
+                            listaStudenti.add(i);
+                        }
 
+                        //CERCO GLI INQUILINI APPARTENENTI A QUESTA CASA
+                        DatabaseReference dataRef = database.getReference();
+                        dataRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot inquilini : dataSnapshot.getChildren()) {
+                                    Inquilino i = inquilini.getValue(Inquilino.class);
+                                    for(Studente s :listaStudenti){
+                                        if(i.getStudente().compareTo(s.getEmail())==0
+                                         && i.getCasa().compareTo(casa.getNomeCasa())==0 && i.getDataFine() == 0 )
+                                            coinquilini.add(s);
+                                    }
 
+                                }
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
     }
 
     private void riferimentoProprietario() {
@@ -244,7 +231,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                 }
                 ilProprietario.setText("Host: "+proprietario.getNome());
                 valutazioneProprietario.setText(""+proprietario.getValutazione());
-                //il proprietario è l'user
+                //SE IL PROPRIETARIO E' UN USER
                 if(user!=null) {
                     if (proprietario.getIdUtente().compareTo(user.getUid()) == 0) {
                         b_aggiungiAnnuncio.setVisibility(View.VISIBLE);
@@ -257,10 +244,11 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             }
         });
     }
-
+        //METODO PER SCRIVERE UNA RECENSIONE SULLA CASA
     private void recensioniCasa(View v){
 
     }
+        //METODO PER ANDARE SUL PROFILO DEL PROPRIETARIO
     private void profiloProprietario(View v){
 
     }
@@ -271,11 +259,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         startActivity(intent);
     }
 
-    public void aggiungiInquilino(View view) {
-    }
-
     //GESTIONE MAPPE
-
     private void createMapView(Bundle savedInstanceState) {
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
@@ -285,8 +269,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         mapViewCasa.onCreate(mapViewBundle);
         mapViewCasa.getMapAsync(this);
     }
-
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
@@ -318,7 +300,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             }
         });
     }
-
     private void aggiungiMarker(GoogleMap gmap) {
 
         //PoliTo sede centrale
@@ -363,8 +344,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         perth5.setTitle("Campus Luigi Enaudi");
 
     }
-
-
     public void calcolaPercorso(LatLng destinazione){
 
         polylinePoints.clear();
@@ -398,7 +377,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         Log.i(TAG, "https://maps.googleapis.com/maps/api/directions/json?origin=");
 
     }
-
     public void drawPolylines(){
         PolylineOptions plo = new PolylineOptions();
 
@@ -412,11 +390,9 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         gmap.addPolyline(plo);
 
     }
-
      /*
     ASYNC TASK
      */
-
     private class DownloadTask extends AsyncTask<String, Void, String> {
         // implemento il metodo do in background
         @Override
@@ -492,7 +468,12 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
-    private void aggiorna() {
+    //LISTVIEW STUDENTI
+    private void aggiornaListViewCoinquilini(){
+
+    }
+    //LISTVIEW RECENSIONI
+    private void aggiornaListViewRecensione() {
 
         ListView listaRecensioni = (ListView) findViewById(R.id.listRecCasa);
         ProfiloCasa.CustomItem[] items = createItems();
@@ -531,7 +512,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     }
     private ProfiloCasa.CustomItem[] createItems() {
 
-        //Log.i(TAG, ""+listaRecensioni.size());
         int size =listaRecensioniCasa.size();
 
         ProfiloCasa.CustomItem[] items = new ProfiloCasa.CustomItem[size]; //numero di annunci possibili
@@ -543,12 +523,11 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             items[i].recensore = rec.getRecensore();
             items[i].descrizione= rec.getDescrizione();
             items[i].dataRec= rec.getDataRevisione();
-
-
         }
         return items;
     }
 
+    //METODI OVERRIDE
     @Override
     protected void onStart() {
         super.onStart();
