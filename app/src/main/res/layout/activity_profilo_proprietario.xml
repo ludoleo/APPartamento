@@ -12,38 +12,78 @@
     tools:context=".profilo.ProfiloProprietario">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        android:id="@+id/immagineProfiloProp"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="20dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/com_facebook_profile_picture_blank_portrait"
-        app:civ_border_color="@color/rosso_scuro"
-        app:civ_border_width="2dp" />
+        <de.hdodenhof.circleimageview.CircleImageView
+
+            android:id="@+id/immagineProfiloProp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="start"
+            android:layout_margin="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@string/cambiaImmagine"
+            android:scaleType="centerCrop"
+            android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+            app:civ_border_color="@color/rosso_scuro"
+            app:civ_border_width="2dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:gravity="right"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_nomeP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/nome"
+                android:textAllCaps="true"
+                android:textColor="@color/rosso_scuro"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/text_cognomeP"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/cognome"
+                android:textAllCaps="true"
+                android:textColor="@color/rosso_scuro" />
+
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/cambiaImmagineProp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cambiaImmagine" />
-
-        <Button
-            android:id="@+id/aggiungiCasa"
-            android:layout_width="222dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="aggiungiNuovaCasa"
-            android:text="@string/aggiungiCasa" />
     </LinearLayout>
 
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/rosso_scuro"
+        android:padding="5dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -54,59 +94,66 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/text_nomeP"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:text="@string/nome" />
-
-                <TextView
-                    android:id="@+id/text_cognomeP"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:text="@string/cognome" />
-
-                <TextView
-                    android:id="@+id/text_emailP"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:text="@string/email" />
-            </LinearLayout>
-
             <TextView
                 android:id="@+id/text_view_testo1"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="2dp"
+                android:gravity="center"
                 android:text="@string/caseProprietario"
-                android:textColor="@color/black" />
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/rosso_scuro" />
 
             <ListView
                 android:id="@+id/lv_case_prop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"></ListView>
 
+            <Button
+                android:id="@+id/aggiungiCasa"
+                android:layout_width="222dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="aggiungiNuovaCasa"
+                android:text="@string/aggiungiCasa" />
+
+            <View
+                android:id="@+id/divider5"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/rosso_scuro"
+                android:padding="5dp" />
+
             <TextView
                 android:id="@+id/tv_recensioni"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="@string/recensioniProprietario"
-                android:textColor="@color/black" />
-
-            <Button
-                android:id="@+id/b_nuovaRecensioneProp"
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/recensioniProprietario"
+                android:textAllCaps="true"
+                android:textColor="@color/rosso_scuro"
+                android:textSize="18sp" />
 
             <ListView
                 android:id="@+id/listView_recensioni_proprietario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"></ListView>
+
+            <Button
+                android:id="@+id/b_nuovaRecensioneProp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:gravity="center_horizontal"
+                android:text="aggiungi recensione" />
 
         </LinearLayout>
     </ScrollView>

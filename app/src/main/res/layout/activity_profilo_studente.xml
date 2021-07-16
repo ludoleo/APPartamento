@@ -50,7 +50,7 @@
                 android:text="@string/nome"
                 android:textAllCaps="true"
                 android:textColor="@color/rosso_scuro"
-                android:textSize="24sp"></TextView>
+                android:textSize="16sp"></TextView>
 
             <TextView
                 android:id="@+id/text_cognome"
@@ -62,7 +62,7 @@
                 android:text="@string/cognome"
                 android:textAllCaps="true"
                 android:textColor="@color/rosso_scuro"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
