@@ -83,14 +83,14 @@ public class ListaRecensioni extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    Inquilino i = snapshot.getValue(Inquilino.class);
+                    Inquilino i = data.getValue(Inquilino.class);
                     listaInquilini.add(i);
                 }
                 myRef.child("Studenti").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshots) {
                         for (DataSnapshot dataS : snapshots.getChildren()) {
-                            Studente s = snapshots.getValue(Studente.class);
+                            Studente s = dataS.getValue(Studente.class);
                             listaStudenti.add(s);
                         }
                         //CONTROLLO SE L'UTENTE E' UN PROPRIETARIO O UNO STUDENTE
