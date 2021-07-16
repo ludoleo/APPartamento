@@ -247,11 +247,6 @@ public class ProfiloStudente extends AppCompatActivity {
                         }
                     }
                 }
-                //VALUTO SE L'USER E' STATO UN SUO COINQUILINO
-                if(user!=null){
-                    if(userIsCoinquilino())
-                        b_nuovaRecensione.setVisibility(View.VISIBLE);
-                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -414,6 +409,7 @@ public class ProfiloStudente extends AppCompatActivity {
         i.putExtra("nomeCasa",nomeCasa);
         startActivity(i);
     }
+    //METODO DA AGGIUNGERE IN SECONDA SEDE
     private boolean userIsCoinquilino() {
         boolean isCoinquilino = false;
         for(Inquilino inq : listaInquilini){

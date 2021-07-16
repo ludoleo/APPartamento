@@ -24,6 +24,7 @@ import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.classi.RecensioneCasa;
 import com.example.myapplication.classi.Studente;
+import com.example.myapplication.prenotazione.ProfiloPrenotazione;
 import com.example.myapplication.recensione.NuovaRecensioneCasa;
 import com.example.myapplication.registrazione.InserimentoDatiAnnuncio;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -64,13 +65,12 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     private static final String TAG = "Mappa";
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
 
-
     List<Studente> listaStudenti;
     List<Studente> coinquilini;
     List<RecensioneCasa> listaRecensioniCasa;
 
     TextView laTuaCasa, ilProprietario, valutazioneProprietario, valutazioneCasa;
-    Button  b_aggiungiAnnuncio , b_aggiungiRecensione;
+    Button  b_aggiungiAnnuncio;
     //MAPPA
     MapView mapViewCasa;
     GoogleMap gmap;
@@ -105,28 +105,14 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         valutazioneCasa = (TextView) findViewById(R.id.tv_valutazioneCasaTua);
 
         b_aggiungiAnnuncio = (Button) findViewById(R.id.button_aggiungiAnnuncio);
-        b_aggiungiRecensione = (Button) findViewById(R.id.button_aggiungiRecensione);
-        //lirendo visibili solo al proprietario loggayo
+        //SOLO IL PROPRIETARIO PUO AGGIUNGERE UN ANNUNCIO
         b_aggiungiAnnuncio.setVisibility(View.GONE);
-       // b_aggiungiRecensione.setVisibility(View.GONE);
+        //SOLO UN CONQUILINO PUO RECENSIRE LA CASA
 
         listaStudenti = new LinkedList<Studente>();
         listaRecensioniCasa = new LinkedList<RecensioneCasa>();
 
-        b_aggiungiRecensione.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent l = new Intent(ProfiloCasa.this, NuovaRecensioneCasa.class);
-                Log.i(TAG,"VADO IN NUOVA REC PER LA CASA: "+casa.getNomeCasa());
-                l.putExtra("casa",casa.getNomeCasa());
-                startActivity(l);
-            }
-        });
-
-
-
     }
-
 
     //RICERCA DEI RIFERIMENTI
     private void riferimentoCasa() {
@@ -140,7 +126,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                         casa=i;
                     }
                 }
-
                 myRef.child("Recensioni_Casa").child(casa.getNomeCasa()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot datasnapshots) {
@@ -151,20 +136,16 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                         }
                         aggiornaListViewRecensione();
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
                 });
-
                 //CARICO IL NOME DELLA CASA
                 laTuaCasa.setText(casa.getNomeCasa());
                 valutazioneCasa.setText("  "+String.format("%.2f" ,casa.getValutazione())+" su "+casa.getNumRec()+" recensioni!");
-
                 //CERCO IL RIFERIMENTO AL PROPRIETARIO
                 riferimentoProprietario();
-
                 //AGGIUNGO LA POSIZIONE DELLA CASA
                 MarkerOptions mo6 = new MarkerOptions();
                 LatLng lCasa = new LatLng(casa.getLat(), casa.getLng());
@@ -242,13 +223,12 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             }
         });
     }
-        //METODO PER SCRIVERE UNA RECENSIONE SULLA CASA
-    private void recensioniCasa(View v){
 
-    }
-        //METODO PER ANDARE SUL PROFILO DEL PROPRIETARIO
+    //METODO PER ANDARE SUL PROFILO DEL PROPRIETARIO
     private void profiloProprietario(View v){
-
+        Intent intent = new Intent(this, ProfiloProprietario.class);
+        intent.putExtra("idUtente", proprietario.getIdUtente());
+        startActivity(intent);
     }
 
     public void aggiungiAnnuncio(View view) {
@@ -381,9 +361,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             plo.color(Color.RED);
             plo.width(10);
         }
-
         gmap.addPolyline(plo);
-
     }
      /*
     ASYNC TASK
