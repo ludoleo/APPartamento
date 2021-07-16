@@ -88,7 +88,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -226,8 +225,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
-
-            Toast.makeText(this, "Devi essere uno studente per effettuare una prenotazione", Toast.LENGTH_SHORT).show();
         }
     }
     // PREFERITI
@@ -246,7 +243,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         startActivity(intent);
 
     }
-
 
     public void inserisciFoto(View view) {
 

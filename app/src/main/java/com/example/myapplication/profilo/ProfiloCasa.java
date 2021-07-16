@@ -185,7 +185,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                             Studente i = inquilini.getValue(Studente.class);
                             listaStudenti.add(i);
                         }
-
+                        coinquilini = new LinkedList<>();
                         //CERCO GLI INQUILINI APPARTENENTI A QUESTA CASA
                         DatabaseReference dataRef = database.getReference();
                         dataRef.child("Inquilini").addValueEventListener(new ValueEventListener() {

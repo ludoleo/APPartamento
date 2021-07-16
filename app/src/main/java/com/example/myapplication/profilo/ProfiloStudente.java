@@ -322,22 +322,21 @@ public class ProfiloStudente extends AppCompatActivity {
 
             case R.id.home:
                 startActivity(new Intent(ProfiloStudente.this, Home.class));
-
+                return true;
                 //attenzione al pulsante la mia casa-------------
                 //TODO DA SPOSTARE
             case R.id.la_mia_casa:
                 Intent intent = new Intent(this, ProfiloCasa.class);
                 intent.putExtra("idStudente", idUtente);
                 startActivity(intent);
+                return true;
 
             case R.id.modifica_profilo_studente:
 
                 Intent a = new Intent(ProfiloStudente.this, ModificaProfilo.class);
                 a.putExtra("idStudente", idUtente);
                 startActivity(a);
-
-
-
+                return true;
         }
         return false;
     }
@@ -408,10 +407,9 @@ public class ProfiloStudente extends AppCompatActivity {
     }
     public void profiloCasa(View view) {
         Intent i = new Intent (this, ProfiloCasa.class);
-        i.putExtra("idCasa",nomeCasa);
+        i.putExtra("nomeCasa",nomeCasa);
         startActivity(i);
     }
-
 }
 
 
