@@ -9,20 +9,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
 
             android:id="@+id/immagineUtente"
-            app:civ_border_color="@color/rosso_scuro"
-            app:civ_border_width="2dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="start"
             android:layout_margin="5dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/com_facebook_profile_picture_blank_portrait" />
+            android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+            app:civ_border_color="@color/rosso_scuro"
+            app:civ_border_width="2dp" />
 
 
         <TextView
@@ -36,13 +36,17 @@
         android:id="@+id/textViewValutazioneInquilino"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawablePadding="10dp"
         android:padding="10dp"
         android:text="Valutazione"
-        android:drawablePadding="10dp"
-        android:drawableRight="@drawable/ic_baseline_star"/>
+        app:drawableLeftCompat="@drawable/ic_outline_star_outline_24" />
+
     <TextView
         android:id="@+id/textViewCorsoDiStudi"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_outline_school_24"
+        android:drawablePadding="10dp"
+        android:padding="10dp"
         android:text="Corso di studi" />
 </LinearLayout>
