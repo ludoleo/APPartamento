@@ -107,7 +107,7 @@ public class ProfiloProprietario extends AppCompatActivity {
             }
         });
 
-        cambiaImmagine = findViewById(R.id.cambiaImmagineProp);
+        cambiaImmagine = findViewById(R.id.immagineProfiloProp);
         cambiaImmagine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,7 +132,6 @@ public class ProfiloProprietario extends AppCompatActivity {
 
         text_nomeP = (TextView) findViewById(R.id.text_nomeP);
         text_cognomeP = (TextView) findViewById(R.id.text_cognomeP);
-        text_emailP = (TextView) findViewById(R.id.text_emailP);
 
         listViewCase = (ListView) findViewById(R.id.lv_case_prop);
 

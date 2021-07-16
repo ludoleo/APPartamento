@@ -64,7 +64,7 @@ public class ProfiloStudente extends AppCompatActivity {
 
     CircleImageView immagineStudente;
     TextView text_nome, text_cognome, text_descrizione, text_univerista, text_indirizzoLaure, hobbyStudente,
-                text_casaProfiloUtente, tv_profilo_nome_casa;
+                text_casaProfiloUtente, tv_profilo_nome_casa, tv_primaEsperienza;
     ListView listViewHobby, listViewRecensioni;
     Button b_nuovaRecensione, rimuoviInquilino;
     ArrayAdapter<String> arrayAdapter;
@@ -142,6 +142,7 @@ public class ProfiloStudente extends AppCompatActivity {
             hobbyStudente = (TextView) findViewById(R.id.tv_hobby_studente);
             text_casaProfiloUtente = (TextView) findViewById(R.id.text_casaProfiloUtente);
             tv_profilo_nome_casa = (TextView) findViewById(R.id.tv_profilo_nome_casa);
+            tv_primaEsperienza = (TextView) findViewById(R.id.tv_prima_esperienza);
             listViewHobby = (ListView) findViewById(R.id.listView_hobby_profilo);
             listViewRecensioni = (ListView) findViewById(R.id.listView_recensioni_studente);
             listaRecensioniUtente = new ArrayList<>();
@@ -154,6 +155,7 @@ public class ProfiloStudente extends AppCompatActivity {
             rimuoviInquilino.setVisibility(View.GONE);
             text_casaProfiloUtente.setVisibility(View.GONE);
             tv_profilo_nome_casa.setVisibility(View.GONE);
+            tv_primaEsperienza.setVisibility(View.GONE);
             //RIFERIMENTO ALL'UTENTE
             idUtente = getIntent().getExtras().getString("idUtente");
 
@@ -175,6 +177,9 @@ public class ProfiloStudente extends AppCompatActivity {
                             String[] hobby = studente.getHobby().split("-");
                             arrayAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.row_item_list_hobby, hobby);
                             listViewHobby.setAdapter(arrayAdapter);
+                            //CONTROLLO SE PRIMA ESPERIENZA
+                            if(studente.getPrimaEsperienza().compareTo("SI")==0)
+                                tv_primaEsperienza.setVisibility(View.VISIBLE);
                             //CONTROLLO SE LO STUDENTE SIA UN INQUILINO
                             studentIsInquilino(studente.getEmail());
                         }
