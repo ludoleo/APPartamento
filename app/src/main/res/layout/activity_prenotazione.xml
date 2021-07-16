@@ -13,6 +13,7 @@
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="25dp"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:translationY="30dp" />
 
@@ -20,9 +21,10 @@
         android:id="@+id/spinnerFasciaOraria"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_weight="0.2"
         android:entries="@array/fasceOrarie"
-        android:padding="15dp"
+        android:padding="10dp"
         android:translationY="30dp" />
 
     <LinearLayout

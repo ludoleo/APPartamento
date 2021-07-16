@@ -1,119 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
+    android:scrollbars="vertical"
     tools:context=".ricercalloggio.FiltriRicerca">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="@string/selezionaPrezzo"
-        android:textSize="20sp" />
-
-    <SeekBar
-        android:id="@+id/seekBarPrezzo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="700"
-        android:padding="15dp"
-        android:progress="550"
-        android:thumb="@drawable/ic_baseline_monetization_on_24"
-        app:tickMarkTint="@color/rosso_mattone" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tv_mostraPrezzo"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"></TextView>
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_mostraPrezzo1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:text="@string/euro"></TextView>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="@string/selezionaPrezzo"
+                android:textAllCaps="false"
+                android:textColor="@color/rosso_scuro"
+                android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="@string/selTipologiaAlloggio"
-        android:textSize="20sp" />
+            <SeekBar
+                android:id="@+id/seekBarPrezzo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="700"
+                android:padding="15dp"
+                android:progress="550"
+                android:thumb="@drawable/ic_baseline_monetization_on_24"
+                app:tickMarkTint="@color/rosso_mattone" />
 
-    <CheckBox
-        android:id="@+id/checkBoxInteroAppartamento"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/InteroApp"
-        android:layout_marginStart="10dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/background_sinistra"
+                android:orientation="horizontal">
 
-    <CheckBox
-        android:id="@+id/checkBoxStanzaSingola"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:text="@string/singola" />
+                <TextView
+                    android:id="@+id/tv_mostraPrezzo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:textColor="@color/rosso_mattone"></TextView>
 
-    <CheckBox
-        android:id="@+id/checkBoxStanzaDoppia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:text="@string/doppia" />
+                <TextView
+                    android:id="@+id/tv_mostraPrezzo1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:text="@string/euro"
+                    android:textColor="@color/rosso_mattone"></TextView>
+            </LinearLayout>
 
-    <CheckBox
-        android:id="@+id/checkBoxPostoLetto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:text="@string/pLetto" />
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="@string/selTipologiaAlloggio"
+                android:textAllCaps="true"
+                android:textColor="@color/rosso_scuro"
+                android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="@string/valCasa"
-        android:textSize="20sp" />
+            <CheckBox
+                android:id="@+id/checkBoxInteroAppartamento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/background_sinistra"
+                android:text="@string/InteroApp"
+                android:textColor="@color/rosso_mattone" />
 
-    <SeekBar
-        android:id="@+id/seekBarRatingCasa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="5"
-        android:padding="15dp"
-        android:progress="0"
-        android:thumb="@drawable/ic_baseline_star_rate_24" />
+            <CheckBox
+                android:id="@+id/checkBoxStanzaSingola"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/background_sinistra"
+                android:text="@string/singola"
+                android:textColor="@color/rosso_mattone" />
 
-    <TextView
-        android:id="@+id/tv_mostraRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp"></TextView>
+            <CheckBox
+                android:id="@+id/checkBoxStanzaDoppia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/background_sinistra"
+                android:text="@string/doppia"
+                android:textColor="@color/rosso_mattone" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:onClick="conferma"
-        android:text="@string/conferma"></Button>
-</LinearLayout>
+            <CheckBox
+                android:id="@+id/checkBoxPostoLetto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/background_sinistra"
+                android:text="@string/pLetto"
+                android:textColor="@color/rosso_mattone" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="@string/valCasa"
+                android:textColor="@color/rosso_scuro"
+                android:textSize="20sp" />
+
+            <SeekBar
+                android:id="@+id/seekBarRatingCasa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="5"
+                android:padding="15dp"
+                android:progress="0"
+                android:thumb="@drawable/ic_baseline_star_rate_24" />
+
+            <TextView
+                android:id="@+id/tv_mostraRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/background_sinistra"
+                android:padding="15dp"
+                android:textColor="@color/rosso_mattone"></TextView>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="conferma"
+                android:text="@string/conferma"></Button>
+
+        </LinearLayout>
+    </>
+

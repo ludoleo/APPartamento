@@ -48,14 +48,17 @@
 
 
         <com.google.android.gms.maps.MapView
-                android:id="@+id/mapView"
-                android:layout_width="match_parent"
-                android:layout_height="486dp" />
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="287dp"
+            android:layout_margin="10dp"
+            android:padding="10dp" />
 
         <Button
             android:id="@+id/visualizzaCasa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:onClick="visualizzaCasa"
             android:text="" />
 
