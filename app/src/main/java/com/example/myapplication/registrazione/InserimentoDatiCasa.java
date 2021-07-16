@@ -158,7 +158,7 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         if(!controlloCasaUguale){
             //CREO L'OGGETTO CASA
             String proprietario = user.getUid();
-            Casa casa = new Casa(nomeCasa, viaCasa, numeroOspiti, numeroBagni, numeroStanze, proprietario,"",coordinate.latitude,coordinate.longitude,0,0);
+            Casa casa = new Casa(nomeCasa, viaCasa, numeroOspiti, numeroBagni, numeroStanze, proprietario,"",coordinate.latitude,coordinate.longitude,0,0,null);
             //eseguo il push
             DatabaseReference casaAggiunta = myRef.child("Case").child(nomeCasa);
             casaAggiunta.setValue(casa);

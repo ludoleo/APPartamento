@@ -72,6 +72,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "Mappa";
@@ -115,6 +117,9 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         user = mAuth.getCurrentUser();
         //CREAZIONE MAPPA
         createMapView(savedInstanceState);
+
+        if(immagineCasa!=null)
+            tv_aggiungiFoto.setVisibility(View.INVISIBLE);
 
         laTuaCasa = (TextView) findViewById(R.id.tv_laTuaCasa);
         ilProprietario = (TextView) findViewById(R.id.tv_proprietarioLaTuaCasa);
@@ -303,10 +308,14 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     private void recensioniCasa(View v){
 
     }
+    /*
         //METODO PER ANDARE SUL PROFILO DEL PROPRIETARIO
     private void profiloProprietario(View v){
 
+
     }
+
+     */
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -351,6 +360,8 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                     @Override
                     public void onSuccess(Uri uri) {
                         Picasso.get().load(uri).into(immagineCasa);
+                        casa.getImageView().setImageURI(uri);
+                        tv_aggiungiFoto.setVisibility(View.GONE);
                     }
                 });
             }
@@ -361,7 +372,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             }
 
         });
-        tv_aggiungiFoto.setVisibility(View.GONE);
+
     }
 
     public void aggiungiAnnuncio(View view) {
@@ -498,9 +509,18 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         gmap.addPolyline(plo);
 
     }
-     /*
-    ASYNC TASK
-     */
+
+    public void profiloProprietario(View view) {
+
+        Intent intent = new Intent(this, ProfiloProprietario.class);
+        intent.putExtra("idUtente", proprietario.getIdUtente());
+        startActivity(intent);
+
+    }
+
+    /*
+   ASYNC TASK
+    */
     private class DownloadTask extends AsyncTask<String, Void, String> {
         // implemento il metodo do in background
         @Override
@@ -593,6 +613,9 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lista_coinquilini, null);
+
+                CircleImageView immagine_coinqui =
+                        (CircleImageView)rowView.findViewById(R.id.immagineUtente);
                 TextView nome_coinqui =
                         (TextView)rowView.findViewById(R.id.tv_coinqi_nome);
                 nome_coinqui.setText(item.nome);
@@ -648,6 +671,8 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         public Date dataRec;
     }
     private static class CustomItemStudente {
+        public CircleImageView immagine;
+
         public String nome;
         public float rating;
         public String indirizzoLaurea;

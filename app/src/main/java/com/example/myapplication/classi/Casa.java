@@ -1,8 +1,11 @@
 package com.example.myapplication.classi;
 
 
+import android.widget.ImageView;
+
 public class Casa {
 
+    private ImageView imageView;
     private String nomeCasa;
     private String indirizzo;
     private int numeroOspiti;
@@ -18,7 +21,7 @@ public class Casa {
     public Casa(){}
 
     public Casa(String nomeCasa, String indirizzo, int numeroOspiti, int numeroBagni, int numeroStanze,
-                String proprietario, String servizi, double lat, double lng , float valutazione, int numRec) {
+                String proprietario, String servizi, double lat, double lng , float valutazione, int numRec, ImageView immagine) {
         this.nomeCasa = nomeCasa;
         this.indirizzo = indirizzo;
         this.numeroOspiti = numeroOspiti;
@@ -30,7 +33,17 @@ public class Casa {
         this.lat = lat;
         this.lng = lng;
         this.numRec = numRec;
+        this.imageView = immagine;
 
+    }
+
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
+    public void setImageView(ImageView imageView) {
+        this.imageView = imageView;
     }
 
     public int getNumRec() {

@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/nomeautore1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Nome Autore" />
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+
+            android:id="@+id/immagineUtente"
+            app:civ_border_color="@color/rosso_scuro"
+            app:civ_border_width="2dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="start"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/com_facebook_profile_picture_blank_portrait" />
+
+
+
+        <TextView
+            android:id="@+id/nomeautore1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome Autore" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/dataRec"

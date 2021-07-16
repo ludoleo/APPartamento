@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -143,7 +144,7 @@ public class ProfiloProprietario extends AppCompatActivity {
         idUtente = getIntent().getExtras().getString("idUtente");
         Log.i(TAG,"STorage "+storageReference);
 
-        Log.i(TAG,"profile ref "+profileRefer);
+        Log.i(TAG,"profile ref "+profileRefer+" "+idUtente);
 
 
 
@@ -304,6 +305,10 @@ public class ProfiloProprietario extends AppCompatActivity {
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lv_lista_case_proprietario, null);
+
+                ImageView immagineCasa =
+                        (ImageView)rowView.findViewById(R.id.immagineCasa);
+
                 TextView nomeCasaView =
                         (TextView)rowView.findViewById(R.id.textViewNomeCasaProprietario);
                 TextView inidirizzoCasaView =
@@ -343,10 +348,13 @@ public class ProfiloProprietario extends AppCompatActivity {
     }
 
     private static class CustomItem {
+
+        public ImageView immCasa;
         public String nomeCasa;
         public String indirizzoCasa;
         public int numeroOspiti;
         public double valutazione;
+
     }
 
     private ProfiloProprietario.CustomItem[] createItems() {
@@ -361,7 +369,10 @@ public class ProfiloProprietario extends AppCompatActivity {
             Casa a = listaCase.get(i);
 
             items[i] = new ProfiloProprietario.CustomItem();
+            Log.i(TAG, a.getNomeCasa()+" "+a.getImageView());
+
             items[i].nomeCasa = a.getNomeCasa();
+            items[i].immCasa = a.getImageView();
             items[i].indirizzoCasa = a.getIndirizzo();
             items[i].numeroOspiti = a.getNumeroOspiti();
             items[i].valutazione = a.getValutazione();
@@ -430,7 +441,7 @@ public class ProfiloProprietario extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_prop, menu);
         return true;
     }
 
