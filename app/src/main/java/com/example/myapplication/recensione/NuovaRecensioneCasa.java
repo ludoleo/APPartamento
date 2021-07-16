@@ -14,8 +14,10 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
+import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.RecensioneCasa;
 import com.example.myapplication.classi.RecensioneStudente;
+import com.example.myapplication.classi.Studente;
 import com.example.myapplication.profilo.ProfiloCasa;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,11 +35,8 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
     private static final String TAG = "Recensioni Casa";
 
     private EditText recensione;
-
     private TextView mediaRecensione;
-
     private RatingBar rb_pulizia, rb_posizione, rb_qualitaPrezzo;
-
     private float valorePulizia, valorePosizione, valoreQualita;
 
     String nomeCasa, descrizione;
@@ -50,6 +49,8 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
     public FirebaseDatabase database;
     public FirebaseUser user;
     public FirebaseAuth mAuth;
+
+    String recensore = "";
 
 
     @Override
@@ -95,8 +96,6 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
                 valorePosizione = rb_posizione.getRating();
                 valutazioneMedia = (valorePulizia+valorePosizione+valoreQualita)/3 ;
                 mediaRecensione.setText(Float.toString(valutazioneMedia));
-
-
                 Log.i(TAG,"Utente autenticato è :"+ user.getEmail()+user.getUid());
             }
         });
@@ -106,8 +105,6 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
                 valoreQualita = rb_qualitaPrezzo.getRating();
                 valutazioneMedia = (valorePulizia+valorePosizione+valoreQualita)/3 ;
                 mediaRecensione.setText(Float.toString(valutazioneMedia));
-
-
                 Log.i(TAG,"Utente autenticato è :"+ user.getEmail()+user.getUid());
             }
         });
@@ -136,20 +133,28 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
             Toast.makeText(this, "Attenzione aggiungi recensione", Toast.LENGTH_SHORT).show();
             return;
         }
-        String recensore = user.getUid();
-        //Devo fare un ciclo sull'inquilini della casa?
 
+        //PER OGNI INQUILINO
+        myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataS : snapshot.getChildren()) {
+                    Inquilino i = dataS.getValue(Inquilino.class);
+                    if(i.getStudente().compareTo(user.getEmail())==0)
+                        recensore = dataS.getKey();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
         RecensioneCasa recensioneCasa = new RecensioneCasa(data,descrizione,valorePulizia,valorePosizione,valoreQualita,valutazioneMedia,recensore,nomeCasa);
         //PUSH
         DatabaseReference recensioneCasaAggiunta = myRef.child("Recensioni_Casa").child(nomeCasa).push();
         recensioneCasaAggiunta.setValue(recensioneCasa);
-
         Log.i(TAG, "Recensione aggiunta da" + user.getUid());
-
         aggiornoDatiCasa(nomeCasa);
-
         pulisciCampi();
-
         //Intent intent = new Intent(this, ProfiloCasa.class);
         //startActivity(intent);
     }

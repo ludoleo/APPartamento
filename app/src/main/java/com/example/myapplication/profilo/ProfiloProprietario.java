@@ -74,7 +74,6 @@ public class ProfiloProprietario extends AppCompatActivity {
     private List<Casa> listaCase = new ArrayList<>();
 
     ListView listViewCase, listViewRecensioni;
-
     Proprietario proprietario;
 
 
@@ -88,12 +87,9 @@ public class ProfiloProprietario extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         myRef = database.getReference();
         immagineProp = findViewById(R.id.immagineProfiloProp);
-
+        //STORAGE
         storageReference = FirebaseStorage.getInstance().getReference();
-
         StorageReference profileRefer = storageReference.child("Proprietari/"+user.getUid()+"/profile.jpg");
-
-        // storage
 
         profileRefer.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -135,18 +131,11 @@ public class ProfiloProprietario extends AppCompatActivity {
         text_cognomeP = (TextView) findViewById(R.id.text_cognomeP);
 
         listViewCase = (ListView) findViewById(R.id.lv_case_prop);
-
         listViewRecensioni = (ListView) findViewById(R.id.listView_recensioni_proprietario);
         listaRecensioniProprietario = new ArrayList<>();
 
         b_nuovaRecensioneProp = findViewById(R.id.b_nuovaRecensioneProp);
-
         idUtente = getIntent().getExtras().getString("idUtente");
-        Log.i(TAG,"STorage "+storageReference);
-
-        Log.i(TAG,"profile ref "+profileRefer+" "+idUtente);
-
-
 
         myRef.child("Recensioni_Proprietario").child(idUtente).addValueEventListener(new ValueEventListener() {
             @Override
@@ -158,10 +147,8 @@ public class ProfiloProprietario extends AppCompatActivity {
                 }
                 aggiornaRecensioni();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
@@ -176,17 +163,10 @@ public class ProfiloProprietario extends AppCompatActivity {
         });
 
         //TODO aggiungere controllo se esiste un utente loggato o no e prendere l'id utente o tramite intent o tramite user
-
-        //sono loggato come proprietario e vedo il mio profilo
-        if(user != null)
-            idUtente = user.getUid();
-        else //sono un utente che vuole vedere il profilo del proprietario
-            idUtente = getIntent().getExtras().getString("idProprietario");
-
+        idUtente = getIntent().getExtras().getString("idProprietario");
         initUI(idUtente);
 
     }
-
     // permission foto
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -331,16 +311,14 @@ public class ProfiloProprietario extends AppCompatActivity {
         listViewCase.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                //TODO prendo l'id della casa che ho cliccato vado ad aggiungi annuncio, pushando con l'intent l'id
                 ProfiloProprietario.CustomItem casa = (ProfiloProprietario.CustomItem) adapterView.getItemAtPosition(pos);
                 String nomeCasa = casa.nomeCasa;
-                //TODO dovrebbe portare al profilo della casa e non alla creazione di un'annuncio
-                creaAnnuncio(nomeCasa);
+                profiloCasa(nomeCasa);
             }
         });
     }
 
-    private void creaAnnuncio(String casa) {
+    private void profiloCasa(String casa) {
 
         Intent intent = new Intent(this, ProfiloCasa.class);
         intent.putExtra("nomeCasa", casa);
@@ -379,8 +357,6 @@ public class ProfiloProprietario extends AppCompatActivity {
         }
         return items;
     }
-
-
 
     private void aggiornaRecensioni() {
 
@@ -434,7 +410,6 @@ public class ProfiloProprietario extends AppCompatActivity {
             items[i].descrizione= rec.getDescrizione();
             items[i].dataRec= rec.getDataRevisione();
 
-
         }
         return items;
     }
@@ -449,13 +424,7 @@ public class ProfiloProprietario extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
 
-            /*
-            case R.id.aggiungiCasa:
-                startActivity(new Intent(ProfiloProprietario.this,InserimentoDatiCasa.class));
-                finish();
-                return true;
 
-             */
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(ProfiloProprietario.this,Home.class));
@@ -464,11 +433,10 @@ public class ProfiloProprietario extends AppCompatActivity {
 
             case R.id.home:
                 startActivity(new Intent(ProfiloProprietario.this,Home.class));
+                return true;
 
         }
         return false;
-
-
     }
 
 
