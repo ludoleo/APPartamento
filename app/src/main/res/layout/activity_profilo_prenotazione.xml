@@ -14,12 +14,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView_nomeAnnuncio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/textView_nomeAnnuncio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="Nome annuncio"
+            android:textAllCaps="true"
+            android:textColor="@color/rosso_scuro"
+            android:textSize="18sp" />
 
 
     <LinearLayout
@@ -27,12 +31,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textView_nomeUtente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/textView_nomeUtente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/background_sinistra"
+            android:drawableLeft="@drawable/ic_outline_person_pin_circle_rosa_24"
+            android:gravity="start"
+            android:padding="10dp"
+            android:text=" Nome utente"
+            android:textColor="@color/teal_700" />
 
     <Button
         android:id="@+id/promuoviInquilino"
@@ -44,60 +54,87 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView_emailUtente"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/textView_dataPrenotazione"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/textView_tipoPrenotazione"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="TextView"
-        android:textStyle="bold" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/textView_emailUtente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/background_destra"
+            android:drawableLeft="@drawable/ic_baseline_alternate_email_24"
+            android:padding="10dp"
+            android:text="@string/email"
+            android:textColor="@color/ic_launcher_background" />
 
         <TextView
-            android:id="@+id/textView_daPagare"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView_dataPrenotazione"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:text="Da pagare"
-            android:textStyle="bold" />
+            android:layout_margin="10dp"
+            android:background="@drawable/background_sinistra"
+            android:drawableLeft="@drawable/ic_outline_calendar_today_24"
+            android:padding="10dp"
+            android:text=" Data prenotazione"
+            android:textColor="@color/rosso_mattone" />
 
-        <Button
-            android:id="@+id/visita_virtuale"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textView_tipoPrenotazione"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="visita"
-            android:visibility="gone"
-            android:layout_marginLeft="20dp"
-            android:text="Visita virtuale" />
+            android:layout_margin="10dp"
+            android:background="@drawable/background_destra"
+            android:padding="10dp"
+            android:text=" Tipo prenotazione"
+            android:textColor="@color/ic_launcher_background"
+            android:textStyle="bold"
+            app:drawableLeftCompat="@drawable/ic_outline_flag_24" />
 
-        <Button
-            android:id="@+id/b_pagaPrenotazioneProfilo"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:onClick="effettuaPagamento"
-            android:text="Paga"></Button>
-    </LinearLayout>
+            android:orientation="horizontal">
 
-    <LinearLayout
+            <TextView
+                android:id="@+id/textView_daPagare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/background_sinistra"
+                android:drawableLeft="@drawable/ic_outline_payment_24"
+                android:padding="10dp"
+                android:text=" Da pagare"
+                android:textColor="@color/rosso_mattone"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/visita_virtuale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:onClick="visita"
+                android:text="Visita virtuale"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/b_pagaPrenotazioneProfilo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:onClick="effettuaPagamento"
+                android:padding="10dp"
+                android:text="Paga"
+                android:translationX="10dp"></Button>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider6"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@color/rosso_scuro" />
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -136,12 +173,15 @@
             <CalendarView
                 android:id="@+id/calendarViewCambio"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:selectedWeekBackgroundColor="@color/rosso_mattone" />
 
             <Spinner
                 android:id="@+id/spinnerFasciaOrariaCambio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:entries="@array/fasceOrarie"
                 android:padding="15dp" />
 

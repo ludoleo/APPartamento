@@ -24,7 +24,7 @@
     <string name="tipoLaurea">Tipologia Laurea</string>
     <string name="descrizione">Descrizione</string>
     <string name="telefono">Telefono</string>
-    <string name="email" translatable="false">E-mail</string>
+    <string name="email" translatable="false">  E-mail</string>
     <string name="profilo">profilo</string>
     <string name="messaggi">Messaggi</string>
     <string name="caseProprietario">Case Proprietario</string>
