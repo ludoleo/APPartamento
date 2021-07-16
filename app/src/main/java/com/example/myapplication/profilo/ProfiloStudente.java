@@ -29,6 +29,7 @@ import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.RecensioneStudente;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.home.Home;
+import com.example.myapplication.prenotazione.ProfiloPrenotazione;
 import com.example.myapplication.recensione.NuovaRecensioneCasa;
 import com.example.myapplication.recensione.NuovaRecensioneStudente;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,7 +63,8 @@ public class ProfiloStudente extends AppCompatActivity {
 
 
     CircleImageView immagineStudente;
-    TextView text_nome, text_cognome, text_descrizione, text_univerista, text_indirizzoLaure, username, hobbyStudente;
+    TextView text_nome, text_cognome, text_descrizione, text_univerista, text_indirizzoLaure, hobbyStudente,
+                text_casaProfiloUtente, tv_profilo_nome_casa;
     ListView listViewHobby, listViewRecensioni;
     Button b_nuovaRecensione, rimuoviInquilino;
     ArrayAdapter<String> arrayAdapter;
@@ -71,6 +73,7 @@ public class ProfiloStudente extends AppCompatActivity {
     //LO STUDENTE PU0' ESSERE INQUILINO
     Inquilino inquilino;
      String id_inquilino = "";
+     String nomeCasa = "";
     Studente studente;
 
 
@@ -136,8 +139,9 @@ public class ProfiloStudente extends AppCompatActivity {
             text_descrizione = (TextView) findViewById(R.id.text_descrizione);
             text_univerista = (TextView) findViewById(R.id.text_universita);
             text_indirizzoLaure = (TextView) findViewById(R.id.text_indirizzoLaurea);
-            username = (TextView) findViewById(R.id.username);
             hobbyStudente = (TextView) findViewById(R.id.tv_hobby_studente);
+            text_casaProfiloUtente = (TextView) findViewById(R.id.text_casaProfiloUtente);
+            tv_profilo_nome_casa = (TextView) findViewById(R.id.tv_profilo_nome_casa);
             listViewHobby = (ListView) findViewById(R.id.listView_hobby_profilo);
             listViewRecensioni = (ListView) findViewById(R.id.listView_recensioni_studente);
             listaRecensioniUtente = new ArrayList<>();
@@ -148,6 +152,8 @@ public class ProfiloStudente extends AppCompatActivity {
             idUtente = getIntent().getExtras().getString("idUtente");
             //VISIBILITA
             rimuoviInquilino.setVisibility(View.GONE);
+            text_casaProfiloUtente.setVisibility(View.GONE);
+            tv_profilo_nome_casa.setVisibility(View.GONE);
             //RIFERIMENTO ALL'UTENTE
             idUtente = getIntent().getExtras().getString("idUtente");
 
@@ -220,8 +226,11 @@ public class ProfiloStudente extends AppCompatActivity {
                     if(inqui.getStudente().compareTo(email)==0 && inqui.getDataFine()==0){
                         id_inquilino = annunciSnapshot.getKey();
                         inquilino = inqui;
-                        //TODO RIEMPIO LA TEXTVIEW PER LA CASA
-                        String nomeCasa = inqui.getCasa();
+                        //TODO RIEMPIO LA TEXTVIEW PER LA CASA INOLTRE BISOGNA AGGIUNGERE L'IMMAGINE
+                        nomeCasa = inqui.getCasa();
+                        text_casaProfiloUtente.setVisibility(View.VISIBLE);
+                        tv_profilo_nome_casa.setText(nomeCasa);
+                        tv_profilo_nome_casa.setVisibility(View.VISIBLE);
                         //SE SEI PROPRIETARIO VI E' UN BUTTON PER TOGLIERTI COME INQUILINO
                         if(user.getEmail().compareTo(inqui.getProprietario())==0){
                             rimuoviInquilino.setVisibility(View.VISIBLE);
@@ -234,7 +243,6 @@ public class ProfiloStudente extends AppCompatActivity {
             }
         });
     }
-
     // PERMESSI PT2
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -309,7 +317,6 @@ public class ProfiloStudente extends AppCompatActivity {
 
             case R.id.home:
                 startActivity(new Intent(ProfiloStudente.this, Home.class));
-
 
                 //attenzione al pulsante la mia casa-------------
                 //TODO DA SPOSTARE
@@ -394,6 +401,12 @@ public class ProfiloStudente extends AppCompatActivity {
         Intent i = new Intent(this, Home.class);
         startActivity(i);
     }
+    public void profiloCasa(View view) {
+        Intent i = new Intent (this, ProfiloCasa.class);
+        i.putExtra("idCasa",nomeCasa);
+        startActivity(i);
+    }
+
 }
 
 
