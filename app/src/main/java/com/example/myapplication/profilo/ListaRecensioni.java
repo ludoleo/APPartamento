@@ -36,6 +36,9 @@ public class ListaRecensioni extends AppCompatActivity {
                 lv_recensioni_effettuate_casa, lv_recensioni_effettuate_proprietario, lv_recensioni_effettuate_studente;
 
 
+    List<Inquilino> listaInquilini;
+    List<Studente> listaStudenti;
+
     List<Casa> caseDaRecensire;
     List<Studente> studentiDaRecensire;
     List<Proprietario> proprietariDaRecensiore;
@@ -72,39 +75,64 @@ public class ListaRecensioni extends AppCompatActivity {
         caseDaRecensire = new LinkedList<>();
         proprietariDaRecensiore = new LinkedList<>();
         studentiDaRecensire = new LinkedList<>();
-        //CONTROLLO SE L'UTENTE E' UN PROPRIETARIO O UNO STUDENTE
-        myRef.child("Utenti")
-                .child("Studenti")
-                .child(user.getUid())
-                .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        listaInquilini = new LinkedList<>();
+        listaStudenti = new LinkedList<>();
+
+        //PRENDO TUTTI GLI STUDENTI E GLI INQUILINI
+        myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                } else {
-                    //SONO UN PROPRIETARIO E POSSO RECENSIRE SOLO STUDENTI
-                    if (task.getResult().getValue() == null) {
-                        DatabaseReference dr = database.getReference();
-                        dr.child("").addValueEventListener(new ValueEventListener() {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    Inquilino i = snapshot.getValue(Inquilino.class);
+                    listaInquilini.add(i);
+                }
+                myRef.child("Studenti").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshots) {
+                        for (DataSnapshot dataS : snapshots.getChildren()) {
+                            Studente s = snapshots.getValue(Studente.class);
+                            listaStudenti.add(s);
+                        }
+                        //CONTROLLO SE L'UTENTE E' UN PROPRIETARIO O UNO STUDENTE
+                        database.getReference().child("Utenti")
+                                .child("Studenti")
+                                .child(user.getUid())
+                                .get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                             @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (!task.isSuccessful()) {
+                                    Log.e("firebase", "Error getting data", task.getException());
+                                } else {
+                                    //SONO UN PROPRIETARIO E POSSO RECENSIRE SOLO STUDENTI
+                                    if (task.getResult().getValue() == null) {
+                                        //UN PROPRIETARIO PUO RECENSIRE TUTTI GLI STUDENTI CHE SONO STATI IN UN SUA CASA
+                                        //PER OGNI INQUILINO
+                                        for(Inquilino inquilinoProprietario : listaInquilini){
+                                            //CONTROLLO SE HA FATTO PARTE DELLA CASA
+                                        }
+                                        caricaRecensioniStudenti();
+                                        //SONO UNO STUDENTE E POSSO RECENSIRE UN PROPRIETARIO, UNA CASA O UNO STUDENTE
+                                    }else{
 
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
+                                        caricaRecensioniStudenti();
+                                        caricaRecensioniCase();
+                                        caricaRecensioniProprietari();
+                                    }
+                                }
                             }
                         });
-                        caricaRecensioniStudenti();
-                        //SONO UNO STUDENTE E POSSO RECENSIRE UN PROPRIETARIO, UNA CASA O UNO STUDENTE
-                    }else{
-
-                        caricaRecensioniStudenti();
-                        caricaRecensioniCase();
-                        caricaRecensioniProprietari();
                     }
-                }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
