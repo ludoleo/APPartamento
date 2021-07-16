@@ -1,12 +1,17 @@
 package com.example.myapplication.profilo;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +19,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
@@ -36,6 +43,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,6 +52,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -63,13 +76,16 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 
     private static final String TAG = "Mappa";
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
+    private static final int IMAG_REQUEST = 1000;
+    private static final int PERMISSION_CODE = 1001;
 
 
+    ImageView immagineCasa;
     List<Studente> listaStudenti;
     List<Studente> coinquilini;
     List<RecensioneCasa> listaRecensioniCasa;
 
-    TextView laTuaCasa, ilProprietario, valutazioneProprietario, valutazioneCasa;
+    TextView laTuaCasa, ilProprietario, valutazioneProprietario, valutazioneCasa, tv_aggiungiFoto;
     Button  b_aggiungiAnnuncio , b_aggiungiRecensione;
     //MAPPA
     MapView mapViewCasa;
@@ -82,6 +98,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     FirebaseAuth mAuth;
     FirebaseDatabase database;
     DatabaseReference myRef;
+    StorageReference storageReference;
 
     private Casa casa;
     private Proprietario proprietario;
@@ -103,6 +120,46 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         ilProprietario = (TextView) findViewById(R.id.tv_proprietarioLaTuaCasa);
         valutazioneProprietario = (TextView) findViewById(R.id.tv_valutazioneProprietarioCasaTua);
         valutazioneCasa = (TextView) findViewById(R.id.tv_valutazioneCasaTua);
+        immagineCasa = findViewById(R.id.immagineCasa);
+        tv_aggiungiFoto = findViewById(R.id.tv_aggiungiFoto);
+
+        //STORAGE
+        storageReference = FirebaseStorage.getInstance().getReference();
+        StorageReference casaRef = storageReference.child("Case/"+getIntent().getExtras().getString("nomeCasa")+"/profile.jpg");
+        casaRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Log.i(TAG,"URI "+uri);
+                Picasso.get().load(uri).into(immagineCasa);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+        // IMMAGINE PERMESSI
+        immagineCasa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // check runtime permission
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_DENIED){
+                        // permission not granted
+                        String [] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                        // show popup for runtime permission
+                        requestPermissions(permission,PERMISSION_CODE);
+                    }
+                    else { // permission alredy granted
+                        cambiaImm();
+                    }
+                }
+                else { // system os is less then Marshmallow
+                    cambiaImm();
+                }
+            }
+        });
 
         b_aggiungiAnnuncio = (Button) findViewById(R.id.button_aggiungiAnnuncio);
         b_aggiungiRecensione = (Button) findViewById(R.id.button_aggiungiRecensione);
@@ -249,6 +306,62 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         //METODO PER ANDARE SUL PROFILO DEL PROPRIETARIO
     private void profiloProprietario(View v){
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case PERMISSION_CODE : {
+                if(grantResults.length > 0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED){
+                    // permission sono garantite
+                    cambiaImm();
+                }
+                else {
+                    // permission denied
+                    Toast.makeText(this,"Permission Denied!",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+    // CAMBIO IMMAGINE
+    private void cambiaImm() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,IMAG_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == IMAG_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+            Uri imageUri = data.getData();
+            UploadImage(imageUri);
+        }
+    }
+
+    private void UploadImage(Uri imageUri) {
+        final StorageReference fileRef = storageReference.child("Case/"+casa.getNomeCasa()+"/profile.jpg");
+        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(immagineCasa);
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ProfiloCasa.this, "Upload non effettuato", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+        tv_aggiungiFoto.setVisibility(View.GONE);
     }
 
     public void aggiungiAnnuncio(View view) {
