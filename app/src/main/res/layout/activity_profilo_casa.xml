@@ -76,17 +76,16 @@
                     android:layout_height="wrap_content"
                     android:onClick="aggiungiAnnuncio"
                     android:text="Aggiungi Annuncio"></Button>
-
-                <Button
-                    android:id="@+id/button_aggiungiInquilino"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="aggiungiInquilino"
-                    android:text="Aggiungi Inquilino"></Button>
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/visualizzaCoinquilini"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inquilini :" />
 
     <ListView
         android:id="@+id/lv_inquiliniLaTuaCasa"

@@ -70,7 +70,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     List<RecensioneCasa> listaRecensioniCasa;
 
     TextView laTuaCasa, ilProprietario, valutazioneProprietario, valutazioneCasa;
-    Button b_aggiungiInquilino, b_aggiungiAnnuncio , b_aggiungiRecensione;
+    Button  b_aggiungiAnnuncio , b_aggiungiRecensione;
     //MAPPA
     MapView mapViewCasa;
     GoogleMap gmap;
@@ -105,10 +105,8 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         valutazioneCasa = (TextView) findViewById(R.id.tv_valutazioneCasaTua);
 
         b_aggiungiAnnuncio = (Button) findViewById(R.id.button_aggiungiAnnuncio);
-        b_aggiungiInquilino = (Button) findViewById(R.id.button_aggiungiInquilino);
         b_aggiungiRecensione = (Button) findViewById(R.id.button_aggiungiRecensione);
         //lirendo visibili solo al proprietario loggayo
-        b_aggiungiInquilino.setVisibility(View.GONE);
         b_aggiungiAnnuncio.setVisibility(View.GONE);
        // b_aggiungiRecensione.setVisibility(View.GONE);
 
@@ -235,7 +233,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                 if(user!=null) {
                     if (proprietario.getIdUtente().compareTo(user.getUid()) == 0) {
                         b_aggiungiAnnuncio.setVisibility(View.VISIBLE);
-                        b_aggiungiInquilino.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -469,22 +466,52 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     }
 
     //LISTVIEW STUDENTI
+
     private void aggiornaListViewCoinquilini(){
 
+        ListView listaCoinquilini = (ListView) findViewById(R.id.lv_inquiliniLaTuaCasa);
+        ProfiloCasa.CustomItemStudente[] items = createItemsStudente();
+        ArrayAdapter<ProfiloCasa.CustomItemStudente> ArrayAdapter = new ArrayAdapter<CustomItemStudente>(
+                this, R.layout.row_lista_coinquilini, R.id.tv_coinqi_nome, items) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                return getViewNotOptimized(position,convertView,parent); }
+
+            public View getViewNotOptimized(int position, View convertView, ViewGroup par){
+                ProfiloCasa.CustomItemStudente item = getItem(position); // Rif. alla riga attualmente
+                LayoutInflater inflater =
+                        (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.row_lista_coinquilini, null);
+                TextView nome_coinqui =
+                        (TextView)rowView.findViewById(R.id.tv_coinqi_nome);
+                nome_coinqui.setText(item.nome);
+                TextView rating_coinqui =
+                        (TextView)rowView.findViewById(R.id.descrizioneRec);
+                rating_coinqui.setText(String.format("%.2f" ,item.rating));
+                TextView laurea_coinqui =
+                        (TextView) rowView.findViewById(R.id.dataRec);
+                laurea_coinqui.setText(item.indirizzoLaurea);
+
+                return rowView;
+            }
+        };
+        listaCoinquilini.setAdapter(ArrayAdapter);
     }
+    
+
     //LISTVIEW RECENSIONI
     private void aggiornaListViewRecensione() {
 
         ListView listaRecensioni = (ListView) findViewById(R.id.listRecCasa);
-        ProfiloCasa.CustomItem[] items = createItems();
-        ArrayAdapter<ProfiloCasa.CustomItem> ArrayAdapter = new ArrayAdapter<ProfiloCasa.CustomItem>(
+        ProfiloCasa.CustomItemRecensione[] items = createItemsRecensione();
+        ArrayAdapter<ProfiloCasa.CustomItemRecensione> ArrayAdapter = new ArrayAdapter<ProfiloCasa.CustomItemRecensione>(
                 this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
 
             public View getViewNotOptimized(int position, View convertView, ViewGroup par){
-                ProfiloCasa.CustomItem item = getItem(position); // Rif. alla riga attualmente
+                ProfiloCasa.CustomItemRecensione item = getItem(position); // Rif. alla riga attualmente
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
@@ -503,23 +530,43 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         };
         listaRecensioni.setAdapter(ArrayAdapter);
     }
-    // CUSTOM ITEM
-    private static class CustomItem {
+    // CUSTOM ITEMS
+    private static class CustomItemRecensione {
         public String recensore;
         public String descrizione;
         public Date dataRec;
-
     }
-    private ProfiloCasa.CustomItem[] createItems() {
+    private static class CustomItemStudente {
+        public String nome;
+        public float rating;
+        public String indirizzoLaurea;
+    }
+
+    private ProfiloCasa.CustomItemStudente[] createItemsStudente() {
+
+        int size =coinquilini.size();
+        ProfiloCasa.CustomItemStudente[] items = new ProfiloCasa.CustomItemStudente[size]; //numero di annunci possibili
+        for (int i = 0; i < items.length; i++) {
+            //mi prendo il riferimento all'annuncio
+            Studente stu= coinquilini.get(i);
+
+            items[i] = new ProfiloCasa.CustomItemStudente();
+            items[i].nome = stu.getNome();
+            items[i].rating= (float)stu.getValutazione();
+            items[i].indirizzoLaurea= stu.getIndirizzoLaurea();
+        }
+        return items;
+    }
+    private ProfiloCasa.CustomItemRecensione[] createItemsRecensione() {
 
         int size =listaRecensioniCasa.size();
 
-        ProfiloCasa.CustomItem[] items = new ProfiloCasa.CustomItem[size]; //numero di annunci possibili
+        ProfiloCasa.CustomItemRecensione[] items = new ProfiloCasa.CustomItemRecensione[size]; //numero di annunci possibili
         for (int i = 0; i < items.length; i++) {
             //mi prendo il riferimento all'annuncio
             RecensioneCasa rec= listaRecensioniCasa.get(i);
 
-            items[i] = new ProfiloCasa.CustomItem();
+            items[i] = new ProfiloCasa.CustomItemRecensione();
             items[i].recensore = rec.getRecensore();
             items[i].descrizione= rec.getDescrizione();
             items[i].dataRec= rec.getDataRevisione();
