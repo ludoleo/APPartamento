@@ -57,9 +57,9 @@ public class ProfiloProprietario extends AppCompatActivity {
     private static final int IMAG_REQUEST = 1000;
     private static final int PERMISSION_CODE = 1001;
 
-    Button cambiaImmagine, b_nuovaRecensioneProp;
+    Button  b_nuovaRecensioneProp;
     CircleImageView immagineProp;
-    TextView text_nomeP, text_cognomeP, text_emailP;
+    TextView text_nomeP, text_cognomeP;
     StorageReference storageReference;
 
     List<RecensioneProprietario> listaRecensioniProprietario;
@@ -107,8 +107,8 @@ public class ProfiloProprietario extends AppCompatActivity {
             }
         });
 
-        cambiaImmagine = findViewById(R.id.immagineProfiloProp);
-        cambiaImmagine.setOnClickListener(new View.OnClickListener() {
+        immagineProp = findViewById(R.id.immagineProfiloProp);
+        immagineProp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -260,8 +260,6 @@ public class ProfiloProprietario extends AppCompatActivity {
 
                         text_nomeP.setText(proprietario.getNome());
                         text_cognomeP.setText(proprietario.getCognome());
-                        text_emailP.setText(proprietario.getEmail());
-                        // immagineprop.setImageURI(convertiURI());
                     }
                 }
             }
