@@ -200,6 +200,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                                     }
 
                                 }
+                                aggiornaListViewCoinquilini();
                             }
                             @Override
                             public void onCancelled(DatabaseError databaseError) {
@@ -281,10 +282,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 
         riferimentoCasa();
         //SELEZIONO LE SEDI PRINCIPALI
-
         aggiungiMarker(gmap);
-
-
 
         gmap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -486,10 +484,10 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                         (TextView)rowView.findViewById(R.id.tv_coinqi_nome);
                 nome_coinqui.setText(item.nome);
                 TextView rating_coinqui =
-                        (TextView)rowView.findViewById(R.id.descrizioneRec);
+                        (TextView)rowView.findViewById(R.id.tv_coinqi_rating);
                 rating_coinqui.setText(String.format("%.2f" ,item.rating));
                 TextView laurea_coinqui =
-                        (TextView) rowView.findViewById(R.id.dataRec);
+                        (TextView) rowView.findViewById(R.id.tv_coinqi_indirizzoLaurea);
                 laurea_coinqui.setText(item.indirizzoLaurea);
 
                 return rowView;
