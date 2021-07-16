@@ -51,6 +51,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -71,6 +72,7 @@ public class ProfiloStudente extends AppCompatActivity {
 
     List<RecensioneStudente> listaRecensioniUtente;
     //LO STUDENTE PU0' ESSERE INQUILINO
+    List<Inquilino> listaInquilini;
     Inquilino inquilino;
      String id_inquilino = "";
      String nomeCasa = "";
@@ -152,6 +154,7 @@ public class ProfiloStudente extends AppCompatActivity {
             //PRENDO L'ID_UTENTE
             idUtente = getIntent().getExtras().getString("idUtente");
             //VISIBILITA
+            b_nuovaRecensione.setVisibility(View.GONE);
             rimuoviInquilino.setVisibility(View.GONE);
             text_casaProfiloUtente.setVisibility(View.GONE);
             tv_profilo_nome_casa.setVisibility(View.GONE);
@@ -221,13 +224,15 @@ public class ProfiloStudente extends AppCompatActivity {
     //METODO CHE DISATTIVA IL PULSANTE SE LO STUDENTE NON E' UN INQUILINO
     private void studentIsInquilino(String email) {
         //PRENDO TUTTI GLI INQUILINI
+        listaInquilini = new LinkedList<>();
         myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot annunciSnapshot: dataSnapshot.getChildren()) {
                     //PER OGNI INQUILINO
                     Inquilino inqui = annunciSnapshot.getValue(Inquilino.class);
-                                //VALUTO SE LO STUDENTE E' ATTUALMENTE INQUILINO IN QUALCHE CASA
+                    listaInquilini.add(inqui);
+                    //VALUTO SE LO STUDENTE E' ATTUALMENTE INQUILINO IN QUALCHE CASA
                     if(inqui.getStudente().compareTo(email)==0 && inqui.getDataFine()==0){
                         id_inquilino = annunciSnapshot.getKey();
                         inquilino = inqui;
@@ -237,10 +242,15 @@ public class ProfiloStudente extends AppCompatActivity {
                         tv_profilo_nome_casa.setText(nomeCasa);
                         tv_profilo_nome_casa.setVisibility(View.VISIBLE);
                         //SE SEI PROPRIETARIO VI E' UN BUTTON PER TOGLIERTI COME INQUILINO
-                        if(user.getEmail().compareTo(inqui.getProprietario())==0){
+                        if(user!=null && user.getEmail().compareTo(inqui.getProprietario())==0){
                             rimuoviInquilino.setVisibility(View.VISIBLE);
                         }
                     }
+                }
+                //VALUTO SE L'USER E' STATO UN SUO COINQUILINO
+                if(user!=null){
+                    if(userIsCoinquilino())
+                        b_nuovaRecensione.setVisibility(View.VISIBLE);
                 }
             }
             @Override
@@ -248,6 +258,7 @@ public class ProfiloStudente extends AppCompatActivity {
             }
         });
     }
+
     // PERMESSI PT2
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -322,13 +333,6 @@ public class ProfiloStudente extends AppCompatActivity {
 
             case R.id.home:
                 startActivity(new Intent(ProfiloStudente.this, Home.class));
-                return true;
-                //attenzione al pulsante la mia casa-------------
-                //TODO DA SPOSTARE
-            case R.id.la_mia_casa:
-                Intent intent = new Intent(this, ProfiloCasa.class);
-                intent.putExtra("idStudente", idUtente);
-                startActivity(intent);
                 return true;
 
             case R.id.modifica_profilo_studente:
@@ -409,6 +413,23 @@ public class ProfiloStudente extends AppCompatActivity {
         Intent i = new Intent (this, ProfiloCasa.class);
         i.putExtra("nomeCasa",nomeCasa);
         startActivity(i);
+    }
+    private boolean userIsCoinquilino() {
+        boolean isCoinquilino = false;
+        for(Inquilino inq : listaInquilini){
+            //SE L'USER E' STATO COINQUILINO
+            if(inq.getStudente().compareTo(user.getEmail())==0 && inq.getDataFine()>0){
+                for(Inquilino inq2 : listaInquilini){
+                    //SE LO STUDENTE DEL PROFILO E' STATO UN COINQUILONO
+                    if(inq2.getStudente().compareTo(studente.getEmail())==0){
+                        //SE DELLA STESSA CASA E SE E' NON LO E' PIU'
+                        if(inq.getCasa().compareTo(inq2.getCasa())==0 && inq.getDataFine()>0)
+                            isCoinquilino = true;
+                    }
+                }
+            }
+        }
+        return isCoinquilino;
     }
 }
 
