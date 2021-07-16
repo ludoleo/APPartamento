@@ -73,7 +73,6 @@ public class ProfiloProprietario extends AppCompatActivity {
     private List<Casa> listaCase = new ArrayList<>();
 
     ListView listViewCase, listViewRecensioni;
-
     Proprietario proprietario;
 
 
