@@ -1,4 +1,5 @@
 
+
 package com.example.myapplication.profilo;
 
 import androidx.annotation.NonNull;
@@ -51,7 +52,7 @@ public class ListaRecensioniPossibili extends AppCompatActivity {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
                 } else {
-                        //SONO UN PROPRIETARIO E POSSO RECENSIRE SOLO STUDENTI
+                    //SONO UN PROPRIETARIO E POSSO RECENSIRE SOLO STUDENTI
                     if (task.getResult().getValue() == null) {
 
                         //SONO UNO STUDENTE E POSSO RECENSIRE UN PROPRIETARIO, UNA CASA O UNO STUDENTE
