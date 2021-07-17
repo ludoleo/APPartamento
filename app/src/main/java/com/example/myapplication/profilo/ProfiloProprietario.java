@@ -58,7 +58,7 @@ public class ProfiloProprietario extends AppCompatActivity {
     private static final int IMAG_REQUEST = 1000;
     private static final int PERMISSION_CODE = 1001;
 
-    Button  b_nuovaRecensioneProp;
+    Button  b_nuovaRecensioneProp, b_nuovaCasa;
     CircleImageView immagineProp;
     TextView text_nomeP, text_cognomeP;
     StorageReference storageReference;
@@ -76,6 +76,7 @@ public class ProfiloProprietario extends AppCompatActivity {
     ListView listViewCase, listViewRecensioni;
     Proprietario proprietario;
 
+    //todo va controllato se sono nel mio profilo o se sto vedendo il profilo del proprietario x
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +85,15 @@ public class ProfiloProprietario extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
+        user = mAuth.getCurrentUser(); //potrebbe anche essere loggato uno studente
         myRef = database.getReference();
         immagineProp = findViewById(R.id.immagineProfiloProp);
+        idUtente = getIntent().getExtras().getString("idProprietario");
+
         //STORAGE
         storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference profileRefer = storageReference.child("Proprietari/"+user.getUid()+"/profile.jpg");
+        //TODO sistemare gli id in base al profilo se si è loggati o se si è solo visitatori
+        StorageReference profileRefer = storageReference.child("Proprietari/"+idUtente+"/profile.jpg");
 
         profileRefer.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -135,7 +139,9 @@ public class ProfiloProprietario extends AppCompatActivity {
         listaRecensioniProprietario = new ArrayList<>();
 
         b_nuovaRecensioneProp = findViewById(R.id.b_nuovaRecensioneProp);
-        idUtente = getIntent().getExtras().getString("idUtente");
+        b_nuovaCasa = findViewById(R.id.aggiungiNuovaCasa);
+        b_nuovaCasa.setVisibility(View.GONE);
+        //TODO controllo se l'utente loggato è il proprietario di quel profilo e allora setto la visibilità del bottono
 
         myRef.child("Recensioni_Proprietario").child(idUtente).addValueEventListener(new ValueEventListener() {
             @Override
@@ -163,7 +169,6 @@ public class ProfiloProprietario extends AppCompatActivity {
         });
 
         //TODO aggiungere controllo se esiste un utente loggato o no e prendere l'id utente o tramite intent o tramite user
-        idUtente = getIntent().getExtras().getString("idProprietario");
         initUI(idUtente);
 
     }
@@ -229,7 +234,6 @@ public class ProfiloProprietario extends AppCompatActivity {
     private void initUI(String idUtente) {
 
         proprietario = null;
-        Log.i(TAG, "utenteloggato "+user.getUid());
 
         myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
             @Override
@@ -256,7 +260,9 @@ public class ProfiloProprietario extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot annData: dataSnapshot.getChildren()) {
                     Casa c = annData.getValue(Casa.class);
-                    if (c.getProprietario().compareTo(user.getUid()) == 0) {
+                    //ho sotituito al compareTo(user.getUid()) direttamente l'id passato con intent
+
+                    if (c.getProprietario().compareTo(idUtente) == 0) {
                         Log.i(TAG, "casa: " + c.getNomeCasa() + " " + c.getIndirizzo());
                         listaCase.add(c);
                     }

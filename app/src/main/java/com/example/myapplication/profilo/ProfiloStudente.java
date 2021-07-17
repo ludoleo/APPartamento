@@ -93,9 +93,13 @@ public class ProfiloStudente extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         myRef = database.getReference();
         immagineStudente = findViewById(R.id.immagineProfiloStud);
-        //STORAGE
+
+        //PRENDO L'ID_UTENTE
+        idUtente = getIntent().getExtras().getString("idStudente");
+
+        //STORAGE---- e se sono loggato come proprietario e vado su profilo studente?????? userid mi prende il proprietario
         storageReference = FirebaseStorage.getInstance().getReference();
-        StorageReference profileRef = storageReference.child("Studenti/"+user.getUid()+"/profile.jpg");
+        StorageReference profileRef = storageReference.child("Studenti/"+idUtente+"/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
         @Override
         public void onSuccess(Uri uri) {
@@ -146,8 +150,7 @@ public class ProfiloStudente extends AppCompatActivity {
             //INIZIALIZZO I BOTTONI
             b_nuovaRecensione = (Button) findViewById(R.id.b_nuovaRecensione);
             rimuoviInquilino = (Button) findViewById(R.id.b_rimuoviInquilino);
-            //PRENDO L'ID_UTENTE
-            idUtente = getIntent().getExtras().getString("idUtente");
+
             //VISIBILITA
             b_nuovaRecensione.setVisibility(View.GONE);
             rimuoviInquilino.setVisibility(View.GONE);

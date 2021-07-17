@@ -48,14 +48,14 @@ public class Home extends AppCompatActivity {
     private void vaiProfiloProprietario(String idUtente) {
 
         Intent intent = new Intent(this, ProfiloProprietario.class);
-        intent.putExtra("idUtente", idUtente);
+        intent.putExtra("idProprietario", idUtente);
         startActivity(intent);
     }
 
     private void vaiProfiloStudente(String idUtente) {
 
         Intent intent = new Intent(this, ProfiloStudente.class);
-        intent.putExtra("idUtente", idUtente);
+        intent.putExtra("idStudente", idUtente);
         startActivity(intent);
     }
 

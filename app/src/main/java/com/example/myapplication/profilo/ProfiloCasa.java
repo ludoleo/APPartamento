@@ -513,7 +513,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     public void profiloProprietario(View view) {
 
         Intent intent = new Intent(this, ProfiloProprietario.class);
-        intent.putExtra("idUtente", proprietario.getIdUtente());
+        intent.putExtra("idProprietario", proprietario.getIdUtente());
         startActivity(intent);
 
     }
