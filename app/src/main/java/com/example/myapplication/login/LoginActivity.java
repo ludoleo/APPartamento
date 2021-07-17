@@ -480,7 +480,6 @@ public class LoginActivity extends AppCompatActivity {
                         myRef.child("Token").child(mAuth.getUid()).setValue(token);
                         // Log and toast
                         Log.d(TAG, "Il token è: "+token);
-                        Toast.makeText(LoginActivity.this, token, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
