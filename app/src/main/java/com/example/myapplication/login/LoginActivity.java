@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        this.setTitle("APPartamento");
+        this.setTitle("UNIAffitto");
 
         mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -265,14 +265,14 @@ public class LoginActivity extends AppCompatActivity {
     private void vaiProfiloProprietario(String idUtente) {
 
         Intent intent = new Intent(this, ProfiloProprietario.class);
-        intent.putExtra("idUtente", idUtente);
+        intent.putExtra("idProprietario", idUtente);
         startActivity(intent);
     }
 
     private void vaiProfiloStudente(String idUtente) {
 
         Intent intent = new Intent(this, ProfiloStudente.class);
-        intent.putExtra("idUtente", idUtente);
+        intent.putExtra("idStudente", idUtente);
         startActivity(intent);
     }
 

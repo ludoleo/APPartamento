@@ -209,7 +209,7 @@ public class ProfiloProprietario extends AppCompatActivity {
     }
 
     private void uploadImageToFirebase(Uri imageUri) {
-        // upload image to firebaseStorage
+        // upload image to firebaseStorage-----------------
         final StorageReference fileRef = storageReference.child("Proprietari/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override

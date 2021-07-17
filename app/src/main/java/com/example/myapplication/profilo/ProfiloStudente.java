@@ -157,8 +157,9 @@ public class ProfiloStudente extends AppCompatActivity {
             text_casaProfiloUtente.setVisibility(View.GONE);
             tv_profilo_nome_casa.setVisibility(View.GONE);
             tv_primaEsperienza.setVisibility(View.GONE);
-            //RIFERIMENTO ALL'UTENTE
-            idUtente = getIntent().getExtras().getString("idUtente");
+            //RIFERIMENTO ALL'UTENTE---c'è già su, ne dovrebbe bastare uno
+
+           // idUtente = getIntent().getExtras().getString("idUtente");
 
             myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
                 @Override

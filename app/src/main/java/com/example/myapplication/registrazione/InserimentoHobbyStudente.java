@@ -81,7 +81,7 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
                 child("hobby").setValue(itemSelected);
 
         Intent intent = new Intent(this, ProfiloStudente.class);
-        intent.putExtra("idUtente", idUtente);
+        intent.putExtra("idStudente", idUtente);
         startActivity(intent);
 
     }

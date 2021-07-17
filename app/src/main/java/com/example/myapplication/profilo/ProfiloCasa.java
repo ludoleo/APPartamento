@@ -168,7 +168,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 
         b_aggiungiAnnuncio = (Button) findViewById(R.id.button_aggiungiAnnuncio);
         b_aggiungiRecensione = (Button) findViewById(R.id.button_aggiungiRecensione);
-        //lirendo visibili solo al proprietario loggayo
+        //lirendo visibili solo al proprietario loggato
         b_aggiungiAnnuncio.setVisibility(View.GONE);
        // b_aggiungiRecensione.setVisibility(View.GONE);
 
@@ -308,14 +308,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     private void recensioniCasa(View v){
 
     }
-    /*
-        //METODO PER ANDARE SUL PROFILO DEL PROPRIETARIO
-    private void profiloProprietario(View v){
 
-
-    }
-
-     */
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
