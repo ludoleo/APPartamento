@@ -46,7 +46,7 @@ public class DBHelper extends SQLiteOpenHelper{
         contentValues.put("descrizione",descrizione);
         contentValues.put("valutazione",valutazione);
         contentValues.put("zona",zona);
-        Cursor cursor = db.rawQuery("Select * from Userdetails where name = ?",new String[] {titolo});
+        Cursor cursor = db.rawQuery("Select * from Userdetails where titolo = ?",new String[] {titolo});
         if (cursor.getCount()>0){
         long result = db.update("Userdetails",contentValues,"titolo=?",new String[] {titolo});
         if(result== -1){
@@ -61,7 +61,7 @@ public class DBHelper extends SQLiteOpenHelper{
 }
     public Boolean deletedata (String titolo){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("Select * from Userdetails where name = ?",new String[] {titolo});
+        Cursor cursor = db.rawQuery("Select * from Userdetails where titolo= ?",new String[] {titolo});
         if (cursor.getCount()>0){
             long result = db.delete("Userdetails","titolo = ?",new String[] {titolo});
             if(result== -1){
@@ -76,7 +76,7 @@ public class DBHelper extends SQLiteOpenHelper{
     }
     public Cursor getdata (){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("Select * from Userdetails where name = ?",null);
+        Cursor cursor = db.rawQuery("Select * from Userdetails" ,null);
        return cursor;
     }
 }

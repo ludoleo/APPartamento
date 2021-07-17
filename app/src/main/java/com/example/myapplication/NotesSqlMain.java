@@ -76,6 +76,7 @@ public class NotesSqlMain extends AppCompatActivity {
                     Toast.makeText(NotesSqlMain.this,"No Entry Exists",Toast.LENGTH_SHORT).show();
                     return;
                 }
+                else{
                 StringBuffer buffer = new StringBuffer();
                 while (res.moveToNext()){
                   buffer.append("titolo :"+res.getString(0)+"\n");
@@ -83,12 +84,14 @@ public class NotesSqlMain extends AppCompatActivity {
                     buffer.append("valutazione :"+res.getString(2)+"\n");
                     buffer.append("zona :"+res.getString(3)+"\n\n");
 
+
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(NotesSqlMain.this);
                 builder.setCancelable(true);
                 builder.setTitle("Note visita");
                 builder.setMessage(buffer.toString());
                 builder.show();
+            }
             }
         });
 
