@@ -37,19 +37,21 @@ public class ListaRecensioni extends AppCompatActivity {
 
 
     List<Inquilino> listaInquilini;
-    List<Studente> listaStudenti;
 
     List<Casa> caseDaRecensire;
-    List<Studente> studentiDaRecensire;
+    List<Inquilino> studentiDaRecensire;
     List<Proprietario> proprietariDaRecensiore;
     List <RecensioneCasa> recensioniCasa;
     List <RecensioneStudente> recensioniStudenti;
     List <RecensioneProprietario> recensioniProprietario;
 
+    //GESTIONE FIREBASE
     FirebaseDatabase database;
     DatabaseReference myRef;
     FirebaseAuth mAuth;
     FirebaseUser user;
+    //VARIABILI DI CONTROLLO
+    boolean isProprietario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class ListaRecensioni extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         myRef = database.getReference();
 
+        isProprietario = false;
         //INIZIALIZZO LE LISTVIEW
         lv_recensioni_possibili_casa = (ListView) findViewById(R.id.lv_recensioni_possibili_casa);
         lv_recensioni_possibili_proprietario = (ListView) findViewById(R.id.lv_recensioni_possibili_proprietario);
@@ -76,7 +79,6 @@ public class ListaRecensioni extends AppCompatActivity {
         proprietariDaRecensiore = new LinkedList<>();
         studentiDaRecensire = new LinkedList<>();
         listaInquilini = new LinkedList<>();
-        listaStudenti = new LinkedList<>();
 
         //PRENDO TUTTI GLI STUDENTI E GLI INQUILINI
         myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
@@ -86,13 +88,6 @@ public class ListaRecensioni extends AppCompatActivity {
                     Inquilino i = data.getValue(Inquilino.class);
                     listaInquilini.add(i);
                 }
-                myRef.child("Studenti").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshots) {
-                        for (DataSnapshot dataS : snapshots.getChildren()) {
-                            Studente s = dataS.getValue(Studente.class);
-                            listaStudenti.add(s);
-                        }
                         //CONTROLLO SE L'UTENTE E' UN PROPRIETARIO O UNO STUDENTE
                         database.getReference().child("Utenti")
                                 .child("Studenti")
@@ -104,20 +99,15 @@ public class ListaRecensioni extends AppCompatActivity {
                                     Log.e("firebase", "Error getting data", task.getException());
                                 } else {
                                     //SONO UN PROPRIETARIO E POSSO RECENSIRE SOLO STUDENTI
-                                    if (task.getResult().getValue() == null) {
-                                        //UN PROPRIETARIO PUO RECENSIRE TUTTI GLI STUDENTI CHE SONO STATI IN UN SUA CASA
-                                        //PER OGNI INQUILINO
-                                        for(Inquilino inquilinoProprietario : listaInquilini){
-                                            //CONTROLLO SE HA FATTO PARTE DELLA CASA
-                                        }
-                                        caricaRecensioniStudenti();
-                                        //SONO UNO STUDENTE E POSSO RECENSIRE UN PROPRIETARIO, UNA CASA O UNO STUDENTE
-                                    }else{
-
-                                        caricaRecensioniStudenti();
-                                        caricaRecensioniCase();
-                                        caricaRecensioniProprietari();
-                                    }
+                                    if (task.getResult().getValue() == null)
+                                        isProprietario = true;
+                                }
+                                if(isProprietario)
+                                    caricaRecensioniStudenti();
+                                else{
+                                    caricaRecensioniStudenti();
+                                    caricaRecensioniCase();
+                                    caricaRecensioniProprietari();
                                 }
                             }
                         });
@@ -128,17 +118,64 @@ public class ListaRecensioni extends AppCompatActivity {
 
                     }
                 });
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
     }
-
+    /*
+        LE RECENSIONI SONO RACCOLTE PER RECENSITO
+        SI CERCA DUNQUE PER TUTTE LE RECENSIONI APPARTENENTI A UN INQUILINO E SI VEDE SE E' POSSIBILE RECENSIRLO
+     */
     private void caricaRecensioniStudenti() {
+
+        if(isProprietario){
+            List<Casa> casePropr = new LinkedList<>();
+            List<Inquilino> inquiliniPropr = new LinkedList<>();
+            //SE SONO IL PROPRIETARIO POSSO RECENSIRE TUTTI GLI INQUILINI DELLA MIA CASA
+            myRef.child("Case").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(DataSnapshot data : snapshot.getChildren()){
+                        Casa casa = data.getValue(Casa.class);
+                        //IDENTIFICO LE CASE DEL PROPRIETARIO
+                        if(casa.getProprietario().compareTo(user.getUid())==0){
+                            casePropr.add(casa);
+                        }
+                    }
+                    //TROVO TUTTI I COINQUILINI PRESENTI CHE SONO STATI NELLA CASA
+                    for(Inquilino inquilino : listaInquilini){
+                        for(Casa casa1 : casePropr){
+                            if(inquilino.getCasa().compareTo(casa1.getNomeCasa())==0){
+                                List<RecensioneStudente> recStu = new LinkedList<>();
+                                DatabaseReference dr = database.getReference();
+                                dr.child("Recensioni_Studente").child(inquilino.getStudente()).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        boolean flag = false;
+                                        for(DataSnapshot dataRecensione : snapshot.getChildren()){
+                                            //RECENSIONE SCRITTA NEI CONFRONTI DI UN INQUILINO (AL PEGGIO UNA)
+                                            RecensioneStudente rs = dataRecensione.getValue(RecensioneStudente.class);
+                                            if(rs.getRecensore().compareTo(user.getUid())==0){
+                                                flag = true;
+                                                recensioniStudenti.add(rs);
+                                            }
+                                        }
+                                        //NON HO ANCORA EFFETTUATO UNA RECENSIONE
+                                        if(!flag)
+                                            studentiDaRecensire.add(inquilino);
+                                    }
+                                    //TODO AGGIORNO LE LIST VIEW
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
     }
     private void caricaRecensioniCase(){
     }
