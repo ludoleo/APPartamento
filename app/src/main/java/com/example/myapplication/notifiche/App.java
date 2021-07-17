@@ -21,7 +21,6 @@ public class App extends Application {
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // se ho versione sup a 26, creo il canale
-
             CharSequence nome = getString(R.string.channel_name);
             String descrizione = getString(R.string.channel_description);
             int importanza = NotificationManager.IMPORTANCE_HIGH;
