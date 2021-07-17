@@ -1,10 +1,12 @@
 package com.example.myapplication.profilo;
 
+import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,6 +79,8 @@ public class ProfiloProprietario extends AppCompatActivity {
     ListView listViewCase, listViewRecensioni;
     Proprietario proprietario;
 
+    boolean isUser = false ;
+
     //todo va controllato se sono nel mio profilo o se sto vedendo il profilo del proprietario x
 
     @Override
@@ -89,6 +94,11 @@ public class ProfiloProprietario extends AppCompatActivity {
         myRef = database.getReference();
         immagineProp = findViewById(R.id.immagineProfiloProp);
         idUtente = getIntent().getExtras().getString("idProprietario");
+
+        //profilo utente loggato
+        if(user.getUid().compareTo(idUtente)==0) {
+            isUser = true;
+        }
 
         //STORAGE
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -147,7 +157,6 @@ public class ProfiloProprietario extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 for (DataSnapshot recPropData : datasnapshot.getChildren()) {
-                    // Log.i(TAG, "recensione");
                     RecensioneProprietario rec = recPropData.getValue(RecensioneProprietario.class);
                     listaRecensioniProprietario.add(rec);
                 }
@@ -162,13 +171,11 @@ public class ProfiloProprietario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent l = new Intent(ProfiloProprietario.this, NuovaRecensioneProprietario.class);
-                Log.i(TAG,"VADO IN NUOVA REC PER LO STUDENTE: "+idUtente);
                 l.putExtra("idProprietario",idUtente);
                 startActivity(l);
             }
         });
 
-        //TODO aggiungere controllo se esiste un utente loggato o no e prendere l'id utente o tramite intent o tramite user
         initUI(idUtente);
 
     }
@@ -210,7 +217,7 @@ public class ProfiloProprietario extends AppCompatActivity {
 
     private void uploadImageToFirebase(Uri imageUri) {
         // upload image to firebaseStorage-----------------
-        final StorageReference fileRef = storageReference.child("Proprietari/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
+        final StorageReference fileRef = storageReference.child("Proprietari/"+idUtente+"/profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -422,7 +429,14 @@ public class ProfiloProprietario extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_prop, menu);
+        MenuInflater menuInflater = getMenuInflater();
+
+        menuInflater.inflate(R.menu.menu_prop, menu);
+
+        if(isUser == false) {
+            menu.getItem(R.id.logout).setVisible(false);
+            return true;
+        }
         return true;
     }
 
