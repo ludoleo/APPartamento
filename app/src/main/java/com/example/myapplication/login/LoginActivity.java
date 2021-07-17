@@ -218,7 +218,6 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUIGiaRegistrato(FirebaseUser user) {
 
         getToken();
-
         Log.i(TAG, "Connesso utente già registrato con us e pw "+user.getEmail());
         String idUtente = user.getUid();
 
@@ -476,11 +475,9 @@ public class LoginActivity extends AppCompatActivity {
                             Log.w(TAG, "Fetching FCM registration token failed", task.getException());
                             return;
                         }
-
                         // Get new FCM registration token
                         String token = task.getResult();
                         myRef.child("Token").child(mAuth.getUid()).setValue(token);
-
                         // Log and toast
                         Log.d(TAG, "Il token è: "+token);
                     }

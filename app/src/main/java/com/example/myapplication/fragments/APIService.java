@@ -1,7 +1,6 @@
 package com.example.myapplication.fragments;
 
 import com.example.myapplication.notifiche.Mittente;
-import com.example.myapplication.notifiche.RispostaNotifica;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

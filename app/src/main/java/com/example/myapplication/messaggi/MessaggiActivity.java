@@ -2,7 +2,6 @@ package com.example.myapplication.messaggi;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,19 +20,14 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Chat;
-import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.classi.Utente;
 import com.example.myapplication.fragments.APIService;
 import com.example.myapplication.fragments.MessageAdapter;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.notifiche.Client;
 import com.example.myapplication.notifiche.DatiNotifica;
 import com.example.myapplication.notifiche.Mittente;
-import com.example.myapplication.notifiche.RispostaNotifica;
 import com.example.myapplication.notifiche.Token;
-import com.example.myapplication.profilo.ProfiloCasa;
-import com.example.myapplication.profilo.ProfiloStudente;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
