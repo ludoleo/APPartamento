@@ -483,7 +483,6 @@ public class LoginActivity extends AppCompatActivity {
 
                         // Log and toast
                         Log.d(TAG, "Il token è: "+token);
-                        Toast.makeText(LoginActivity.this, token, Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -26,6 +29,7 @@ import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.Prenotazione;
 import com.example.myapplication.home.Home;
+import com.example.myapplication.notifiche.AlarmBroadcastReceiver;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -434,6 +438,30 @@ public class ProfiloPrenotazione extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
+    }
+
+
+    //crea l'alarm che ricorda la prenotazione confermata----------------------
+
+    public void setAlarm(View view) {
+        Intent intentToFire = new Intent(getApplicationContext() , AlarmBroadcastReceiver.class);
+        intentToFire.setAction(AlarmBroadcastReceiver.ACTION_ALARM);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0 , intentToFire , 0);
+
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        //in millis va settato prima dell'orario della prenotazione confermata
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        //vanno creati gli elementi int di ora minuti e giorno della prenotazione e passati nel set()
+        calendar.set(Calendar.DAY_OF_MONTH, 20);
+        calendar.set(Calendar.MINUTE, 30);
+        //calendar.set();
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), alarmIntent);
+
+        //se devo cancellare un alarm uso alarmManager.cancel(alarmIntent);
 
     }
 }
