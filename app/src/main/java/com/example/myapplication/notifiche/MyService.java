@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.myapplication.R;
+import com.example.myapplication.home.Home;
 import com.example.myapplication.messaggi.ChatActivity;
 import com.example.myapplication.messaggi.MessaggiActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,52 +37,46 @@ public class MyService extends FirebaseMessagingService {
     int idNotifica = 0;
     public static final Integer NOTIFICATION_REQUESTCODE=101;
 
-    SendBirdCall sendBirdCall;
+   // SendBirdCall sendBirdCall;
 
     public MyService() {
     }
+
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         String inviato = remoteMessage.getData().get("sended");
-
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
 
         if(firebaseUser != null && inviato.equals(firebaseUser.getUid()) ) {
             inviaNotifica(remoteMessage);
         }
-
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
             creaNotifica(remoteMessage.getData().toString());
         }
-
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-
             creaNotifica(remoteMessage.getNotification().getBody());
         }
-
-        if (sendBirdCall.handleFirebaseMessageData(remoteMessage.getData())) {
-
+        /*
+         if (sendBirdCall.handleFirebaseMessageData(remoteMessage.getData())) {
         } else {
             // Handle non-SendBirdCall Firebase messages.
         }
+         */
     }
     // Also if you intend on generating your own notifications as a result of a received FCM
     // message, here is where that should be initiated. See sendNotification method below.
-
-    
 
 
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
+        /*
         sendBirdCall.registerPushToken(s, false, e -> {
             if (e == null) {
                 // Succeeded to register push token.
@@ -89,21 +84,16 @@ public class MyService extends FirebaseMessagingService {
                 // Failed to register push token.
             }
         });
-
+        */
         String refreshToken = FirebaseMessaging.getInstance().getToken().toString();
         if(firebaseUser != null ) {
             updateToken(refreshToken);
             }
         }
 
-
-
-
     private void updateToken(String refreshToken) {
 
-
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
         DatabaseReference reference = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference();
         Token token = new Token(refreshToken);
@@ -152,9 +142,11 @@ public class MyService extends FirebaseMessagingService {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
+        NotificationCompat.Builder builder;
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+            builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                     .setContentTitle("Titolo da settare")
                     .setContentText(testo)
@@ -162,12 +154,9 @@ public class MyService extends FirebaseMessagingService {
                     .setAutoCancel(true)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(idNotifica, builder.build());
-            idNotifica++;
         }
         else {
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+            builder = new NotificationCompat.Builder(this)
                     .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                     .setContentTitle("Totolo da settare")
                     .setContentText(testo)
@@ -175,9 +164,9 @@ public class MyService extends FirebaseMessagingService {
                     .setAutoCancel(true)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            notificationManager.notify(idNotifica, builder.build());
-            idNotifica++;
         }
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(idNotifica, builder.build());
+        idNotifica++;
     }
 }
