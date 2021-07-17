@@ -100,16 +100,14 @@
         <activity android:name=".registrazione.RegistrationActivity" />
         <activity android:name=".prenotazione.VisitaVirtuale" />
         <activity android:name=".login.LoginActivity" />
-        <activity
-            android:name=".visitaNote.InserimentoDatiVisita"
-            android:theme="@style/Theme.MyApplication" />
+
         <activity android:name=".bollettaSQL.ImageSQL" />
         <activity android:name=".bollettaSQL.Bolletta_main" />
-        <activity android:name=".visitaNote.NoteVisitaLista" />
-        <activity android:name=".SqlNotemain" />
+
         <activity android:name=".MainActivity" />
+        <activity android:name=".NotesSqlMain"/>
         <activity android:name=".ImmaginiAnnuncio" />
-        <activity android:name=".Notes_Prova.EditNotes" />
+
         <activity
             android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
             android:launchMode="singleTask">

@@ -6,10 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.myapplication.NotesSqlMain;
 import com.example.myapplication.bollettaSQL.ImageSQL;
 import com.example.myapplication.R;
-import com.example.myapplication.visitaNote.InserimentoDatiVisita;
-import com.example.myapplication.visitaNote.NoteVisitaLista;
+
 
 public class ModificaProfilo extends AppCompatActivity {
     Button infopersonali ;
@@ -46,7 +47,7 @@ public class ModificaProfilo extends AppCompatActivity {
         note.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent d = new Intent(ModificaProfilo.this, NoteVisitaLista.class);
+                Intent d = new Intent(ModificaProfilo.this, NotesSqlMain.class);
                 startActivity(d);
             }
         });
@@ -69,9 +70,5 @@ public class ModificaProfilo extends AppCompatActivity {
 
     }
 
-    public void vediNote(View view) {
 
-        Intent intent = new Intent(ModificaProfilo.this, InserimentoDatiVisita.class);
-        startActivity(intent);
-    }
 }
