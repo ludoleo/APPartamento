@@ -427,9 +427,12 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                     if(a.getIdAnnuncio().compareTo(prenotazione.getIdAnnuncio())==0)
                         annuncio = a;
                 }                   //studente, casa, inzio, fine
-                Inquilino inquilino = new Inquilino(emailStudente,annuncio.getIdCasa(),emailProprietario, oggi.getTime(),0);
+                Inquilino inquilino = new Inquilino("",emailStudente,annuncio.getIdCasa(),emailProprietario, oggi.getTime(),0);
                 DatabaseReference inquilinoAggiunto = myRef.child("Inquilini").push();
                 inquilinoAggiunto.setValue(inquilino);
+                String key = inquilinoAggiunto.getKey();
+                //AGGIUNGO L'ID
+                myRef.child(key).child("idInquilino").setValue(key);
                 Intent intent = new Intent(ProfiloPrenotazione.this, Home.class);
                 Toast.makeText(ProfiloPrenotazione.this,"Studente aggiunto come inquilino in casa: "+annuncio.getIdCasa(),Toast.LENGTH_SHORT).show();
                 startActivity(intent);
