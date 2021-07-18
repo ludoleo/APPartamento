@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,9 +70,10 @@ public class ProfiloStudente extends AppCompatActivity {
     //LO STUDENTE PU0' ESSERE INQUILINO
     List<Inquilino> listaInquilini;
     Inquilino inquilino;
-     String id_inquilino = "";
-     String nomeCasa = "";
+    String id_inquilino = "";
+    String nomeCasa = "";
     Studente studente;
+    boolean isUser = false;
 
 
     FirebaseDatabase database;
@@ -97,6 +99,10 @@ public class ProfiloStudente extends AppCompatActivity {
         //PRENDO L'ID_UTENTE
         idUtente = getIntent().getExtras().getString("idStudente");
 
+        //profilo utente loggato
+        if(user.getUid().compareTo(idUtente)==0) {
+            isUser = true;
+        }
         //STORAGE---- e se sono loggato come proprietario e vado su profilo studente?????? userid mi prende il proprietario
         storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference profileRef = storageReference.child("Studenti/"+idUtente+"/profile.jpg");
@@ -289,7 +295,7 @@ public class ProfiloStudente extends AppCompatActivity {
             }
 
     private void UploadImage(Uri imageUri) {
-        final StorageReference fileRef = storageReference.child("Studenti/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
+        final StorageReference fileRef = storageReference.child("Studenti/"+idUtente+"/profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -311,7 +317,15 @@ public class ProfiloStudente extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        MenuInflater menuInflater = getMenuInflater();
+
+        menuInflater.inflate(R.menu.menu, menu);
+
+        if(isUser == false) {
+            menu.getItem(R.id.logout).setVisible(false);
+            menu.getItem(R.id.modifica_profilo_studente).setVisible(false);
+            return true;
+        }
         return true;
     }
 

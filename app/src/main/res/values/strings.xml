@@ -97,20 +97,6 @@
     <string name="mappa">Visualizza mappa</string>
 
 
-    // da modificare
-
-    <string name="empty_message">Non ci sono Team</string>
-    <string name="name_label">Nome</string>
-    <string name="city_label">Città </string>
-    <string name="country_label">Paese</string>
-    <string name="web_label">Sito</string>
-    <string name="create_option">Inserisci Team</string>
-    <string name="save_option">Salva</string>
-    <string name="cancel_option">Annulla</string>
-    <string name="delete_option">Elimina</string>
-    <string name="update_option">Aggiorna</string>
-
-
     <string-array name="hobby">
         <item>Giochi da tavolo</item>
         <item>Scacchi</item>
@@ -185,5 +171,81 @@
     <string name="alarm_notif_title" translatable="false">UNIAffitto</string>
     <string name="alarm_notif_text">Nuova notifica</string>
     <string name="etichetta2">nome</string>
+
+     <string-array name="politoTriennale">
+         <item>Architettura</item>
+         <item>Architecture</item>
+         <item>Design e Comunicazione</item>
+         <item>Design sostenibile per il sistema alimentare</item>
+         <item>Electronic and communications engineering</item>
+         <item>Ingegneria Aereospaziale</item>
+         <item>Ingegneria Biomedica</item>
+         <item>Ingegneria Chimica e alimentare</item>
+         <item>Ingegneria Civile</item>
+         <item>Ingegneria dei Materiali</item>
+         <item>Ingegneria del Cinema e dei mezzi di comunicazione</item>
+         <item>Ingegneria dell'autoveicolo</item>
+         <item>Automotive engineering</item>
+         <item>Ingegneria della produzione industriale</item>
+         <item>Ingegneria Edile</item>
+         <item>Ingegneria Elettronica</item>
+         <item>Ingegneria Elettrica</item>
+         <item>Ingegneria Energetica</item>
+         <item>Ingegneria Fisica</item>
+         <item>Ingegneria Gestionale L-8</item>
+         <item>Ingegneria Gestionale L-9</item>
+         <item>Ingegneria Informatica</item>
+         <item>Computer Engineering</item>
+         <item>Ingegneria Meccanica</item>
+         <item>Mechanica Engineering</item>
+         <item>Ingegneria per l'ambiente e il territorio</item>
+         <item>Matematica per l'ingegneria</item>
+         <item>Pianificazione territoriale, urbanistica e paesaggistico-ambientale</item>
+         <item>Tecnologie per l'industria manifatturiera</item>
+</string-array>
+
+    <string-array name="politoMagistrale">
+        <item>Architettura Costruzione Città</item>
+        <item>Architecture Construction City</item>
+        <item>Architettura per il patrimonio</item>
+        <item>Architecture for heritage</item>
+        <item>Architettura per la sostenibilità</item>
+        <item>Architecture for sustainability</item>
+        <item>Automotive Engineering</item>
+        <item>Communications and computer networks engineering</item>
+        <item>Data science and engineering</item>
+        <item>Design sismico</item>
+        <item>Economia dell'ambiente,della cultura e del territorio</item>
+        <item>Geografia e scienze territoriali</item>
+        <item>ICT for smart societies</item>
+        <item>Ingengeria Aereospaziale</item>
+        <item>Ingegneria Biomedica</item>
+        <item>Ingegneria Chimica e dei processi sostenibili</item>
+        <item>Ingegneria Civile</item>
+        <item>Ingegneria dei Materiali</item>
+        <item>Ingegneria del Cinema e dei mezzi di comunicazione</item>
+        <item>Ingegneria della produzione industriale e dell'innovazione tecnologica</item>
+        <item>Ingegneria Edile</item>
+        <item>Ingegneria Elettronica</item>
+        <item>Building Engineering</item>
+        <item>Ingegneria Elettrica</item>
+        <item>Ingegneria Energetica e Nucleare</item>
+        <item>Ingegneria Fisica</item>
+        <item>Ingegneria Gestionale </item>
+        <item>Engineering and Management</item>
+        <item>Ingegneria Informatica</item>
+        <item>Computer Engineering</item>
+        <item>Ingegneria Meccanica</item>
+        <item>Mechanica Engineering</item>
+        <item>Ingegneria per l'ambiente e il territorio</item>
+        <item>Ingegneria Matematica</item>
+        <item>Pianificazione territoriale, urbanistica e paesaggistico-ambientale</item>
+        <item>Tecnologie per l'industria manifatturiera</item>
+        <item>Mechatronic engineering</item>
+        <item>Petroleum and minig engineering</item>
+        <item>Physics of complex system</item>
+        <item>Fisica dei sistemi complessi</item>
+
+    </string-array>
 
 </resources>
