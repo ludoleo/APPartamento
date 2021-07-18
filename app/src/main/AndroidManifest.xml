@@ -20,6 +20,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera.front" />
     <uses-feature android:name="android.hardware.camera.front.autofocus" />
+    <uses-feature android:name="android.hardware.camera2.full" />
 
     <application
         android:allowBackup="true"
@@ -29,7 +30,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".profilo.ListaRecensioni"></activity>
+        <activity android:name=".Qrcode"></activity>
+        <activity android:name=".AnnBachecapdf" />
+        <activity android:name=".profilo.ListaRecensioni" />
         <activity android:name=".prenotazione.ProfiloPrenotazione" />
         <activity android:name=".prenotazione.LeMiePrenotazioni" />
         <activity android:name=".ricercalloggio.FiltriRicerca" />
@@ -85,6 +88,10 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="barcode" />
+
 
         <activity android:name=".messaggi.ChatActivity" />
         <activity android:name=".profilo.ModificaInfoPersonali" />
@@ -100,14 +107,11 @@
         <activity android:name=".registrazione.RegistrationActivity" />
         <activity android:name=".prenotazione.VisitaVirtuale" />
         <activity android:name=".login.LoginActivity" />
-
         <activity android:name=".bollettaSQL.ImageSQL" />
         <activity android:name=".bollettaSQL.Bolletta_main" />
-
         <activity android:name=".MainActivity" />
-        <activity android:name=".NotesSqlMain"/>
+        <activity android:name=".NotesSqlMain" />
         <activity android:name=".ImmaginiAnnuncio" />
-
         <activity
             android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
             android:launchMode="singleTask">

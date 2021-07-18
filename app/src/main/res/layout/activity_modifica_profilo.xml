@@ -21,10 +21,10 @@
         android:text="@string/Bottone3" />
 
     <Button
-        android:id="@+id/RecProfile"
+        android:id="@+id/mod_prof_qrcode"
         android:layout_width="match_parent"
         android:layout_height="72dp"
-        android:text="RECENSIONI" />
+        android:text="QR CODE" />
 
     <TextView
         android:id="@+id/textView6"
@@ -43,12 +43,6 @@
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:text="NOTE SULLE VISITE" />
-
-    <Button
-        android:id="@+id/noteInserite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Vedi Note inserite" />
 
     <TextView
         android:id="@+id/textView7"

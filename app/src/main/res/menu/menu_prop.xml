@@ -12,6 +12,10 @@
             android:id="@+id/home"
             android:title="@string/home"
             app:showAsAction="never" />
+    <item
+        android:id="@+id/annuncioBacheca"
+        android:title="Crea annuncio per bacheca"
+        app:showAsAction="never" />
 
 
 </menu>
