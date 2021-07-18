@@ -302,6 +302,6 @@ public class ListaRecensioni extends AppCompatActivity {
             });
         }
     }
-    // ALL'INTERNO DELL'ACTIVITY SONO NECCESSARI DIVERSI CUSTOM ITEM
+    // ALL'INTERNO DELL'ACTIVITY SONO NECCESSARI DIVERSI CUSTOM ITEMS
 
 }
