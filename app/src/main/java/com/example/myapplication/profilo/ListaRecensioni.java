@@ -5,10 +5,15 @@ package com.example.myapplication.profilo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
@@ -28,18 +33,30 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class ListaRecensioni extends AppCompatActivity {
+
+    private static final int RECENSIONE_CASA = 0;
+    private static final int RECENSIONE_STUDENTE = 1;
+    private static final int RECENSIONE_PROPRIETARIO = 2;
 
     ListView lv_recensioni_possibili_casa, lv_recensioni_possibili_proprietario, lv_recensioni_possibili_studente,
                 lv_recensioni_effettuate_casa, lv_recensioni_effettuate_proprietario, lv_recensioni_effettuate_studente;
 
-
+    //TUTTI I RIFERIMENTI AGLI INQUILINI
     List<Inquilino> listaInquilini;
+    //E' IL CASO DI MAPPARE L'OGGETTO DA RECENSIRE ED IL RISPETTIVO INQUILINO
     List<Inquilino> inquiliniUser;
-
+    //MAPPING PER EFFETTUARE UNA RECENSIONE
+    Map<Inquilino,Inquilino> mapInquilino;
+    Map<Casa,Inquilino> mapCasa;
+    Map<Proprietario,Inquilino> mapProprietario;
+    //VARIABILI LIST
     List<Casa> casaDaRecensire;
     List<Inquilino> studentiDaRecensire;
     List<Proprietario> proprietariDaRecensiore;
@@ -82,7 +99,10 @@ public class ListaRecensioni extends AppCompatActivity {
         studentiDaRecensire = new LinkedList<>();
         listaInquilini = new LinkedList<>();
         inquiliniUser = new LinkedList<>();
-
+        //INIZIALIZZO LE MAPPE
+        mapInquilino = new HashMap<>();
+        mapProprietario = new HashMap<>();
+        mapCasa = new HashMap<>();
         //PRENDO TUTTI GLI STUDENTI E GLI INQUILINI
         myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
             @Override
@@ -167,6 +187,9 @@ public class ListaRecensioni extends AppCompatActivity {
                             }
                         }
                     }
+                    // RIEMPIO LE LISTVIEW
+                    fillListViewRecensioniStudenti();
+                    fillListViewStudentiDaRecensire();
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
@@ -222,9 +245,15 @@ public class ListaRecensioni extends AppCompatActivity {
                                                 recensioniStudenti.add(rs);
                                             }else{ //SE LO DEVO ANCORA RECENSIRE
                                                 studentiDaRecensire.add(c);
+                                                //MAPPO L'INQUILINO DA RECENSIRE (ASSOCIO L'USER INQUILINO CON L'INQUILINO DA RECENSIRE
+                                                mapInquilino.put(c,io);
+                                                //POTENZIALMENTE CI POSSONO ESSERE PIU' USER INQUILINI
                                             }
                                         }
                                     }
+                                    //RIEMPIO LE LISTVIEW
+                                    fillListViewRecensioniStudenti();
+                                    fillListViewStudentiDaRecensire();
                                 }
                             }
                             @Override
@@ -250,14 +279,19 @@ public class ListaRecensioni extends AppCompatActivity {
                                                 for(DataSnapshot dataPropUser : snapshotpro.getChildren()){
                                                     RecensioneProprietario rp = dataPropUser.getValue(RecensioneProprietario.class);
                                                     //SE L'INQUILINO HA VALUTATO IL PROPRIETARIO
-                                                    for(Inquilino c : inquiliniUser){
-                                                        if(rp.getRecensore().compareTo(c.getIdInquilino())==0)
+                                                    for(Inquilino io : inquiliniUser){
+                                                        if(rp.getRecensore().compareTo(io.getIdInquilino())==0)
                                                             recensioniProprietario.add(rp);
                                                         else {
-                                                            if(c.getCasa().compareTo(nc.getNomeCasa())==0 && c.getDataFine()>0)
+                                                            if(io.getCasa().compareTo(nc.getNomeCasa())==0 && io.getDataFine()>0){
                                                                 proprietariDaRecensiore.add(prop);
+                                                                mapProprietario.put(prop,io);
+                                                            }
                                                         }
                                                     }
+                                                    //RIEMPIO LE LISTVIEW
+                                                    fillListViewRecensioniProprietario();
+                                                    fillListViewProprietariDaRecensire();
                                                 }
                                             }
 
@@ -284,10 +318,15 @@ public class ListaRecensioni extends AppCompatActivity {
                                         if(rc.getRecensore().compareTo(c.getIdInquilino())==0)
                                             recensioniCasa.add(rc);
                                         else{
-                                            if(c.getCasa().compareTo(nc.getNomeCasa())==0 && c.getDataFine()>0)
+                                            if(c.getCasa().compareTo(nc.getNomeCasa())==0 && c.getDataFine()>0){
                                                 casaDaRecensire.add(nc);
+                                                mapCasa.put(nc,c);
+                                            }
                                         }
                                     }
+                                    //RIEMPIO LE LISTVIEW
+                                    fillListViewRecensioniCase();
+                                    fillListViewCaseDaRecensire();
                                 }
                             }
                             @Override
@@ -302,6 +341,162 @@ public class ListaRecensioni extends AppCompatActivity {
             });
         }
     }
-    // ALL'INTERNO DELL'ACTIVITY SONO NECCESSARI DIVERSI CUSTOM ITEMS
+    // ALL'INTERNO DELL'ACTIVITY SONO NECCESSARI DIVERSI CUSTOM ITEMS (UTENTE E CASA)
 
+    //RECENSIONI EFFETTUATE
+    private void fillListViewRecensioniCase() {
+
+        ListaRecensioni.CustomItemRecensione[] items = createItemsRecensione(RECENSIONE_CASA);
+        ArrayAdapter<ListaRecensioni.CustomItemRecensione> ArrayAdapter = new ArrayAdapter<ListaRecensioni.CustomItemRecensione>(
+                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                return getViewNotOptimized(position,convertView,parent); }
+
+            public View getViewNotOptimized(int position, View convertView, ViewGroup par){
+                ListaRecensioni.CustomItemRecensione item = getItem(position); // Rif. alla riga attualmente
+                LayoutInflater inflater =
+                        (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
+                TextView recensore =
+                        (TextView)rowView.findViewById(R.id.nomeautore1);
+                TextView descrizione =
+                        (TextView)rowView.findViewById(R.id.descrizioneRec);
+                recensore.setText(item.recensore);
+                descrizione.setText(item.descrizione);
+                TextView dataRec =
+                        (TextView) rowView.findViewById(R.id.dataRec);
+                dataRec.setText(item.dataRec.toString());
+
+                return rowView;
+            }
+        };
+        lv_recensioni_effettuate_casa.setAdapter(ArrayAdapter);
+    }
+    private void fillListViewRecensioniProprietario() {
+
+        ListaRecensioni.CustomItemRecensione[] items = createItemsRecensione(RECENSIONE_PROPRIETARIO);
+        ArrayAdapter<ListaRecensioni.CustomItemRecensione> ArrayAdapter = new ArrayAdapter<ListaRecensioni.CustomItemRecensione>(
+                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                return getViewNotOptimized(position,convertView,parent); }
+
+            public View getViewNotOptimized(int position, View convertView, ViewGroup par){
+                ListaRecensioni.CustomItemRecensione item = getItem(position); // Rif. alla riga attualmente
+                LayoutInflater inflater =
+                        (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
+                TextView recensore =
+                        (TextView)rowView.findViewById(R.id.nomeautore1);
+                TextView descrizione =
+                        (TextView)rowView.findViewById(R.id.descrizioneRec);
+                recensore.setText(item.recensore);
+                descrizione.setText(item.descrizione);
+                TextView dataRec =
+                        (TextView) rowView.findViewById(R.id.dataRec);
+                dataRec.setText(item.dataRec.toString());
+
+                return rowView;
+            }
+        };
+        lv_recensioni_effettuate_proprietario.setAdapter(ArrayAdapter);
+    }
+    private void fillListViewRecensioniStudenti() {
+        ListaRecensioni.CustomItemRecensione[] items = createItemsRecensione(RECENSIONE_STUDENTE);
+        ArrayAdapter<ListaRecensioni.CustomItemRecensione> ArrayAdapter = new ArrayAdapter<ListaRecensioni.CustomItemRecensione>(
+                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                return getViewNotOptimized(position,convertView,parent); }
+
+            public View getViewNotOptimized(int position, View convertView, ViewGroup par){
+                ListaRecensioni.CustomItemRecensione item = getItem(position); // Rif. alla riga attualmente
+                LayoutInflater inflater =
+                        (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
+                TextView recensore =
+                        (TextView)rowView.findViewById(R.id.nomeautore1);
+                TextView descrizione =
+                        (TextView)rowView.findViewById(R.id.descrizioneRec);
+                recensore.setText(item.recensore);
+                descrizione.setText(item.descrizione);
+                TextView dataRec =
+                        (TextView) rowView.findViewById(R.id.dataRec);
+                dataRec.setText(item.dataRec.toString());
+
+                return rowView;
+            }
+        };
+        lv_recensioni_effettuate_studente.setAdapter(ArrayAdapter);
+    }
+    // CUSTOM ITEMS
+    private static class CustomItemRecensione {
+        public String recensore;
+        public String descrizione;
+        public Date dataRec;
+    }
+    //A SECONDA DEL PARAMETRO RICONOSCE QUALE RECENSIONE STIAMO TRATTANDO
+    private ListaRecensioni.CustomItemRecensione[] createItemsRecensione(int par) {
+
+        int size = 0;
+        switch(par){
+
+            case RECENSIONE_CASA:
+
+                size =recensioniCasa.size();
+                ListaRecensioni.CustomItemRecensione[] itemsCasa = new ListaRecensioni.CustomItemRecensione[size]; //numero di annunci possibili
+                for (int i = 0; i < itemsCasa.length; i++) {
+                    //mi prendo il riferimento all'annuncio
+                    RecensioneCasa rec= recensioniCasa.get(i);
+
+                    itemsCasa[i] = new ListaRecensioni.CustomItemRecensione();
+                    itemsCasa[i].recensore = rec.getRecensore();
+                    itemsCasa[i].descrizione= rec.getDescrizione();
+                    itemsCasa[i].dataRec= rec.getDataRevisione();
+                }
+                return itemsCasa;
+
+            case RECENSIONE_STUDENTE:
+
+                size =recensioniStudenti.size();
+                ListaRecensioni.CustomItemRecensione[] itemsStudente = new ListaRecensioni.CustomItemRecensione[size]; //numero di annunci possibili
+                for (int i = 0; i < itemsStudente.length; i++) {
+                    //mi prendo il riferimento all'annuncio
+                    RecensioneStudente rec= recensioniStudenti.get(i);
+
+                    itemsStudente[i] = new ListaRecensioni.CustomItemRecensione();
+                    itemsStudente[i].recensore = rec.getRecensore();
+                    itemsStudente[i].descrizione= rec.getDescrizione();
+                    itemsStudente[i].dataRec= rec.getDataRevisione();
+                }
+                return itemsStudente;
+
+            case RECENSIONE_PROPRIETARIO:
+
+                size =recensioniStudenti.size();
+                ListaRecensioni.CustomItemRecensione[] itemsProprietario = new ListaRecensioni.CustomItemRecensione[size]; //numero di annunci possibili
+                for (int i = 0; i < itemsProprietario.length; i++) {
+                    //mi prendo il riferimento all'annuncio
+                    RecensioneProprietario rec= recensioniProprietario.get(i);
+
+                    itemsProprietario[i] = new ListaRecensioni.CustomItemRecensione();
+                    itemsProprietario[i].recensore = rec.getRecensore();
+                    itemsProprietario[i].descrizione= rec.getDescrizione();
+                    itemsProprietario[i].dataRec= rec.getDataRevisione();
+                }
+                return itemsProprietario;
+
+            default:
+
+                return null;
+        }
+    }
+
+    private void fillListViewCaseDaRecensire() {
+    }
+    private void fillListViewProprietariDaRecensire() {
+    }
+    private void fillListViewStudentiDaRecensire() {
+    }
 }
