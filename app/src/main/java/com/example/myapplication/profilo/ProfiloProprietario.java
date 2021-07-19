@@ -28,6 +28,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.AnnBachecapdf;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Proprietario;
@@ -454,7 +455,10 @@ public class ProfiloProprietario extends AppCompatActivity {
             case R.id.home:
                 startActivity(new Intent(ProfiloProprietario.this,Home.class));
                 return true;
-
+            case R.id.annuncioBacheca:
+                startActivity(new Intent(ProfiloProprietario.this, AnnBachecapdf.class));
+                finish();
+                return true;
         }
         return false;
     }

@@ -172,40 +172,40 @@
     <string name="alarm_notif_text">Nuova notifica</string>
     <string name="etichetta2">nome</string>
 
-     <string-array name="politoTriennale">
-         <item>Architettura</item>
-         <item>Architecture</item>
-         <item>Design e Comunicazione</item>
-         <item>Design sostenibile per il sistema alimentare</item>
-         <item>Electronic and communications engineering</item>
-         <item>Ingegneria Aereospaziale</item>
-         <item>Ingegneria Biomedica</item>
-         <item>Ingegneria Chimica e alimentare</item>
-         <item>Ingegneria Civile</item>
-         <item>Ingegneria dei Materiali</item>
-         <item>Ingegneria del Cinema e dei mezzi di comunicazione</item>
-         <item>Ingegneria dell'autoveicolo</item>
-         <item>Automotive engineering</item>
-         <item>Ingegneria della produzione industriale</item>
-         <item>Ingegneria Edile</item>
-         <item>Ingegneria Elettronica</item>
-         <item>Ingegneria Elettrica</item>
-         <item>Ingegneria Energetica</item>
-         <item>Ingegneria Fisica</item>
-         <item>Ingegneria Gestionale L-8</item>
-         <item>Ingegneria Gestionale L-9</item>
-         <item>Ingegneria Informatica</item>
-         <item>Computer Engineering</item>
-         <item>Ingegneria Meccanica</item>
-         <item>Mechanica Engineering</item>
-         <item>Ingegneria per l'ambiente e il territorio</item>
-         <item>Matematica per l'ingegneria</item>
-         <item>Pianificazione territoriale, urbanistica e paesaggistico-ambientale</item>
-         <item>Tecnologie per l'industria manifatturiera</item>
-</string-array>
+    <string-array name="politoTriennale">
+        <item>Architettura</item>
+        <item>Architecture</item>
+        <item>Design e Comunicazione</item>
+        <item>Design sostenibile per il sistema alimentare</item>
+        <item>Electronic and communications engineering</item>
+        <item>Ingegneria Aereospaziale</item>
+        <item>Ingegneria Biomedica</item>
+        <item>Ingegneria Chimica e alimentare</item>
+        <item>Ingegneria Civile</item>
+        <item>Ingegneria dei Materiali</item>
+        <item>Ingegneria del Cinema e dei mezzi di comunicazione</item>
+        <item>Ingegneria dell autoveicolo</item>
+        <item>Automotive engineering</item>
+        <item>Ingegneria della produzione industriale</item>
+        <item>Ingegneria Edile</item>
+        <item>Ingegneria Elettronica</item>
+        <item>Ingegneria Elettrica</item>
+        <item>Ingegneria Energetica</item>
+        <item>Ingegneria Fisica</item>
+        <item>Ingegneria Gestionale L-8</item>
+        <item>Ingegneria Gestionale L-9</item>
+        <item>Ingegneria Informatica</item>
+        <item>Computer Engineering</item>
+        <item>Ingegneria Meccanica</item>
+        <item>Mechanica Engineering</item>
+        <item>Ingegneria per l ambiente e il territorio</item>
+        <item>Matematica per l ingegneria</item>
+        <item>Pianificazione territoriale, urbanistica e paesaggistico-ambientale</item>
+        <item>Tecnologie per l industria manifatturiera</item>
+    </string-array>
 
     <string-array name="politoMagistrale">
-        <item>Architettura Costruzione Città</item>
+        <item>Architettura Costruzione Citta</item>
         <item>Architecture Construction City</item>
         <item>Architettura per il patrimonio</item>
         <item>Architecture for heritage</item>
@@ -215,7 +215,7 @@
         <item>Communications and computer networks engineering</item>
         <item>Data science and engineering</item>
         <item>Design sismico</item>
-        <item>Economia dell'ambiente,della cultura e del territorio</item>
+        <item>Economia dell ambiente,della cultura e del territorio</item>
         <item>Geografia e scienze territoriali</item>
         <item>ICT for smart societies</item>
         <item>Ingengeria Aereospaziale</item>
@@ -224,7 +224,7 @@
         <item>Ingegneria Civile</item>
         <item>Ingegneria dei Materiali</item>
         <item>Ingegneria del Cinema e dei mezzi di comunicazione</item>
-        <item>Ingegneria della produzione industriale e dell'innovazione tecnologica</item>
+        <item>Ingegneria della produzione industriale e dell innovazione tecnologica</item>
         <item>Ingegneria Edile</item>
         <item>Ingegneria Elettronica</item>
         <item>Building Engineering</item>
@@ -237,15 +237,61 @@
         <item>Computer Engineering</item>
         <item>Ingegneria Meccanica</item>
         <item>Mechanica Engineering</item>
-        <item>Ingegneria per l'ambiente e il territorio</item>
+        <item>Ingegneria per l ambiente e il territorio</item>
         <item>Ingegneria Matematica</item>
         <item>Pianificazione territoriale, urbanistica e paesaggistico-ambientale</item>
-        <item>Tecnologie per l'industria manifatturiera</item>
+        <item>Tecnologie per l industria manifatturiera</item>
         <item>Mechatronic engineering</item>
         <item>Petroleum and minig engineering</item>
         <item>Physics of complex system</item>
         <item>Fisica dei sistemi complessi</item>
 
     </string-array>
+
+    <string-array name="UnitoTriennale">
+        <item>Amministrazione aziendale</item>
+        <item>Business and Management</item>
+        <item>Economia Aziendale</item>
+        <item>Management dell informazione e della comunicazione aziendale</item>
+        <item>Beni culturali</item>
+        <item>Storia</item>
+        <item>Biotecnologie</item>
+        <item>Chimica e tecnologie chimichee</item>
+        <item>Scienza e tecnologia dei materiali</item>
+        <item>Comunicazione interculturale</item>
+        <item>Innovazione sociale</item>
+        <item>Scienze politiche</item>
+        <item>Scienze strategiche</item>
+        <item>Servizio sociale</item>
+        <item>Consulenza del lavoro</item>
+        <item>Diritto per le imprese e le istituzioni </item>
+        <item>Scienze dell'amministrazione digitale</item>
+        <item>Culture e letterature del mondo moderno</item>
+        <item>Dams</item>
+        <item>Lettere</item>
+        <item>lingue</item>
+        <item>Scienze della comunicazione</item>
+        <item>Dietistica</item>
+        <item>Infermieristica</item>
+        <item>Economia</item>
+        <item>Economia e statistica</item>
+        <item>Infermieristica pediatrica</item>
+        <item>Fisioterapia</item>
+        <item>Tecniche di laboratorio</item>
+        <item>Terapia della neuro psicomotricita</item>
+        <item>Filosofia</item>
+        <item>Fisica</item>
+        <item>Logopedia</item>
+        <item>Ostreticia</item>
+        <item>Tecniche audiometriche</item>
+        <item>Informatica</item>
+        <item>Agraria</item>
+        <item>Matematica</item>
+        <item>Psicologia</item>
+        <item>Scienze della terra</item>
+        <item>Tecniche erboristiche</item>
+
+    </string-array>
+
 
 </resources>

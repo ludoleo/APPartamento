@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.myapplication.NotesSqlMain;
+import com.example.myapplication.Qrcode;
 import com.example.myapplication.bollettaSQL.ImageSQL;
 import com.example.myapplication.R;
 
@@ -15,7 +16,7 @@ import com.example.myapplication.R;
 public class ModificaProfilo extends AppCompatActivity {
     Button infopersonali ;
     Button note;
-    Button recensioni;
+    Button Qrcodebutton;
     Button assistenza;
     Button bolletta;
 
@@ -34,12 +35,12 @@ public class ModificaProfilo extends AppCompatActivity {
             }
         });
 
-        recensioni = findViewById(R.id.RecProfile);
-        recensioni.setOnClickListener(new View.OnClickListener() {
+        Qrcodebutton = findViewById(R.id.mod_prof_qrcode);
+        Qrcodebutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  Intent c = new Intent(ModificaProfilo.this, Notifiche.class);
-                //  startActivity(c);
+                Intent c = new Intent(ModificaProfilo.this, Qrcode.class);
+                 startActivity(c);
             }
         });
 
