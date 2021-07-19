@@ -578,6 +578,7 @@ public class ListaRecensioni extends AppCompatActivity {
                 return null;
         }
     }
+   //TODO CREARE UN OGGETTO ROW CON TRE CAMPI
     private void fillListViewCaseDaRecensire() {
     }
     private void fillListViewProprietariDaRecensire() {
