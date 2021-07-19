@@ -13,7 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.RecensioneStudente;
+import com.example.myapplication.classi.Studente;
 import com.example.myapplication.classi.Utente;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.profilo.ProfiloStudente;
@@ -34,20 +36,12 @@ public class NuovaRecensioneStudente extends AppCompatActivity {
     private static final String TAG = "RECENSIONI STUDENTE";
 
     private EditText recensione;
-
     private TextView mediaRecensione ;
-
     private RatingBar rb_puliziaStud, rb_rispettoLuoghi, rb_socialita;
-
     private float valorePuliziaStud, valoreRispetto, valoreSocialita;
-
     float valutazioneMedia;
-
-    String descrizioneRec, idStudente;
-
-    Boolean flagNomeRecensoreUguale;
-
-    Utente utente;
+    String descrizioneRec, idRecensito;
+    Studente utente;
 
     private FirebaseDatabase database;
     private DatabaseReference myRef;
@@ -66,20 +60,19 @@ public class NuovaRecensioneStudente extends AppCompatActivity {
 
     private void initUI() {
 
+        //INIZIALIZZO
         mediaRecensione = (TextView) findViewById(R.id.mediaRec);
         rb_puliziaStud = findViewById(R.id.rb_puliziaStud);
         rb_rispettoLuoghi = findViewById(R.id.rb_rispettoSpaziComuni);
         rb_socialita = findViewById(R.id.rb_socialita);
-
         recensione = (EditText) findViewById(R.id.et_recensione);
-
-        idStudente = getIntent().getExtras().getString("idStudente");
-
+        //PRENDO L'ID DEL RECENSITO INQUILINO
+        idRecensito = getIntent().getExtras().getString("idRecensito");
+        //DATABASE
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-        flagNomeRecensoreUguale = false;
 
         // Rating Bar per settare il rating
         rb_puliziaStud.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -111,10 +104,8 @@ public class NuovaRecensioneStudente extends AppCompatActivity {
                 Log.i(TAG, "Descrizione rec"+ descrizioneRec);
             }
         });
-
-        Log.i(TAG,"Utente autenticato è :"+user.getEmail()+user.getUid());
-
-        myRef.child("Utenti").child("Studenti").child(idStudente).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        DatabaseReference dr = database.getReference();
+        dr.child("Inquilini").child(idRecensito).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (!task.isSuccessful()) {
@@ -122,100 +113,54 @@ public class NuovaRecensioneStudente extends AppCompatActivity {
                 }
                 else {
                     DataSnapshot utenteDb = task.getResult();
-                    utente = utenteDb.getValue(Utente.class);
-                    Log.i(TAG, "Studente RECENSITO: " + utente);
+                    Inquilino inquilino = utenteDb.getValue(Inquilino.class);
+                    myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for(DataSnapshot dataStud : snapshot.getChildren()){
+                                Studente studente = dataStud.getValue(Studente.class);
+                                if(inquilino.getStudente().compareTo(studente.getEmail())==0){
+                                    utente = studente;
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
         });
-
-    }
+     }
 
     public void nuovaRecensioneStudente(View view) {
 
         descrizioneRec = recensione.getText().toString();
-        //float valutazionemedia = rateValue1;
-        // Data Recensione
         Date data = new Date();
-
-        //controllo sulla descrizione
         if (descrizioneRec.compareTo("") == 0) {
             Toast.makeText(this, "Attenzione aggiungi recensione", Toast.LENGTH_SHORT).show();
             return;
         }
         // recensore e recensito
-        String recensore = user.getUid();
-        String recensito = "Nome Recensito";
-        // controllo recensore/recensito
-        if(recensore==recensito){
-            Toast.makeText(this, "Non puoi scrivere la recensione", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-
-        RecensioneStudente recensioneStudente= new RecensioneStudente(data,descrizioneRec,valorePuliziaStud,valoreRispetto,valoreSocialita,valutazioneMedia,recensore,recensito);
+        String recensore = getIntent().getExtras().getString("idRecensore");;
+        RecensioneStudente recensioneStudente= new RecensioneStudente(data,descrizioneRec,valorePuliziaStud,valoreRispetto,valoreSocialita,valutazioneMedia,recensore,idRecensito);
         //PUSH
-        DatabaseReference recensioneStudenteAggiunta = myRef.child("Recensioni_Studente").child(idStudente).push();
+        DatabaseReference recensioneStudenteAggiunta = myRef.child("Recensioni_Studente").child(idRecensito).push();
         recensioneStudenteAggiunta.setValue(recensioneStudente);
-
-        Log.i(TAG, "Recensione aggiunta da" + user.getUid().toString());
-
-        aggiornoDatiStudente(idStudente);
-
+        aggiornoDatiStudente(utente.getIdUtente());
         pulisciCampi();
-
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
     }
 
     private void aggiornoDatiStudente(String idStudente) {
 
-        //TODO vanno cambiati i dati su firebase
         int numeroRec = utente.getNumRec()+1;
-
-        Log.i(TAG, "valutazione: "+utente.getValutazione()+"-"+utente.getNumRec()+"-"+valutazioneMedia+"-"+numeroRec);
-
         double valutazioneMediaAggiornata = ((utente.getValutazione()*utente.getNumRec())+valutazioneMedia)/numeroRec ;
-
-        Log.i(TAG," valutazione media: "+valutazioneMediaAggiornata+ " nuovo numero rec: "+numeroRec);
-
-
-        utente.setValutazione(valutazioneMediaAggiornata);
-        utente.setNumRec(numeroRec);
-
         myRef.child("Utenti").child("Studenti").child(idStudente).child("numRec").setValue(numeroRec);
         myRef.child("Utenti").child("Studenti").child(idStudente).child("valutazione").setValue(valutazioneMediaAggiornata);
-
-
-    }
-
-    public void controlloRensore(String recensore) {
-
-        myRef.child("Recensioni_Studente").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
-
-                    RecensioneStudente recensionepropFiglio = caseSnapshot.getValue(RecensioneStudente.class);
-
-                    if(recensionepropFiglio.getRecensore().compareTo(recensore)==0) {
-
-                        Toast.makeText(NuovaRecensioneStudente.this,"Recensore già presente contattare l'assistenza",Toast.LENGTH_SHORT).show();
-
-                        cambiaFlag();
-                    }
-                    Log.i(TAG,"recensore è :"+recensionepropFiglio.getRecensore());
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
-
-    private void cambiaFlag() {
-        Log.i(TAG, "Passo dal flag ");
-        flagNomeRecensoreUguale = true;
-        Log.i(TAG, "Passo dal flag "+flagNomeRecensoreUguale.booleanValue());
     }
 
     private void pulisciCampi() {
@@ -224,11 +169,6 @@ public class NuovaRecensioneStudente extends AppCompatActivity {
         rb_puliziaStud.setRating(0);
         rb_rispettoLuoghi.setRating(0);
         rb_socialita.setRating(0);
-
-        Intent intent = new Intent(this, ProfiloStudente.class);
-        intent.putExtra("idStudente",idStudente);
-        startActivity(intent);
-
     }
 }
 

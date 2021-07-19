@@ -6,11 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -365,7 +367,6 @@ public class ListaRecensioni extends AppCompatActivity {
         }
     }
     // ALL'INTERNO DELL'ACTIVITY SONO NECCESSARI DIVERSI CUSTOM ITEMS (UTENTE E CASA)
-
     //RECENSIONI EFFETTUATE
     private void fillListViewRecensioniCase() {
 
@@ -519,6 +520,7 @@ public class ListaRecensioni extends AppCompatActivity {
     private static class CustomItemOggetto {
         //TODO SE POSSIBILE AGGIUNGERE LE FOTO
         public String nome; //ID dell'oggetto da recensire
+        public String recensito;
         public float valutazione;
         public String recensore; //ID dell'oggetto recensore
     }
@@ -539,6 +541,7 @@ public class ListaRecensioni extends AppCompatActivity {
                     itemsCasa[i] = new ListaRecensioni.CustomItemOggetto();
                     itemsCasa[i].recensore = mapCasa.get(ca.getNomeCasa()).getIdInquilino();
                     itemsCasa[i].nome= ca.getNomeCasa();
+                    itemsCasa[i].recensito= ca.getNomeCasa();
                     itemsCasa[i].valutazione = (float)ca.getValutazione();
 
                 }
@@ -554,6 +557,7 @@ public class ListaRecensioni extends AppCompatActivity {
                     itemsStudente[i] = new ListaRecensioni.CustomItemOggetto();
                     itemsStudente[i].recensore = mapInquilino.get(stu.getIdInquilino()).getIdInquilino();
                     itemsStudente[i].nome= mappaInquilini.get(stu.getIdInquilino()).getNome();
+                    itemsStudente[i].recensito= stu.getIdInquilino();
                     itemsStudente[i].valutazione= (float) mappaInquilini.get(stu.getIdInquilino()).getValutazione();
                 }
                 return itemsStudente;
@@ -569,6 +573,7 @@ public class ListaRecensioni extends AppCompatActivity {
                     itemsProprietario[i] = new ListaRecensioni.CustomItemOggetto();
                     itemsProprietario[i].recensore = mapProprietario.get(pro.getIdUtente()).getIdInquilino();
                     itemsProprietario[i].nome= pro.getNome();
+                    itemsProprietario[i].recensito= pro.getIdUtente();
                     itemsProprietario[i].valutazione= (float)pro.getValutazione();
                 }
                 return itemsProprietario;
@@ -580,9 +585,133 @@ public class ListaRecensioni extends AppCompatActivity {
     }
    //TODO CREARE UN OGGETTO ROW CON TRE CAMPI
     private void fillListViewCaseDaRecensire() {
+        ListaRecensioni.CustomItemOggetto[] items = createItemsOggetto(CASA);
+        ArrayAdapter<ListaRecensioni.CustomItemOggetto> ArrayAdapter = new ArrayAdapter<ListaRecensioni.CustomItemOggetto>(
+                this, R.layout.row_utenti_recensione, R.id.nome_utente_lista_rec, items) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                return getViewNotOptimized(position,convertView,parent); }
+
+            public View getViewNotOptimized(int position, View convertView, ViewGroup par){
+                ListaRecensioni.CustomItemOggetto item = getItem(position); // Rif. alla riga attualmente
+                LayoutInflater inflater =
+                        (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.row_utenti_recensione, null);
+                TextView nome =
+                        (TextView)rowView.findViewById(R.id.nome_utente_lista_rec);
+                nome.setText(item.nome);
+                TextView recensito =
+                        (TextView)rowView.findViewById(R.id.id_recensito_lista_rec);
+                recensito.setText(item.recensito);
+                TextView valutazione =
+                        (TextView) rowView.findViewById(R.id.valutazione_utente_lista_rec);
+                valutazione.setText(String.format("%.2f" ,item.valutazione));
+                TextView recensore =
+                        (TextView) rowView.findViewById(R.id.id_recensore_lista_rec);
+                recensore.setText(item.recensore);
+
+                return rowView;
+            }
+        };
+        lv_recensioni_possibili_casa.setAdapter(ArrayAdapter);
+        //---- LISTENER
+        lv_recensioni_possibili_casa.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                CustomItemOggetto item = (CustomItemOggetto) adapterView.getItemAtPosition(pos);
+                //VADO AD EFFETTUARE LA RECENSIONE
+                Intent intent = new Intent(ListaRecensioni.this, RecensioneCasa.class);
+                intent.putExtra("idRecensore",item.recensore);
+                intent.putExtra("idRecensito",item.recensito);
+                startActivity(intent);
+            }
+        });
     }
     private void fillListViewProprietariDaRecensire() {
+
+        ListaRecensioni.CustomItemOggetto[] items = createItemsOggetto(PROPRIETARIO);
+        ArrayAdapter<ListaRecensioni.CustomItemOggetto> ArrayAdapter = new ArrayAdapter<ListaRecensioni.CustomItemOggetto>(
+                this, R.layout.row_utenti_recensione, R.id.nome_utente_lista_rec, items) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                return getViewNotOptimized(position,convertView,parent); }
+
+            public View getViewNotOptimized(int position, View convertView, ViewGroup par){
+                ListaRecensioni.CustomItemOggetto item = getItem(position); // Rif. alla riga attualmente
+                LayoutInflater inflater =
+                        (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.row_utenti_recensione, null);
+                TextView nome =
+                        (TextView)rowView.findViewById(R.id.nome_utente_lista_rec);
+                nome.setText(item.nome);
+                TextView recensito =
+                        (TextView)rowView.findViewById(R.id.id_recensito_lista_rec);
+                recensito.setText(item.recensito);
+                TextView valutazione =
+                        (TextView) rowView.findViewById(R.id.valutazione_utente_lista_rec);
+                valutazione.setText(String.format("%.2f" ,item.valutazione));
+                TextView recensore =
+                        (TextView) rowView.findViewById(R.id.id_recensore_lista_rec);
+                recensore.setText(item.recensore);
+
+                return rowView;
+            }
+        };
+        lv_recensioni_possibili_proprietario.setAdapter(ArrayAdapter);
+        //---- LISTENER
+        lv_recensioni_possibili_proprietario.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                CustomItemOggetto item = (CustomItemOggetto) adapterView.getItemAtPosition(pos);
+                //VADO AD EFFETTUARE LA RECENSIONE
+                Intent intent = new Intent(ListaRecensioni.this, RecensioneProprietario.class);
+                intent.putExtra("idRecensore",item.recensore);
+                intent.putExtra("idRecensito",item.recensito);
+                startActivity(intent);
+            }
+        });
     }
     private void fillListViewStudentiDaRecensire() {
+        ListaRecensioni.CustomItemOggetto[] items = createItemsOggetto(STUDENTE);
+        ArrayAdapter<ListaRecensioni.CustomItemOggetto> ArrayAdapter = new ArrayAdapter<ListaRecensioni.CustomItemOggetto>(
+                this, R.layout.row_utenti_recensione, R.id.nome_utente_lista_rec, items) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                return getViewNotOptimized(position,convertView,parent); }
+
+            public View getViewNotOptimized(int position, View convertView, ViewGroup par){
+                ListaRecensioni.CustomItemOggetto item = getItem(position); // Rif. alla riga attualmente
+                LayoutInflater inflater =
+                        (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.row_utenti_recensione, null);
+                TextView nome =
+                        (TextView)rowView.findViewById(R.id.nome_utente_lista_rec);
+                nome.setText(item.nome);
+                TextView recensito =
+                        (TextView)rowView.findViewById(R.id.id_recensito_lista_rec);
+                recensito.setText(item.recensito);
+                TextView valutazione =
+                        (TextView) rowView.findViewById(R.id.valutazione_utente_lista_rec);
+                valutazione.setText(String.format("%.2f" ,item.valutazione));
+                TextView recensore =
+                        (TextView) rowView.findViewById(R.id.id_recensore_lista_rec);
+                recensore.setText(item.recensore);
+
+                return rowView;
+            }
+        };
+        lv_recensioni_possibili_studente.setAdapter(ArrayAdapter);
+        //---- LISTENER
+        lv_recensioni_possibili_studente.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                CustomItemOggetto item = (CustomItemOggetto) adapterView.getItemAtPosition(pos);
+                //VADO AD EFFETTUARE LA RECENSIONE
+                Intent intent = new Intent(ListaRecensioni.this, RecensioneStudente.class);
+                intent.putExtra("idRecensore",item.recensore);
+                intent.putExtra("idRecensito",item.recensito);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -18,6 +18,7 @@ import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.RecensioneCasa;
 import com.example.myapplication.classi.RecensioneStudente;
 import com.example.myapplication.classi.Studente;
+import com.example.myapplication.home.Home;
 import com.example.myapplication.profilo.ProfiloCasa;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,15 +44,11 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
     Casa casa;
 
     float valutazioneMedia;
-    Boolean flagNomeRecensoreUguale;
-    public DatabaseReference myRef;
-
-    public FirebaseDatabase database;
-    public FirebaseUser user;
-    public FirebaseAuth mAuth;
-
-    String recensore = "";
-
+    //DATABASE
+    DatabaseReference myRef;
+    FirebaseDatabase database;
+    FirebaseUser user;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,17 +65,11 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
         rb_posizione = findViewById(R.id.rb_posizione);
         rb_qualitaPrezzo = findViewById(R.id.rb_qualitaPrezzo);
 
-
-        nomeCasa = getIntent().getExtras().getString("casa");
-        Log.i(TAG,"casa da Intent "+nomeCasa);
-
-        //submit2 = findViewById(R.id.Submit2);
+        nomeCasa = getIntent().getExtras().getString("idRecensito");
         recensione = (EditText) findViewById(R.id.et_recensione);
-
+        //DATABASE
         database= FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef= database.getReference();
-        flagNomeRecensoreUguale = false;
-
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
@@ -126,28 +117,13 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
     public void NuovaRecensioneCasa(View view) {
 
         descrizione = recensione.getText().toString();
-        Log.i(TAG,"dati: "+valutazioneMedia);
-       //valutazioneMedia = (valorePulizia+valorePosizione+valoreQualita)/3 ;
+
         Date data = new Date();
         if (descrizione.compareTo("") == 0) {
             Toast.makeText(this, "Attenzione aggiungi recensione", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        //PER OGNI INQUILINO
-        myRef.child("Inquilini").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataS : snapshot.getChildren()) {
-                    Inquilino i = dataS.getValue(Inquilino.class);
-                    if(i.getStudente().compareTo(user.getEmail())==0)
-                        recensore = dataS.getKey();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+        String recensore = getIntent().getExtras().getString("idRecensore");
         RecensioneCasa recensioneCasa = new RecensioneCasa(data,descrizione,valorePulizia,valorePosizione,valoreQualita,valutazioneMedia,recensore,nomeCasa);
         //PUSH
         DatabaseReference recensioneCasaAggiunta = myRef.child("Recensioni_Casa").child(nomeCasa).push();
@@ -155,58 +131,14 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
         Log.i(TAG, "Recensione aggiunta da" + user.getUid());
         aggiornoDatiCasa(nomeCasa);
         pulisciCampi();
-        //Intent intent = new Intent(this, ProfiloCasa.class);
-        //startActivity(intent);
     }
 
     private void aggiornoDatiCasa(String nomeCasa1) {
 
-
-        //TODO vanno cambiati i dati su firebase
         int numeroRec = casa.getNumRec()+1;
-
-        Log.i(TAG, "valutazione: "+casa.getValutazione()+"-"+casa.getNumRec()+"-"+valutazioneMedia+"-"+numeroRec);
-
         double valutazioneMediaAggiornata = ((casa.getValutazione()*casa.getNumRec())+valutazioneMedia)/numeroRec ;
-
-        Log.i(TAG," valutazione media: "+valutazioneMediaAggiornata+ " nuovo numero rec: "+numeroRec);
-
-
-        casa.setValutazione(valutazioneMediaAggiornata);
-        casa.setNumRec(numeroRec);
-
         myRef.child("Case").child(nomeCasa).child("numRec").setValue(numeroRec);
         myRef.child("Case").child(nomeCasa).child("valutazione").setValue(valutazioneMediaAggiornata);
-    }
-
-    public void controlloRensore(String recensore) {
-
-        myRef.child("Recensioni_Casa").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
-
-                    RecensioneCasa recensioneCasa = caseSnapshot.getValue(RecensioneCasa.class);
-
-                    if(recensioneCasa.getRecensore().compareTo(recensore)==0) {
-
-                 Toast.makeText(NuovaRecensioneCasa.this,"Recensore già presente contattare l'assistenza",Toast.LENGTH_SHORT).show();
-
-                        cambiaFlag();
-                    }
-                    Log.i(TAG,"recensore è :"+recensioneCasa.getRecensore());
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
-
-    private void cambiaFlag() {
-        Log.i(TAG, "Passo dal flag ");
-        flagNomeRecensoreUguale = true;
-        Log.i(TAG, "Passo dal flag "+flagNomeRecensoreUguale.booleanValue());
     }
 
     private void pulisciCampi() {
@@ -216,8 +148,7 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
         rb_posizione.setRating(0);
         rb_qualitaPrezzo.setRating(0);
 
-        Intent intent = new Intent(this, ProfiloCasa.class);
-        intent.putExtra("nomeCasa",nomeCasa);
+        Intent intent = new Intent(this, Home.class);
         startActivity(intent);
 
     }

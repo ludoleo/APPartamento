@@ -78,7 +78,6 @@ public class RecensioneProprietario {
     public void setValutazioneMedia(float valutazioneMedia) {
         this.valutazioneMedia = valutazioneMedia;
     }
-
     public String getRecensore() {
         return recensore;
     }
