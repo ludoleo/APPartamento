@@ -665,7 +665,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     }
     private static class CustomItemStudente {
         public CircleImageView immagine;
-
         public String nome;
         public float rating;
         public String indirizzoLaurea;
