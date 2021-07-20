@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class RecensioneCasa {
 
-    //private String idRecensione;
+
     private Date dataRevisione; //gestione date
     private String descrizione;
 
@@ -26,7 +26,6 @@ public class RecensioneCasa {
 
     public RecensioneCasa() {
     }
-
 
     public RecensioneCasa(Date dataRevisione, String descrizione, float valutazionePulizia, float valutazionePosizione, float valutazioneQualita, float valutazioneMedia, String recensore, String casaRecensita) {
         this.dataRevisione = dataRevisione;
@@ -46,7 +45,6 @@ public class RecensioneCasa {
     public void setValutazionePulizia(float valutazionePulizia) {
         this.valutazionePulizia = valutazionePulizia;
     }
-
     public float getValutazionePosizione() {
         return valutazionePosizione;
     }
@@ -54,7 +52,6 @@ public class RecensioneCasa {
     public void setValutazionePosizione(float valutazionePosizione) {
         this.valutazionePosizione = valutazionePosizione;
     }
-
     public float getValutazioneQualita() {
         return valutazioneQualita;
     }
@@ -62,18 +59,6 @@ public class RecensioneCasa {
     public void setValutazioneQualita(float valutazioneQualita) {
         this.valutazioneQualita = valutazioneQualita;
     }
-
-    /*
-            public String getIdRecensione() {
-                return idRecensione;
-            }
-
-            public void setIdRecensione(String idRecensione) {
-                this.idRecensione = idRecensione;
-            }
-
-
-          */
     public Date getDataRevisione() {
         return dataRevisione;
     }
@@ -98,14 +83,6 @@ public class RecensioneCasa {
         this.valutazioneMedia = valutazioneMedia;
     }
 
-   // public boolean isRecensitoIsProprietario() {
-   //     return recensitoIsProprietario;
-   // }
-
-   // public void setRecensitoIsProprietario(boolean recensitoIsProprietario) {
-    //    this.recensitoIsProprietario = recensitoIsProprietario;
-  //  }
-
     public String getRecensore() {
         return recensore;
     }
@@ -121,21 +98,5 @@ public class RecensioneCasa {
     public void setCasaRecensita(String casaRecensita) {
         this.casaRecensita = casaRecensita;
     }
-
-    /*
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof RecensioneCasa)) return false;
-        RecensioneCasa that = (RecensioneCasa) o;
-        return getIdRecensione().equals(that.getIdRecensione());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getIdRecensione());
-    }
-
-     */
 
 }
