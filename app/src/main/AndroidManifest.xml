@@ -57,7 +57,7 @@
         <activity android:name=".ricercalloggio.MappaAnnunci" />
 
         <service
-            android:name=".MyService"
+            android:name=".notifiche.MyService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -65,7 +65,7 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".AlarmBroadcastReceiver">
+        <receiver android:name=".notifiche.AlarmBroadcastReceiver">
             <intent-filter>
                 <action android:name="com.example.myapplication" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -86,8 +86,6 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
-
 
         <activity android:name=".messaggi.ChatActivity" />
         <activity android:name=".profilo.ModificaInfoPersonali" />
