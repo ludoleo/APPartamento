@@ -1,49 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_tipoPrenotazione"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:padding="5dp"
+        android:textAllCaps="true"
+        android:textColor="@color/rosso_scuro"
         android:textStyle="bold"></TextView>
 
     <TextView
         android:id="@+id/tv_dataPrenotazione"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"></TextView>
+        android:layout_gravity="center"
+        android:drawableLeft="@drawable/ic_outline_calendar_today_24"
+        android:padding="5dp"
+        android:textColor="@color/rosso_scuro"></TextView>
 
     <TextView
         android:id="@+id/tv_nomeAnnuncioPrenotazione"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"></TextView>
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:textColor="@color/rosso_scuro"></TextView>
 
     <TextView
         android:id="@+id/tv_utentePrenotazione"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"></TextView>
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:textColor="@color/rosso_scuro"></TextView>
 
     <TextView
         android:id="@+id/tv_emailPrenotazione"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"></TextView>
+        android:layout_gravity="center"
+        android:drawableLeft="@drawable/ic_baseline_alternate_email_rosa_24"
+        android:padding="5dp"
+        android:textColor="@color/rosso_scuro"></TextView>
 
     <TextView
         android:id="@+id/tv_daPagare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"></TextView>
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:textColor="@color/rosso_scuro"></TextView>
 
     <TextView
         android:id="@+id/tv_id_prenotazione"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"></TextView>
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:textColor="@color/rosso_scuro"></TextView>
 </LinearLayout>

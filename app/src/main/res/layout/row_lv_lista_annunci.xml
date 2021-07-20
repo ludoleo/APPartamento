@@ -38,11 +38,14 @@
                     android:gravity="center"
                     android:text="Prezzo al mese"
                     android:textColor="@color/rosso_scuro" />
+
+                <View
+                    android:id="@+id/divider7"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/rosso_scuro"
+                    android:padding="5dp" />
         </LinearLayout>
 
-        <View
-            android:id="@+id/divider7"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/rosso_scuro" />
 </LinearLayout>

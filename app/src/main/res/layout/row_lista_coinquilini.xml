@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,14 +13,14 @@
         <de.hdodenhof.circleimageview.CircleImageView
 
             android:id="@+id/immagineUtente"
-            app:civ_border_color="@color/rosso_scuro"
-            app:civ_border_width="2dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="start"
             android:layout_margin="5dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/com_facebook_profile_picture_blank_portrait" />
+            android:src="@drawable/com_facebook_profile_picture_blank_portrait"
+            app:civ_border_color="@color/rosso_scuro"
+            app:civ_border_width="2dp" />
 
 
         <TextView

@@ -261,6 +261,7 @@ public class LeMiePrenotazioni extends AppCompatActivity {
         String strDate = dateFormat.format(data);
         strDate = strDate + " - " + time;
         return strDate;
+
     }
 
 }

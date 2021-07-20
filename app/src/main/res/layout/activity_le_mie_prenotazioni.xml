@@ -17,6 +17,7 @@
             android:id="@+id/textView19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="@string/tuePrenotazioni"
             android:textAllCaps="true"
             android:textColor="@color/rosso_scuro" />
@@ -25,19 +26,23 @@
             android:id="@+id/spinnerPrenotazione"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
             android:entries="@array/tipoPrenotazione"
             android:gravity="start"
-            android:padding="5dp"
             android:paddingStart="20dp"
             android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="10dp"
             android:paddingRight="10dp"
-            android:paddingBottom="5dp"
-            android:paddingEnd="10dp"></Spinner>
+            android:paddingBottom="5dp"></Spinner>
     </LinearLayout>
 
     <ListView
         android:id="@+id/lv_leMiePrenotazioni"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content"
+        android:padding="10dp"></ListView>
 
 </LinearLayout>
