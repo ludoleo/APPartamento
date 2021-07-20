@@ -33,8 +33,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Date;
 
 public class NuovaRecensioneCasa extends AppCompatActivity {
-    private static final String TAG = "Recensioni Casa";
 
+    private static final String TAG = "Recensioni Casa";
     private EditText recensione;
     private TextView mediaRecensione;
     private RatingBar rb_pulizia, rb_posizione, rb_qualitaPrezzo;

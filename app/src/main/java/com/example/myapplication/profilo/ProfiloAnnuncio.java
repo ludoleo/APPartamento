@@ -1,14 +1,17 @@
 package com.example.myapplication.profilo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageSwitcher;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +24,9 @@ import com.example.myapplication.classi.Studente;
 import com.example.myapplication.prenotazione.PrenotazioneCalendarioActivity;
 import com.example.myapplication.R;
 
+import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,15 +34,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class ProfiloAnnuncio extends AppCompatActivity {
 
-    //todo questa pagina è accessibile anche senza login
 
     //Gestione del Menù
     private final static int SAVE_MENU_OPTION = 0;
     private final static int CANCEL_MENU_OPTION = 1;
-    private static final String TAG ="Il preferito " ;
+    private static final String TAG = "preferito ";
     private CheckBox IsPrefetito;
 
 
@@ -50,6 +59,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
             et_tipologiaStanza, et_prezzo, et_proprietario, et_ospiti, et_numeroCamere, et_num_bagni, descrizioneAnnuncio;
 
     Button b_prenota;
+    private ImageSwitcher imageIs;
 
     //Database
     private FirebaseDatabase database;
@@ -57,6 +67,9 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     //Autenticazione
     public FirebaseUser user;
     public FirebaseAuth mAuth;
+    //Storage
+    FirebaseStorage storage;
+    StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +95,11 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         descrizioneAnnuncio = (TextView) findViewById(R.id.descrizioneAnnuncio);
         b_prenota = (Button) findViewById(R.id.b_prenota);
         b_prenota.setVisibility(View.GONE);
+        //GESTIONE IMMAGINI
+        imageIs = findViewById(R.id.imageis);
+        storage = FirebaseStorage.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
+        //INIZIALIZZO
         initUI();
         // preferito
         IsPrefetito = (CheckBox) findViewById(R.id.IsPreferito);
@@ -94,14 +112,14 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         initUI();
     }
 
-    private void initUI(){
+    private void initUI() {
         //inzializzo
         annuncio = null;
         proprietario = null;
         casa = null;
         studente = null;
 
-        if(user!=null) {
+        if (user != null) {
             //VALUTA SE L'UTENTE LOGGATO E' UNO STUDENTE
             myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -131,12 +149,13 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         myRef.child("Annunci").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot annunciSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot annunciSnapshot : dataSnapshot.getChildren()) {
                     Annuncio a = annunciSnapshot.getValue(Annuncio.class);
-                    if(a.getIdAnnuncio().compareTo(idAnnuncio)==0)
+                    if (a.getIdAnnuncio().compareTo(idAnnuncio) == 0)
                         annuncio = a;
                 }
                 riferimentoCasa();
+                caricaImmaginiAnnuncio(idAnnuncio);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -144,18 +163,43 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         });
     }
 
+    private void caricaImmaginiAnnuncio(String idAnnuncio) {
+
+        StorageReference listRef = storage.getReference().child("Annuncio/"+idAnnuncio);
+        listRef.listAll()
+                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
+                    @Override
+                    public void onSuccess(ListResult listResult) {
+                        for (StorageReference item : listResult.getItems()) {
+                            // All the items under listRef.
+                            Log.i(TAG," item : "+item.toString());
+                            Uri uri = Uri.parse(item.toString());
+                            imageIs.setImageURI(uri);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Uh-oh, an error occurred!
+                    }
+                });
+
+    }
+
     private void riferimentoCasa() {
 
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot caseSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot caseSnapshot : dataSnapshot.getChildren()) {
                     Casa a = caseSnapshot.getValue(Casa.class);
-                    if(annuncio.getIdCasa().compareTo(a.getNomeCasa())==0)
+                    if (annuncio.getIdCasa().compareTo(a.getNomeCasa()) == 0)
                         casa = a;
                 }
                 riferimentoProprietario();
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -167,13 +211,14 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot proprietarioSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot proprietarioSnapshot : dataSnapshot.getChildren()) {
                     Proprietario a = proprietarioSnapshot.getValue(Proprietario.class);
-                    if(casa.getProprietario().compareTo(proprietarioSnapshot.getKey())==0)
+                    if (casa.getProprietario().compareTo(proprietarioSnapshot.getKey()) == 0)
                         proprietario = a;
                 }
                 aggiornaSchermata();
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -182,15 +227,15 @@ public class ProfiloAnnuncio extends AppCompatActivity {
 
     private void aggiornaSchermata() {
         et_nomeAnnuncio.setText(annuncio.getIdAnnuncio());
-        et_punteggio.setText(""+casa.getValutazione());
+        et_punteggio.setText("" + casa.getValutazione());
         et_numRecensioni.setText("#");
         et_indirizzo.setText(casa.getIndirizzo());
         et_tipologiaStanza.setText(annuncio.getTipologiaAlloggio());
-        et_prezzo.setText(annuncio.getPrezzoMensile()+"€");
+        et_prezzo.setText(annuncio.getPrezzoMensile() + "€");
         et_proprietario.setText(proprietario.getNome());
-        et_ospiti.setText("#ospiti "+casa.getNumeroOspiti());
-        et_numeroCamere.setText("#stanze "+casa.getNumeroStanze());
-        et_num_bagni.setText("#bagni "+casa.getNumeroBagni());
+        et_ospiti.setText("#ospiti " + casa.getNumeroOspiti());
+        et_numeroCamere.setText("#stanze " + casa.getNumeroStanze());
+        et_num_bagni.setText("#bagni " + casa.getNumeroBagni());
         descrizioneAnnuncio.setText(annuncio.getSpeseStraordinarie());
     }
 
@@ -200,18 +245,18 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         String email;
         Intent intent = new Intent(this, PrenotazioneCalendarioActivity.class);
 
-        if(user.equals(null)){
+        if (user.equals(null)) {
             Toast.makeText(this, "Effettua il login per prenotare una visita", Toast.LENGTH_SHORT).show();
             return;
-        }else{
+        } else {
 
             email = user.getEmail();
             myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot studenti: dataSnapshot.getChildren()) {
+                    for (DataSnapshot studenti : dataSnapshot.getChildren()) {
                         Studente a = studenti.getValue(Studente.class);
-                        if(a.getEmail().compareTo(email)==0){
+                        if (a.getEmail().compareTo(email) == 0) {
                             intent.putExtra("idAnnuncio", annuncio.getIdAnnuncio());
                             intent.putExtra("emailUtente2", proprietario.getEmail());
                             intent.putExtra("nomeUtente2", proprietario.getNome());
@@ -221,36 +266,45 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                         }
                     }
                 }
+
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
         }
     }
+
     // PREFERITI
     public void PreferitoIsChecked() {
-        if(IsPrefetito.isChecked()){
-        Annuncio preferito = new Annuncio();
-        String nomeannuncio = preferito.getIdAnnuncio() ;
-        creapreferito (preferito);
+        if (IsPrefetito.isChecked()) {
+            Annuncio preferito = new Annuncio();
+            String nomeannuncio = preferito.getIdAnnuncio();
+            creapreferito(preferito);
 
+        }
     }
-    }
+
     // se non mettevo (Parcelable ) mi dava errore
     private void creapreferito(Annuncio preferito) {
         Intent intent = new Intent(ProfiloAnnuncio.this, Preferiti.class);
-        intent.putExtra("idAnnuncio", annuncio.getIdAnnuncio() );
+        intent.putExtra("idAnnuncio", annuncio.getIdAnnuncio());
         startActivity(intent);
 
     }
 
     public void inserisciFoto(View view) {
 
-        Log.i(TAG,"Passo da qui");
+        Log.i(TAG, "Passo da qui");
         Intent intent = new Intent(ProfiloAnnuncio.this, ImmaginiAnnuncio.class);
-        intent.putExtra("idAnnuncio", annuncio.getIdAnnuncio() );
+        intent.putExtra("idAnnuncio", annuncio.getIdAnnuncio());
         startActivity(intent);
 
+    }
+
+    public void immagineIndietro(View view) {
+    }
+
+    public void immagineDopo(View view) {
     }
 }
 

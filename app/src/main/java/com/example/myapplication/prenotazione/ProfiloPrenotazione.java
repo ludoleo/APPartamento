@@ -432,7 +432,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                 inquilinoAggiunto.setValue(inquilino);
                 String key = inquilinoAggiunto.getKey();
                 //AGGIUNGO L'ID
-                myRef.child(key).child("idInquilino").setValue(key);
+                myRef.child("Inquilini").child(key).child("idInquilino").setValue(key);
                 Intent intent = new Intent(ProfiloPrenotazione.this, Home.class);
                 Toast.makeText(ProfiloPrenotazione.this,"Studente aggiunto come inquilino in casa: "+annuncio.getIdCasa(),Toast.LENGTH_SHORT).show();
                 startActivity(intent);

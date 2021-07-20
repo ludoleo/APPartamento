@@ -127,9 +127,7 @@ public class LeMiePrenotazioni extends AppCompatActivity {
                 }
             }
             public void onNothingSelected(AdapterView<?> parent)
-            {
-
-            }
+            {}
         });
 
     }
@@ -259,7 +257,6 @@ public class LeMiePrenotazioni extends AppCompatActivity {
     }
 
     public String getDataOra(Long data, String time) {
-
         DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy");
         String strDate = dateFormat.format(data);
         strDate = strDate + " - " + time;

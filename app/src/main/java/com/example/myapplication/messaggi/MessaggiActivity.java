@@ -61,7 +61,7 @@ public class MessaggiActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     Intent intent;
-    
+
     boolean notifica = false;
     boolean flag;
 
@@ -102,14 +102,8 @@ public class MessaggiActivity extends AppCompatActivity {
         intent = getIntent();
         idUtente = intent.getStringExtra("userId");
         flag = false;
-
-        Log.i(TAG,"IDUTENTE DESTINATARIO CHAT "+idUtente);
-
-
         user = FirebaseAuth.getInstance().getCurrentUser();
-
         btn_send.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 notifica = true;
@@ -123,11 +117,6 @@ public class MessaggiActivity extends AppCompatActivity {
                 text_send.setText("");
             }
         });
-
-
-
-        //TODO controllare se i messaggi sono verso gli studenti o i proprietari, non va bene così
-
 
         myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
             @Override

@@ -68,9 +68,9 @@ public class ListaRecensioni extends AppCompatActivity {
     List<Casa> casaDaRecensire;
     List<Inquilino> studentiDaRecensire;
     List<Proprietario> proprietariDaRecensiore;
-    List <RecensioneCasa> recensioniCasa;
-    List <RecensioneStudente> recensioniStudenti;
-    List <RecensioneProprietario> recensioniProprietario;
+    List<RecensioneCasa> recensioniCasa;
+    List<RecensioneStudente> recensioniStudenti;
+    List<RecensioneProprietario> recensioniProprietario;
 
     //GESTIONE FIREBASE
     FirebaseDatabase database;
@@ -204,7 +204,6 @@ public class ListaRecensioni extends AppCompatActivity {
                                         if(!flag)
                                             studentiDaRecensire.add(inquilino);
                                     }
-                                    //TODO AGGIORNO LE LIST VIEW
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
                                     }
@@ -263,7 +262,7 @@ public class ListaRecensioni extends AppCompatActivity {
                                     //RIFERIMENTO ALLA RECENSIONE DEL MIO COINQUILINO
                                     RecensioneStudente rs = resdata.getValue(RecensioneStudente.class);
                                     for(Inquilino io : inquiliniUser){
-                                        //SE ABBIAMO VISSUTO INSIEME E IO NON VIVO PIU' LA E ANCORA NON L'HO RECENSIOTO
+                                        //SE ABBIAMO VISSUTO INSIEME E IO NON VIVO PIU' LA E ANCORA NON L'HO RECENSITO
                                         if(c.getCasa().compareTo(io.getCasa())==0 && io.getDataFine()>0){
                                             //SE LHO GIA RECENSITO
                                             if(rs.getRecensore().compareTo(io.getIdInquilino())==0){
