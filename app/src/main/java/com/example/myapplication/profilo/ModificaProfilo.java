@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.myapplication.NotesSqlMain;
-import com.example.myapplication.Qrcode;
 import com.example.myapplication.bollettaSQL.ImageSQL;
 import com.example.myapplication.R;
 

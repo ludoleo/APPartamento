@@ -1,12 +1,10 @@
 package com.example.myapplication.profilo;
 
-import androidx.annotation.MenuRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,7 +26,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.AnnBachecapdf;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Proprietario;
@@ -455,10 +452,7 @@ public class ProfiloProprietario extends AppCompatActivity {
             case R.id.home:
                 startActivity(new Intent(ProfiloProprietario.this,Home.class));
                 return true;
-            case R.id.annuncioBacheca:
-                startActivity(new Intent(ProfiloProprietario.this, AnnBachecapdf.class));
-                finish();
-                return true;
+
         }
         return false;
     }
