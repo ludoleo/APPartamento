@@ -257,10 +257,9 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                                     Inquilino i = inquilini.getValue(Inquilino.class);
                                     for(Studente s :listaStudenti){
                                         if(i.getStudente().compareTo(s.getEmail())==0
-                                         && i.getCasa().compareTo(casa.getNomeCasa())==0 && i.getDataFine() == 0 )
+                                         && i.getCasa().compareTo(casa.getNomeCasa())==0 && i.getDataFine() == 0)
                                             coinquilini.add(s);
                                     }
-
                                 }
                                 aggiornaListViewCoinquilini();
                             }

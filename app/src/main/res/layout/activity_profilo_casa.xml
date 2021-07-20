@@ -101,36 +101,36 @@
                     android:onClick="aggiungiAnnuncio"
                     android:text="Aggiungi Annuncio"></Button>
             </LinearLayout>
+            <TextView
+                android:id="@+id/visualizzaCoinquilini"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Inquilini :" />
+
+            <ListView
+                android:id="@+id/lv_inquiliniLaTuaCasa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></ListView>
+
+            <TextView
+                android:id="@+id/visualizzaRec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Recensioni ricevute:" />
+
+            <Button
+                android:id="@+id/button_aggiungiRecensione"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aggiungi recensione"></Button>
+
+            <ListView
+                android:id="@+id/listRecCasa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </ScrollView>
 
-    <TextView
-        android:id="@+id/visualizzaCoinquilini"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Inquilini :" />
-
-    <ListView
-        android:id="@+id/lv_inquiliniLaTuaCasa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></ListView>
-
-    <TextView
-        android:id="@+id/visualizzaRec"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Recensioni ricevute:" />
-
-    <Button
-        android:id="@+id/button_aggiungiRecensione"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Aggiungi recensione"></Button>
-
-    <ListView
-        android:id="@+id/listRecCasa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>
