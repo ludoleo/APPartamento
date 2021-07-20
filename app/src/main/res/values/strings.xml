@@ -248,7 +248,7 @@
 
     </string-array>
 
-    <string-array name="UnitoTriennale">
+    <string-array name="unitoTriennale">
         <item>Amministrazione aziendale</item>
         <item>Business and Management</item>
         <item>Economia Aziendale</item>
@@ -265,7 +265,7 @@
         <item>Servizio sociale</item>
         <item>Consulenza del lavoro</item>
         <item>Diritto per le imprese e le istituzioni </item>
-        <item>Scienze dell'amministrazione digitale</item>
+        <item>Scienze dell amministrazione digitale</item>
         <item>Culture e letterature del mondo moderno</item>
         <item>Dams</item>
         <item>Lettere</item>

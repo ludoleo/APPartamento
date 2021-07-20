@@ -22,7 +22,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.classi.Chat;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.classi.Utente;
-import com.example.myapplication.fragments.APIService;
 import com.example.myapplication.fragments.MessageAdapter;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.notifiche.DatiNotifica;
@@ -40,10 +39,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 // creo l'activity che mi fa permettere di chattare-----------------------------------
@@ -66,9 +61,7 @@ public class MessaggiActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     Intent intent;
-
-    APIService apiService;
-
+    
     boolean notifica = false;
     boolean flag;
 
@@ -307,24 +300,6 @@ public class MessaggiActivity extends AppCompatActivity {
                             idUtente);
 
                     Mittente mittente = new Mittente(dati,token.getToken());
-
-                            apiService.inviaNotifica(mittente)
-                            .enqueue(new Callback<RispostaNotifica>() {
-                                @Override
-                                public void onResponse(Call<RispostaNotifica> call, Response<RispostaNotifica> response) {
-                                    if(response.code() == 200) {
-                                        if(response.body().successo != 1) {
-                                            Toast.makeText(MessaggiActivity.this, "Fallito", Toast.LENGTH_SHORT).show();
-
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<RispostaNotifica> call, Throwable t) {
-
-                                }
-                            });
                          }
                     }
 

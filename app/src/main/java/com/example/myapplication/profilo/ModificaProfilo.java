@@ -13,9 +13,9 @@ import com.example.myapplication.R;
 
 
 public class ModificaProfilo extends AppCompatActivity {
+
     Button infopersonali ;
     Button note;
-    Button Qrcodebutton;
     Button assistenza;
     Button bolletta;
 
@@ -31,15 +31,6 @@ public class ModificaProfilo extends AppCompatActivity {
             public void onClick(View v) {
                 Intent b = new Intent(ModificaProfilo.this, ModificaInfoPersonali.class);
                 startActivity(b);
-            }
-        });
-
-        Qrcodebutton = findViewById(R.id.mod_prof_qrcode);
-        Qrcodebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent c = new Intent(ModificaProfilo.this, Qrcode.class);
-                 startActivity(c);
             }
         });
 

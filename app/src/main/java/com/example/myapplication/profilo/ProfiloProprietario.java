@@ -59,7 +59,7 @@ public class ProfiloProprietario extends AppCompatActivity {
     private static final int IMAG_REQUEST = 1000;
     private static final int PERMISSION_CODE = 1001;
 
-    Button  b_nuovaRecensioneProp, b_nuovaCasa;
+    Button  b_nuovaCasa;
     CircleImageView immagineProp;
     TextView text_nomeP, text_cognomeP;
     StorageReference storageReference;
@@ -102,7 +102,6 @@ public class ProfiloProprietario extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         //TODO sistemare gli id in base al profilo se si è loggati o se si è solo visitatori
         StorageReference profileRefer = storageReference.child("Proprietari/"+idUtente+"/profile.jpg");
-
         profileRefer.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -139,18 +138,17 @@ public class ProfiloProprietario extends AppCompatActivity {
             }
         });
 
+        //INIZIALIZZO LE TEXTVIEW, I BOTTONI E LE LISTVIEW
         text_nomeP = (TextView) findViewById(R.id.text_nomeP);
         text_cognomeP = (TextView) findViewById(R.id.text_cognomeP);
-
         listViewCase = (ListView) findViewById(R.id.lv_case_prop);
         listViewRecensioni = (ListView) findViewById(R.id.listView_recensioni_proprietario);
         listaRecensioniProprietario = new ArrayList<>();
-
-        b_nuovaRecensioneProp = findViewById(R.id.b_nuovaRecensioneProp);
-        b_nuovaCasa = findViewById(R.id.aggiungiNuovaCasa);
+        b_nuovaCasa = findViewById(R.id.aggiungiCasa);
         b_nuovaCasa.setVisibility(View.GONE);
-        //TODO controllo se l'utente loggato è il proprietario di quel profilo e allora setto la visibilità del bottono
-
+        if(isUser)
+            b_nuovaCasa.setVisibility(View.VISIBLE);
+        //PRENDO I RIFERIMENTI A TUTTE LE RECENSIONI DEL PROPRIETARIO
         myRef.child("Recensioni_Proprietario").child(idUtente).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
@@ -164,18 +162,7 @@ public class ProfiloProprietario extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-        b_nuovaRecensioneProp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent l = new Intent(ProfiloProprietario.this, NuovaRecensioneProprietario.class);
-                l.putExtra("idProprietario",idUtente);
-                startActivity(l);
-            }
-        });
-
         initUI(idUtente);
-
     }
     // permission foto
     @Override
@@ -196,7 +183,7 @@ public class ProfiloProprietario extends AppCompatActivity {
         }
     }
 
-
+    //GESTIONE IMMAGINI
     private void CambiaImmagine() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -246,8 +233,7 @@ public class ProfiloProprietario extends AppCompatActivity {
                 for (DataSnapshot figlioP : snapshot.getChildren()) {
                     if(figlioP.getKey().compareTo(idUtente)==0) {
 
-                        Proprietario proprietario = figlioP.getValue(Proprietario.class);
-
+                        proprietario = figlioP.getValue(Proprietario.class);
                         text_nomeP.setText(proprietario.getNome());
                         text_cognomeP.setText(proprietario.getCognome());
                     }
@@ -317,8 +303,8 @@ public class ProfiloProprietario extends AppCompatActivity {
                 return rowView;
             }
         };
-        listViewCase.setAdapter(arrayAdapter);
 
+        listViewCase.setAdapter(arrayAdapter);
         listViewCase.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -408,7 +394,6 @@ public class ProfiloProprietario extends AppCompatActivity {
 
     private ProfiloProprietario.CustomItemRecensioni[] createItemsRecensioni() {
 
-        //Log.i(TAG, ""+listaRecensioni.size());
         int size =listaRecensioniProprietario.size();
 
         ProfiloProprietario.CustomItemRecensioni[] items = new ProfiloProprietario.CustomItemRecensioni[size]; //numero di annunci possibili
@@ -428,9 +413,7 @@ public class ProfiloProprietario extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-
         menuInflater.inflate(R.menu.menu_prop, menu);
-
         if(isUser == false) {
             menu.getItem(R.id.logout).setVisible(false);
             return true;
@@ -456,9 +439,6 @@ public class ProfiloProprietario extends AppCompatActivity {
         }
         return false;
     }
-
-
-
 
     public void aggiungiNuovaCasa(View view) {
         Intent intent = new Intent(this, InserimentoDatiCasa.class);

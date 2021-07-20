@@ -164,7 +164,6 @@ public class NuovaRecensioneStudente extends AppCompatActivity {
     }
 
     private void pulisciCampi() {
-
         recensione.setText("");
         rb_puliziaStud.setRating(0);
         rb_rispettoLuoghi.setRating(0);

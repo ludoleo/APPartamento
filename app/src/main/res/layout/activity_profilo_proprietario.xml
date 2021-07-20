@@ -146,14 +146,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"></ListView>
 
-            <Button
-                android:id="@+id/b_nuovaRecensioneProp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:gravity="center_horizontal"
-                android:text="aggiungi recensione" />
 
         </LinearLayout>
     </ScrollView>
