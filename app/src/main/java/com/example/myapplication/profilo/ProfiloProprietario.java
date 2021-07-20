@@ -277,7 +277,6 @@ public class ProfiloProprietario extends AppCompatActivity {
 
                 ImageView immagineCasa =
                         (ImageView)rowView.findViewById(R.id.immagineCasa);
-
                 TextView nomeCasaView =
                         (TextView)rowView.findViewById(R.id.textViewNomeCasaProprietario);
                 TextView inidirizzoCasaView =

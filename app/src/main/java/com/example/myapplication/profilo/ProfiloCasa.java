@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -605,9 +606,23 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lista_coinquilini, null);
-
+                //gestione immagine
                 CircleImageView immagine_coinqui =
                         (CircleImageView)rowView.findViewById(R.id.immagineUtente);
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                StorageReference profileRef = storageReference.child("Studenti/"+item.idStudente+"/profile.jpg");
+                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.i(TAG,"URI "+uri);
+                        Picasso.get().load(uri).into(immagine_coinqui);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
                 TextView nome_coinqui =
                         (TextView)rowView.findViewById(R.id.tv_coinqi_nome);
                 nome_coinqui.setText(item.nome);
@@ -617,14 +632,25 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                 TextView laurea_coinqui =
                         (TextView) rowView.findViewById(R.id.tv_coinqi_indirizzoLaurea);
                 laurea_coinqui.setText(item.indirizzoLaurea);
-
+                TextView id_coinqui =
+                        (TextView) rowView.findViewById(R.id.tv_coinqi_id);
+                id_coinqui.setText(item.idStudente);
                 return rowView;
             }
         };
         listaCoinquilini.setAdapter(ArrayAdapter);
-    }
-    
+        listaCoinquilini.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                ProfiloCasa.CustomItemStudente stu = (ProfiloCasa.CustomItemStudente) adapterView.getItemAtPosition(pos);
+                String idStudente = stu.idStudente;
+                Intent intent = new Intent(ProfiloCasa.this, ProfiloStudente.class);
+                intent.putExtra("idStudente", idStudente);
+                startActivity(intent);
+            }
+        });
 
+    }
     //LISTVIEW RECENSIONI
     private void aggiornaListViewRecensione() {
 
@@ -655,6 +681,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             }
         };
         listaRecensioni.setAdapter(ArrayAdapter);
+
     }
     // CUSTOM ITEMS
     private static class CustomItemRecensione {
@@ -667,6 +694,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         public String nome;
         public float rating;
         public String indirizzoLaurea;
+        public String idStudente;
     }
 
     private ProfiloCasa.CustomItemStudente[] createItemsStudente() {
@@ -681,6 +709,8 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             items[i].nome = stu.getNome();
             items[i].rating= (float)stu.getValutazione();
             items[i].indirizzoLaurea= stu.getIndirizzoLaurea();
+            items[i].idStudente = stu.getIdUtente();
+
         }
         return items;
     }
