@@ -77,10 +77,6 @@ public class ProfiloProprietario extends AppCompatActivity {
     ListView listViewCase, listViewRecensioni;
     Proprietario proprietario;
 
-    boolean isUser = false ;
-
-    //todo va controllato se sono nel mio profilo o se sto vedendo il profilo del proprietario x
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,11 +88,6 @@ public class ProfiloProprietario extends AppCompatActivity {
         myRef = database.getReference();
         immagineProp = findViewById(R.id.immagineProfiloProp);
         idUtente = getIntent().getExtras().getString("idProprietario");
-
-        //profilo utente loggato
-        if(user.getUid().compareTo(idUtente)==0) {
-            isUser = true;
-        }
 
         //STORAGE
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -146,8 +137,7 @@ public class ProfiloProprietario extends AppCompatActivity {
         listaRecensioniProprietario = new ArrayList<>();
         b_nuovaCasa = findViewById(R.id.aggiungiCasa);
         b_nuovaCasa.setVisibility(View.GONE);
-        if(isUser)
-            b_nuovaCasa.setVisibility(View.VISIBLE);
+
         //PRENDO I RIFERIMENTI A TUTTE LE RECENSIONI DEL PROPRIETARIO
         myRef.child("Recensioni_Proprietario").child(idUtente).addValueEventListener(new ValueEventListener() {
             @Override
@@ -236,6 +226,8 @@ public class ProfiloProprietario extends AppCompatActivity {
                         proprietario = figlioP.getValue(Proprietario.class);
                         text_nomeP.setText(proprietario.getNome());
                         text_cognomeP.setText(proprietario.getCognome());
+                        if(isUser())
+                            b_nuovaCasa.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -412,10 +404,10 @@ public class ProfiloProprietario extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_prop, menu);
-        if(isUser == false) {
-            menu.getItem(R.id.logout).setVisible(false);
+
+        if(isUser()) {
+            MenuInflater menuInflater = getMenuInflater();
+            menuInflater.inflate(R.menu.menu_prop, menu);
             return true;
         }
         return true;
@@ -443,6 +435,12 @@ public class ProfiloProprietario extends AppCompatActivity {
     public void aggiungiNuovaCasa(View view) {
         Intent intent = new Intent(this, InserimentoDatiCasa.class);
         startActivity(intent);
+    }
+    public boolean isUser(){
+        if(user!=null){
+        if(user.getUid().compareTo(getIntent().getExtras().getString("idProprietario"))==0)
+            return true;}
+        return false;
     }
 
 }
