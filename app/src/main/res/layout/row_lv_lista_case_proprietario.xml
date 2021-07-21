@@ -8,7 +8,7 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/immagineCasa"
+        android:id="@+id/immagineCasaListaProfilo"
         android:layout_width="90dp"
         android:layout_height="match_parent"
         app:srcCompat="@drawable/ic_outline_insert_photo_24" />

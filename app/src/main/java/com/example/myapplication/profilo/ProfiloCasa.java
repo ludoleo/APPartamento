@@ -145,20 +145,20 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 // check runtime permission
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                            == PackageManager.PERMISSION_DENIED){
-                        // permission not granted
-                        String [] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                        // show popup for runtime permission
-                        requestPermissions(permission,PERMISSION_CODE);
-                    }
-                    else { // permission alredy granted
+                if(user!=null && user.getUid().compareTo(casa.getProprietario())==0) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                == PackageManager.PERMISSION_DENIED) {
+                            // permission not granted
+                            String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                            // show popup for runtime permission
+                            requestPermissions(permission, PERMISSION_CODE);
+                        } else { // permission alredy granted
+                            cambiaImm();
+                        }
+                    } else { // system os is less then Marshmallow
                         cambiaImm();
                     }
-                }
-                else { // system os is less then Marshmallow
-                    cambiaImm();
                 }
             }
         });
@@ -336,7 +336,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                     @Override
                     public void onSuccess(Uri uri) {
                         Picasso.get().load(uri).into(immagineCasa);
-                        casa.getImageView().setImageURI(uri);
                     }
                 });
             }

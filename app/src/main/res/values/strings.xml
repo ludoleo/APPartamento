@@ -248,7 +248,7 @@
 
     </string-array>
 
-    <string-array name="unitoTriennale">
+    <string-array name="unito">
         <item>Amministrazione aziendale</item>
         <item>Business and Management</item>
         <item>Economia Aziendale</item>
@@ -293,5 +293,9 @@
 
     </string-array>
 
+    <string-array name="univerista">
+        <item>Politecnico Di Torino</item>
+        <item>Universita degli studi di Torino</item>
+    </string-array>
 
 </resources>

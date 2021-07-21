@@ -10,9 +10,9 @@
     android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/immagineCasa"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:id="@+id/immagineAnnuncioLista"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             app:srcCompat="@drawable/ic_outline_insert_photo_24" />
 
         <LinearLayout
@@ -28,7 +28,8 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="Nome Casa"
-                    android:textColor="@color/rosso_scuro" />
+                    android:textColor="@color/rosso_scuro"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/textViewPrezzCasaLista"
@@ -37,7 +38,8 @@
                     android:layout_gravity="right"
                     android:gravity="center"
                     android:text="Prezzo al mese"
-                    android:textColor="@color/rosso_scuro" />
+                    android:textColor="@color/rosso_scuro"
+                    android:textSize="18sp" />
 
                 <View
                     android:id="@+id/divider7"

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -25,11 +27,16 @@ import com.example.myapplication.classi.Casa;
 import com.example.myapplication.home.CaseProprietario;
 import com.example.myapplication.profilo.ProfiloAnnuncio;
 import com.example.myapplication.registrazione.InserimentoDatiAnnuncio;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -148,6 +155,23 @@ public class ListaAnnunci extends AppCompatActivity {
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lv_lista_annunci, null);
+
+                ImageView imageViewCasa =
+                        (ImageView)rowView.findViewById(R.id.immagineAnnuncioLista);
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                StorageReference profileRef = storageReference.child("Annuncio/"+item.nomeCasa+"/foto0.jpg");
+                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.i(TAG,"URI "+uri);
+                        Picasso.get().load(uri).into(imageViewCasa);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
                 TextView nomeCasaView =
                         (TextView)rowView.findViewById(R.id.textViewNomeCasaLista);
                 TextView prezzoCasaView =
@@ -184,6 +208,7 @@ public class ListaAnnunci extends AppCompatActivity {
 
     //Gestione del CustomItem
     protected static class CustomItem {
+        public ImageView imageView;
         public String nomeCasa;
         public String prezzoCasa;
     }

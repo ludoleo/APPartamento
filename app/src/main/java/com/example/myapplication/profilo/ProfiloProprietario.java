@@ -277,7 +277,21 @@ public class ProfiloProprietario extends AppCompatActivity {
                 View rowView = inflater.inflate(R.layout.row_lv_lista_case_proprietario, null);
 
                 ImageView immagineCasa =
-                        (ImageView)rowView.findViewById(R.id.immagineCasa);
+                        (ImageView)rowView.findViewById(R.id.immagineCasaListaProfilo);
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                StorageReference profileRef = storageReference.child("Case/"+item.nomeCasa+"/profile.jpg");
+                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.i(TAG,"URI "+uri);
+                        Picasso.get().load(uri).into(immagineCasa);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
                 TextView nomeCasaView =
                         (TextView)rowView.findViewById(R.id.textViewNomeCasaProprietario);
                 TextView inidirizzoCasaView =
@@ -438,7 +452,7 @@ public class ProfiloProprietario extends AppCompatActivity {
     }
     public boolean isUser(){
         if(user!=null){
-        if(user.getUid().compareTo(getIntent().getExtras().getString("idProprietario"))==0)
+            if(user.getUid().compareTo(idUtente)==0)
             return true;}
         return false;
     }

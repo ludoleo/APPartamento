@@ -14,6 +14,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.home.Home;
+import com.example.myapplication.profilo.ProfiloAnnuncio;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -141,12 +142,12 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
         Annuncio annuncio = new Annuncio(idAnnuncio,user.getUid().toString(), nomeCasa, strDate, tipologia,prezzo,speseStraordinarie, casa.getIndirizzo());
         DatabaseReference annuncioAggiunto = myRef.child("Annunci").push();
         annuncioAggiunto.setValue(annuncio);
-
+        Intent intent = new Intent(this, ProfiloAnnuncio.class);
+        intent.putExtra("idAnnuncio", idAnnuncio);
         //PULISCO I CAMPI
         et_nomeAnnuncio.setText("");
         et_prezzo.setText("");
         et_speseStraordinarie.setText("");
-        Intent intent = new Intent(this, Home.class);
         startActivity(intent);
     }
 }

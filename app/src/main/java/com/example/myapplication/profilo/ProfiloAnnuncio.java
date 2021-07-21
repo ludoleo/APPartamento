@@ -195,7 +195,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
 
     private void UploadImage(Uri imageUri) {
         //carico su storage
-        final StorageReference fileRef = storageReference.child("Annuncio/"+annuncio.getIdAnnuncio()+"/foto.jpg");
+        final StorageReference fileRef = storageReference.child("Annuncio/"+annuncio.getIdAnnuncio()+"/foto0.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
