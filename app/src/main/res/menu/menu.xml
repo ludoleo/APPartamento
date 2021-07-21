@@ -13,8 +13,8 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/la_mia_casa"
-        android:title="La mia CASA"
+        android:id="@+id/recensioni"
+        android:title="Recensioni"
         app:showAsAction="never"
         />
 

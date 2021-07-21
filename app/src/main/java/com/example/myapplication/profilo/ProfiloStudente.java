@@ -341,6 +341,14 @@ public class ProfiloStudente extends AppCompatActivity {
                 a.putExtra("idStudente", idUtente);
                 startActivity(a);
                 return true;
+
+            case R.id.recensioni:
+
+                Intent rec = new Intent(ProfiloStudente.this, ListaRecensioni.class);
+                rec.putExtra("idStudente", idUtente);
+                startActivity(rec);
+                return true;
+
         }
         return false;
     }
