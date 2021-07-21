@@ -104,7 +104,6 @@
                 android:layout_width="222dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight="1"
                 android:onClick="aggiungiNuovaCasa"
                 android:text="@string/aggiungiCasa" />
 
