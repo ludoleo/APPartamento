@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.myapplication.Helper;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
@@ -256,6 +257,7 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
             }
         };
         listView.setAdapter(arrayAdapter);
+        Helper.getListViewSize(listView);
         //aggista-------
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
