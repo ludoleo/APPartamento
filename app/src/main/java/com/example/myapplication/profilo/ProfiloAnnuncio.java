@@ -1,10 +1,14 @@
 package com.example.myapplication.profilo;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -12,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,28 +42,32 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class ProfiloAnnuncio extends AppCompatActivity {
 
-
     //Gestione del Menù
     private final static int SAVE_MENU_OPTION = 0;
     private final static int CANCEL_MENU_OPTION = 1;
-    private static final String TAG = "preferito ";
+    private static final String TAG = "annuncio ";
+    private static final int IMAG_REQUEST = 1000;
+    private static final int PERMISSION_CODE = 1001;
     private CheckBox IsPrefetito;
 
     //parametri necessari per riempire la pagina
+    ImageView immagineAnnuncio;
     private Annuncio annuncio;
     private Proprietario proprietario;
     private Casa casa;
     private Studente studente;
+    private String idAnnuncio;
 
     TextView et_nomeAnnuncio, et_punteggio, et_numRecensioni, et_indirizzo,
             et_tipologiaStanza, et_prezzo, et_proprietario, et_ospiti, et_numeroCamere, et_num_bagni, descrizioneAnnuncio;
 
     Button b_prenota;
-    private ImageSwitcher imageIs;
+    //private ImageSwitcher imageIs;
 
     //Database
     private FirebaseDatabase database;
@@ -67,7 +76,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     public FirebaseUser user;
     public FirebaseAuth mAuth;
     //Storage
-    FirebaseStorage storage;
+    //FirebaseStorage storage;
     StorageReference storageReference;
 
     @Override
@@ -95,9 +104,10 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         b_prenota = (Button) findViewById(R.id.b_prenota);
         b_prenota.setVisibility(View.GONE);
         //GESTIONE IMMAGINI
-        imageIs = findViewById(R.id.imageis);
-        storage = FirebaseStorage.getInstance();
+       // imageIs = findViewById(R.id.imageis);
+        //storage = FirebaseStorage.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
+        immagineAnnuncio = findViewById(R.id.immagineAnnuncio);
         //INIZIALIZZO
         initUI();
         // preferito
@@ -117,6 +127,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         proprietario = null;
         casa = null;
         studente = null;
+        idAnnuncio = getIntent().getExtras().getString("idAnnuncio");
 
         if (user != null) {
             //VALUTA SE L'UTENTE LOGGATO E' UNO STUDENTE
@@ -141,6 +152,80 @@ public class ProfiloAnnuncio extends AppCompatActivity {
 
         riferimentoAnnuncio(getIntent().getExtras().getString("idAnnuncio"));
 
+
+        StorageReference annuncioRef = storageReference.child("Annuncio/"+idAnnuncio+"/foto.jpg");
+        annuncioRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Log.i(TAG,"URI "+uri);
+                Picasso.get().load(uri).into(immagineAnnuncio);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+        // IMMAGINE PERMESSI
+        immagineAnnuncio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // check runtime permission
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_DENIED){
+                        // permission not granted
+                        String [] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                        // show popup for runtime permission
+                        requestPermissions(permission,PERMISSION_CODE);
+                    }
+                    else { // permission alredy granted
+                        cambiaImm();
+                    }
+                }
+                else { // system os is less then Marshmallow
+                    cambiaImm();
+                }
+            }
+        });
+
+    }
+
+    private void cambiaImm() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,IMAG_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == IMAG_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+            Uri imageUri = data.getData();
+            UploadImage(imageUri);
+        }
+    }
+
+    private void UploadImage(Uri imageUri) {
+        final StorageReference fileRef = storageReference.child("Annuncio/"+annuncio.getIdAnnuncio()+"/foto.jpg");
+        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(immagineAnnuncio);
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ProfiloAnnuncio.this, "Upload non effettuato", Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 
     private void riferimentoAnnuncio(String idAnnuncio) {
@@ -162,6 +247,8 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         });
     }
 
+
+    /*
     private void caricaImmaginiAnnuncio(String idAnnuncio) {
 
         StorageReference listRef = storage.getReference().child("Annuncio/"+idAnnuncio);
@@ -186,6 +273,8 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                 });
     }
 
+
+     */
     private void riferimentoCasa() {
 
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
