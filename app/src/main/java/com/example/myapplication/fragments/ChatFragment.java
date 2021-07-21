@@ -135,8 +135,11 @@ public class ChatFragment extends Fragment {
                                 for(String id : usersList) {
                                     if(utente.getIdUtente().equals(id)) {
                                         if(mUtenti.size() != 0 ) {
+                                            Log.i(TAG,mUtenti.toString());
                                             for ( Utente u :mUtenti) {
-                                                if(!utente.getIdUtente().equals(u.getIdUtente())) {
+                                                Log.i(TAG, " utent "+u);
+                                                if(utente.getIdUtente().compareTo(u.getIdUtente())!=0) {
+                                                    Log.i(TAG,"SONO NELL'IF DI MUTENTE");
                                                     mUtenti.add(utente);
                                                 }
                                             }
@@ -199,7 +202,5 @@ public class ChatFragment extends Fragment {
 
             }
         });
-
-
     }
 }

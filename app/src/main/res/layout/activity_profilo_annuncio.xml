@@ -29,8 +29,9 @@
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:text=""
-            android:textColor="#D3000000"
-            android:textSize="30sp"
+            android:textAllCaps="true"
+            android:textColor="@color/rosso_scuro"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -53,7 +54,7 @@
                 android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
-                android:textSize="20sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/textView17"
@@ -68,7 +69,7 @@
                 android:padding="5dp"
                 android:text=""
                 android:textColor="#D3000000"
-                android:textSize="20sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/textView18"
@@ -82,10 +83,11 @@
             android:id="@+id/et_indirizzo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_outline_map_24"
             android:padding="6dp"
             android:text=""
             android:textColor="#D3000000"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -137,7 +139,7 @@
                 android:layout_weight="1"
                 android:padding="4dp"
                 android:text=""
-                android:textColor="#D3000000"
+                android:textColor="@color/rosso_scuro"
                 android:textSize="18sp" />
 
             <TextView
@@ -147,7 +149,7 @@
                 android:layout_weight="1"
                 android:padding="5dp"
                 android:text=""
-                android:textColor="#D3000000"
+                android:textColor="@color/rosso_scuro"
                 android:textSize="18sp" />
 
             <TextView
@@ -157,7 +159,7 @@
                 android:layout_weight="1"
                 android:padding="5dp"
                 android:text=""
-                android:textColor="#D3000000"
+                android:textColor="@color/rosso_scuro"
                 android:textSize="18sp" />
 
         </LinearLayout>
@@ -212,9 +214,8 @@
                 android:layout_weight="1"
                 android:padding="5dp"
                 android:text=""
-                android:textColor="#D3000000"
-                android:textSize="14sp"
-                android:textStyle="italic" />
+                android:textColor="@color/rosso_scuro"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/et_numeroCamere"
@@ -223,9 +224,8 @@
                 android:layout_weight="1"
                 android:padding="5dp"
                 android:text=""
-                android:textColor="#D3000000"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textColor="@color/rosso_scuro"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/et_num_bagni"
@@ -234,9 +234,8 @@
                 android:layout_weight="1"
                 android:padding="5dp"
                 android:text=""
-                android:textColor="#D3000000"
-                android:textSize="14sp"
-                android:textStyle="italic" />
+                android:textColor="@color/rosso_scuro"
+                android:textSize="18sp" />
         </LinearLayout>
 
         <TextView
@@ -262,7 +261,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:text="Qui andrà una descrizione della casa. Vi saranno informazioni scritte dal proprietario sulle pricipali caratteristiche dell'abitazione e sul perchè debba essere scelta" />
+            android:text="Qui andrà una descrizione della casa. Vi saranno informazioni scritte dal proprietario sulle pricipali caratteristiche dell'abitazione e sul perchè debba essere scelta"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/b_prenota"

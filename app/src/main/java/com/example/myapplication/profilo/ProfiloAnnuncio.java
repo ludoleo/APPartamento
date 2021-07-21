@@ -314,14 +314,14 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     private void aggiornaSchermata() {
         et_nomeAnnuncio.setText(annuncio.getIdAnnuncio());
         et_punteggio.setText("" + casa.getValutazione());
-        et_numRecensioni.setText("#");
+        et_numRecensioni.setText(" "+casa.getNumRec());
         et_indirizzo.setText(casa.getIndirizzo());
         et_tipologiaStanza.setText(annuncio.getTipologiaAlloggio());
         et_prezzo.setText(annuncio.getPrezzoMensile() + "€");
         et_proprietario.setText(proprietario.getNome());
-        et_ospiti.setText("#ospiti " + casa.getNumeroOspiti());
-        et_numeroCamere.setText("#stanze " + casa.getNumeroStanze());
-        et_num_bagni.setText("#bagni " + casa.getNumeroBagni());
+        et_ospiti.setText(" " + casa.getNumeroOspiti());
+        et_numeroCamere.setText(" " + casa.getNumeroStanze());
+        et_num_bagni.setText(" " + casa.getNumeroBagni());
         descrizioneAnnuncio.setText(annuncio.getSpeseStraordinarie());
     }
 
