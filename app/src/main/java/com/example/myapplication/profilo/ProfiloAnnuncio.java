@@ -13,12 +13,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.ImmaginiAnnuncio;
 import com.example.myapplication.ricercalloggio.Preferiti;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
@@ -48,7 +46,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     private static final String TAG = "annuncio ";
     private static final int IMAG_REQUEST = 1000;
     private static final int PERMISSION_CODE = 1001;
-    private CheckBox IsPrefetito;
 
     //parametri necessari per riempire la pagina
     ImageView immagineAnnuncio;
@@ -62,7 +59,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
             et_tipologiaStanza, et_prezzo, et_proprietario, et_ospiti, et_numeroCamere, et_num_bagni, descrizioneAnnuncio;
 
     Button b_prenota;
-    //private ImageSwitcher imageIs;
 
     //Database
     private FirebaseDatabase database;
@@ -105,9 +101,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         immagineAnnuncio = findViewById(R.id.immagineAnnuncio);
         //INIZIALIZZO
         initUI();
-        // preferito
-        IsPrefetito = (CheckBox) findViewById(R.id.IsPreferito);
-
     }
 
     @Override
@@ -146,9 +139,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         }
 
         riferimentoAnnuncio(getIntent().getExtras().getString("idAnnuncio"));
-
-
-        StorageReference annuncioRef = storageReference.child("Annuncio/"+idAnnuncio+"/foto.jpg");
+        StorageReference annuncioRef = storageReference.child("Annuncio/"+idAnnuncio+"/foto0.jpg");
         annuncioRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -159,28 +150,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception exception) {
                 // Handle any errors
-            }
-        });
-        // IMMAGINE PERMESSI
-        immagineAnnuncio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // check runtime permission
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                            == PackageManager.PERMISSION_DENIED){
-                        // permission not granted
-                        String [] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                        // show popup for runtime permission
-                        requestPermissions(permission,PERMISSION_CODE);
-                    }
-                    else { // permission alredy granted
-                        cambiaImm();
-                    }
-                }
-                else { // system os is less then Marshmallow
-                    cambiaImm();
-                }
             }
         });
 
@@ -235,7 +204,28 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                         annuncio = a;
                 }
                 riferimentoCasa();
-                //caricaImmaginiAnnuncio(idAnnuncio);
+                // IMMAGINE PERMESSI SOLO SE SEI IL PROPRIETARIO
+                if(user!=null && user.getUid().compareTo(annuncio.getIdProprietario())==0) {
+                    immagineAnnuncio.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // check runtime permission
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                        == PackageManager.PERMISSION_DENIED) {
+                                    // permission not granted
+                                    String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                                    // show popup for runtime permission
+                                    requestPermissions(permission, PERMISSION_CODE);
+                                } else { // permission alredy granted
+                                    cambiaImm();
+                                }
+                            } else { // system os is less then Marshmallow
+                                cambiaImm();
+                            }
+                        }
+                    });
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -243,34 +233,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         });
     }
 
-
-    /*
-    private void caricaImmaginiAnnuncio(String idAnnuncio) {
-
-        StorageReference listRef = storage.getReference().child("Annuncio/"+idAnnuncio);
-        listRef.listAll()
-                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
-                    @Override
-                    public void onSuccess(ListResult listResult) {
-                        for (StorageReference item : listResult.getItems()) {
-                            // All the items under listRef.
-                            Log.i(TAG," item : "+item.toString());
-                            //Uri uri = Uri.parse(item.toString());
-                            //imageIs.setImageURI(uri);
-
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Uh-oh, an error occurred!
-                    }
-                });
-    }
-
-
-     */
     private void riferimentoCasa() {
 
         myRef.child("Case").addValueEventListener(new ValueEventListener() {
@@ -321,7 +283,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         descrizioneAnnuncio.setText(annuncio.getSpeseStraordinarie());
     }
 
-
     public void prenota(View view) {
 
         String email;
@@ -354,33 +315,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                 }
             });
         }
-    }
-
-    // PREFERITI
-    public void PreferitoIsChecked() {
-        if (IsPrefetito.isChecked()) {
-            Annuncio preferito = new Annuncio();
-            String nomeannuncio = preferito.getIdAnnuncio();
-            creapreferito(preferito);
-
-        }
-    }
-
-    // se non mettevo (Parcelable ) mi dava errore
-    private void creapreferito(Annuncio preferito) {
-        Intent intent = new Intent(ProfiloAnnuncio.this, Preferiti.class);
-        intent.putExtra("idAnnuncio", annuncio.getIdAnnuncio());
-        startActivity(intent);
-
-    }
-
-    public void inserisciFoto(View view) {
-
-        Log.i(TAG, "Passo da qui");
-        Intent intent = new Intent(ProfiloAnnuncio.this, ImmaginiAnnuncio.class);
-        intent.putExtra("idAnnuncio", annuncio.getIdAnnuncio());
-        startActivity(intent);
-
     }
 
 }

@@ -18,8 +18,9 @@
         android:layout_marginLeft="5dp"
         android:background="@drawable/background_sinistra"
         android:padding="10dp"
+        android:textAllCaps="true"
         android:textColor="@color/rosso_scuro"
-        android:textStyle="normal"
+        android:textStyle="normal|bold"
         android:translationY="-5dp" />
 
 
@@ -45,11 +46,11 @@
         android:layout_gravity="start"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:background="@drawable/background_sinistra"
         android:gravity="center"
         android:padding="5dp"
         android:paddingBottom="5dp"
         android:text="@string/selezionaTipologia"
+        android:textAllCaps="true"
         android:textColor="@color/rosso_scuro"
         android:textStyle="bold"
         android:translationY="15dp" />
@@ -64,7 +65,9 @@
         android:background="@drawable/background_destra"
         android:entries="@array/tipologiaPostiLetto"
         android:padding="5dp"
-        android:popupBackground="@drawable/background_destra"
+        android:popupBackground="@color/biancoTrasparente"
+        android:scrollbarThumbHorizontal="@color/biancoTrasparente"
+        android:scrollbarThumbVertical="@color/biancoTrasparente"
         android:translationY="25dp" />
 
     <LinearLayout
@@ -114,7 +117,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/background_destra"
-        android:gravity="end"
+        android:gravity="start"
         android:hint="@string/spese"
         android:inputType="textMultiLine"
         android:padding="5dp"

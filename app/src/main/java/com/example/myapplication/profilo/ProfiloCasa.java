@@ -89,7 +89,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     List<RecensioneCasa> listaRecensioniCasa;
 
     TextView laTuaCasa, ilProprietario, valutazioneProprietario, valutazioneCasa ;
-    Button  b_aggiungiAnnuncio , b_aggiungiRecensione;
+    Button  b_aggiungiAnnuncio;
     //MAPPA
     MapView mapViewCasa;
     GoogleMap gmap;
@@ -164,25 +164,12 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         });
 
         b_aggiungiAnnuncio = (Button) findViewById(R.id.button_aggiungiAnnuncio);
-        b_aggiungiRecensione = (Button) findViewById(R.id.button_aggiungiRecensione);
         //lirendo visibili solo al proprietario loggato
         b_aggiungiAnnuncio.setVisibility(View.GONE);
        // b_aggiungiRecensione.setVisibility(View.GONE);
 
         listaStudenti = new LinkedList<Studente>();
         listaRecensioniCasa = new LinkedList<RecensioneCasa>();
-
-        b_aggiungiRecensione.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent l = new Intent(ProfiloCasa.this, NuovaRecensioneCasa.class);
-                Log.i(TAG,"VADO IN NUOVA REC PER LA CASA: "+casa.getNomeCasa());
-                l.putExtra("casa",casa.getNomeCasa());
-                startActivity(l);
-            }
-        });
-
-
 
     }
 

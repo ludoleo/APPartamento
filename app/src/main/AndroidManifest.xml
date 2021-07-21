@@ -103,9 +103,7 @@
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".bollettaSQL.ImageSQL" />
         <activity android:name=".bollettaSQL.Bolletta_main" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".NotesSqlMain" />
-        <activity android:name=".ImmaginiAnnuncio" />
         <activity
             android:name="com.braintreepayments.api.BraintreeBrowserSwitchActivity"
             android:launchMode="singleTask">
