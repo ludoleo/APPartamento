@@ -88,7 +88,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     List<Studente> coinquilini;
     List<RecensioneCasa> listaRecensioniCasa;
 
-    TextView laTuaCasa, ilProprietario, valutazioneProprietario, valutazioneCasa, tv_aggiungiFoto;
+    TextView laTuaCasa, ilProprietario, valutazioneProprietario, valutazioneCasa ;
     Button  b_aggiungiAnnuncio , b_aggiungiRecensione;
     //MAPPA
     MapView mapViewCasa;
@@ -119,15 +119,11 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         //CREAZIONE MAPPA
         createMapView(savedInstanceState);
 
-        if(immagineCasa!=null)
-            tv_aggiungiFoto.setVisibility(View.INVISIBLE);
-
         laTuaCasa = (TextView) findViewById(R.id.tv_laTuaCasa);
         ilProprietario = (TextView) findViewById(R.id.tv_proprietarioLaTuaCasa);
         valutazioneProprietario = (TextView) findViewById(R.id.tv_valutazioneProprietarioCasaTua);
         valutazioneCasa = (TextView) findViewById(R.id.tv_valutazioneCasaTua);
         immagineCasa = findViewById(R.id.immagineCasa);
-        tv_aggiungiFoto = findViewById(R.id.tv_aggiungiFoto);
 
         //STORAGE
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -354,7 +350,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                     public void onSuccess(Uri uri) {
                         Picasso.get().load(uri).into(immagineCasa);
                         casa.getImageView().setImageURI(uri);
-                        tv_aggiungiFoto.setVisibility(View.GONE);
                     }
                 });
             }
