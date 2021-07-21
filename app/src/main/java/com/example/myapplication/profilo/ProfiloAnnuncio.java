@@ -99,6 +99,28 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         //storage = FirebaseStorage.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         immagineAnnuncio = findViewById(R.id.immagineAnnuncio);
+        //LISTENER
+        immagineAnnuncio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // check runtime permission
+                if(user!=null && user.getUid().compareTo(annuncio.getIdProprietario())==0) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                == PackageManager.PERMISSION_DENIED) {
+                            // permission not granted
+                            String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                            // show popup for runtime permission
+                            requestPermissions(permission, PERMISSION_CODE);
+                        } else { // permission alredy granted
+                            cambiaImm();
+                        }
+                    } else { // system os is less then Marshmallow
+                        cambiaImm();
+                    }
+                }
+            }
+        });
         //INIZIALIZZO
         initUI();
     }
@@ -204,28 +226,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                         annuncio = a;
                 }
                 riferimentoCasa();
-                // IMMAGINE PERMESSI SOLO SE SEI IL PROPRIETARIO
-                if(user!=null && user.getUid().compareTo(annuncio.getIdProprietario())==0) {
-                    immagineAnnuncio.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // check runtime permission
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                                        == PackageManager.PERMISSION_DENIED) {
-                                    // permission not granted
-                                    String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                                    // show popup for runtime permission
-                                    requestPermissions(permission, PERMISSION_CODE);
-                                } else { // permission alredy granted
-                                    cambiaImm();
-                                }
-                            } else { // system os is less then Marshmallow
-                                cambiaImm();
-                            }
-                        }
-                    });
-                }
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
