@@ -137,6 +137,7 @@ public class ProfiloProprietario extends AppCompatActivity {
         listaRecensioniProprietario = new ArrayList<>();
         b_nuovaCasa = findViewById(R.id.aggiungiCasa);
         b_nuovaCasa.setVisibility(View.GONE);
+        listViewCase.setVerticalScrollBarEnabled(false);
 
         //PRENDO I RIFERIMENTI A TUTTE LE RECENSIONI DEL PROPRIETARIO
         myRef.child("Recensioni_Proprietario").child(idUtente).addValueEventListener(new ValueEventListener() {
