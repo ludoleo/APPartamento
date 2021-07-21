@@ -112,7 +112,6 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         //Autenticazione
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
-        //Mi prendo le informazioni sugli inquilini
 
         calendarViewCambio.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -225,10 +224,6 @@ public class ProfiloPrenotazione extends AppCompatActivity {
             }else
                 myRef.child("Prenotazioni").child(id).removeValue();
         }
-    }
-
-    private void init(){
-
     }
 
     private void initTextView() {
@@ -441,9 +436,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
     }
-
 
     //crea l'alarm che ricorda la prenotazione confermata----------------------
 
@@ -461,9 +454,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         calendar.set(Calendar.DAY_OF_MONTH, 20);
         calendar.set(Calendar.MINUTE, 30);
         //calendar.set();
-
         alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), alarmIntent);
-
         //se devo cancellare un alarm uso alarmManager.cancel(alarmIntent);
 
     }

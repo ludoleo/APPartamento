@@ -48,7 +48,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     private static final String TAG = "preferito ";
     private CheckBox IsPrefetito;
 
-
     //parametri necessari per riempire la pagina
     private Annuncio annuncio;
     private Proprietario proprietario;
@@ -155,7 +154,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                         annuncio = a;
                 }
                 riferimentoCasa();
-                caricaImmaginiAnnuncio(idAnnuncio);
+                //caricaImmaginiAnnuncio(idAnnuncio);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -173,8 +172,9 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                         for (StorageReference item : listResult.getItems()) {
                             // All the items under listRef.
                             Log.i(TAG," item : "+item.toString());
-                            Uri uri = Uri.parse(item.toString());
-                            imageIs.setImageURI(uri);
+                            //Uri uri = Uri.parse(item.toString());
+                            //imageIs.setImageURI(uri);
+
                         }
                     }
                 })
@@ -184,7 +184,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                         // Uh-oh, an error occurred!
                     }
                 });
-
     }
 
     private void riferimentoCasa() {
@@ -199,7 +198,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                 }
                 riferimentoProprietario();
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -218,7 +216,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                 }
                 aggiornaSchermata();
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
