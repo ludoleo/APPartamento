@@ -281,10 +281,5 @@ public class ProfiloAnnuncio extends AppCompatActivity {
 
     }
 
-    public void immagineIndietro(View view) {
-    }
-
-    public void immagineDopo(View view) {
-    }
 }
 
