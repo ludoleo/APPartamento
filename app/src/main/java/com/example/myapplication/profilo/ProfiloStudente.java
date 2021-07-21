@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -20,12 +21,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Helper;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.RecensioneStudente;
@@ -180,6 +181,8 @@ public class ProfiloStudente extends AppCompatActivity {
                             String[] hobby = studente.getHobby().split("-");
                             arrayAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.row_item_list_hobby, hobby);
                             listViewHobby.setAdapter(arrayAdapter);
+                            //USO UN HELPER
+                            Helper.getListViewSize(listViewHobby);
                             //CONTROLLO SE PRIMA ESPERIENZA
                             if(studente.getPrimaEsperienza().compareTo("SI")==0)
                                 tv_primaEsperienza.setVisibility(View.VISIBLE);
@@ -381,7 +384,9 @@ public class ProfiloStudente extends AppCompatActivity {
             }
         };
         listViewRecensioni.setAdapter(ArrayAdapter);
+
     }
+
     // CUSTOM ITEM
     private static class CustomItem {
         public String recensore;
