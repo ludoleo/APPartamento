@@ -14,29 +14,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageSwitcher
+        <ImageView
             android:id="@+id/imageAnnuncio"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:background="@color/quantum_black_divider"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/previsiousBtnAnnuncio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/precedente"
-                android:onClick="immagineIndietro"/>
-            <Button
-                android:id="@+id/nextBtnAnnuncio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/successivo"
-                android:onClick="immagineDopo" />
-        </LinearLayout>
 
         <TextView
             android:id="@+id/et_nomeAnnuncio"
@@ -48,14 +30,6 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="inserisciFoto"
-            android:text="Inserisci foto annuncio"
-            android:translationX="70dp"
-            android:visibility="visible" />
 
         <LinearLayout
             android:layout_width="match_parent"

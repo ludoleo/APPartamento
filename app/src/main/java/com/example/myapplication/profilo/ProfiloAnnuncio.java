@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageSwitcher;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,7 +59,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
             et_tipologiaStanza, et_prezzo, et_proprietario, et_ospiti, et_numeroCamere, et_num_bagni, descrizioneAnnuncio;
 
     Button b_prenota;
-    private ImageSwitcher imageIs;
+    private ImageView imageIs;
 
     //Database
     private FirebaseDatabase database;
@@ -95,7 +96,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         b_prenota = (Button) findViewById(R.id.b_prenota);
         b_prenota.setVisibility(View.GONE);
         //GESTIONE IMMAGINI
-        imageIs = findViewById(R.id.imageis);
+        imageIs = findViewById(R.id.imageAnnuncio);
         storage = FirebaseStorage.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         //INIZIALIZZO
@@ -154,7 +155,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                         annuncio = a;
                 }
                 riferimentoCasa();
-                //caricaImmaginiAnnuncio(idAnnuncio);
+                caricaImmaginiAnnuncio(idAnnuncio);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -165,25 +166,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     private void caricaImmaginiAnnuncio(String idAnnuncio) {
 
         StorageReference listRef = storage.getReference().child("Annuncio/"+idAnnuncio);
-        listRef.listAll()
-                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
-                    @Override
-                    public void onSuccess(ListResult listResult) {
-                        for (StorageReference item : listResult.getItems()) {
-                            // All the items under listRef.
-                            Log.i(TAG," item : "+item.toString());
-                            //Uri uri = Uri.parse(item.toString());
-                            //imageIs.setImageURI(uri);
 
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Uh-oh, an error occurred!
-                    }
-                });
     }
 
     private void riferimentoCasa() {
