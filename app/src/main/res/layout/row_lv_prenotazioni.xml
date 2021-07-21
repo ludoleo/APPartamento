@@ -14,6 +14,12 @@
         android:textColor="@color/rosso_scuro"
         android:textStyle="bold"></TextView>
 
+    <View
+        android:id="@+id/divider8"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/rosso_scuro" />
+
     <TextView
         android:id="@+id/tv_dataPrenotazione"
         android:layout_width="wrap_content"
@@ -29,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="5dp"
+        android:textAllCaps="true"
         android:textColor="@color/rosso_scuro"></TextView>
 
     <TextView
@@ -36,6 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:drawableLeft="@drawable/ic_outline_person_pin_circle_rosa_24"
         android:padding="5dp"
         android:textColor="@color/rosso_scuro"></TextView>
 
@@ -55,6 +63,12 @@
         android:layout_gravity="center"
         android:padding="5dp"
         android:textColor="@color/rosso_scuro"></TextView>
+
+    <View
+        android:id="@+id/divider9"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/rosso_scuro" />
 
     <TextView
         android:id="@+id/tv_id_prenotazione"
