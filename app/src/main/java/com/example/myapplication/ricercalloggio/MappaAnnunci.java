@@ -258,7 +258,7 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
         };
         listView.setAdapter(arrayAdapter);
         Helper.getListViewSize(listView);
-        //aggista-------
+        //aggista--------
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
