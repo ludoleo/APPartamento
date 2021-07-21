@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Helper;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Proprietario;
@@ -137,7 +138,6 @@ public class ProfiloProprietario extends AppCompatActivity {
         listaRecensioniProprietario = new ArrayList<>();
         b_nuovaCasa = findViewById(R.id.aggiungiCasa);
         b_nuovaCasa.setVisibility(View.GONE);
-        listViewCase.setVerticalScrollBarEnabled(false);
 
         //PRENDO I RIFERIMENTI A TUTTE LE RECENSIONI DEL PROPRIETARIO
         myRef.child("Recensioni_Proprietario").child(idUtente).addValueEventListener(new ValueEventListener() {
@@ -311,6 +311,7 @@ public class ProfiloProprietario extends AppCompatActivity {
         };
 
         listViewCase.setAdapter(arrayAdapter);
+        Helper.getListViewSize(listViewCase);
         listViewCase.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -389,6 +390,7 @@ public class ProfiloProprietario extends AppCompatActivity {
             }
         };
         listViewRecensioni.setAdapter(ArrayAdapter);
+        Helper.getListViewSize(listViewRecensioni);
     }
     // CUSTOM ITEM
     private static class CustomItemRecensioni {

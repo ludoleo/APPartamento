@@ -384,6 +384,7 @@ public class ProfiloStudente extends AppCompatActivity {
             }
         };
         listViewRecensioni.setAdapter(ArrayAdapter);
+        Helper.getListViewSize(listViewRecensioni);
 
     }
 

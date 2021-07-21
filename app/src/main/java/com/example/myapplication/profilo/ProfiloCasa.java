@@ -26,6 +26,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Helper;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Inquilino;
@@ -166,7 +167,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         b_aggiungiAnnuncio = (Button) findViewById(R.id.button_aggiungiAnnuncio);
         //lirendo visibili solo al proprietario loggato
         b_aggiungiAnnuncio.setVisibility(View.GONE);
-       // b_aggiungiRecensione.setVisibility(View.GONE);
 
         listaStudenti = new LinkedList<Studente>();
         listaRecensioniCasa = new LinkedList<RecensioneCasa>();
@@ -620,6 +620,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             }
         };
         listaCoinquilini.setAdapter(ArrayAdapter);
+        Helper.getListViewSize(listaCoinquilini);
         listaCoinquilini.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -662,6 +663,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             }
         };
         listaRecensioni.setAdapter(ArrayAdapter);
+        Helper.getListViewSize(listaRecensioni);
 
     }
     // CUSTOM ITEMS

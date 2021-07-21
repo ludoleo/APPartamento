@@ -97,7 +97,7 @@
             <ListView
                 android:id="@+id/lv_case_prop"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"></ListView>
+                android:layout_height="match_parent"></ListView>
 
             <Button
                 android:id="@+id/aggiungiCasa"
@@ -130,8 +130,8 @@
 
             <ListView
                 android:id="@+id/listView_recensioni_proprietario"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"></ListView>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></ListView>
 
 
         </LinearLayout>
