@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.myapplication.DownloadFiles;
 import com.example.myapplication.NotesSqlMain;
 import com.example.myapplication.bollettaSQL.ImageSQL;
 import com.example.myapplication.R;
@@ -61,5 +62,8 @@ public class ModificaProfilo extends AppCompatActivity {
 
     }
 
-
+    public void vaiAiContratti(View view) {
+        Intent intent = new Intent(ModificaProfilo.this, DownloadFiles.class);
+        startActivity(intent);
+    }
 }
