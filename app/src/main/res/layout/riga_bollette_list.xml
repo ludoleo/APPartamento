@@ -10,7 +10,10 @@
         android:id="@+id/bulet"
         android:layout_width="match_parent"
         android:layout_height="37dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/rosso_scuro"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/imageViewbulet"

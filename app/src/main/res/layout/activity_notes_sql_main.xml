@@ -4,75 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NotesSqlMain"
-    android:padding="10dp">
+    android:background="@drawable/sfondo_activity"
+    android:padding="10dp"
+    tools:context=".NotesSqlMain">
+
     <TextView
+        android:id="@+id/tx_nota"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Inserire Nota "
-        android:layout_margin="20dp"
-        android:id="@+id/tx_nota"/>
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Inserire Nota " />
+
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/Titolo"
-        android:hint="titolo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/tx_nota"
-        android:inputType="textPersonName"/>
+        android:layout_margin="10dp"
+        android:hint="titolo"
+        android:inputType="textPersonName" />
+
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/Descrizione"
-        android:hint="Descrizione"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/Titolo"
+        android:layout_margin="10dp"
 
-        android:inputType="textMultiLine"/>
+        android:hint="Descrizione"
+        android:inputType="textMultiLine" />
+
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/ValutazioneNota"
-        android:hint="Valutazione"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/Descrizione"
-        android:inputType="textPersonName"/>
+        android:layout_margin="10dp"
+        android:hint="Valutazione"
+        android:inputType="textPersonName" />
+
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/ZonaNota"
-        android:hint="Zona"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/ValutazioneNota"
-        android:inputType="textPersonName"/>
+        android:layout_margin="10dp"
+        android:hint="Zona"
+        android:inputType="textPersonName" />
+
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/btnInsert"
-        android:text="Insert Nuova Nota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ValutazioneNota"
+        android:layout_margin="20dp"
         android:layout_marginTop="30dp"
-    android:layout_below="@+id/ValutazioneNota"/>
+        android:text="Inserire Nuova Nota" />
+
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/btnUpdate"
-        android:text="Update Nuova Nota"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/btnInsert"/>
-    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/btnInsert"
+        android:layout_margin="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Update Nuova Nota" />
+
+    <Button
         android:id="@+id/btnDelete"
-        android:text="Delete Nuova Nota"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/btnUpdate"/>
-    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnView"
-        android:text="View Nuova Nota"
+        android:layout_below="@+id/btnUpdate"
+        android:layout_margin="10dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/btnDelete"/>
+        android:text="Eliminare Nota" />
 
-
-
-
+    <Button
+        android:id="@+id/btnView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnDelete"
+        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Visualizzare Nota" />
 
 
 </RelativeLayout>

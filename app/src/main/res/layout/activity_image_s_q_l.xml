@@ -13,17 +13,18 @@
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/nomeBolletta"
         android:inputType="textEmailAddress"
-        android:autofillHints="" />
+        android:textSize="24sp" />
 
     <ImageView
         android:id="@+id/bolletta"
         android:layout_width="match_parent"
         android:layout_height="289dp"
         android:contentDescription="@string/cambiaImmagine"
-        app:srcCompat="@drawable/ic_baseline_add_a_photo_24" />
+        app:srcCompat="@drawable/ic_outline_insert_photo_24" />
 
     <Button
         android:id="@+id/bottone_aggiungi_bolletta"
