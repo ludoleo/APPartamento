@@ -45,8 +45,8 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_baseline_star_rate_24"
-                android:text="Punteggio :" />
+                android:text="Punteggio :"
+                android:drawableLeft="@drawable/ic_baseline_star_rate_24" />
 
             <TextView
                 android:id="@+id/et_punteggio"
@@ -239,24 +239,6 @@
                 android:textColor="@color/rosso_scuro"
                 android:textSize="18sp" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/servizi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="Elenco dei servizi"
-            android:textAllCaps="true"
-            android:textColor="@color/rosso_scuro"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <ListView
-            android:id="@+id/arrayListServizi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:scrollbars="none"></ListView>
 
         <TextView
             android:id="@+id/descrizioneAnnuncio"

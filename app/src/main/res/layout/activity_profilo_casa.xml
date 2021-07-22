@@ -80,6 +80,38 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/servizi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Elenco dei servizi"
+                    android:textAllCaps="true"
+                    android:textColor="@color/rosso_scuro"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <ListView
+                    android:id="@+id/listView_serviziProfilo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp"
+                    android:scrollbars="none"></ListView>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider7"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/rosso_scuro"
+                android:padding="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -91,26 +123,36 @@
                     android:text="Aggiungi Annuncio"></Button>
             </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/visualizzaCoinquilini"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Inquilini :"
-                android:textAllCaps="true"
-                android:textColor="@color/rosso_scuro"
-                android:textSize="24sp"
-                android:textStyle="bold|italic" />
-            <ListView
-                android:id="@+id/lv_inquiliniLaTuaCasa"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/visualizzaCoinquilini"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Inquilini :"
+                    android:textAllCaps="true"
+                    android:textColor="@color/rosso_scuro"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <ListView
+                    android:id="@+id/lv_inquiliniLaTuaCasa"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></ListView>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider13"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></ListView>
-        </LinearLayout>
-        <LinearLayout
+                android:layout_height="2dp"
+                android:background="@color/rosso_scuro"
+                android:padding="5dp" />
+
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -122,13 +164,19 @@
                 android:text="Recensioni ricevute:"
                 android:textAllCaps="true"
                 android:textColor="@color/rosso_scuro"
-                android:textSize="24sp"
-                android:textStyle="bold|italic" />
+                android:textSize="25sp"
+                android:textStyle="bold" />
             <ListView
                 android:id="@+id/listRecCasa"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
             </LinearLayout>
+
+            <View
+                android:id="@+id/divider10"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/rosso_scuro" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

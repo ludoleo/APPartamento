@@ -93,6 +93,9 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     List<Studente> coinquilini;
     List<RecensioneCasa> listaRecensioniCasa;
 
+    ListView listViewServizi;
+    ArrayAdapter<String> arrayAdapter;
+
     TextView laTuaCasa, ilProprietario, valutazioneProprietario, valutazioneCasa ;
     Button  b_aggiungiAnnuncio;
     //MAPPA
@@ -129,6 +132,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         valutazioneProprietario = (TextView) findViewById(R.id.tv_valutazioneProprietarioCasaTua);
         valutazioneCasa = (TextView) findViewById(R.id.tv_valutazioneCasaTua);
         immagineCasa = findViewById(R.id.immagineCasa);
+        listViewServizi = findViewById(R.id.listView_serviziProfilo);
 
         //STORAGE
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -188,6 +192,12 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                     Casa i = lcase.getValue(Casa.class);
                     if(i.getNomeCasa().compareTo(getIntent().getExtras().getString("nomeCasa"))==0){
                         casa=i;
+                        //POPOLO LISTA DI SERVIZI
+                        String[] servizi = casa.getServizi().split("-");
+                        arrayAdapter = new ArrayAdapter<String>(getBaseContext() , R.layout.row_item_list_hobby, servizi);
+                        Log.i(TAG,"servizi "+casa.getServizi());
+                        listViewServizi.setAdapter(arrayAdapter);
+                        Helper.getListViewSize(listViewServizi);
                     }
                 }
 
@@ -211,6 +221,8 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                 //CARICO IL NOME DELLA CASA
                 laTuaCasa.setText(casa.getNomeCasa());
                 valutazioneCasa.setText("  "+String.format("%.2f" ,casa.getValutazione())+" su "+casa.getNumRec()+" recensioni!");
+
+
 
                 //CERCO IL RIFERIMENTO AL PROPRIETARIO
                 riferimentoProprietario();
