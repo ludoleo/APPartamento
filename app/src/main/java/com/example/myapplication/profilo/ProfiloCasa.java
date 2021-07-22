@@ -15,6 +15,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -32,6 +35,7 @@ import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.classi.RecensioneCasa;
 import com.example.myapplication.classi.Studente;
+import com.example.myapplication.home.Home;
 import com.example.myapplication.recensione.NuovaRecensioneCasa;
 import com.example.myapplication.registrazione.InserimentoDatiAnnuncio;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -712,6 +716,29 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         }
         return items;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_profilo, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.home:
+                startActivity(new Intent(ProfiloCasa.this, Home.class));
+                return true;
+
+        }
+
+        return false;
+    }
+
 
     //METODI OVERRIDE
     @Override
