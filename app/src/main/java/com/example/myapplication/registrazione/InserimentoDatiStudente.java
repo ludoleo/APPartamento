@@ -167,5 +167,5 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         et_universita.setText("");
         cb_primaEsperienza.setChecked(false);
     }
-
+    //tolto i call back
 }
