@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -86,6 +87,8 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
     private static final int IMAG_REQUEST = 1000;
     private static final int PERMISSION_CODE = 1001;
+    private static final int MILLE_METRI = 1000;
+    private static final int DUEMILA_METRI = 2000;
 
 
     ImageView immagineCasa;
@@ -96,7 +99,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     ListView listViewServizi;
     ArrayAdapter<String> arrayAdapter;
 
-    TextView laTuaCasa, ilProprietario, valutazioneProprietario, valutazioneCasa ;
+    TextView laTuaCasa, ilProprietario, valutazioneProprietario, valutazioneCasa , distanzaMappa;
     Button  b_aggiungiAnnuncio;
     //MAPPA
     MapView mapViewCasa;
@@ -128,11 +131,14 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         createMapView(savedInstanceState);
 
         laTuaCasa = (TextView) findViewById(R.id.tv_laTuaCasa);
+        distanzaMappa = (TextView) findViewById(R.id.distanzaMappa);
         ilProprietario = (TextView) findViewById(R.id.tv_proprietarioLaTuaCasa);
         valutazioneProprietario = (TextView) findViewById(R.id.tv_valutazioneProprietarioCasaTua);
         valutazioneCasa = (TextView) findViewById(R.id.tv_valutazioneCasaTua);
         immagineCasa = findViewById(R.id.immagineCasa);
         listViewServizi = findViewById(R.id.listView_serviziProfilo);
+
+        distanzaMappa.setVisibility(View.GONE);
 
         //STORAGE
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -487,16 +493,39 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 
     }
     public void drawPolylines(){
-        PolylineOptions plo = new PolylineOptions();
 
-        for (LatLng latLng : polylinePoints){
+        distanzaMappa.setVisibility(View.VISIBLE);
+        PolylineOptions plo = new PolylineOptions();
+        float distance = 0;
+
+        for (int i=0; i<polylinePoints.size();i++){
             // disegno la polyline
-            plo.add(latLng);
+            if(i>0){
+                float[] result = new float[2];
+                Location.distanceBetween(polylinePoints.get(i-1).latitude, polylinePoints.get(i-1).longitude,
+                        polylinePoints.get(i).latitude, polylinePoints.get(i).longitude,result);
+                distance+=result[0];
+            }
+            plo.add(polylinePoints.get(i));
             plo.color(Color.RED);
             plo.width(10);
         }
-
         gmap.addPolyline(plo);
+        String testo = "";
+        float val = distance/MILLE_METRI;
+        if(distance < MILLE_METRI){
+            testo+= "L'università dista solo "+String.format("%.2f", val)+" km! Meno di un quarto d'ora a piedi!";
+            distanzaMappa.setTextColor(Color.GREEN);
+        }else if(distance < DUEMILA_METRI){
+            testo+= "L'università si trova a "+String.format("%.2f", val)+" km dalla casa, non troppo distante!";
+            distanzaMappa.setTextColor(Color.GRAY);
+        }else{
+            testo+= "L'università si trova a "+String.format("%.2f", val)+" km dalla casa. Prova a cercare qualcosa di più vicino!";
+            distanzaMappa.setTextColor(Color.RED);
+        }
+
+        distanzaMappa.setText(testo);
+        Log.i(TAG,"distanza: "+distance);
 
     }
 
