@@ -101,6 +101,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Inquilini :"
+                android:textAllCaps="true"
+                android:textColor="@color/rosso_scuro"
                 android:textSize="24sp"
                 android:textStyle="bold|italic" />
             <ListView
@@ -112,13 +114,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/visualizzaRec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Recensioni ricevute:"
+                android:textAllCaps="true"
+                android:textColor="@color/rosso_scuro"
                 android:textSize="24sp"
-                android:textStyle="bold|italic"/>
+                android:textStyle="bold|italic" />
             <ListView
                 android:id="@+id/listRecCasa"
                 android:layout_width="match_parent"
