@@ -82,7 +82,7 @@
         android:translationY="20dp" />
 
     <RadioGroup
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginEnd="5dp"
@@ -93,21 +93,30 @@
 
         <RadioButton
             android:id="@+id/radioButtonTriennale"
-            android:layout_width="183dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:checked="true"
+            android:layout_weight="1"
             android:text="@string/triennale"
             android:textColor="@color/ic_launcher_background" />
-
+         <RadioButton
+            android:id="@+id/radioButtonCicloUnico"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:checked="true"
+             android:layout_weight="1"
+            android:text="Ciclo unico"
+            android:textColor="@color/ic_launcher_background" />
         <RadioButton
             android:id="@+id/radioButtonMagistrale"
-            android:layout_width="183dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:layout_weight="1"
             android:text="@string/magistrale"
             android:textColor="@color/ic_launcher_background" />
     </RadioGroup>
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/et_inidirizzoLaurea"
         android:layout_width="367dp"
         android:layout_height="50dp"

@@ -172,7 +172,7 @@
     <string name="alarm_notif_text">Nuova notifica</string>
     <string name="etichetta2">nome</string>
 
-    <string-array name="politoTriennale">
+    <string-array name="indirizzoUniversita">
         <item>Architettura</item>
         <item>Architecture</item>
         <item>Design e Comunicazione</item>
@@ -202,9 +202,7 @@
         <item>Matematica per l ingegneria</item>
         <item>Pianificazione territoriale, urbanistica e paesaggistico-ambientale</item>
         <item>Tecnologie per l industria manifatturiera</item>
-    </string-array>
 
-    <string-array name="politoMagistrale">
         <item>Architettura Costruzione Citta</item>
         <item>Architecture Construction City</item>
         <item>Architettura per il patrimonio</item>
@@ -246,9 +244,6 @@
         <item>Physics of complex system</item>
         <item>Fisica dei sistemi complessi</item>
 
-    </string-array>
-
-    <string-array name="unito">
         <item>Amministrazione aziendale</item>
         <item>Business and Management</item>
         <item>Economia Aziendale</item>

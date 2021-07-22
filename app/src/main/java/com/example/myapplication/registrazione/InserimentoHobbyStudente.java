@@ -30,11 +30,12 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
     private static final String TAG = "InserimentoHobbyStudente";
     ListView listView;
     ArrayAdapter<String> arrayAdapter;
-
-
     //Database
     FirebaseDatabase database;
     DatabaseReference myRef;
+    FirebaseAuth mAuth;
+    FirebaseUser user;
+
     String idUtente = "";
 
     String[] hobby = {"Giochi da tavolo", "Scacchi", "Cucina", "Fotografia",
@@ -53,7 +54,10 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
         myRef = database.getReference();
-        idUtente = getIntent().getExtras().getString("idUtente");
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
+        idUtente = getIntent().getExtras().getString("idStudente");
     }
 
     @Override
