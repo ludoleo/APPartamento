@@ -344,5 +344,22 @@ public class ProfiloAnnuncio extends AppCompatActivity {
 
         return false;
     }
+
+    public void profiloProprietario1(View view) {
+
+
+        Intent intent = new Intent(this, ProfiloProprietario.class);
+        intent.putExtra("idProprietario", proprietario.getIdUtente());
+        startActivity(intent);
+
+    }
+
+    public void profiloCasa(View view) {
+
+        Intent intent = new Intent(this, ProfiloCasa.class);
+        intent.putExtra("nomeCasa", casa.getNomeCasa());
+        startActivity(intent);
+
+    }
 }
 
