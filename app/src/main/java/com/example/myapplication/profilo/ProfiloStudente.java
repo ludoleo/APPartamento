@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Helper;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.RecensioneStudente;
@@ -179,6 +181,8 @@ public class ProfiloStudente extends AppCompatActivity {
                             String[] hobby = studente.getHobby().split("-");
                             arrayAdapter = new ArrayAdapter<String>(getBaseContext(), R.layout.row_item_list_hobby, hobby);
                             listViewHobby.setAdapter(arrayAdapter);
+                            //USO UN HELPER
+                            Helper.getListViewSize(listViewHobby);
                             //CONTROLLO SE PRIMA ESPERIENZA
                             if(studente.getPrimaEsperienza().compareTo("SI")==0)
                                 tv_primaEsperienza.setVisibility(View.VISIBLE);
@@ -380,7 +384,10 @@ public class ProfiloStudente extends AppCompatActivity {
             }
         };
         listViewRecensioni.setAdapter(ArrayAdapter);
+        Helper.getListViewSize(listViewRecensioni);
+
     }
+
     // CUSTOM ITEM
     private static class CustomItem {
         public String recensore;
@@ -390,7 +397,6 @@ public class ProfiloStudente extends AppCompatActivity {
 
     private ProfiloStudente.CustomItem[] createItems() {
 
-        //Log.i(TAG, ""+listaRecensioni.size());
         int size =listaRecensioniUtente.size();
 
         ProfiloStudente.CustomItem[] items = new ProfiloStudente.CustomItem[size]; //numero di annunci possibili
@@ -421,25 +427,6 @@ public class ProfiloStudente extends AppCompatActivity {
         i.putExtra("nomeCasa",nomeCasa);
         startActivity(i);
     }
-    //METODO DA AGGIUNGERE IN SECONDA SEDE
-    private boolean userIsCoinquilino() {
-        boolean isCoinquilino = false;
-        for(Inquilino inq : listaInquilini){
-            //SE L'USER E' STATO COINQUILINO
-            if(inq.getStudente().compareTo(user.getEmail())==0 && inq.getDataFine()>0){
-                for(Inquilino inq2 : listaInquilini){
-                    //SE LO STUDENTE DEL PROFILO E' STATO UN COINQUILONO
-                    if(inq2.getStudente().compareTo(studente.getEmail())==0){
-                        //SE DELLA STESSA CASA E SE E' NON LO E' PIU'
-                        if(inq.getCasa().compareTo(inq2.getCasa())==0 && inq.getDataFine()>0)
-                            isCoinquilino = true;
-                    }
-                }
-            }
-        }
-        return isCoinquilino;
-    }
-
     public boolean isUser(){
         if(user!=null){
             if(user.getUid().compareTo(getIntent().getExtras().getString("idStudente"))==0)

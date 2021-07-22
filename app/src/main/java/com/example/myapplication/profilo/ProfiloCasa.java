@@ -29,6 +29,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Helper;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Inquilino;
@@ -149,20 +150,20 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 // check runtime permission
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                            == PackageManager.PERMISSION_DENIED){
-                        // permission not granted
-                        String [] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                        // show popup for runtime permission
-                        requestPermissions(permission,PERMISSION_CODE);
-                    }
-                    else { // permission alredy granted
+                if(user!=null && user.getUid().compareTo(casa.getProprietario())==0) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                == PackageManager.PERMISSION_DENIED) {
+                            // permission not granted
+                            String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                            // show popup for runtime permission
+                            requestPermissions(permission, PERMISSION_CODE);
+                        } else { // permission alredy granted
+                            cambiaImm();
+                        }
+                    } else { // system os is less then Marshmallow
                         cambiaImm();
                     }
-                }
-                else { // system os is less then Marshmallow
-                    cambiaImm();
                 }
             }
         });
@@ -170,7 +171,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         b_aggiungiAnnuncio = (Button) findViewById(R.id.button_aggiungiAnnuncio);
         //lirendo visibili solo al proprietario loggato
         b_aggiungiAnnuncio.setVisibility(View.GONE);
-       // b_aggiungiRecensione.setVisibility(View.GONE);
 
         listaStudenti = new LinkedList<Studente>();
         listaRecensioniCasa = new LinkedList<RecensioneCasa>();
@@ -340,7 +340,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                     @Override
                     public void onSuccess(Uri uri) {
                         Picasso.get().load(uri).into(immagineCasa);
-                        casa.getImageView().setImageURI(uri);
                     }
                 });
             }
@@ -625,6 +624,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             }
         };
         listaCoinquilini.setAdapter(ArrayAdapter);
+        Helper.getListViewSize(listaCoinquilini);
         listaCoinquilini.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -667,6 +667,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             }
         };
         listaRecensioni.setAdapter(ArrayAdapter);
+        Helper.getListViewSize(listaRecensioni);
 
     }
     // CUSTOM ITEMS

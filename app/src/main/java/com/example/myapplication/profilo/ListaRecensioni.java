@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.myapplication.Helper;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Inquilino;
@@ -395,6 +396,7 @@ public class ListaRecensioni extends AppCompatActivity {
             }
         };
         lv_recensioni_effettuate_casa.setAdapter(ArrayAdapter);
+        Helper.getListViewSize(lv_recensioni_effettuate_casa);
     }
     private void fillListViewRecensioniProprietario() {
 
@@ -424,6 +426,7 @@ public class ListaRecensioni extends AppCompatActivity {
             }
         };
         lv_recensioni_effettuate_proprietario.setAdapter(ArrayAdapter);
+        Helper.getListViewSize(lv_recensioni_effettuate_proprietario);
     }
     private void fillListViewRecensioniStudenti() {
         ListaRecensioni.CustomItemRecensione[] items = createItemsRecensione(RECENSIONE_STUDENTE);
@@ -452,6 +455,7 @@ public class ListaRecensioni extends AppCompatActivity {
             }
         };
         lv_recensioni_effettuate_studente.setAdapter(ArrayAdapter);
+        Helper.getListViewSize(lv_recensioni_effettuate_studente);
     }
     // CUSTOM ITEMS
     private static class CustomItemRecensione {
@@ -613,6 +617,7 @@ public class ListaRecensioni extends AppCompatActivity {
             }
         };
         lv_recensioni_possibili_casa.setAdapter(ArrayAdapter);
+        Helper.getListViewSize(lv_recensioni_possibili_casa);
         //---- LISTENER
         lv_recensioni_possibili_casa.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -657,6 +662,7 @@ public class ListaRecensioni extends AppCompatActivity {
             }
         };
         lv_recensioni_possibili_proprietario.setAdapter(ArrayAdapter);
+        Helper.getListViewSize(lv_recensioni_possibili_proprietario);
         //---- LISTENER
         lv_recensioni_possibili_proprietario.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -700,6 +706,7 @@ public class ListaRecensioni extends AppCompatActivity {
             }
         };
         lv_recensioni_possibili_studente.setAdapter(ArrayAdapter);
+        Helper.getListViewSize(lv_recensioni_possibili_studente);
         //---- LISTENER
         lv_recensioni_possibili_studente.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

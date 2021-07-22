@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.Helper;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Proprietario;
@@ -137,7 +138,6 @@ public class ProfiloProprietario extends AppCompatActivity {
         listaRecensioniProprietario = new ArrayList<>();
         b_nuovaCasa = findViewById(R.id.aggiungiCasa);
         b_nuovaCasa.setVisibility(View.GONE);
-        listViewCase.setVerticalScrollBarEnabled(false);
 
         //PRENDO I RIFERIMENTI A TUTTE LE RECENSIONI DEL PROPRIETARIO
         myRef.child("Recensioni_Proprietario").child(idUtente).addValueEventListener(new ValueEventListener() {
@@ -277,7 +277,21 @@ public class ProfiloProprietario extends AppCompatActivity {
                 View rowView = inflater.inflate(R.layout.row_lv_lista_case_proprietario, null);
 
                 ImageView immagineCasa =
-                        (ImageView)rowView.findViewById(R.id.immagineCasa);
+                        (ImageView)rowView.findViewById(R.id.immagineCasaListaProfilo);
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                StorageReference profileRef = storageReference.child("Case/"+item.nomeCasa+"/profile.jpg");
+                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.i(TAG,"URI "+uri);
+                        Picasso.get().load(uri).into(immagineCasa);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
                 TextView nomeCasaView =
                         (TextView)rowView.findViewById(R.id.textViewNomeCasaProprietario);
                 TextView inidirizzoCasaView =
@@ -297,6 +311,7 @@ public class ProfiloProprietario extends AppCompatActivity {
         };
 
         listViewCase.setAdapter(arrayAdapter);
+        Helper.getListViewSize(listViewCase);
         listViewCase.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -375,6 +390,7 @@ public class ProfiloProprietario extends AppCompatActivity {
             }
         };
         listViewRecensioni.setAdapter(ArrayAdapter);
+        Helper.getListViewSize(listViewRecensioni);
     }
     // CUSTOM ITEM
     private static class CustomItemRecensioni {
@@ -438,7 +454,7 @@ public class ProfiloProprietario extends AppCompatActivity {
     }
     public boolean isUser(){
         if(user!=null){
-        if(user.getUid().compareTo(getIntent().getExtras().getString("idProprietario"))==0)
+            if(user.getUid().compareTo(idUtente)==0)
             return true;}
         return false;
     }

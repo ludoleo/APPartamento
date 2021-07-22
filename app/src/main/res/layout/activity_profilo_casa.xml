@@ -91,31 +91,38 @@
                     android:text="Aggiungi Annuncio"></Button>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/visualizzaCoinquilini"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Inquilini :" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/visualizzaCoinquilini"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Inquilini :"
+                android:textSize="24sp"
+                android:textStyle="bold|italic" />
             <ListView
                 android:id="@+id/lv_inquiliniLaTuaCasa"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"></ListView>
-
+                android:layout_height="match_parent"></ListView>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/visualizzaRec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Recensioni ricevute:" />
-
+                android:text="Recensioni ricevute:"
+                android:textSize="24sp"
+                android:textStyle="bold|italic"/>
             <ListView
                 android:id="@+id/listRecCasa"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="match_parent" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

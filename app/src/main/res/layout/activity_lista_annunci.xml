@@ -42,7 +42,7 @@
     <ListView
         android:id="@+id/lv_elencoAnnunci"
         android:layout_width="match_parent"
-        android:layout_height="421dp"
+        android:layout_height="match_parent"
         android:divider="@drawable/ic_baseline_horizontal_rule_24">
 
     </ListView>

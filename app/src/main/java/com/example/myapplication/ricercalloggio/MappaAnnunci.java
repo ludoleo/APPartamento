@@ -1,9 +1,11 @@
 package com.example.myapplication.ricercalloggio;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.myapplication.Helper;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
@@ -29,11 +33,16 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -222,6 +231,22 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lv_lista_annunci, null);
+                ImageView imageViewCasa =
+                        (ImageView)rowView.findViewById(R.id.immagineAnnuncioLista);
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                StorageReference profileRef = storageReference.child("Annuncio/"+item.nomeCasa+"/foto0.jpg");
+                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.i(TAG,"URI "+uri);
+                        Picasso.get().load(uri).into(imageViewCasa);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
                 TextView nomeCasaView =
                         (TextView)rowView.findViewById(R.id.textViewNomeCasaLista);
                 TextView prezzoCasaView =
@@ -232,7 +257,8 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
             }
         };
         listView.setAdapter(arrayAdapter);
-        //aggista-------
+        Helper.getListViewSize(listView);
+        //aggista--------
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
@@ -252,7 +278,6 @@ public class MappaAnnunci extends AppCompatActivity implements OnMapReadyCallbac
         for (int i = 0; i < items.length; i++) {
             //mi prendo il riferimento all'annuncio
             Annuncio a = annunciCasa.get(i);
-
             items[i] = new ListaAnnunci.CustomItem();
             items[i].nomeCasa = a.getIdAnnuncio();
             items[i].prezzoCasa = a.getPrezzoMensile()+" Euro al mese";
