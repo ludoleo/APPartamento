@@ -76,6 +76,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -692,7 +694,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         ListView listaRecensioni = (ListView) findViewById(R.id.listRecCasa);
         ProfiloCasa.CustomItemRecensione[] items = createItemsRecensione();
         ArrayAdapter<ProfiloCasa.CustomItemRecensione> ArrayAdapter = new ArrayAdapter<ProfiloCasa.CustomItemRecensione>(
-                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+                this, R.layout.row_lista_recensioni, R.id.punteggioRec, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -702,15 +704,15 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
-                TextView recensore =
-                        (TextView)rowView.findViewById(R.id.nomeautore1);
+                TextView punteggio =
+                        (TextView)rowView.findViewById(R.id.punteggioRec);
                 TextView descrizione =
                         (TextView)rowView.findViewById(R.id.descrizioneRec);
-                recensore.setText(item.recensore);
+                punteggio.setText(String.format("%.2f" ,item.punteggio));
                 descrizione.setText(item.descrizione);
                 TextView dataRec =
                         (TextView) rowView.findViewById(R.id.dataRec);
-                dataRec.setText(item.dataRec.toString());
+                dataRec.setText(getDataOra(item.dataRec));
 
                 return rowView;
             }
@@ -719,9 +721,16 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         Helper.getListViewSize(listaRecensioni);
 
     }
+
+    private String getDataOra(Date dataRec) {
+        DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy");
+        String strDate = dateFormat.format(dataRec);
+        return strDate;
+    }
+
     // CUSTOM ITEMS
     private static class CustomItemRecensione {
-        public String recensore;
+        public float punteggio;
         public String descrizione;
         public Date dataRec;
     }
@@ -760,7 +769,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             RecensioneCasa rec= listaRecensioniCasa.get(i);
 
             items[i] = new ProfiloCasa.CustomItemRecensione();
-            items[i].recensore = rec.getRecensore();
+            items[i].punteggio = rec.getValutazioneMedia();
             items[i].descrizione= rec.getDescrizione();
             items[i].dataRec= rec.getDataRevisione();
         }

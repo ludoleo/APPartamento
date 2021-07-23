@@ -47,6 +47,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -365,7 +367,7 @@ public class ProfiloProprietario extends AppCompatActivity {
 
         ProfiloProprietario.CustomItemRecensioni[] items = createItemsRecensioni();
         ArrayAdapter<ProfiloProprietario.CustomItemRecensioni> ArrayAdapter = new ArrayAdapter<ProfiloProprietario.CustomItemRecensioni>(
-                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+                this, R.layout.row_lista_recensioni, R.id.punteggioRec, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -375,15 +377,15 @@ public class ProfiloProprietario extends AppCompatActivity {
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
-                TextView recensore =
-                        (TextView)rowView.findViewById(R.id.nomeautore1);
+                TextView punteggio =
+                        (TextView)rowView.findViewById(R.id.punteggioRec);
                 TextView descrizione =
                         (TextView)rowView.findViewById(R.id.descrizioneRec);
-                recensore.setText(item.recensore);
+                punteggio.setText(String.format("%.2f" ,item.punteggio));
                 descrizione.setText(item.descrizione);
                 TextView dataRec =
                         (TextView) rowView.findViewById(R.id.dataRec);
-                dataRec.setText(item.dataRec.toString());
+                dataRec.setText(getDataOra(item.dataRec));
 
                 return rowView;
             }
@@ -393,10 +395,15 @@ public class ProfiloProprietario extends AppCompatActivity {
     }
     // CUSTOM ITEM
     private static class CustomItemRecensioni {
-        public String recensore;
+        public float punteggio;
         public String descrizione;
         public Date dataRec;
 
+    }
+    public String getDataOra(Date data) {
+        DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy");
+        String strDate = dateFormat.format(data);
+        return strDate;
     }
 
     private ProfiloProprietario.CustomItemRecensioni[] createItemsRecensioni() {
@@ -409,9 +416,9 @@ public class ProfiloProprietario extends AppCompatActivity {
             RecensioneProprietario rec = listaRecensioniProprietario.get(i);
 
             items[i] = new ProfiloProprietario.CustomItemRecensioni();
-            items[i].recensore = rec.getRecensore();
-            items[i].descrizione= rec.getDescrizione();
-            items[i].dataRec= rec.getDataRevisione();
+            items[i].punteggio = rec.getValutazioneMedia();
+            items[i].descrizione = rec.getDescrizione();
+            items[i].dataRec = rec.getDataRevisione();
 
         }
         return items;

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.util.Linkify;
 import android.widget.TextView;
 
@@ -33,8 +34,9 @@ public class Assistenza extends AppCompatActivity {
         // scroll della text view
         assistenza1.setSingleLine(true);
         assistenza1.setHorizontallyScrolling(true);
-        assistenza1.setMarqueeRepeatLimit(1);
-        //assistenza1.setSelected(true);
+        assistenza1.setMarqueeRepeatLimit(-1);
+        assistenza1.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        assistenza1.setSelected(true);
         // Passo il font dalla cartella assets
         AssetManager assetManager = getResources().getAssets();
         Typeface assistenza = Typeface.createFromAsset(assetManager,"Font/APPartamento.ttf");

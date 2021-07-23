@@ -46,6 +46,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -360,7 +362,7 @@ public class ProfiloStudente extends AppCompatActivity {
         Log.i(TAG, ""+listaRecensioniUtente.size()+"  -  "+listaRecensioniUtente);
         ProfiloStudente.CustomItem[] items = createItems();
         ArrayAdapter<ProfiloStudente.CustomItem> ArrayAdapter = new ArrayAdapter<ProfiloStudente.CustomItem>(
-                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+                this, R.layout.row_lista_recensioni, R.id.punteggioRec, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -370,15 +372,15 @@ public class ProfiloStudente extends AppCompatActivity {
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
-                TextView recensore =
-                        (TextView)rowView.findViewById(R.id.nomeautore1);
-                recensore.setText(item.recensore);
+                TextView punteggio =
+                        (TextView)rowView.findViewById(R.id.punteggioRec);
+                punteggio.setText(String.format("%.2f" ,item.punteggio));
                 TextView descrizione =
                         (TextView)rowView.findViewById(R.id.descrizioneRec);
                 descrizione.setText(item.descrizione);
                 TextView dataRec =
                         (TextView) rowView.findViewById(R.id.dataRec);
-                dataRec.setText(item.dataRec.toString());
+                dataRec.setText(getDataOra(item.dataRec));
                 return rowView;
             }
         };
@@ -386,10 +388,15 @@ public class ProfiloStudente extends AppCompatActivity {
         Helper.getListViewSize(listViewRecensioni);
 
     }
+    public String getDataOra(Date data) {
+        DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy");
+        String strDate = dateFormat.format(data);
+        return strDate;
+    }
 
     // CUSTOM ITEM
     private static class CustomItem {
-        public String recensore;
+        public float punteggio;
         public String descrizione;
         public Date dataRec;
     }
@@ -404,7 +411,7 @@ public class ProfiloStudente extends AppCompatActivity {
             RecensioneStudente rec = listaRecensioniUtente.get(i);
 
             items[i] = new ProfiloStudente.CustomItem();
-            items[i].recensore = rec.getRecensore();
+            items[i].punteggio = rec.getValutazioneMedia();
             items[i].descrizione= rec.getDescrizione();
             items[i].dataRec= rec.getDataRevisione();
         }
