@@ -697,7 +697,7 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                 return null;
         }
     }
-    // CUSTOM ITEMS
+    // CUSTOM ITEMS ciao
     private static class CustomItemRecensione {
         public String recensore;
         public String descrizione;
