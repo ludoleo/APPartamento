@@ -32,7 +32,6 @@ import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.RecensioneStudente;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.recensione.NuovaRecensioneStudente;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -65,12 +64,13 @@ public class ProfiloStudente extends AppCompatActivity {
     TextView text_nome, text_cognome, text_descrizione, text_univerista, text_indirizzoLaure, hobbyStudente,
                 text_casaProfiloUtente, tv_profilo_nome_casa, tv_primaEsperienza;
     ListView listViewHobby, listViewRecensioni;
-    Button b_nuovaRecensione, rimuoviInquilino;
+    Button rimuoviInquilino;
     ArrayAdapter<String> arrayAdapter;
 
     List<RecensioneStudente> listaRecensioniUtente;
     //LO STUDENTE PU0' ESSERE INQUILINO
     List<Inquilino> listaInquilini;
+    List<Inquilino> inquiUser;
     Inquilino inquilino;
     String id_inquilino = "";
     String nomeCasa = "";
@@ -150,11 +150,10 @@ public class ProfiloStudente extends AppCompatActivity {
             listViewRecensioni = (ListView) findViewById(R.id.listView_recensioni_studente);
             listaRecensioniUtente = new ArrayList<>();
             //INIZIALIZZO I BOTTONI
-            b_nuovaRecensione = (Button) findViewById(R.id.b_nuovaRecensione);
             rimuoviInquilino = (Button) findViewById(R.id.b_rimuoviInquilino);
 
             //VISIBILITA
-            b_nuovaRecensione.setVisibility(View.GONE);
+
             rimuoviInquilino.setVisibility(View.GONE);
             text_casaProfiloUtente.setVisibility(View.GONE);
             tv_profilo_nome_casa.setVisibility(View.GONE);
@@ -188,6 +187,14 @@ public class ProfiloStudente extends AppCompatActivity {
                                 tv_primaEsperienza.setVisibility(View.VISIBLE);
                             //CONTROLLO SE LO STUDENTE SIA UN INQUILINO
                             studentIsInquilino(studente.getEmail());
+                            //I MIEI INQUILINI
+                            inquiUser = new LinkedList<>();
+                            for(Inquilino inqui : listaInquilini){
+                                if(inqui.getStudente().compareTo(studente.getEmail())==0)
+                                    inquiUser.add(inqui);
+                            }
+                            //PREPARO LE RECENSIONI
+                            initListViewRecensioni();
                         }
                     }
                 }
@@ -195,33 +202,24 @@ public class ProfiloStudente extends AppCompatActivity {
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
-            //PREPARO LE RECENSIONI
-            initListViewRecensioni();
     }
 
     private void initListViewRecensioni() {
-        // Preparazione ListView per l'elenco delle Recensioni
-        myRef.child("Recensioni_Studente").child(idUtente).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                for (DataSnapshot recStudData : datasnapshot.getChildren()) {
-                    RecensioneStudente rec = recStudData.getValue(RecensioneStudente.class);
-                    listaRecensioniUtente.add(rec);
+
+            myRef.child("Recensioni_Studente").child(idUtente).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                    for (DataSnapshot recStudData : datasnapshot.getChildren()) {
+                        RecensioneStudente recStu = recStudData.getValue(RecensioneStudente.class);
+                        listaRecensioniUtente.add(recStu);
+                    }
+                    aggiorna();
                 }
-                aggiorna();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) { }
-        });
-        b_nuovaRecensione.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent l = new Intent(ProfiloStudente.this, NuovaRecensioneStudente.class);
-                Log.i(TAG,"VADO IN NUOVA REC PER LO STUDENTE: "+idUtente);
-                l.putExtra("idStudente",idUtente);
-                startActivity(l);
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) { }
+            });
+
+
     }
 
     //METODO CHE DISATTIVA IL PULSANTE SE LO STUDENTE NON E' UN INQUILINO
@@ -347,7 +345,7 @@ public class ProfiloStudente extends AppCompatActivity {
 
             case R.id.recensioni:
 
-                Intent rec = new Intent(ProfiloStudente.this, ListaRecensioni.class);
+                Intent rec = new Intent(ProfiloStudente.this, ListaRecensioniUtente.class);
                 rec.putExtra("idStudente", idUtente);
                 startActivity(rec);
                 return true;
@@ -359,6 +357,7 @@ public class ProfiloStudente extends AppCompatActivity {
 
     //GESTIONE DELLE RECENSIONI
     private void aggiorna() {
+        Log.i(TAG, ""+listaRecensioniUtente.size()+"  -  "+listaRecensioniUtente);
         ProfiloStudente.CustomItem[] items = createItems();
         ArrayAdapter<ProfiloStudente.CustomItem> ArrayAdapter = new ArrayAdapter<ProfiloStudente.CustomItem>(
                 this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {

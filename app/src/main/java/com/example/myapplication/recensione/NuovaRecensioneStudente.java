@@ -147,7 +147,7 @@ public class NuovaRecensioneStudente extends AppCompatActivity {
         String recensore = getIntent().getExtras().getString("idRecensore");;
         RecensioneStudente recensioneStudente= new RecensioneStudente(data,descrizioneRec,valorePuliziaStud,valoreRispetto,valoreSocialita,valutazioneMedia,recensore,idRecensito);
         //PUSH
-        DatabaseReference recensioneStudenteAggiunta = myRef.child("Recensioni_Studente").child(idRecensito).push();
+        DatabaseReference recensioneStudenteAggiunta = myRef.child("Recensioni_Studente").child(utente.getIdUtente()).push();
         recensioneStudenteAggiunta.setValue(recensioneStudente);
         aggiornoDatiStudente(utente.getIdUtente());
         pulisciCampi();

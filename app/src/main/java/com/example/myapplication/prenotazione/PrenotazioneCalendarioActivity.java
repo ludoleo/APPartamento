@@ -40,7 +40,7 @@ import java.util.TimeZone;
 public class PrenotazioneCalendarioActivity extends AppCompatActivity {
 
     CalendarView calendarView;
-    Date dataSelzionata;
+    Date data;
     Spinner spinnerFasciaOraria;
     Long date;
 
@@ -115,7 +115,7 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
         }catch (Exception e){
             //TODO GESTISCI ECCEZIONE
         }
-
+        data = new Date();
         //Controllo sulla prenotazione
         myRef.child("Prenotazioni").addValueEventListener(new ValueEventListener() {
             @Override
@@ -123,8 +123,8 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
                 boolean uguale = false;
                 for (DataSnapshot preData: dataSnapshot.getChildren()) {
                     Prenotazione p = preData.getValue(Prenotazione.class);
-                    if((p.getEmailUtente1().equals(user.getEmail()) || p.getEmailUtente2().equals(user.getEmail()))
-                        && p.getIdAnnuncio().equals(idAnnuncio))
+                    if(((p.getEmailUtente1().equals(user.getEmail()) || p.getEmailUtente2().equals(user.getEmail()))
+                        && p.getIdAnnuncio().equals(idAnnuncio)) && data.getTime()<p.getDataPrenotazione())
                         uguale = true;
                 }
                 if(!uguale){

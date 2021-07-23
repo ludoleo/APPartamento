@@ -298,16 +298,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
-                <Button
-                    android:id="@+id/b_nuovaRecensione"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:gravity="center_horizontal"
-                    android:padding="5dp"
-                    android:text="Aggiungi recensione" />
-
             </LinearLayout>
 
         </LinearLayout>

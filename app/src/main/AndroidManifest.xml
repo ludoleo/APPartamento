@@ -29,7 +29,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".DownloadFiles"></activity>
+        <activity android:name=".profilo.ListaRecensioniUtente"></activity>
+        <activity android:name=".DownloadFiles" />
         <activity android:name=".profilo.ListaRecensioni" />
         <activity android:name=".prenotazione.ProfiloPrenotazione" />
         <activity android:name=".prenotazione.LeMiePrenotazioni" />

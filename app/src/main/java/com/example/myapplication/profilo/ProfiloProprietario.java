@@ -32,7 +32,6 @@ import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.classi.RecensioneProprietario;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.recensione.NuovaRecensioneProprietario;
 import com.example.myapplication.registrazione.InserimentoDatiCasa;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -446,7 +445,7 @@ public class ProfiloProprietario extends AppCompatActivity {
 
             case R.id.recensioni_prop:
 
-                Intent rec = new Intent(ProfiloProprietario.this, ListaRecensioni.class);
+                Intent rec = new Intent(ProfiloProprietario.this, ListaRecensioniUtente.class);
                 rec.putExtra("idProprietario", idUtente);
                 startActivity(rec);
                 return true;
