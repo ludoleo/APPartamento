@@ -54,6 +54,7 @@ import java.util.TimeZone;
 public class ProfiloPrenotazione extends AppCompatActivity {
 
     private static final String TAG = "PROFILO PRENOTAZIONE";
+    private static final int PERMISSION_READ_CALENDAR = 1 ;
     //Database
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -256,10 +257,46 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void confermaPrenotazione(View view) {
 
+
+    public void confermaPrenotazione(View view) {
         //LA PRENOTAZIONE DIVENTA CONFERMATA
         myRef.child("Prenotazioni").child(id).child("confermata").setValue(true);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_CALENDAR)) {
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_CALENDAR},PERMISSION_READ_CALENDAR);
+            }
+        }
+        else
+            aggiungiCalendario();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(ProfiloPrenotazione.this, "Permission granted", Toast.LENGTH_SHORT).show();
+
+            switch (requestCode) {
+
+                case PERMISSION_READ_CALENDAR:
+                    aggiungiCalendario();
+                    break;
+            }
+
+        }else{
+            Toast.makeText(ProfiloPrenotazione.this, "Permission denied", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void aggiungiCalendario() {
         //CALENDARIO
         String[] projection =
                 new String[]{
@@ -267,16 +304,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                         CalendarContract.Calendars.NAME,
                         CalendarContract.Calendars.ACCOUNT_NAME,
                         CalendarContract.Calendars.ACCOUNT_TYPE};
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
+
         Cursor cursor =
                 getContentResolver().
                         query(CalendarContract.Calendars.CONTENT_URI,
@@ -295,20 +323,20 @@ public class ProfiloPrenotazione extends AppCompatActivity {
 
         String orario = prenotazione.getOrario();
         int ora = 0;
-            if(orario.compareTo("8:00-10:00")==0)
-                ora = 8;
-            else if(orario.compareTo("10:00-12:00")==0)
-                ora = 10;
-            else if(orario.compareTo("12:00-14:00")==0)
-                ora = 12;
-            else if(orario.compareTo("14:00-16:00")==0)
-                ora = 14;
-            else if(orario.compareTo("16:00-18:00")==0)
-                ora = 16;
-            else if(orario.compareTo("18:00-20:00")==0)
-                ora = 18;
+        if(orario.compareTo("8:00-10:00")==0)
+            ora = 8;
+        else if(orario.compareTo("10:00-12:00")==0)
+            ora = 10;
+        else if(orario.compareTo("12:00-14:00")==0)
+            ora = 12;
+        else if(orario.compareTo("14:00-16:00")==0)
+            ora = 14;
+        else if(orario.compareTo("16:00-18:00")==0)
+            ora = 16;
+        else if(orario.compareTo("18:00-20:00")==0)
+            ora = 18;
 
-                            //AGGIUNGERE I PARAMETRI
+        //AGGIUNGERE I PARAMETRI
         Calendar cal = new GregorianCalendar(anno, mese, giorno);
         cal.setTimeZone(TimeZone.getDefault());
         cal.set(Calendar.HOUR, ora);
@@ -327,6 +355,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
 
         Intent i = new Intent(this, Home.class);
         startActivity(i);
+
     }
 
     public void cancella(View view) {
@@ -338,7 +367,6 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
     }
 
     public void modifica(View view) {
@@ -405,6 +433,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         //SE MI TROVO IN QUESTO METODO SONO IL PROPRIETARIO
         //CANCELLO la prenotazione
         DatabaseReference ref = database.getReference();
+        ref.child("Prenotazioni").child(id).removeValue();
 
         if(user.getEmail().compareTo(prenotazione.getEmailUtente1())==0){
             emailStudente = prenotazione.getEmailUtente2();
