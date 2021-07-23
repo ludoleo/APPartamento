@@ -13,6 +13,11 @@
             android:title="@string/home"
             app:showAsAction="never" />
 
+    <item
+        android:id="@+id/recensioni_prop"
+        android:title="Recensioni"
+        app:showAsAction="never" />
+
 
 
 </menu>

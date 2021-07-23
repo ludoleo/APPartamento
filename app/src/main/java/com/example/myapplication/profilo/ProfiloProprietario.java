@@ -444,6 +444,13 @@ public class ProfiloProprietario extends AppCompatActivity {
                 startActivity(new Intent(ProfiloProprietario.this,Home.class));
                 return true;
 
+            case R.id.recensioni_prop:
+
+                Intent rec = new Intent(ProfiloProprietario.this, ListaRecensioni.class);
+                rec.putExtra("idProprietario", idUtente);
+                startActivity(rec);
+                return true;
+
         }
         return false;
     }
