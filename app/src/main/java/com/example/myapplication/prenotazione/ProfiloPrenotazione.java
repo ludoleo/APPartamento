@@ -261,7 +261,6 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         //LA PRENOTAZIONE DIVENTA CONFERMATA
         myRef.child("Prenotazioni").child(id).child("confermata").setValue(true);
         //CALENDARIO
-        /*
         String[] projection =
                 new String[]{
                         CalendarContract.Calendars._ID,
@@ -325,8 +324,6 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                 getContentResolver().
                         insert(CalendarContract.Events.CONTENT_URI, values);
 
-
-         */
         Intent i = new Intent(this, Home.class);
         startActivity(i);
     }
