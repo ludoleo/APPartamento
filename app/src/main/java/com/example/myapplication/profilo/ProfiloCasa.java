@@ -497,7 +497,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         distanzaMappa.setVisibility(View.VISIBLE);
         PolylineOptions plo = new PolylineOptions();
         float distance = 0;
-
+        //DISTANZA TRA DUE LATLNG
         for (int i=0; i<polylinePoints.size();i++){
             // disegno la polyline
             if(i>0){
