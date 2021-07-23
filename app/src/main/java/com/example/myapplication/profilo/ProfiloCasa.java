@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -100,6 +101,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     ArrayAdapter<String> arrayAdapter;
 
     TextView laTuaCasa, ilProprietario, valutazioneProprietario, valutazioneCasa , distanzaMappa;
+    TextView tv_visualizzaCoinquilini, tv_visualizzaRec;
     Button  b_aggiungiAnnuncio;
     //MAPPA
     MapView mapViewCasa;
@@ -137,6 +139,8 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         valutazioneCasa = (TextView) findViewById(R.id.tv_valutazioneCasaTua);
         immagineCasa = findViewById(R.id.immagineCasa);
         listViewServizi = findViewById(R.id.listView_serviziProfilo);
+        tv_visualizzaCoinquilini = findViewById(R.id.visualizzaCoinquilini);
+        tv_visualizzaRec = findViewById(R.id.visualizzaRec);
 
         distanzaMappa.setVisibility(View.GONE);
 
@@ -215,6 +219,8 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                             RecensioneCasa recensioneCasa = recCasaData.getValue(RecensioneCasa.class);
                             listaRecensioniCasa.add(recensioneCasa);
                         }
+                        if(listaRecensioniCasa.isEmpty())
+                            tv_visualizzaRec.setVisibility(View.GONE);
                         aggiornaListViewRecensione();
                     }
 
@@ -267,6 +273,8 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                                             coinquilini.add(s);
                                     }
                                 }
+                                if(coinquilini.isEmpty())
+                                    tv_visualizzaCoinquilini.setVisibility(View.GONE);
                                 aggiornaListViewCoinquilini();
                             }
                             @Override
@@ -515,13 +523,13 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         float val = distance/MILLE_METRI;
         if(distance < MILLE_METRI){
             testo+= "L'università dista solo "+String.format("%.2f", val)+" km! Meno di un quarto d'ora a piedi!";
-            distanzaMappa.setTextColor(Color.GREEN);
+            distanzaMappa.setTextColor(getResources().getColor(R.color.verde));
         }else if(distance < DUEMILA_METRI){
             testo+= "L'università si trova a "+String.format("%.2f", val)+" km dalla casa, non troppo distante!";
-            distanzaMappa.setTextColor(Color.GRAY);
+            distanzaMappa.setTextColor(getResources().getColor(R.color.giallo));
         }else{
             testo+= "L'università si trova a "+String.format("%.2f", val)+" km dalla casa. Prova a cercare qualcosa di più vicino!";
-            distanzaMappa.setTextColor(Color.RED);
+            distanzaMappa.setTextColor(getResources().getColor(R.color.rosso_scuro));
         }
 
         distanzaMappa.setText(testo);
