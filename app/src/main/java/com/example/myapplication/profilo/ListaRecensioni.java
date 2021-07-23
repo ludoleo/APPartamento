@@ -36,6 +36,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -372,7 +374,7 @@ public class ListaRecensioni extends AppCompatActivity {
 
         ListaRecensioni.CustomItemRecensione[] items = createItemsRecensione(RECENSIONE_CASA);
         ArrayAdapter<ListaRecensioni.CustomItemRecensione> ArrayAdapter = new ArrayAdapter<ListaRecensioni.CustomItemRecensione>(
-                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+                this, R.layout.row_lista_recensioni, R.id.punteggioRec, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -382,15 +384,15 @@ public class ListaRecensioni extends AppCompatActivity {
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
-                TextView recensore =
-                        (TextView)rowView.findViewById(R.id.nomeautore1);
+                TextView punteggio =
+                        (TextView)rowView.findViewById(R.id.punteggioRec);
                 TextView descrizione =
                         (TextView)rowView.findViewById(R.id.descrizioneRec);
-                recensore.setText(item.recensore);
+                punteggio.setText(String.format("%.2f" ,item.punteggio));
                 descrizione.setText(item.descrizione);
                 TextView dataRec =
                         (TextView) rowView.findViewById(R.id.dataRec);
-                dataRec.setText(item.dataRec.toString());
+                dataRec.setText(getDataOra(item.dataRec));
 
                 return rowView;
             }
@@ -398,11 +400,18 @@ public class ListaRecensioni extends AppCompatActivity {
         lv_recensioni_effettuate_casa.setAdapter(ArrayAdapter);
         Helper.getListViewSize(lv_recensioni_effettuate_casa);
     }
+
+    public String getDataOra(Date data) {
+        DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy");
+        String strDate = dateFormat.format(data);
+        return strDate;
+    }
+
     private void fillListViewRecensioniProprietario() {
 
         ListaRecensioni.CustomItemRecensione[] items = createItemsRecensione(RECENSIONE_PROPRIETARIO);
         ArrayAdapter<ListaRecensioni.CustomItemRecensione> ArrayAdapter = new ArrayAdapter<ListaRecensioni.CustomItemRecensione>(
-                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+                this, R.layout.row_lista_recensioni, R.id.punteggioRec, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -412,15 +421,15 @@ public class ListaRecensioni extends AppCompatActivity {
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
-                TextView recensore =
-                        (TextView)rowView.findViewById(R.id.nomeautore1);
+                TextView punteggio =
+                        (TextView)rowView.findViewById(R.id.punteggioRec);
                 TextView descrizione =
                         (TextView)rowView.findViewById(R.id.descrizioneRec);
-                recensore.setText(item.recensore);
+                punteggio.setText(String.format("%.2f" ,item.punteggio));
                 descrizione.setText(item.descrizione);
                 TextView dataRec =
                         (TextView) rowView.findViewById(R.id.dataRec);
-                dataRec.setText(item.dataRec.toString());
+                dataRec.setText(getDataOra(item.dataRec));
 
                 return rowView;
             }
@@ -431,7 +440,7 @@ public class ListaRecensioni extends AppCompatActivity {
     private void fillListViewRecensioniStudenti() {
         ListaRecensioni.CustomItemRecensione[] items = createItemsRecensione(RECENSIONE_STUDENTE);
         ArrayAdapter<ListaRecensioni.CustomItemRecensione> ArrayAdapter = new ArrayAdapter<ListaRecensioni.CustomItemRecensione>(
-                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+                this, R.layout.row_lista_recensioni, R.id.punteggioRec, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -441,15 +450,15 @@ public class ListaRecensioni extends AppCompatActivity {
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
-                TextView recensore =
-                        (TextView)rowView.findViewById(R.id.nomeautore1);
+                TextView punteggio  =
+                        (TextView)rowView.findViewById(R.id.punteggioRec);
                 TextView descrizione =
                         (TextView)rowView.findViewById(R.id.descrizioneRec);
-                recensore.setText(item.recensore);
+                punteggio.setText(String.format("%.2f" ,item.punteggio));
                 descrizione.setText(item.descrizione);
                 TextView dataRec =
                         (TextView) rowView.findViewById(R.id.dataRec);
-                dataRec.setText(item.dataRec.toString());
+                dataRec.setText(getDataOra(item.dataRec));
 
                 return rowView;
             }
@@ -459,7 +468,7 @@ public class ListaRecensioni extends AppCompatActivity {
     }
     // CUSTOM ITEMS
     private static class CustomItemRecensione {
-        public String recensore;
+        public float punteggio;
         public String descrizione;
         public Date dataRec;
     }
@@ -478,7 +487,7 @@ public class ListaRecensioni extends AppCompatActivity {
                     RecensioneCasa rec= recensioniCasa.get(i);
 
                     itemsCasa[i] = new ListaRecensioni.CustomItemRecensione();
-                    itemsCasa[i].recensore = rec.getRecensore();
+                    itemsCasa[i].punteggio = rec.getValutazioneMedia();
                     itemsCasa[i].descrizione= rec.getDescrizione();
                     itemsCasa[i].dataRec= rec.getDataRevisione();
                 }
@@ -493,7 +502,7 @@ public class ListaRecensioni extends AppCompatActivity {
                     RecensioneStudente rec= recensioniStudenti.get(i);
 
                     itemsStudente[i] = new ListaRecensioni.CustomItemRecensione();
-                    itemsStudente[i].recensore = rec.getRecensore();
+                    itemsStudente[i].punteggio = rec.getValutazioneMedia();
                     itemsStudente[i].descrizione= rec.getDescrizione();
                     itemsStudente[i].dataRec= rec.getDataRevisione();
                 }
@@ -508,7 +517,7 @@ public class ListaRecensioni extends AppCompatActivity {
                     RecensioneProprietario rec= recensioniProprietario.get(i);
 
                     itemsProprietario[i] = new ListaRecensioni.CustomItemRecensione();
-                    itemsProprietario[i].recensore = rec.getRecensore();
+                    itemsProprietario[i].punteggio = rec.getValutazioneMedia();
                     itemsProprietario[i].descrizione= rec.getDescrizione();
                     itemsProprietario[i].dataRec= rec.getDataRevisione();
                 }

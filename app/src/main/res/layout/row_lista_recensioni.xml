@@ -5,36 +5,16 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:visibility="invisible">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-
-            android:id="@+id/immagineUtente"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="start"
-            android:layout_margin="5dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/com_facebook_profile_picture_blank_portrait"
-            app:civ_border_color="@color/rosso_scuro"
-            app:civ_border_width="2dp" />
-
-
-        <TextView
-            android:id="@+id/nomeautore1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nome Autore" />
-    </LinearLayout>
-
     <TextView
         android:id="@+id/dataRec"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/punteggioRec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
     <TextView
         android:id="@+id/descrizioneRec"

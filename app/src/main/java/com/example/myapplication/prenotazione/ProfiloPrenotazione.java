@@ -54,7 +54,7 @@ import java.util.TimeZone;
 public class ProfiloPrenotazione extends AppCompatActivity {
 
     private static final String TAG = "PROFILO PRENOTAZIONE";
-    private static final int PERMISSION_READ_CALENDAR = 1 ;
+    private static final int PERMISSION_WRITE_CALENDAR = 1 ;
     //Database
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -269,7 +269,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                     Manifest.permission.READ_CALENDAR)) {
             } else {
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR},PERMISSION_READ_CALENDAR);
+                        new String[]{Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR},PERMISSION_WRITE_CALENDAR);
             }
         }
         else
@@ -285,7 +285,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
 
             switch (requestCode) {
 
-                case PERMISSION_READ_CALENDAR:
+                case PERMISSION_WRITE_CALENDAR:
                     aggiungiCalendario();
                     break;
             }
