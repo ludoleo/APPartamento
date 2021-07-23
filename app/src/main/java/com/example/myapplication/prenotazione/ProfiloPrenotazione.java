@@ -269,7 +269,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                     Manifest.permission.READ_CALENDAR)) {
             } else {
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_CALENDAR},PERMISSION_READ_CALENDAR);
+                        new String[]{Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR},PERMISSION_READ_CALENDAR);
             }
         }
         else
