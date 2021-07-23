@@ -418,7 +418,9 @@ public class ProfiloStudente extends AppCompatActivity {
     }
 
     public void rimuoviInquilino(View view) {
-        myRef.child("Inquilini").child(id_inquilino).removeValue();
+        Date data = new Date();
+        long longData = data.getTime();
+        myRef.child("Inquilini").child(id_inquilino).child("dataFine").setValue(longData);
         Intent i = new Intent(this, Home.class);
         startActivity(i);
     }
