@@ -347,7 +347,6 @@ public class ProfiloAnnuncio extends AppCompatActivity {
 
     public void profiloProprietario1(View view) {
 
-
         Intent intent = new Intent(this, ProfiloProprietario.class);
         intent.putExtra("idProprietario", proprietario.getIdUtente());
         startActivity(intent);

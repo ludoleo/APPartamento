@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Prenotazione;
@@ -141,7 +142,9 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
                     Intent intent = new Intent(PrenotazioneCalendarioActivity.this, Home.class);
                     startActivity(intent);
                 }else{
-
+                    Toast.makeText(PrenotazioneCalendarioActivity.this,
+                            "Attenzione hai già una prenotazione per questo annuncio",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
             @Override

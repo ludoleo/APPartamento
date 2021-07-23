@@ -324,15 +324,21 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                 getContentResolver().
                         insert(CalendarContract.Events.CONTENT_URI, values);
 
+
         Intent i = new Intent(this, Home.class);
         startActivity(i);
     }
 
     public void cancella(View view) {
         //LA PRENOTAZIONE VIENE CANCELLATA
-        myRef.child("Prenotazioni").child(id).removeValue();
-        Intent i = new Intent(ProfiloPrenotazione.this, Home.class);
-        startActivity(i);
+        myRef.child("Prenotazioni").child(id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Intent i = new Intent(ProfiloPrenotazione.this, Home.class);
+                startActivity(i);
+            }
+        });
+
     }
 
     public void modifica(View view) {
@@ -345,33 +351,34 @@ public class ProfiloPrenotazione extends AppCompatActivity {
     public void cambiaData(View view) {
 
         //ELIMINO LA VECCHIA PRENOTAZIONE
-        myRef.child("Prenotazioni").child(id).removeValue();
+        myRef.child("Prenotazioni").child(id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                String email1 = prenotazione.getEmailUtente1();
+                String nome1 = prenotazione.getNomeUtente1();
+                String email2 = prenotazione.getEmailUtente2();
+                String nome2 = prenotazione.getNomeUtente2();
+                String ora = spinnerFasciaOraria.getSelectedItem().toString();
+                fasciaOraria = spinnerFasciaOraria.getSelectedItem().toString();
 
-        String email1 = prenotazione.getEmailUtente1();
-        String nome1 = prenotazione.getNomeUtente1();
-        String email2 = prenotazione.getEmailUtente2();
-        String nome2 = prenotazione.getNomeUtente2();
-        String ora = spinnerFasciaOraria.getSelectedItem().toString();
-        fasciaOraria = spinnerFasciaOraria.getSelectedItem().toString();
+                prenotazione.setDataPrenotazione(date);
+                prenotazione.setEmailUtente1(email2);
+                prenotazione.setEmailUtente2(email1);
+                prenotazione.setNomeUtente1(nome2);
+                prenotazione.setNomeUtente2(nome1);
+                prenotazione.setOrario(fasciaOraria);
 
-        prenotazione.setDataPrenotazione(date);
-        prenotazione.setEmailUtente1(email2);
-        prenotazione.setEmailUtente2(email1);
-        prenotazione.setNomeUtente1(nome2);
-        prenotazione.setNomeUtente2(nome1);
-        prenotazione.setOrario(fasciaOraria);
+                //CREO UNA NUOVA PRENOTAZIONE
+                DatabaseReference ref = database.getReference();
+                DatabaseReference preAdd = ref.child("Prenotazioni").push();
+                preAdd.setValue(prenotazione);
+                String key = preAdd.getKey();
+                ref.child("Prenotazioni").child(key).child("id").setValue(key);
 
-        //CREO UNA NUOVA PRENOTAZIONE
-        DatabaseReference ref = database.getReference();
-        DatabaseReference preAdd = ref.child("Prenotazioni").push();
-        preAdd.setValue(prenotazione);
-        String key = preAdd.getKey();
-        ref.child("Prenotazioni").child(key).child("id").setValue(key);
-
-        Intent i = new Intent(ProfiloPrenotazione.this, Home.class);
-        startActivity(i);
-
-
+                Intent i = new Intent(ProfiloPrenotazione.this, Home.class);
+                startActivity(i);
+            }
+        });
 
     }
 
@@ -398,7 +405,6 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         //SE MI TROVO IN QUESTO METODO SONO IL PROPRIETARIO
         //CANCELLO la prenotazione
         DatabaseReference ref = database.getReference();
-        ref.child("Prenotazioni").child(id).removeValue();
 
         if(user.getEmail().compareTo(prenotazione.getEmailUtente1())==0){
             emailStudente = prenotazione.getEmailUtente2();
