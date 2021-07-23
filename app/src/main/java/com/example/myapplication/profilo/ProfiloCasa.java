@@ -784,6 +784,9 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                 startActivity(new Intent(ProfiloCasa.this, Home.class));
                 return true;
 
+            case R.id.elimina_annuncio:
+                //TODO
+                myRef.child("Annunci").child("");
         }
 
         return false;
