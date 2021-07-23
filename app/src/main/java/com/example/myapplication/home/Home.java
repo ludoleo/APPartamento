@@ -126,6 +126,10 @@ public class Home extends AppCompatActivity {
 
     public void prenotazione(View view) {
 
+        if (user == null) {
+            Toast.makeText(this,"Per visualizzare le prenotazioni devi prima effettuare il login",Toast.LENGTH_SHORT).show();
+            return;
+        }
         Intent intent = new Intent(Home.this , LeMiePrenotazioni.class);
         startActivity(intent);
     }
