@@ -356,7 +356,7 @@ public class ListaRecensioniUtente extends AppCompatActivity {
     private void fillListViewRecensioniProprietari() {
         ListaRecensioniUtente.CustomItemRecensione[] items = createItemsRecensione(RECENSIONE_PROPRIETARIO);
         ArrayAdapter<ListaRecensioniUtente.CustomItemRecensione> ArrayAdapter = new ArrayAdapter<ListaRecensioniUtente.CustomItemRecensione>(
-                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+                this, R.layout.row_lista_recensioni, R.id.punteggioRec, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -366,11 +366,11 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
-                TextView recensore =
-                        (TextView)rowView.findViewById(R.id.nomeautore1);
+                TextView punteggio =
+                        (TextView)rowView.findViewById(R.id.punteggioRec);
                 TextView descrizione =
                         (TextView)rowView.findViewById(R.id.descrizioneRec);
-                recensore.setText(item.recensore);
+                punteggio.setText(item.recensore);
                 descrizione.setText(item.descrizione);
                 TextView dataRec =
                         (TextView) rowView.findViewById(R.id.dataRec);
@@ -431,7 +431,7 @@ public class ListaRecensioniUtente extends AppCompatActivity {
 
         ListaRecensioniUtente.CustomItemRecensione[] items = createItemsRecensione(RECENSIONE_CASA);
         ArrayAdapter<ListaRecensioniUtente.CustomItemRecensione> ArrayAdapter = new ArrayAdapter<ListaRecensioniUtente.CustomItemRecensione>(
-                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+                this, R.layout.row_lista_recensioni, R.id.punteggioRec, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -441,11 +441,11 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
-                TextView recensore =
-                        (TextView)rowView.findViewById(R.id.nomeautore1);
+                TextView punteggio =
+                        (TextView)rowView.findViewById(R.id.punteggioRec);
                 TextView descrizione =
                         (TextView)rowView.findViewById(R.id.descrizioneRec);
-                recensore.setText(item.recensore);
+                punteggio.setText(item.recensore);
                 descrizione.setText(item.descrizione);
                 TextView dataRec =
                         (TextView) rowView.findViewById(R.id.dataRec);
@@ -506,7 +506,7 @@ public class ListaRecensioniUtente extends AppCompatActivity {
 
         ListaRecensioniUtente.CustomItemRecensione[] items = createItemsRecensione(RECENSIONE_STUDENTE);
         ArrayAdapter<ListaRecensioniUtente.CustomItemRecensione> ArrayAdapter = new ArrayAdapter<ListaRecensioniUtente.CustomItemRecensione>(
-                this, R.layout.row_lista_recensioni, R.id.nomeautore1, items) {
+                this, R.layout.row_lista_recensioni, R.id.punteggioRec, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -516,11 +516,11 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
-                TextView recensore =
-                        (TextView)rowView.findViewById(R.id.nomeautore1);
+                TextView punteggio =
+                        (TextView)rowView.findViewById(R.id.punteggioRec);
                 TextView descrizione =
                         (TextView)rowView.findViewById(R.id.descrizioneRec);
-                recensore.setText(item.recensore);
+                punteggio.setText(item.recensore);
                 descrizione.setText(item.descrizione);
                 TextView dataRec =
                         (TextView) rowView.findViewById(R.id.dataRec);
