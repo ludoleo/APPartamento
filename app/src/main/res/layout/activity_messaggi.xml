@@ -18,6 +18,8 @@
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="8dp"
+            android:textColor="#FFFFFF"
             android:textSize="20dp" />
 
     </com.google.android.material.appbar.AppBarLayout>

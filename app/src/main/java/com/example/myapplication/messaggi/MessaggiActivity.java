@@ -335,7 +335,7 @@ public class MessaggiActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu_profilo, menu);
         return true;
     }
 
@@ -345,6 +345,10 @@ public class MessaggiActivity extends AppCompatActivity {
 
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(MessaggiActivity.this, Home.class));
+                finish();
+                return true;
+            case R.id.home:
                 startActivity(new Intent(MessaggiActivity.this, Home.class));
                 finish();
                 return true;
