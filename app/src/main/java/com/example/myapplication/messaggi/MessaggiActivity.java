@@ -335,7 +335,7 @@ public class MessaggiActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_profilo, menu);
+        getMenuInflater().inflate(R.menu.menu_home_logout, menu);
         return true;
     }
 
