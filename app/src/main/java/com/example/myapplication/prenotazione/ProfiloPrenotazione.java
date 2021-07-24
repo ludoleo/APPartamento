@@ -387,7 +387,6 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         String nome1 = prenotazione.getNomeUtente1();
         String email2 = prenotazione.getEmailUtente2();
         String nome2 = prenotazione.getNomeUtente2();
-        String ora = spinnerFasciaOraria.getSelectedItem().toString();
         fasciaOraria = spinnerFasciaOraria.getSelectedItem().toString();
 
         prenotazione.setDataPrenotazione(date);
@@ -398,40 +397,14 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         prenotazione.setOrario(fasciaOraria);
 
         DatabaseReference dr = database.getReference();
-        myRef.child("Prenotazioni").child(prenotazione.getId()).setValue(prenotazione);
-
-       /*
-        myRef.child("Prenotazioni").child(id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-
+        myRef.child("Prenotazioni").child(prenotazione.getId()).setValue(prenotazione).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-
-                String email1 = prenotazione.getEmailUtente1();
-                String nome1 = prenotazione.getNomeUtente1();
-                String email2 = prenotazione.getEmailUtente2();
-                String nome2 = prenotazione.getNomeUtente2();
-                String ora = spinnerFasciaOraria.getSelectedItem().toString();
-                fasciaOraria = spinnerFasciaOraria.getSelectedItem().toString();
-
-                prenotazione.setDataPrenotazione(date);
-                prenotazione.setEmailUtente1(email2);
-                prenotazione.setEmailUtente2(email1);
-                prenotazione.setNomeUtente1(nome2);
-                prenotazione.setNomeUtente2(nome1);
-                prenotazione.setOrario(fasciaOraria);
-
-                //CREO UNA NUOVA PRENOTAZIONE
-                DatabaseReference ref = database.getReference();
-                DatabaseReference preAdd = ref.child("Prenotazioni").push();
-                preAdd.setValue(prenotazione);
-                String key = preAdd.getKey();
-                ref.child("Prenotazioni").child(key).child("id").setValue(key);
-
-                Intent i = new Intent(ProfiloPrenotazione.this, Home.class);
-                startActivity(i);
+                Intent intent = new Intent(ProfiloPrenotazione.this, Home.class);
+                startActivity(intent);
             }
         });
-*/
+
     }
 
     //METODO CHE 'ABBELLISCE' LA DATA
