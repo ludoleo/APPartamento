@@ -284,7 +284,6 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                                     fillListViewRecensioniCase();
                                     fillListViewCaseDaRecensire();
                                     //POSSO RECENSIRE IL SUO PROPRIETARIO
-
                                     DatabaseReference dr = database.getReference();
                                     dr.child("Recensioni_Proprietario").child(casaMia.getProprietario()).addValueEventListener(new ValueEventListener() {
                                         @Override
@@ -316,7 +315,7 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                                                             flagStud = false;
                                                             for(DataSnapshot dataSnapshotRS : snapshotRS.getChildren()) {
                                                                 RecensioneStudente rs = dataSnapshotRS.getValue(RecensioneStudente.class);
-                                                                if (rs.getRecensore().compareTo(in.getIdInquilino()) == 0) {
+                                                                if (rs.getRecensore().compareTo(io.getIdInquilino()) == 0) {
                                                                     flagStud = true;
                                                                     recensioniStudentiEffettuate.add(rs);
                                                                 }
@@ -326,6 +325,7 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                                                                 mappaInquiliniInquilini.put(in.getIdInquilino(), io);
                                                             }
                                                             // RIEMPIO LE LISTVIEW
+                                                            Log.i(TAG,"Recensioni_Stu "+recensioniStudentiEffettuate);
                                                             fillListViewRecensioniStudenti();
                                                             fillListViewStudentiDaRecensire();
                                                         }
