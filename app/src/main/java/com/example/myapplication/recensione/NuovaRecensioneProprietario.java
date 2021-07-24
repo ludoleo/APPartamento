@@ -149,6 +149,7 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
         });
     }
 
+    //push
     private void pulisciCampi() {
 
         recensione.setText("");
