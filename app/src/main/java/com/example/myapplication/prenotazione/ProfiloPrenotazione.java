@@ -54,7 +54,7 @@ import java.util.TimeZone;
 public class ProfiloPrenotazione extends AppCompatActivity {
 
     private static final String TAG = "PROFILO PRENOTAZIONE";
-    private static final int PERMISSION_WRITE_CALENDAR = 1 ;
+    private static final int PERMISSION_WRITE_CALENDAR = 1;
     //Database
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -141,10 +141,10 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                     dr.child("Inquilini").addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot inquiliniSnapshot: dataSnapshot.getChildren()) {
+                            for (DataSnapshot inquiliniSnapshot : dataSnapshot.getChildren()) {
                                 Inquilino in = inquiliniSnapshot.getValue(Inquilino.class);
-                                if(in.getStudente().compareTo(prenotazione.getEmailUtente1())==0
-                                        || in.getStudente().compareTo(prenotazione.getEmailUtente2())==0){
+                                if (in.getStudente().compareTo(prenotazione.getEmailUtente1()) == 0
+                                        || in.getStudente().compareTo(prenotazione.getEmailUtente2()) == 0) {
                                     //LISTA DI STUDENTI PRENOTATI
                                     listaInquilini.add(in);
                                 }
@@ -152,6 +152,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                             //QUI ESEGUO TUTTO
                             caricaPrenotazione();
                         }
+
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                         }
@@ -197,13 +198,13 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                 });
             }
         } else if (tipo.compareTo("TERMINATA") == 0) {
-            if(prenotazione.isPagata()){
+            if (prenotazione.isPagata()) {
                 boolean occupato = false;
-                for(Inquilino inquilino : listaInquilini){
-                    if(inquilino.getDataFine()==0)
+                for (Inquilino inquilino : listaInquilini) {
+                    if (inquilino.getDataFine() == 0)
                         occupato = true;
                 }
-                if(!occupato){
+                if (!occupato) {
                     //SE SEI IL PROPRIETARIO
                     DatabaseReference drf = database.getReference();
                     drf.child("Utenti")
@@ -222,7 +223,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                         }
                     });
                 }
-            }else
+            } else
                 myRef.child("Prenotazioni").child(id).removeValue();
         }
     }
@@ -253,10 +254,9 @@ public class ProfiloPrenotazione extends AppCompatActivity {
     public void effettuaPagamento(View view) {
         //SI EFFETTUA IL PAGAMENTO
         Intent i = new Intent(this, PrenotazionePaypalActivity.class);
-        i.putExtra("id",id);
+        i.putExtra("id", id);
         startActivity(i);
     }
-
 
 
     public void confermaPrenotazione(View view) {
@@ -269,10 +269,9 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                     Manifest.permission.READ_CALENDAR)) {
             } else {
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR},PERMISSION_WRITE_CALENDAR);
+                        new String[]{Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR}, PERMISSION_WRITE_CALENDAR);
             }
-        }
-        else
+        } else
             aggiungiCalendario();
     }
 
@@ -290,7 +289,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                     break;
             }
 
-        }else{
+        } else {
             Toast.makeText(ProfiloPrenotazione.this, "Permission denied", Toast.LENGTH_SHORT).show();
         }
     }
@@ -305,6 +304,16 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                         CalendarContract.Calendars.ACCOUNT_NAME,
                         CalendarContract.Calendars.ACCOUNT_TYPE};
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         Cursor cursor =
                 getContentResolver().
                         query(CalendarContract.Calendars.CONTENT_URI,
@@ -378,10 +387,30 @@ public class ProfiloPrenotazione extends AppCompatActivity {
 
     public void cambiaData(View view) {
 
-        //ELIMINO LA VECCHIA PRENOTAZIONE
+        String email1 = prenotazione.getEmailUtente1();
+        String nome1 = prenotazione.getNomeUtente1();
+        String email2 = prenotazione.getEmailUtente2();
+        String nome2 = prenotazione.getNomeUtente2();
+        String ora = spinnerFasciaOraria.getSelectedItem().toString();
+        fasciaOraria = spinnerFasciaOraria.getSelectedItem().toString();
+
+        prenotazione.setDataPrenotazione(date);
+        prenotazione.setEmailUtente1(email2);
+        prenotazione.setEmailUtente2(email1);
+        prenotazione.setNomeUtente1(nome2);
+        prenotazione.setNomeUtente2(nome1);
+        prenotazione.setOrario(fasciaOraria);
+
+        cancella(view);
+        DatabaseReference dr = database.getReference();
+        myRef.child("Prenotazioni").child(prenotazione.getId()).setValue(prenotazione);
+
+       /*
         myRef.child("Prenotazioni").child(id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+
             @Override
             public void onComplete(@NonNull Task<Void> task) {
+
                 String email1 = prenotazione.getEmailUtente1();
                 String nome1 = prenotazione.getNomeUtente1();
                 String email2 = prenotazione.getEmailUtente2();
@@ -407,14 +436,9 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
+*/
     }
 
-    public void visita(View view) {
-        //implementare il sistema di visita virtuale
-        Intent intent = new Intent(this, VisitaVirtuale.class);
-        startActivity(intent);
-    }
     //METODO CHE 'ABBELLISCE' LA DATA
     public String getDataOra(Long data, String time) {
         DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy");

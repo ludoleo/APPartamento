@@ -222,7 +222,7 @@ public class MessaggiActivity extends AppCompatActivity {
 
         //notifche messaggio
         final String messaggio = message;
-
+        /*
         myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -273,7 +273,7 @@ public class MessaggiActivity extends AppCompatActivity {
 
             }
         });
-
+        */
     }
 
     private void inviaNotifica(String receiver, String email, String message) {

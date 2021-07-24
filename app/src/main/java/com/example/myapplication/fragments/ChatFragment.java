@@ -77,10 +77,12 @@ public class ChatFragment extends Fragment {
                     Log.i(TAG,"Sender "+firebaseUser.getUid()+" "+chat.getSender()+" "+chat.getReceiver());
                     if(chat.getSender().equals(firebaseUser.getUid())) {
                         Log.i(TAG,"ENTRO NELL'IF");
-                        usersList.add(chat.getReceiver());
+                        if(!usersList.contains(chat.getReceiver()))
+                             usersList.add(chat.getReceiver());
                     }
                     if(chat.getReceiver().equals(firebaseUser.getUid())) {
-                        usersList.add(chat.getSender());
+                        if(!usersList.contains(chat.getSender()))
+                            usersList.add(chat.getSender());
                     }
                 }
 
@@ -176,7 +178,7 @@ public class ChatFragment extends Fragment {
                                     if(utente2.getIdUtente().equals(id)) {
                                         if(mUtenti.size() != 0 ) {
                                             for ( Utente u :mUtenti) {
-                                                if(!utente2.getIdUtente().equals(u.getIdUtente())) {
+                                                if(utente2.getIdUtente().compareTo(u.getIdUtente())!=0) {
                                                     mUtenti.add(utente2);
                                                 }
                                             }

@@ -259,10 +259,5 @@
             android:text="Prenota visita"
             android:visibility="gone" />
 
-        <CheckBox
-            android:id="@+id/IsPreferito"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Aggiungi ai Preferiti" />
     </LinearLayout>
 </ScrollView>
