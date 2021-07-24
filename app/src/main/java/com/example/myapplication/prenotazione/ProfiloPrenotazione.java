@@ -178,8 +178,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
             modificaPrenotazione.setVisibility(View.VISIBLE);
             confermaPrenotazione.setVisibility(View.VISIBLE);
         } else if (tipo.compareTo("CONFERMATA") == 0) {
-            //SE LA PRENOTAZIONE E' CONFERMATA
-            cancellaPrenotazione.setVisibility(View.VISIBLE);
+            //SE LA PRENOTAZIONE E' CONFERMATA NON PUO' ESSERE ANNULLATA
             //SE E' PAGATA
             if (!prenotazione.isPagata()) {
                 // controllo utente loggato se è studente o no
@@ -190,7 +189,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Log.e("firebase", "Error getting data", task.getException());
                         } else {
-                            if (task.getResult().getValue() == null) {
+                            if (!task.getResult().exists()) {
                                 pagaPrenotazione.setVisibility(View.VISIBLE);
                             }
                         }
@@ -223,8 +222,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                         }
                     });
                 }
-            } else
-                myRef.child("Prenotazioni").child(id).removeValue();
+            }
         }
     }
 
@@ -258,11 +256,10 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         startActivity(i);
     }
 
-
     public void confermaPrenotazione(View view) {
         //LA PRENOTAZIONE DIVENTA CONFERMATA
         myRef.child("Prenotazioni").child(id).child("confermata").setValue(true);
-
+        //GESTIONE CALENDARIO
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
@@ -293,7 +290,6 @@ public class ProfiloPrenotazione extends AppCompatActivity {
             Toast.makeText(ProfiloPrenotazione.this, "Permission denied", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     private void aggiungiCalendario() {
         //CALENDARIO
@@ -369,7 +365,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
 
     public void cancella(View view) {
         //LA PRENOTAZIONE VIENE CANCELLATA
-        myRef.child("Prenotazioni").child(id).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+        myRef.child("Prenotazioni").child(prenotazione.getId()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Intent i = new Intent(ProfiloPrenotazione.this, Home.class);
@@ -401,7 +397,6 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         prenotazione.setNomeUtente2(nome1);
         prenotazione.setOrario(fasciaOraria);
 
-        cancella(view);
         DatabaseReference dr = database.getReference();
         myRef.child("Prenotazioni").child(prenotazione.getId()).setValue(prenotazione);
 

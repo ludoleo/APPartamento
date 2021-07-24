@@ -144,7 +144,7 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(PrenotazioneCalendarioActivity.this,
                             "Attenzione hai già una prenotazione per questo annuncio",
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT);
                 }
             }
             @Override
