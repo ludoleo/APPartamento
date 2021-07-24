@@ -131,6 +131,8 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
         Log.i(TAG, "Recensione aggiunta da" + user.getUid());
         aggiornoDatiCasa(nomeCasa);
         pulisciCampi();
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
     }
 
     private void aggiornoDatiCasa(String nomeCasa1) {
@@ -147,9 +149,6 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
         rb_pulizia.setRating(0);
         rb_posizione.setRating(0);
         rb_qualitaPrezzo.setRating(0);
-
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
 
     }
 }
