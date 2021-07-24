@@ -28,4 +28,5 @@ public class Proprietario extends Utente{
 
 
 
+
 }

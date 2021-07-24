@@ -103,10 +103,17 @@ public class Utente {
         this.primaEsperienza = primaEsperienza;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Utente)) return false;
+        Utente utente = (Utente) o;
+        return getIdUtente().equals(utente.getIdUtente());
+    }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getEmail());
+        return Objects.hash(getIdUtente());
     }
 
     @Override

@@ -119,8 +119,10 @@ public class UsersFragment extends Fragment {
                                     Log.i(TAG, "Aggiunto proprietario " + proprietario.getNome());
                                     for(Prenotazione pr : listaPrenotazioni){
                                         if(pr.getEmailUtente1().compareTo(proprietario.getEmail()) == 0
-                                                || pr.getEmailUtente2().compareTo(proprietario.getEmail()) == 0)
-                                            mUtente.add(proprietario);
+                                                || pr.getEmailUtente2().compareTo(proprietario.getEmail()) == 0){
+                                            if(!mUtente.contains(proprietario))
+                                                mUtente.add(proprietario);
+                                        }
                                     }
 
                                     Log.i(TAG, "Dimensione di mutente " + mUtente.size());
@@ -146,8 +148,10 @@ public class UsersFragment extends Fragment {
                                     Log.i(TAG, "Aggiunto studente " + studente.getNome());
                                     for(Prenotazione pr : listaPrenotazioni){
                                         if(pr.getEmailUtente1().compareTo(studente.getEmail()) == 0
-                                                || pr.getEmailUtente2().compareTo(studente.getEmail()) == 0)
-                                            mUtente.add(studente);
+                                                || pr.getEmailUtente2().compareTo(studente.getEmail()) == 0){
+                                            if(!mUtente.contains(studente))
+                                                mUtente.add(studente);
+                                        }
                                     }
                                     Log.i(TAG, "Dimensione di mutente " + mUtente.size());
 
