@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/immagineCasaListaProfilo"
-        android:layout_width="90dp"
+        android:layout_width="110dp"
         android:layout_height="match_parent"
         app:srcCompat="@drawable/ic_outline_insert_photo_24" />
 
@@ -23,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            android:textSize="16sp"
             android:text="Nome Casa" />
 
         <TextView
@@ -30,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            android:textSize="16sp"
             android:text="Indirizzo" />
 
         <TextView
@@ -37,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            android:textSize="16sp"
             android:text="Numero di ospiti" />
 
         <TextView
@@ -44,6 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            android:textSize="16sp"
+            android:drawableLeft="@drawable/ic_outline_star_outline_24"
             android:text="valuazione" />
 
 

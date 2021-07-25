@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ import com.example.myapplication.classi.Studente;
 import com.example.myapplication.recensione.NuovaRecensioneCasa;
 import com.example.myapplication.recensione.NuovaRecensioneProprietario;
 import com.example.myapplication.recensione.NuovaRecensioneStudente;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,12 +37,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ListaRecensioniUtente extends AppCompatActivity {
 
@@ -356,7 +366,7 @@ public class ListaRecensioniUtente extends AppCompatActivity {
     private void fillListViewRecensioniProprietari() {
         ListaRecensioniUtente.CustomItemRecensione[] items = createItemsRecensione(RECENSIONE_PROPRIETARIO);
         ArrayAdapter<ListaRecensioniUtente.CustomItemRecensione> ArrayAdapter = new ArrayAdapter<ListaRecensioniUtente.CustomItemRecensione>(
-                this, R.layout.row_lista_recensioni, R.id.punteggioRec, items) {
+                this, R.layout.row_utenti_recensione, R.id.nome_utente_lista_rec, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -365,16 +375,20 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                 ListaRecensioniUtente.CustomItemRecensione item = getItem(position); // Rif. alla riga attualmente
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
-                TextView punteggio =
-                        (TextView)rowView.findViewById(R.id.punteggioRec);
+                View rowView = inflater.inflate(R.layout.row_utenti_recensione, null);
+                TextView nome =
+                        (TextView)rowView.findViewById(R.id.nome_utente_lista_rec);
                 TextView descrizione =
-                        (TextView)rowView.findViewById(R.id.descrizioneRec);
-                punteggio.setText(item.recensore);
-                descrizione.setText(item.descrizione);
+                        (TextView)rowView.findViewById(R.id.desc_recensore_lista_rec);
                 TextView dataRec =
-                        (TextView) rowView.findViewById(R.id.dataRec);
-                dataRec.setText(item.dataRec.toString());
+                        (TextView) rowView.findViewById(R.id.data_recensito_lista_rec);
+                TextView punteggio =
+                        (TextView) rowView.findViewById(R.id.valutazione_utente_lista_rec);
+
+                nome.setText(item.recensito);
+                dataRec.setText(getDataOra(item.dataRec));
+                punteggio.setText(String.format("%.2f" ,item.valutazione));
+                descrizione.setText(item.descrizione);
 
                 return rowView;
             }
@@ -386,7 +400,7 @@ public class ListaRecensioniUtente extends AppCompatActivity {
 
         ListaRecensioniUtente.CustomItemOggetto[] items = createItemsOggetto(PROPRIETARIO);
         ArrayAdapter<ListaRecensioniUtente.CustomItemOggetto> ArrayAdapter = new ArrayAdapter<ListaRecensioniUtente.CustomItemOggetto>(
-                this, R.layout.row_utenti_recensione, R.id.nome_utente_lista_rec, items) {
+                this, R.layout.row_lista_coinquilini, R.id.tv_coinqi_nome, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -395,20 +409,37 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                 ListaRecensioniUtente.CustomItemOggetto item = getItem(position); // Rif. alla riga attualmente
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View rowView = inflater.inflate(R.layout.row_utenti_recensione, null);
-                TextView nome =
-                        (TextView)rowView.findViewById(R.id.nome_utente_lista_rec);
-                nome.setText(item.nome);
-                TextView recensito =
-                        (TextView)rowView.findViewById(R.id.id_recensito_lista_rec);
-                recensito.setText(item.recensito);
-                TextView valutazione =
-                        (TextView) rowView.findViewById(R.id.valutazione_utente_lista_rec);
-                valutazione.setText(String.format("%.2f" ,item.valutazione));
-                TextView recensore =
-                        (TextView) rowView.findViewById(R.id.id_recensore_lista_rec);
-                recensore.setText(item.recensore);
-
+                View rowView = inflater.inflate(R.layout.row_lista_coinquilini, null);
+                //gestione immagine
+                CircleImageView immagine_coinqui =
+                        (CircleImageView)rowView.findViewById(R.id.immagineUtente);
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                StorageReference profileRef = storageReference.child("Proprietari/"+item.recensito+"/profile.jpg");
+                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.i(TAG,"URI "+uri);
+                        Picasso.get().load(uri).into(immagine_coinqui);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+                TextView nome_coinqui =
+                        (TextView)rowView.findViewById(R.id.tv_coinqi_nome);
+                nome_coinqui.setText(item.nome);
+                TextView rating_coinqui =
+                        (TextView)rowView.findViewById(R.id.tv_coinqi_rating);
+                rating_coinqui.setText(String.format("%.2f" ,item.valutazione));
+                TextView laurea_coinqui =
+                        (TextView) rowView.findViewById(R.id.tv_coinqi_indirizzoLaurea);
+                laurea_coinqui.setText("");
+                laurea_coinqui.setVisibility(View.GONE);
+                TextView id_coinqui =
+                        (TextView) rowView.findViewById(R.id.tv_coinqi_id);
+                id_coinqui.setText(item.recensito);
                 return rowView;
             }
         };
@@ -431,7 +462,7 @@ public class ListaRecensioniUtente extends AppCompatActivity {
 
         ListaRecensioniUtente.CustomItemRecensione[] items = createItemsRecensione(RECENSIONE_CASA);
         ArrayAdapter<ListaRecensioniUtente.CustomItemRecensione> ArrayAdapter = new ArrayAdapter<ListaRecensioniUtente.CustomItemRecensione>(
-                this, R.layout.row_lista_recensioni, R.id.punteggioRec, items) {
+                this, R.layout.row_utenti_recensione, R.id.nome_utente_lista_rec, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -440,17 +471,20 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                 ListaRecensioniUtente.CustomItemRecensione item = getItem(position); // Rif. alla riga attualmente
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
-                TextView punteggio =
-                        (TextView)rowView.findViewById(R.id.punteggioRec);
+                View rowView = inflater.inflate(R.layout.row_utenti_recensione, null);
+                TextView nome =
+                        (TextView)rowView.findViewById(R.id.nome_utente_lista_rec);
                 TextView descrizione =
-                        (TextView)rowView.findViewById(R.id.descrizioneRec);
-                punteggio.setText(item.recensore);
-                descrizione.setText(item.descrizione);
+                        (TextView)rowView.findViewById(R.id.desc_recensore_lista_rec);
                 TextView dataRec =
-                        (TextView) rowView.findViewById(R.id.dataRec);
-                dataRec.setText(item.dataRec.toString());
+                        (TextView) rowView.findViewById(R.id.data_recensito_lista_rec);
+                TextView punteggio =
+                        (TextView) rowView.findViewById(R.id.valutazione_utente_lista_rec);
 
+                nome.setText(item.recensito);
+                dataRec.setText(getDataOra(item.dataRec));
+                punteggio.setText(String.format("%.2f" ,item.valutazione));
+                descrizione.setText(item.descrizione);
                 return rowView;
             }
         };
@@ -461,7 +495,7 @@ public class ListaRecensioniUtente extends AppCompatActivity {
 
         ListaRecensioniUtente.CustomItemOggetto[] items = createItemsOggetto(CASA);
         ArrayAdapter<ListaRecensioniUtente.CustomItemOggetto> ArrayAdapter = new ArrayAdapter<ListaRecensioniUtente.CustomItemOggetto>(
-                this, R.layout.row_utenti_recensione, R.id.nome_utente_lista_rec, items) {
+                this, R.layout.row_lista_coinquilini, R.id.tv_coinqi_nome, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -470,20 +504,37 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                 ListaRecensioniUtente.CustomItemOggetto item = getItem(position); // Rif. alla riga attualmente
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View rowView = inflater.inflate(R.layout.row_utenti_recensione, null);
-                TextView nome =
-                        (TextView)rowView.findViewById(R.id.nome_utente_lista_rec);
-                nome.setText(item.nome);
-                TextView recensito =
-                        (TextView)rowView.findViewById(R.id.id_recensito_lista_rec);
-                recensito.setText(item.recensito);
-                TextView valutazione =
-                        (TextView) rowView.findViewById(R.id.valutazione_utente_lista_rec);
-                valutazione.setText(String.format("%.2f" ,item.valutazione));
-                TextView recensore =
-                        (TextView) rowView.findViewById(R.id.id_recensore_lista_rec);
-                recensore.setText(item.recensore);
-
+                View rowView = inflater.inflate(R.layout.row_lista_coinquilini, null);
+                //gestione immagine
+                CircleImageView immagine_coinqui =
+                        (CircleImageView)rowView.findViewById(R.id.immagineUtente);
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                StorageReference profileRef = storageReference.child("Case/"+item.recensito+"/profile.jpg");
+                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.i(TAG,"URI "+uri);
+                        Picasso.get().load(uri).into(immagine_coinqui);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+                TextView nome_coinqui =
+                        (TextView)rowView.findViewById(R.id.tv_coinqi_nome);
+                nome_coinqui.setText(item.nome);
+                TextView rating_coinqui =
+                        (TextView)rowView.findViewById(R.id.tv_coinqi_rating);
+                rating_coinqui.setText(String.format("%.2f" ,item.valutazione));
+                TextView laurea_coinqui =
+                        (TextView) rowView.findViewById(R.id.tv_coinqi_indirizzoLaurea);
+                laurea_coinqui.setText("");
+                laurea_coinqui.setVisibility(View.GONE);
+                TextView id_coinqui =
+                        (TextView) rowView.findViewById(R.id.tv_coinqi_id);
+                id_coinqui.setText(item.recensito);
                 return rowView;
             }
         };
@@ -506,7 +557,7 @@ public class ListaRecensioniUtente extends AppCompatActivity {
 
         ListaRecensioniUtente.CustomItemRecensione[] items = createItemsRecensione(RECENSIONE_STUDENTE);
         ArrayAdapter<ListaRecensioniUtente.CustomItemRecensione> ArrayAdapter = new ArrayAdapter<ListaRecensioniUtente.CustomItemRecensione>(
-                this, R.layout.row_lista_recensioni, R.id.punteggioRec, items) {
+                this, R.layout.row_utenti_recensione, R.id.nome_utente_lista_rec, items) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent){
                 return getViewNotOptimized(position,convertView,parent); }
@@ -515,17 +566,20 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                 ListaRecensioniUtente.CustomItemRecensione item = getItem(position); // Rif. alla riga attualmente
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View rowView = inflater.inflate(R.layout.row_lista_recensioni, null);
-                TextView punteggio =
-                        (TextView)rowView.findViewById(R.id.punteggioRec);
+                View rowView = inflater.inflate(R.layout.row_utenti_recensione, null);
+                TextView nome =
+                        (TextView)rowView.findViewById(R.id.nome_utente_lista_rec);
                 TextView descrizione =
-                        (TextView)rowView.findViewById(R.id.descrizioneRec);
-                punteggio.setText(item.recensore);
-                descrizione.setText(item.descrizione);
+                        (TextView)rowView.findViewById(R.id.desc_recensore_lista_rec);
                 TextView dataRec =
-                        (TextView) rowView.findViewById(R.id.dataRec);
-                dataRec.setText(item.dataRec.toString());
+                        (TextView) rowView.findViewById(R.id.data_recensito_lista_rec);
+                TextView punteggio =
+                        (TextView) rowView.findViewById(R.id.valutazione_utente_lista_rec);
 
+                nome.setText(item.recensito);
+                dataRec.setText(getDataOra(item.dataRec));
+                punteggio.setText(String.format("%.2f" ,item.valutazione));
+                descrizione.setText(item.descrizione);
                 return rowView;
             }
         };
@@ -545,20 +599,37 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                 ListaRecensioniUtente.CustomItemOggetto item = getItem(position); // Rif. alla riga attualmente
                 LayoutInflater inflater =
                         (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View rowView = inflater.inflate(R.layout.row_utenti_recensione, null);
-                TextView nome =
-                        (TextView)rowView.findViewById(R.id.nome_utente_lista_rec);
-                nome.setText(item.nome);
-                TextView recensito =
-                        (TextView)rowView.findViewById(R.id.id_recensito_lista_rec);
-                recensito.setText(item.recensito);
-                TextView valutazione =
-                        (TextView) rowView.findViewById(R.id.valutazione_utente_lista_rec);
-                valutazione.setText(String.format("%.2f" ,item.valutazione));
-                TextView recensore =
-                        (TextView) rowView.findViewById(R.id.id_recensore_lista_rec);
-                recensore.setText(item.recensore);
-
+                View rowView = inflater.inflate(R.layout.row_lista_coinquilini, null);
+                //gestione immagine
+                CircleImageView immagine_coinqui =
+                        (CircleImageView)rowView.findViewById(R.id.immagineUtente);
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+                StorageReference profileRef = storageReference.child("Studenti/"+mappaInquilinoStudente.get(item.recensito).getIdUtente()+"/profile.jpg");
+                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.i(TAG,"URI "+uri);
+                        Picasso.get().load(uri).into(immagine_coinqui);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+                TextView nome_coinqui =
+                        (TextView)rowView.findViewById(R.id.tv_coinqi_nome);
+                nome_coinqui.setText(item.nome);
+                TextView rating_coinqui =
+                        (TextView)rowView.findViewById(R.id.tv_coinqi_rating);
+                rating_coinqui.setText(String.format("%.2f" ,item.valutazione));
+                TextView laurea_coinqui =
+                        (TextView) rowView.findViewById(R.id.tv_coinqi_indirizzoLaurea);
+                laurea_coinqui.setText("");
+                laurea_coinqui.setVisibility(View.GONE);
+                TextView id_coinqui =
+                        (TextView) rowView.findViewById(R.id.tv_coinqi_id);
+                id_coinqui.setText(item.recensito);
                 return rowView;
             }
         };
@@ -592,9 +663,10 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                     RecensioneCasa rec = recensioniCasaEffettuate.get(i);
 
                     itemsCasa[i] = new ListaRecensioniUtente.CustomItemRecensione();
-                    itemsCasa[i].recensore = rec.getRecensore();
+                    itemsCasa[i].recensito = rec.getCasaRecensita();
                     itemsCasa[i].descrizione = rec.getDescrizione();
                     itemsCasa[i].dataRec = rec.getDataRevisione();
+                    itemsCasa[i].valutazione = rec.getValutazioneMedia();
                 }
                 return itemsCasa;
 
@@ -607,9 +679,10 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                     RecensioneStudente rec = recensioniStudentiEffettuate.get(i);
 
                     itemsStudente[i] = new ListaRecensioniUtente.CustomItemRecensione();
-                    itemsStudente[i].recensore = rec.getRecensore();
+                    itemsStudente[i].recensito = mappaInquilinoStudente.get(rec.getRecensito()).getNome()+" "+mappaInquilinoStudente.get(rec.getRecensito()).getCognome();
                     itemsStudente[i].descrizione = rec.getDescrizione();
                     itemsStudente[i].dataRec = rec.getDataRevisione();
+                    itemsStudente[i].valutazione = rec.getValutazioneMedia();
                 }
                 return itemsStudente;
 
@@ -622,9 +695,10 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                     RecensioneProprietario rec = recensioniProprietarioEffettuate.get(i);
 
                     itemsProprietario[i] = new ListaRecensioniUtente.CustomItemRecensione();
-                    itemsProprietario[i].recensore = rec.getRecensore();
+                    itemsProprietario[i].recensito = mappaProprietari.get(rec.getRecensito()).getNome()+" "+mappaProprietari.get(rec.getRecensito()).getCognome();
                     itemsProprietario[i].descrizione = rec.getDescrizione();
                     itemsProprietario[i].dataRec = rec.getDataRevisione();
+                    itemsProprietario[i].valutazione = rec.getValutazioneMedia();
                 }
                 return itemsProprietario;
 
@@ -699,15 +773,21 @@ public class ListaRecensioniUtente extends AppCompatActivity {
     }
     // CUSTOM ITEMS ciao
     private static class CustomItemRecensione {
-        public String recensore;
+        public String recensito;
+        public float valutazione;
         public String descrizione;
         public Date dataRec;
     }
     private static class CustomItemOggetto {
         //TODO SE POSSIBILE AGGIUNGERE LE FOTO
-        public String nome; //ID dell'oggetto da recensire
-        public String recensito;
+        public String nome;
+        public String recensito; //ID dell'oggetto da recensire
         public float valutazione;
         public String recensore; //ID dell'oggetto recensore
+    }
+    public String getDataOra(Date data) {
+        DateFormat dateFormat = new SimpleDateFormat("E, dd MMM yyyy");
+        String strDate = dateFormat.format(data);
+        return strDate;
     }
 }

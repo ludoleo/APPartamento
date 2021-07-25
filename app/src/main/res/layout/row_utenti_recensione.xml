@@ -27,9 +27,26 @@
         android:textSize="18sp" />
 
     <TextView
+        android:id="@+id/desc_recensore_lista_rec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textSize="18sp"/>
+
+    <TextView
         android:id="@+id/id_recensore_lista_rec"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/data_recensito_lista_rec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_margin="5dp"
+        android:drawableLeft="@drawable/ic_outline_calendar_today_24"
+        android:visibility="visible" />
 
 </LinearLayout>

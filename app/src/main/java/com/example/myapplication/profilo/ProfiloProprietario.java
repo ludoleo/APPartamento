@@ -301,11 +301,10 @@ public class ProfiloProprietario extends AppCompatActivity {
                         (TextView)rowView.findViewById(R.id.textViewNumeroDiOspiti);
                 TextView valutazioneCasaView =
                         (TextView)rowView.findViewById(R.id.textViewValutazione);
-
                 nomeCasaView.setText(item.nomeCasa);
                 inidirizzoCasaView.setText(item.indirizzoCasa);
                 ospitiCasaView.setText(""+item.numeroOspiti);
-                valutazioneCasaView.setText(""+item.valutazione);
+                valutazioneCasaView.setText(String.format("%.2f" ,item.valutazione));
 
                 return rowView;
             }
@@ -456,8 +455,6 @@ public class ProfiloProprietario extends AppCompatActivity {
                 rec.putExtra("idProprietario", idUtente);
                 startActivity(rec);
                 return true;
-
-
         }
         return false;
     }
