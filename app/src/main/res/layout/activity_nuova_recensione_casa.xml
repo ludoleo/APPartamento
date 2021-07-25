@@ -111,13 +111,15 @@
             android:id="@+id/textView21"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="La media della valutazione è" />
+            android:layout_margin="5dp"
+            android:text="La media della valutazione è : "
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/showRating2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:textAppearance="?android:textAppearanceMedium" />
     </LinearLayout>
 

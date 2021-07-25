@@ -19,13 +19,17 @@
         android:id="@+id/et_prenotazione_paypal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/etichettaPaypal" />
+        android:layout_margin="5dp"
+        android:text="@string/etichettaPaypal"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/et_paypal_importo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/etichettaImportoPaypal" />
+        android:layout_margin="5dp"
+        android:text="@string/etichettaImportoPaypal"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/etAmount"

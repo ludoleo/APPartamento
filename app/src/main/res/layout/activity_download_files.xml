@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/sfondo_activity"
     android:orientation="vertical"
     tools:context=".DownloadFiles">
 
@@ -13,8 +14,9 @@
         android:layout_height="wrap_content"
         android:padding="20dp"
         android:text="Scarica i contratti standard"
-        android:textColor="#000000"
-        android:textSize="24sp" />
+        android:textAllCaps="true"
+        android:textColor="@color/rosso_scuro"
+        android:textSize="20sp" />
 
     <ListView
         android:id="@+id/listViewContratti"

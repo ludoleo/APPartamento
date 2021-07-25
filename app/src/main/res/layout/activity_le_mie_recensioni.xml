@@ -8,6 +8,16 @@
     android:orientation="vertical"
     tools:context=".profilo.ListaRecensioniUtente">
 
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Recensioni possibili"
+        android:textAllCaps="true"
+        android:textColor="@color/rosso_scuro"
+        android:textSize="18sp" />
+
     <ListView
         android:id="@+id/lv_recensioni_possibili_casa"
         android:layout_width="match_parent"
@@ -16,12 +26,31 @@
     <ListView
         android:id="@+id/lv_recensioni_possibili_studente"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+    </ListView>
 
     <ListView
         android:id="@+id/lv_recensioni_possibili_proprietario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/divider11"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_margin="5dp"
+        android:background="@color/rosso_scuro" />
+
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Recensioni effettuate"
+        android:textAllCaps="true"
+        android:textColor="@color/rosso_scuro"
+        android:textSize="18sp" />
 
     <ListView
         android:id="@+id/lv_recensioni_effettuate_casa"

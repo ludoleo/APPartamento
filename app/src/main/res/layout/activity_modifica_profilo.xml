@@ -37,7 +37,7 @@
         android:layout_margin="5dp"
         android:drawableLeft="@drawable/ic_outline_payments_24"
         android:padding="5dp"
-        android:text="Gestione bollette"
+        android:text="Gestione documenti"
         android:textColor="@color/rosso_mattone"
         app:backgroundTint="@color/no_color" />
 

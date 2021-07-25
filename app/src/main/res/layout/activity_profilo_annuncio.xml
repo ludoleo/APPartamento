@@ -45,8 +45,8 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Punteggio :"
-                android:drawableLeft="@drawable/ic_baseline_star_rate_24" />
+                android:drawableLeft="@drawable/ic_baseline_star_rate_24"
+                android:text="Punteggio casa :" />
 
             <TextView
                 android:id="@+id/et_punteggio"

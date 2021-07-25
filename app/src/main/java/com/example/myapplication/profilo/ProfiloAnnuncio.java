@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.home.Home;
-import com.example.myapplication.ricercalloggio.Preferiti;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.Casa;
 import com.example.myapplication.classi.Proprietario;

@@ -80,7 +80,7 @@ public class NuovaRecensioneStudente extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 valorePuliziaStud = rb_puliziaStud.getRating();
                 valutazioneMedia = (valorePuliziaStud+valoreRispetto+valoreSocialita)/3 ;
-                mediaRecensione.setText(Float.toString(valutazioneMedia));
+                mediaRecensione.setText(String.format("%.2f" ,valutazioneMedia));
                 Log.i(TAG, "Descrizione rec"+ descrizioneRec);
             }
         });
@@ -90,7 +90,7 @@ public class NuovaRecensioneStudente extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 valoreRispetto = rb_rispettoLuoghi.getRating();
                 valutazioneMedia = (valorePuliziaStud+valoreRispetto+valoreSocialita)/3 ;
-                mediaRecensione.setText(Float.toString(valutazioneMedia));
+                mediaRecensione.setText(String.format("%.2f" ,valutazioneMedia));
                 Log.i(TAG, "Descrizione rec"+ descrizioneRec);
             }
         });
@@ -100,7 +100,7 @@ public class NuovaRecensioneStudente extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 valoreSocialita = rb_socialita.getRating();
                 valutazioneMedia = (valorePuliziaStud+valoreRispetto+valoreSocialita)/3 ;
-                mediaRecensione.setText(Float.toString(valutazioneMedia));
+                mediaRecensione.setText(String.format("%.2f" ,valutazioneMedia));
                 Log.i(TAG, "Descrizione rec"+ descrizioneRec);
             }
         });

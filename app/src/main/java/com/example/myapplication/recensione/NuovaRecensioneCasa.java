@@ -77,7 +77,7 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
             @Override public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 valorePulizia = rb_pulizia.getRating();
                 valutazioneMedia = (valorePulizia+valorePosizione+valoreQualita)/3 ;
-                mediaRecensione.setText(Float.toString(valutazioneMedia));
+                mediaRecensione.setText(String.format("%.2f" ,valutazioneMedia));
 
                                                     }
         });
@@ -86,7 +86,7 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 valorePosizione = rb_posizione.getRating();
                 valutazioneMedia = (valorePulizia+valorePosizione+valoreQualita)/3 ;
-                mediaRecensione.setText(Float.toString(valutazioneMedia));
+                mediaRecensione.setText(String.format("%.2f" ,valutazioneMedia));
                 Log.i(TAG,"Utente autenticato è :"+ user.getEmail()+user.getUid());
             }
         });
@@ -95,7 +95,7 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 valoreQualita = rb_qualitaPrezzo.getRating();
                 valutazioneMedia = (valorePulizia+valorePosizione+valoreQualita)/3 ;
-                mediaRecensione.setText(Float.toString(valutazioneMedia));
+                mediaRecensione.setText(String.format("%.2f" ,valutazioneMedia));
                 Log.i(TAG,"Utente autenticato è :"+ user.getEmail()+user.getUid());
             }
         });

@@ -41,6 +41,8 @@ public class ImageSQL extends AppCompatActivity {
     final int REQUEST_CODE_GALLERY= 999;
     final int PERMISSION_CODE = 1000;
 
+    String Titolotxt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,6 +168,16 @@ public class ImageSQL extends AppCompatActivity {
                 startActivity(a);
                 return true;
 
+            case R.id.elimina_bolletta:
+
+                Titolotxt = nomebolletta.getText().toString();
+                Boolean checkdeletedata = databaseHelper.deleteData(Titolotxt);
+                if (checkdeletedata==true )
+                    Toast.makeText(ImageSQL.this,"Bolletta eliminata",Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(ImageSQL.this,"Errore Inserimento",Toast.LENGTH_SHORT).show();
+
+                return true;
         }
         return false;
     }

@@ -12,63 +12,63 @@
         android:id="@+id/NSQL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:autofillHints=""
         android:ems="10"
         android:hint="@string/nome"
         android:inputType="textPersonName"
-        android:autofillHints="" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/inserisciValutazione" />
+        android:textColor="@color/rosso_scuro" />
 
     <EditText
         android:id="@+id/VSQL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/valutazione"
-        android:inputType="numberDecimal" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/prezzo" />
+        android:inputType="numberDecimal"
+        android:textColor="@color/rosso_scuro" />
 
     <EditText
         android:id="@+id/PSQL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/numero"
-        android:inputType="number" />
+        android:inputType="number"
+        android:textColor="@color/rosso_scuro" />
 
     <EditText
         android:id="@+id/ZONASQL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/posizione"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textColor="@color/rosso_scuro" />
 
     <EditText
         android:id="@+id/LINKSQL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/link"
-        android:inputType="textUri" />
+        android:inputType="textUri"
+        android:textColor="@color/rosso_scuro" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
         android:onClick="confermaNota"
         android:text="@string/conferma"
         app:backgroundTint="@color/rosso_mattone" />

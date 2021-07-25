@@ -24,6 +24,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public boolean deleteData(String nome)   {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name",nome);
+
+        long result = db.delete(Table_Name,"name = ?",new String[] {nome});
+        if(result == -1)
+        {
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+
+
     public boolean addData(String nome, byte[] img)   {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

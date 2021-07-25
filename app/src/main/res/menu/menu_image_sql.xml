@@ -17,4 +17,9 @@
         android:title="Visualizza bollette"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/elimina_bolletta"
+        android:title="Elimina bolletta"
+        app:showAsAction="never" />
+
 </menu>

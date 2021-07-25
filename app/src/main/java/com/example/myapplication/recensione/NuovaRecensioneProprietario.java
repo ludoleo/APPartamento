@@ -78,7 +78,7 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 valoreDisponibilita = rb_disponibilita.getRating();
                 valutazioneMedia = (valoreDisponibilita+valoreFlessibilita+valoreGenerale)/3;
-                mediaRecensione.setText(Float.toString(valutazioneMedia));
+                mediaRecensione.setText(String.format("%.2f" ,valutazioneMedia));
             }
         });
         rb_flessibilita.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -86,7 +86,7 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 valoreFlessibilita = rb_flessibilita.getRating();
                 valutazioneMedia = (valoreDisponibilita+valoreFlessibilita+valoreGenerale)/3;
-                mediaRecensione.setText(Float.toString(valutazioneMedia));
+                mediaRecensione.setText(String.format("%.2f" ,valutazioneMedia));
             }
         });
 
@@ -95,7 +95,7 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 valoreGenerale = rb_disponibilita.getRating();
                 valutazioneMedia = (valoreDisponibilita+valoreFlessibilita+valoreGenerale)/3;
-                mediaRecensione.setText(Float.toString(valutazioneMedia));
+                mediaRecensione.setText(String.format("%.2f" ,valutazioneMedia));
             }
         });
     }

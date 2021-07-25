@@ -42,16 +42,17 @@
         android:id="@+id/et_numTelefono"
         android:layout_width="367dp"
         android:layout_height="50dp"
+        android:layout_gravity="start"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
+        android:autofillHints=""
         android:background="@drawable/background_sinistra"
         android:hint="@string/telefono"
         android:inputType="phone"
         android:padding="15dp"
         android:textColor="@color/rosso_scuro"
         android:textColorHint="@color/rosso_scuro"
-        android:translationY="10dp"
-        android:autofillHints="" />
+        android:translationY="10dp" />
 
     <EditText
         android:id="@+id/et_univerista"
@@ -74,7 +75,6 @@
         android:layout_gravity="start"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:background="@drawable/background_sinistra"
         android:padding="15dp"
         android:text="@string/tipoLaurea"
         android:textColor="@color/rosso_scuro"
@@ -120,6 +120,7 @@
         android:id="@+id/et_inidirizzoLaurea"
         android:layout_width="367dp"
         android:layout_height="50dp"
+        android:layout_gravity="end"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:autofillHints=""
@@ -134,21 +135,22 @@
         android:id="@+id/et_descrizioneS"
         android:layout_width="367dp"
         android:layout_height="50dp"
+        android:layout_gravity="start"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:autofillHints=""
         android:background="@drawable/background_destra"
         android:hint="@string/descrizione"
         android:inputType="text"
         android:padding="15dp"
         android:textColorHint="@color/ic_launcher_background"
-        android:translationY="35dp"
-        android:autofillHints="" />
+        android:translationY="35dp" />
 
     <CheckBox
         android:id="@+id/checkBoxPrimaEsperienza"
         android:layout_width="367dp"
         android:layout_height="50dp"
-        android:layout_gravity="start"
+        android:layout_gravity="end"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:background="@drawable/background_sinistra"

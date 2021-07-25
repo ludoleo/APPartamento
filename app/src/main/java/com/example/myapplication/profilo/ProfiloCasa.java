@@ -234,7 +234,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 
                 //CARICO IL NOME DELLA CASA
                 laTuaCasa.setText(casa.getNomeCasa());
-                valutazioneCasa.setText("  "+String.format("%.2f" ,casa.getValutazione())+" su "+casa.getNumRec()+" recensioni!");
+                valutazioneCasa.setText("Punteggio casa:   "+String.format("%.2f" ,casa.getValutazione())+" su "+casa.getNumRec()+" recensioni!");
 
 
 
@@ -305,8 +305,8 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                     if(casa.getProprietario().compareTo(i.getIdUtente())==0)
                         proprietario = i;
                 }
-                ilProprietario.setText("Host: "+proprietario.getNome());
-                valutazioneProprietario.setText(""+proprietario.getValutazione());
+                ilProprietario.setText("Proprietario: "+proprietario.getNome());
+                valutazioneProprietario.setText("Punteggio proprietario:   "+String.format("%.2f" ,proprietario.getValutazione())+" su "+proprietario.getNumRec()+" recensioni!");
                 //SE IL PROPRIETARIO E' UN USER
                 if(user!=null) {
                     if (proprietario.getIdUtente().compareTo(user.getUid()) == 0) {

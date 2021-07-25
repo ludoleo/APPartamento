@@ -31,13 +31,11 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".profilo.ListaRecensioniUtente"></activity>
         <activity android:name=".DownloadFiles" />
-        <activity android:name=".profilo.ListaRecensioni" />
         <activity android:name=".prenotazione.ProfiloPrenotazione" />
         <activity android:name=".prenotazione.LeMiePrenotazioni" />
         <activity android:name=".ricercalloggio.FiltriRicerca" />
         <activity android:name=".registrazione.InserimentoServiziCasa" />
         <activity android:name=".registrazione.InserimentoHobbyStudente" />
-        <activity android:name=".ricercalloggio.Preferiti" />
         <activity android:name=".messaggi.MessaggiActivity" />
         <activity android:name=".registrazione.InserimentoDatiAnnuncio" />
         <activity android:name=".registrazione.InserimentoDatiCasa" />

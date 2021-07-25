@@ -57,7 +57,7 @@
         android:layout_gravity="end"
         android:autofillHints=""
         android:background="@drawable/background_destra"
-        android:gravity="end"
+        android:gravity="start|end"
         android:hint="@string/descrizione"
         android:inputType="text"
         android:padding="10dp"

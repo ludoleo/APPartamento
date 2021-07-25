@@ -15,7 +15,6 @@ import com.example.myapplication.prenotazione.LeMiePrenotazioni;
 import com.example.myapplication.profilo.ProfiloProprietario;
 import com.example.myapplication.profilo.ProfiloStudente;
 import com.example.myapplication.ricercalloggio.MappaAnnunci;
-import com.example.myapplication.ricercalloggio.Preferiti;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -114,13 +113,6 @@ public class Home extends AppCompatActivity {
         }
 
         Intent intent = new Intent(Home.this , ChatActivity.class);
-        startActivity(intent);
-    }
-
-    public void salvati(View view) {
-
-        //TODO aggiungere activity per case salvate
-        Intent intent = new Intent(Home.this , Preferiti.class);
         startActivity(intent);
     }
 
