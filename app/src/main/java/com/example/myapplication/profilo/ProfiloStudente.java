@@ -427,6 +427,8 @@ public class ProfiloStudente extends AppCompatActivity {
         Date data = new Date();
         long longData = data.getTime();
         myRef.child("Inquilini").child(id_inquilino).child("dataFine").setValue(longData);
+        DatabaseReference dr = database.getReference();
+        dr.child("Utenti").child("Studenti").child(idUtente).child("primaEsperienza").setValue("NO");
         Intent i = new Intent(this, Home.class);
         startActivity(i);
     }
