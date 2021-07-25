@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.home.Home;
+import com.example.myapplication.notifiche.MyService;
 import com.example.myapplication.profilo.ListaRecensioniUtente;
 import com.example.myapplication.profilo.ModificaProfilo;
 import com.example.myapplication.profilo.ProfiloStudente;

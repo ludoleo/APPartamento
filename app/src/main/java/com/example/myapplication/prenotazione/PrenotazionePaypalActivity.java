@@ -39,7 +39,6 @@ public class PrenotazionePaypalActivity extends AppCompatActivity {
     private static final String TAG = "Pagamen";
     EditText etAmount;
     Button btnPay;
-    //TODO DA MODIFICARE SE CAMBIO LA DIRECTORY
                                     //metto indirizzo col quale sono collegato
     //final static String IP_ADDRESS = "192.168.47.175"; //CREA
     final static String IP_ADDRESS = "10.14.4.151";   //CASA
@@ -53,8 +52,8 @@ public class PrenotazionePaypalActivity extends AppCompatActivity {
     String id="";
 
     //Database
-    FirebaseDatabase database;
-    DatabaseReference myRef;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -26,12 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 public class InserimentoServiziCasa extends AppCompatActivity {
 
     private static final String TAG = "Servizi";
-    ListView listView;
+    private ListView listView;
     ArrayAdapter<String> arrayAdapter;
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-    String[] servizi = {"Aria Condizionata", "Balcone", "Cucina", "Forno", "Frigorifero e Freezer", "Lavastoviglie",
+    private String[] servizi = {"Aria Condizionata", "Balcone", "Cucina", "Forno", "Frigorifero e Freezer", "Lavastoviglie",
                             "Lavatrice","Piatti e posate", "Posto Auto", "Riscaldamento", "Sky", "Televisione",
                                 "Terrazzina o Veranda", "Ventilatore", "Wi-fi"};
 

@@ -43,15 +43,15 @@ public class InserimentoDatiAnnuncio extends AppCompatActivity {
     private static final int PREZZOMINIMO = 150;
 
     //Autenticazione
-    public FirebaseUser user;
-    public FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     // case proprietario
     TextView textViewNomeCasa;
-    Casa casa;
-    List<String> listaAnnunci = new LinkedList<>();
+    private Casa casa;
+    private List<String> listaAnnunci = new LinkedList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

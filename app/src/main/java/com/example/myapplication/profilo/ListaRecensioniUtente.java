@@ -70,34 +70,34 @@ public class ListaRecensioniUtente extends AppCompatActivity {
     ListView lv_recensioni_possibili_casa, lv_recensioni_possibili_proprietario, lv_recensioni_possibili_studente,
             lv_recensioni_effettuate_casa, lv_recensioni_effettuate_proprietario, lv_recensioni_effettuate_studente;
     //LISTE
-    List<RecensioneCasa> listaRecensioniCase;
-    List<RecensioneProprietario> listaRecensioniProprietari;
-    List<RecensioneStudente> listaRecensioniStudente;
-    List<Studente> listaStudenti;
-    List<Inquilino> listaInquilini;
-    List<Proprietario> listaProprietari;
-    List<Casa> listaCase;
+    private List<RecensioneCasa> listaRecensioniCase;
+    private List<RecensioneProprietario> listaRecensioniProprietari;
+    private List<RecensioneStudente> listaRecensioniStudente;
+    private List<Studente> listaStudenti;
+    private List<Inquilino> listaInquilini;
+    private List<Proprietario> listaProprietari;
+    private List<Casa> listaCase;
 
-    List<Casa> casaDaRecensire;
-    List<Inquilino> studentiDaRecensire;
-    List<Proprietario> proprietariDaRecensire;
-    List<RecensioneCasa> recensioniCasaEffettuate;
-    List<RecensioneStudente> recensioniStudentiEffettuate;
-    List<RecensioneProprietario> recensioniProprietarioEffettuate;
-
+    private List<Casa> casaDaRecensire;
+    private List<Inquilino> studentiDaRecensire;
+    private List<Proprietario> proprietariDaRecensire;
+    private List<RecensioneCasa> recensioniCasaEffettuate;
+    private List<RecensioneStudente> recensioniStudentiEffettuate;
+    private List<RecensioneProprietario> recensioniProprietarioEffettuate;
     //MAPPE
-    Map<String,Studente> mappaInquilinoStudente;
-    Map<String, Inquilino> mappaCasaInquilini;
-    Map<String, Inquilino> mappaProprietarioInquilini;
-    Map<String, Inquilino> mappaInquiliniInquilini;
+    private Map<String,Studente> mappaInquilinoStudente;
+    private Map<String, Inquilino> mappaCasaInquilini;
+    private Map<String, Inquilino> mappaProprietarioInquilini;
+    private Map<String, Inquilino> mappaInquiliniInquilini;
 
-    Map<String, Proprietario> mappaProprietari;
+    private Map<String, Proprietario> mappaProprietari;
     //VARIABILI CONTROLLO
-    boolean isProprietario;
-    boolean flag = false;
-    boolean flagCasa = false;
-    boolean flagProp = false;
-    boolean flagStud = false;
+    private boolean isProprietario;
+    private boolean flag = false;
+    private boolean flagCasa = false;
+    private boolean flagProp = false;
+    private boolean flagStud = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -760,7 +760,6 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                     Proprietario pro = proprietariDaRecensire.get(i);
                     Log.i(TAG,"sono qua "+pro.getEmail());
                     itemsProprietario[i] = new ListaRecensioniUtente.CustomItemOggetto();
-                    Log.i(TAG,"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+mappaProprietarioInquilini.get(pro.getIdUtente()).getIdInquilino());
                     itemsProprietario[i].recensore = mappaProprietarioInquilini.get(pro.getIdUtente()).getIdInquilino();
                     itemsProprietario[i].nome= pro.getNome();
                     itemsProprietario[i].recensito= pro.getIdUtente();
@@ -780,7 +779,7 @@ public class ListaRecensioniUtente extends AppCompatActivity {
         public Date dataRec;
     }
     private static class CustomItemOggetto {
-        //TODO SE POSSIBILE AGGIUNGERE LE FOTO
+
         public String nome;
         public String recensito; //ID dell'oggetto da recensire
         public float valutazione;

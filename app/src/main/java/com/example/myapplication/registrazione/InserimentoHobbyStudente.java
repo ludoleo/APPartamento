@@ -28,17 +28,17 @@ import com.google.firebase.database.ValueEventListener;
 public class InserimentoHobbyStudente extends AppCompatActivity {
 
     private static final String TAG = "InserimentoHobbyStudente";
-    ListView listView;
+    private ListView listView;
     ArrayAdapter<String> arrayAdapter;
     //Database
-    FirebaseDatabase database;
-    DatabaseReference myRef;
-    FirebaseAuth mAuth;
-    FirebaseUser user;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
-    String idUtente = "";
+    private String idUtente = "";
 
-    String[] hobby = {"Giochi da tavolo", "Scacchi", "Cucina", "Fotografia",
+    private String[] hobby = {"Giochi da tavolo", "Scacchi", "Cucina", "Fotografia",
                         "Musei", "Sport", "Calcio", "Fitness", "Libri", "Videogiochi"};
 
     @Override

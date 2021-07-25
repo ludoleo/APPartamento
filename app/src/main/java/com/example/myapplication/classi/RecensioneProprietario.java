@@ -12,7 +12,6 @@ public class RecensioneProprietario {
     private float valutazioneGenerale;
 
     private float valutazioneMedia;
-    //private boolean recensitoIsProprietario;
     private String recensore;// id
     private String recensito;//id
 

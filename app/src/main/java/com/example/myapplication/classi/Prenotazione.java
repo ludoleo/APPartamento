@@ -17,8 +17,6 @@ public class Prenotazione {
     private boolean pagata;
     private String orario;
 
-    //TODO considerare il video
-
     public Prenotazione(){}
 
     public Prenotazione(String id, String emailUtente1, String nomeUtente1, String emailUtente2, String nomeUtente2,

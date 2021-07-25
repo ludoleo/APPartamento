@@ -40,26 +40,26 @@ import java.util.TimeZone;
 public class PrenotazioneCalendarioActivity extends AppCompatActivity {
 
     CalendarView calendarView;
-    Date data;
+    private Date data;
     Spinner spinnerFasciaOraria;
-    Long date;
+    private Long date;
 
     //Database
-     FirebaseDatabase database;
-     DatabaseReference myRef;
+     private FirebaseDatabase database;
+     private DatabaseReference myRef;
     //Autenticazione
-     FirebaseUser user;
-     FirebaseAuth mAuth;
+     private FirebaseUser user;
+     private FirebaseAuth mAuth;
 
     private static final String TAG = "Prenotazione";
     private int idNotifica;
 
-    String idAnnuncio="";
-    String nomeUtente1="";
-    String emailUtente1="";
-    String nomeUtente2="";
-    String emailUtente2="";
-    String fasciaOraria="";
+    private String idAnnuncio="";
+    private String nomeUtente1="";
+    private String emailUtente1="";
+    private String nomeUtente2="";
+    private String emailUtente2="";
+    private String fasciaOraria="";
 
 
     @Override
@@ -90,12 +90,8 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
        // initUI();
     }
     private void initUI() {
-
-
         getToken();
     }
-
-
     public void back(View view) {
         Intent intent = new Intent(this, ProfiloAnnuncio.class);
         startActivity(intent);
@@ -113,7 +109,7 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
             idAnnuncio = bundle.getString("idAnnuncio");
             fasciaOraria = spinnerFasciaOraria.getSelectedItem().toString();
         }catch (Exception e){
-            //TODO GESTISCI ECCEZIONE
+
         }
         data = new Date();
         //Controllo sulla prenotazione
@@ -132,7 +128,6 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
                     Prenotazione prenotazione = new Prenotazione("",emailUtente1,nomeUtente1, emailUtente2,nomeUtente2,
                             idAnnuncio, date,false,fasciaOraria,false);
 
-                    //todo notifica al proprietario e creazione delle chat, bisogna prendere il token del proprietario
                     DatabaseReference preAdd = myRef.child("Prenotazioni").push();
                     preAdd.setValue(prenotazione);
                     String key = preAdd.getKey();

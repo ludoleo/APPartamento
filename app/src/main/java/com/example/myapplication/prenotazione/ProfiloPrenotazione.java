@@ -56,27 +56,27 @@ public class ProfiloPrenotazione extends AppCompatActivity {
     private static final String TAG = "PROFILO PRENOTAZIONE";
     private static final int PERMISSION_WRITE_CALENDAR = 1;
     //Database
-    FirebaseDatabase database;
-    DatabaseReference myRef;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
     //Autenticazione
-    FirebaseUser user;
-    FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
 
     CalendarView calendarViewCambio;
     Spinner spinnerFasciaOraria;
-    Prenotazione prenotazione;
-    Long date;
+    private Prenotazione prenotazione;
+    private Long date;
 
     Button pagaPrenotazione, confermaPrenotazione, cancellaPrenotazione, modificaPrenotazione, cambiaDataPrenotazione, promuoviInquilino;
     TextView nomeAnnuncio, nomeUtente, emailUtente, dataPrenotazione, tipoPrenotazione, daPagare;
 
-    String tipo = "";
-    String id = "";
-    String fasciaOraria = "";
-    String emailStudente = "";
-    String emailProprietario = "";
-    Annuncio annuncio;
-    List<Inquilino> listaInquilini;
+    private String tipo = "";
+    private String id = "";
+    private String fasciaOraria = "";
+    private String emailStudente = "";
+    private String emailProprietario = "";
+    private Annuncio annuncio;
+    private List<Inquilino> listaInquilini;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

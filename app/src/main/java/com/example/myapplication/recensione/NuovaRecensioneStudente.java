@@ -39,15 +39,15 @@ public class NuovaRecensioneStudente extends AppCompatActivity {
     private TextView mediaRecensione ;
     private RatingBar rb_puliziaStud, rb_rispettoLuoghi, rb_socialita;
     private float valorePuliziaStud, valoreRispetto, valoreSocialita;
-    float valutazioneMedia;
-    String descrizioneRec, idRecensito;
-    Studente utente;
+    private float valutazioneMedia;
+    private String descrizioneRec, idRecensito;
+    private Studente utente;
 
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     //Autentificazione
-    public FirebaseUser user;
-    public FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

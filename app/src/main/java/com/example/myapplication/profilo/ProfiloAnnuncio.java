@@ -67,11 +67,10 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     //Autenticazione
-    public FirebaseUser user;
-    public FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
     //Storage
-    //FirebaseStorage storage;
-    StorageReference storageReference;
+    private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

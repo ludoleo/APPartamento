@@ -53,10 +53,10 @@ public class InserimentoDatiStudente extends AppCompatActivity {
     private CheckBox cb_primaEsperienza;
 
    //Database
-    FirebaseDatabase database;
-    DatabaseReference myRef;
-    FirebaseAuth mAuth;
-    FirebaseUser user;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,5 +167,5 @@ public class InserimentoDatiStudente extends AppCompatActivity {
         et_universita.setText("");
         cb_primaEsperienza.setChecked(false);
     }
-    //tolto i call back
+
 }

@@ -41,17 +41,16 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
 
     private RatingBar rb_disponibilita, rb_flessibilita, rb_generale;
     private float valoreDisponibilita, valoreFlessibilita, valoreGenerale, valutazioneMedia;
-    String descrizioneRec;
+    private String descrizioneRec;
     // Database
-    DatabaseReference myRef;
-    FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private FirebaseDatabase database;
     //Autentificazione
-    FirebaseUser user;
-    FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
 
-    Proprietario utente;
-
-    String idProprietario = "";
+    private Proprietario utente;
+    private String idProprietario = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,10 +117,8 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-
     }
 
     public void nuovaRecProp(View view) {

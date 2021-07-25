@@ -40,15 +40,15 @@ public class NuovaRecensioneCasa extends AppCompatActivity {
     private RatingBar rb_pulizia, rb_posizione, rb_qualitaPrezzo;
     private float valorePulizia, valorePosizione, valoreQualita;
 
-    String nomeCasa, descrizione;
-    Casa casa;
+    private String nomeCasa, descrizione;
+    private Casa casa;
 
     float valutazioneMedia;
     //DATABASE
-    DatabaseReference myRef;
-    FirebaseDatabase database;
-    FirebaseUser user;
-    FirebaseAuth mAuth;
+    private DatabaseReference myRef;
+    private FirebaseDatabase database;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

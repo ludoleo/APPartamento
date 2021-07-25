@@ -40,16 +40,13 @@ public class InserimentoDatiProprietario extends AppCompatActivity {
 
     private FirebaseUser user;
     private FirebaseAuth mAuth;
-
     private CheckBox cb_primaEsperienzaP;
 
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-
     private static final String si = "SI";
     private static final String no = "NO";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

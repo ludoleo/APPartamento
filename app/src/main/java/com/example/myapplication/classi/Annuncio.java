@@ -5,7 +5,6 @@ import android.widget.ImageView;
 import java.util.LinkedList;
 import java.util.List;
 
-// NUOVO
 public class Annuncio{
 
     private String nomeAnnuncio;
@@ -16,9 +15,6 @@ public class Annuncio{
     private Integer prezzoMensile;
     private String speseStraordinarie;
     private String indirizzo;
-
-    //TODO creare un metodo per aggiungere i servizi e le immagini
-    private List<ImageView> listaImmagini = new LinkedList<>();
 
     public Annuncio(){}
 
@@ -46,8 +42,6 @@ public class Annuncio{
     public String getIdCasa() {return idCasa;}
 
     public void setIdCasa(String idCasa) {this.idCasa = idCasa;}
-
-    public void setListaImmagini(List<ImageView> listaImmagini) {this.listaImmagini = listaImmagini;}
 
     public String getIdAnnuncio() {
         return nomeAnnuncio;
@@ -94,16 +88,7 @@ public class Annuncio{
     }
 
     public void setSpeseStraordinarie(String speseStraordinarie) {
-        this.speseStraordinarie = speseStraordinarie;
-    }
-
-    public List<ImageView> getListaImmagini() {
-        return listaImmagini;
-    }
-
-    public void addImmagine(ImageView immagine) {
-        this.listaImmagini.add(immagine);
-    }
+        this.speseStraordinarie = speseStraordinarie; }
 
     public String getIndirizzo() {
         return indirizzo;

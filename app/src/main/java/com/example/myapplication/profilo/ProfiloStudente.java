@@ -3,6 +3,8 @@ package com.example.myapplication.profilo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 
 import android.Manifest;
@@ -32,6 +34,7 @@ import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.RecensioneStudente;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.home.Home;
+import com.example.myapplication.notifiche.MyService;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -69,22 +72,22 @@ public class ProfiloStudente extends AppCompatActivity {
     Button rimuoviInquilino;
     ArrayAdapter<String> arrayAdapter;
 
-    List<RecensioneStudente> listaRecensioniUtente;
+    private List<RecensioneStudente> listaRecensioniUtente;
     //LO STUDENTE PU0' ESSERE INQUILINO
-    List<Inquilino> listaInquilini;
-    List<Inquilino> inquiUser;
-    Inquilino inquilino;
-    String id_inquilino = "";
-    String nomeCasa = "";
-    Studente studente;
+    private List<Inquilino> listaInquilini;
+    private List<Inquilino> inquiUser;
+    private Inquilino inquilino;
+    private String id_inquilino = "";
+    private String nomeCasa = "";
+    private Studente studente;
 
-    FirebaseDatabase database;
-    DatabaseReference myRef;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
     private String idUtente;
 
-    StorageReference storageReference;
-    FirebaseAuth mAuth;
-    FirebaseUser user;
+    private StorageReference storageReference;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
 
 
     @Override
@@ -100,8 +103,7 @@ public class ProfiloStudente extends AppCompatActivity {
 
         //PRENDO L'ID_UTENTE
         idUtente = getIntent().getExtras().getString("idStudente");
-
-        //STORAGE---- e se sono loggato come proprietario e vado su profilo studente?????? userid mi prende il proprietario
+        //STORAGE
         storageReference = FirebaseStorage.getInstance().getReference();
         StorageReference profileRef = storageReference.child("Studenti/"+idUtente+"/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -113,7 +115,6 @@ public class ProfiloStudente extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
             }
         });
         // IMMAGINE PERMESSI
@@ -153,16 +154,12 @@ public class ProfiloStudente extends AppCompatActivity {
             listaRecensioniUtente = new ArrayList<>();
             //INIZIALIZZO I BOTTONI
             rimuoviInquilino = (Button) findViewById(R.id.b_rimuoviInquilino);
-
             //VISIBILITA
-
             rimuoviInquilino.setVisibility(View.GONE);
             text_casaProfiloUtente.setVisibility(View.GONE);
             tv_profilo_nome_casa.setVisibility(View.GONE);
             tv_primaEsperienza.setVisibility(View.GONE);
             //RIFERIMENTO ALL'UTENTE---c'è già su, ne dovrebbe bastare uno
-
-           // idUtente = getIntent().getExtras().getString("idUtente");
 
             myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
                 @Override
@@ -220,8 +217,6 @@ public class ProfiloStudente extends AppCompatActivity {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) { }
             });
-
-
     }
 
     //METODO CHE DISATTIVA IL PULSANTE SE LO STUDENTE NON E' UN INQUILINO
@@ -239,7 +234,6 @@ public class ProfiloStudente extends AppCompatActivity {
                     if(inqui.getStudente().compareTo(email)==0 && inqui.getDataFine()==0){
                         id_inquilino = annunciSnapshot.getKey();
                         inquilino = inqui;
-                        //TODO RIEMPIO LA TEXTVIEW PER LA CASA INOLTRE BISOGNA AGGIUNGERE L'IMMAGINE
                         nomeCasa = inqui.getCasa();
                         text_casaProfiloUtente.setVisibility(View.VISIBLE);
                         tv_profilo_nome_casa.setText(nomeCasa);
@@ -257,7 +251,7 @@ public class ProfiloStudente extends AppCompatActivity {
         });
     }
 
-    // PERMESSI PT2
+    // PERMESSI
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -315,7 +309,6 @@ public class ProfiloStudente extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         if(isUser()) {
             MenuInflater menuInflater = getMenuInflater();
             menuInflater.inflate(R.menu.menu, menu);
@@ -356,7 +349,6 @@ public class ProfiloStudente extends AppCompatActivity {
         return false;
     }
 
-
     //GESTIONE DELLE RECENSIONI
     private void aggiorna() {
         Log.i(TAG, ""+listaRecensioniUtente.size()+"  -  "+listaRecensioniUtente);
@@ -393,7 +385,6 @@ public class ProfiloStudente extends AppCompatActivity {
         String strDate = dateFormat.format(data);
         return strDate;
     }
-
     // CUSTOM ITEM
     private static class CustomItem {
         public float punteggio;
@@ -404,7 +395,6 @@ public class ProfiloStudente extends AppCompatActivity {
     private ProfiloStudente.CustomItem[] createItems() {
 
         int size =listaRecensioniUtente.size();
-
         ProfiloStudente.CustomItem[] items = new ProfiloStudente.CustomItem[size]; //numero di annunci possibili
         for (int i = 0; i < items.length; i++) {
             //mi prendo il riferimento all'annuncio

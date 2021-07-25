@@ -39,21 +39,21 @@ public class LeMiePrenotazioni extends AppCompatActivity {
 
     private static final String TAG = "Data";
     //Autenticazione
-    FirebaseUser user;
-    FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
     //Database
-    FirebaseDatabase database;
-    DatabaseReference myRef;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
 
     ListView listView;
     Spinner spinner;
 
     //Lista per la gestione delle prenotazioni
-    List<Prenotazione> listaPrenotazioni;
-    List<Prenotazione> inSospeso;
-    List<Prenotazione> confermate;
-    List<Prenotazione> terminate;
-    Date ora;
+    private List<Prenotazione> listaPrenotazioni;
+    private List<Prenotazione> inSospeso;
+    private List<Prenotazione> confermate;
+    private List<Prenotazione> terminate;
+    private Date ora;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +95,6 @@ public class LeMiePrenotazioni extends AppCompatActivity {
                         listaPrenotazioni.add(prenotazione);
                     }
                 }
-
                 for (Prenotazione p : listaPrenotazioni) {
 
                     if(p.getDataPrenotazione()<ora.getTime())
@@ -105,15 +104,12 @@ public class LeMiePrenotazioni extends AppCompatActivity {
                     else if(!p.isConfermata())
                         inSospeso.add(p);
                 }
-
                 caricaListView(listaPrenotazioni);
-
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
@@ -129,11 +125,8 @@ public class LeMiePrenotazioni extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent)
             {}
         });
-
     }
-
     private void caricaListView(List<Prenotazione> listaPrenotazioni) {
-
 
         LeMiePrenotazioni.CustomItem[] items = createItems(listaPrenotazioni);
         ArrayAdapter<LeMiePrenotazioni.CustomItem> arrayAdapter = new ArrayAdapter<LeMiePrenotazioni.CustomItem>(
@@ -191,7 +184,7 @@ public class LeMiePrenotazioni extends AppCompatActivity {
         });
     }
 
-    //Gestione del CustomItem
+    //GESTIONE DEL CUSTOM ITEM
     protected static class CustomItem {
         public String tipoPrenotazione;
         public String nomeAnnuncio;

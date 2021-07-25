@@ -95,9 +95,9 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 
 
     ImageView immagineCasa;
-    List<Studente> listaStudenti;
-    List<Studente> coinquilini;
-    List<RecensioneCasa> listaRecensioniCasa;
+    private List<Studente> listaStudenti;
+    private List<Studente> coinquilini;
+    private List<RecensioneCasa> listaRecensioniCasa;
 
     ListView listViewServizi;
     ArrayAdapter<String> arrayAdapter;
@@ -107,16 +107,16 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     Button  b_aggiungiAnnuncio;
     //MAPPA
     MapView mapViewCasa;
-    GoogleMap gmap;
-    List<LatLng> polylinePoints = new LinkedList<LatLng>();
-    DownloadTask task;
+    private GoogleMap gmap;
+    private List<LatLng> polylinePoints = new LinkedList<LatLng>();
+    private DownloadTask task;
 
     //DATABASE
-    FirebaseUser user;
-    FirebaseAuth mAuth;
-    FirebaseDatabase database;
-    DatabaseReference myRef;
-    StorageReference storageReference;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private StorageReference storageReference;
 
     private Casa casa;
     private Proprietario proprietario;
@@ -143,7 +143,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         listViewServizi = findViewById(R.id.listView_serviziProfilo);
         tv_visualizzaCoinquilini = findViewById(R.id.visualizzaCoinquilini);
         tv_visualizzaRec = findViewById(R.id.visualizzaRec);
-
         distanzaMappa.setVisibility(View.GONE);
 
         //STORAGE
@@ -187,12 +186,9 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         b_aggiungiAnnuncio = (Button) findViewById(R.id.button_aggiungiAnnuncio);
         //lirendo visibili solo al proprietario loggato
         b_aggiungiAnnuncio.setVisibility(View.GONE);
-
         listaStudenti = new LinkedList<Studente>();
         listaRecensioniCasa = new LinkedList<RecensioneCasa>();
-
     }
-
 
     //RICERCA DEI RIFERIMENTI
     private void riferimentoCasa() {
@@ -212,7 +208,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                         Helper.getListViewSize(listViewServizi);
                     }
                 }
-
                 myRef.child("Recensioni_Casa").child(casa.getNomeCasa()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot datasnapshots) {
@@ -225,18 +220,13 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                             tv_visualizzaRec.setVisibility(View.GONE);
                         aggiornaListViewRecensione();
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
-
                 //CARICO IL NOME DELLA CASA
                 laTuaCasa.setText(casa.getNomeCasa());
                 valutazioneCasa.setText("Punteggio casa:   "+String.format("%.2f" ,casa.getValutazione())+" su "+casa.getNumRec()+" recensioni!");
-
-
 
                 //CERCO IL RIFERIMENTO AL PROPRIETARIO
                 riferimentoProprietario();
@@ -283,7 +273,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                             public void onCancelled(DatabaseError databaseError) {
                             }
                         });
-
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -295,7 +284,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                     }
                 });
     }
-
     private void riferimentoProprietario() {
         myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
             @Override
@@ -319,11 +307,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             }
         });
     }
-        //METODO PER SCRIVERE UNA RECENSIONE SULLA CASA
-    private void recensioniCasa(View v){
-
-    }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -349,7 +332,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent,IMAG_REQUEST);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -358,7 +340,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             UploadImage(imageUri);
         }
     }
-
     private void UploadImage(Uri imageUri) {
         final StorageReference fileRef = storageReference.child("Case/"+casa.getNomeCasa()+"/profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -378,15 +359,12 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             }
 
         });
-
     }
-
     public void aggiungiAnnuncio(View view) {
         Intent intent = new Intent(this, InserimentoDatiAnnuncio.class);
         intent.putExtra("nomeCasa", casa.getNomeCasa());
         startActivity(intent);
     }
-
     //GESTIONE MAPPE
     private void createMapView(Bundle savedInstanceState) {
         Bundle mapViewBundle = null;
@@ -467,7 +445,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                 .draggable(true));
         gmap.addMarker(mo5);
         perth5.setTitle("Campus Luigi Enaudi");
-
     }
     public void calcolaPercorso(LatLng destinazione){
 
@@ -800,7 +777,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 
         return false;
     }
-
 
     //METODI OVERRIDE
     @Override

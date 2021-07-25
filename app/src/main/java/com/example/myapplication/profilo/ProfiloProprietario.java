@@ -77,7 +77,7 @@ public class ProfiloProprietario extends AppCompatActivity {
     private List<Casa> listaCase = new ArrayList<>();
 
     ListView listViewCase, listViewRecensioni;
-    Proprietario proprietario;
+    private Proprietario proprietario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +93,6 @@ public class ProfiloProprietario extends AppCompatActivity {
 
         //STORAGE
         storageReference = FirebaseStorage.getInstance().getReference();
-        //TODO sistemare gli id in base al profilo se si è loggati o se si è solo visitatori
         StorageReference profileRefer = storageReference.child("Proprietari/"+idUtente+"/profile.jpg");
         profileRefer.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -127,7 +126,6 @@ public class ProfiloProprietario extends AppCompatActivity {
                 else { // system os is less then Marshmallow
                     CambiaImmagine();
                 }
-
             }
         });
 

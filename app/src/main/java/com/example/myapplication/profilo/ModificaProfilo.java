@@ -15,7 +15,7 @@ import com.example.myapplication.R;
 
 public class ModificaProfilo extends AppCompatActivity {
 
-    Button infopersonali ;
+
     Button note;
     Button assistenza;
     Button bolletta;
@@ -25,15 +25,6 @@ public class ModificaProfilo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_profilo);
-
-        infopersonali = findViewById(R.id.infopersonali);
-        infopersonali.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent b = new Intent(ModificaProfilo.this, ModificaInfoPersonali.class);
-                startActivity(b);
-            }
-        });
 
         note = findViewById(R.id.VediNV);
         note.setOnClickListener(new View.OnClickListener() {

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class RecensioneStudente {
 
-   //private String idRecensione;
+
    private Date dataRevisione; //gestione date
    private String descrizione;
 
@@ -13,7 +13,7 @@ public class RecensioneStudente {
    private float valutazioneSocialita;
 
    private float valutazioneMedia;
-   //private boolean recensitoIsProprietario;
+
    private String recensore;// id
    private String recensito;//id
 

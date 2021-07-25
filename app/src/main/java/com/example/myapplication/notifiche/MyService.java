@@ -37,8 +37,6 @@ public class MyService extends FirebaseMessagingService {
     int idNotifica = 0;
     public static final Integer NOTIFICATION_REQUESTCODE=101;
 
-   // SendBirdCall sendBirdCall;
-
     public MyService() {
     }
 
@@ -61,30 +59,16 @@ public class MyService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
             creaNotifica(remoteMessage.getNotification().getBody());
         }
-        /*
-         if (sendBirdCall.handleFirebaseMessageData(remoteMessage.getData())) {
-        } else {
-            // Handle non-SendBirdCall Firebase messages.
-        }
-         */
+
     }
     // Also if you intend on generating your own notifications as a result of a received FCM
     // message, here is where that should be initiated. See sendNotification method below.
-
 
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        /*
-        sendBirdCall.registerPushToken(s, false, e -> {
-            if (e == null) {
-                // Succeeded to register push token.
-            } else {
-                // Failed to register push token.
-            }
-        });
-        */
+
         String refreshToken = FirebaseMessaging.getInstance().getToken().toString();
         if(firebaseUser != null ) {
             updateToken(refreshToken);
@@ -99,7 +83,6 @@ public class MyService extends FirebaseMessagingService {
         Token token = new Token(refreshToken);
         reference.child("Token").child(firebaseUser.getUid()).setValue(token);
     }
-
 
 
     private void inviaNotifica(RemoteMessage remoteMessage) {
@@ -168,5 +151,15 @@ public class MyService extends FirebaseMessagingService {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(idNotifica, builder.build());
         idNotifica++;
+    }
+
+    public void inviaNotificaDispositivo(String titolo, String body, Context context){
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                .setContentTitle(titolo)
+                .setContentText(body);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        notificationManager.notify(0,builder.build());
     }
 }

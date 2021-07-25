@@ -11,7 +11,6 @@ public class Studente extends Utente {
     private String hobby;
     private String imageURL; // Associo immagine
 
-
     public Studente() {
     }
 

@@ -48,13 +48,13 @@ public class InserimentoDatiCasa extends AppCompatActivity {
     EditText et_numeroBagni, et_numeroStanze, et_numeroOspiti;
     TextView coordinateCasa;
     //Autenticazione
-    public FirebaseUser user;
-    public FirebaseAuth mAuth;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
 
-    List<String> listaCase;
+    private List<String> listaCase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,8 +199,6 @@ public class InserimentoDatiCasa extends AppCompatActivity {
         et_numeroBagni.setText(savedInstanceState.getString("chiavenbC"));
         et_numeroStanze.setText(savedInstanceState.getString("chiavensC"));
         et_numeroOspiti.setText(savedInstanceState.getString("chiavenoC"));
-
-
 
     }
 }

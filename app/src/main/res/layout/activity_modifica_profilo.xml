@@ -19,16 +19,6 @@
         android:textColor="@color/rosso_scuro"
         android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/infopersonali"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:drawableLeft="@drawable/ic_outline_settings_24"
-        android:padding="5dp"
-        android:text="@string/Bottone3"
-        android:textColor="@color/teal_700"
-        app:backgroundTint="#00C0C0C0" />
 
     <Button
         android:id="@+id/bolletteID"

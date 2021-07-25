@@ -37,7 +37,6 @@ public class Casa {
 
     }
 
-
     public ImageView getImageView() {
         return imageView;
     }

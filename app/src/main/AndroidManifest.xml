@@ -41,7 +41,6 @@
         <activity android:name=".registrazione.InserimentoDatiCasa" />
         <activity android:name=".login.ScegliUtente" />
         <activity android:name=".profilo.Assistenza" />
-        <activity android:name=".home.CaseProprietario" />
         <activity android:name=".home.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -87,7 +86,6 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".messaggi.ChatActivity" />
-        <activity android:name=".profilo.ModificaInfoPersonali" />
         <activity android:name=".profilo.ModificaProfilo" />
         <activity android:name=".prenotazione.PrenotazioneCalendarioActivity" />
         <activity android:name=".prenotazione.PrenotazionePaypalActivity" />

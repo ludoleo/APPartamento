@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -24,9 +23,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.classi.Annuncio;
 import com.example.myapplication.classi.AnnuncioPrezzoComparator;
 import com.example.myapplication.classi.Casa;
-import com.example.myapplication.home.CaseProprietario;
 import com.example.myapplication.profilo.ProfiloAnnuncio;
-import com.example.myapplication.registrazione.InserimentoDatiAnnuncio;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -40,8 +37,6 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
