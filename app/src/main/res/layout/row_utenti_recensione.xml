@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:drawableLeft="@drawable/ic_outline_person_pin_circle_rosa_24"
-        android:textSize="18sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/id_recensito_lista_rec"
