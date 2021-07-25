@@ -46,8 +46,9 @@
                             android:id="@+id/textView20"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Rispetto \n spazi comun"
-                            android:textAppearance="?android:textAppearanceLarge" />
+                            android:text="Rispetto \nspazi comuni"
+                            android:textAppearance="?android:textAppearanceLarge"
+                            android:textSize="18sp" />
 
                         <RatingBar
                             android:id="@+id/rb_rispettoSpaziComuni"
