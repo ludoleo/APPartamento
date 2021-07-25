@@ -103,6 +103,7 @@
                     android:id="@+id/textView23"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="La media della valutazione è : "
                     android:textSize="18sp" />
 
