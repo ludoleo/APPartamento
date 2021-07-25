@@ -48,6 +48,7 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
     //Autentificazione
     FirebaseUser user;
     FirebaseAuth mAuth;
+    Proprietario utente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,20 +127,23 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
 
     private void aggiornoDatiProprietario(String idProprietario) {
 
+
         myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 for(DataSnapshot proData : snapshot.getChildren()){
                     Proprietario proprietarioTemp = proData.getValue(Proprietario.class);
                     if(proprietarioTemp.getIdUtente().compareTo(idProprietario)==0){
-                        int numeroRec = proprietarioTemp.getNumRec()+1;
-                        double valutazioneMediaAggiornata = ((proprietarioTemp.getValutazione()*proprietarioTemp.getNumRec())+valutazioneMedia)/numeroRec ;
-                        DatabaseReference dr = database.getReference();
-                        dr.child("Utenti").child("Proprietari").child(idProprietario).child("numRec").setValue(numeroRec);
-                        dr.child("Utenti").child("Proprietari").child(idProprietario).child("valutazione").setValue(valutazioneMediaAggiornata);
-
+                        utente = proprietarioTemp;
                     }
                 }
+
+                int numeroRec = utente.getNumRec()+1;
+                double valutazioneMediaAggiornata = ((utente.getValutazione()*utente.getNumRec())+valutazioneMedia)/numeroRec ;
+                DatabaseReference dr = database.getReference();
+                dr.child("Utenti").child("Proprietari").child(idProprietario).child("numRec").setValue(numeroRec);
+                dr.child("Utenti").child("Proprietari").child(idProprietario).child("valutazione").setValue(valutazioneMediaAggiornata);
             }
 
             @Override
@@ -149,7 +153,6 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
         });
     }
 
-    //push
     private void pulisciCampi() {
 
         recensione.setText("");
@@ -157,7 +160,5 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
         rb_flessibilita.setRating(0);
         rb_generale.setRating(0);
 
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
     }
 }
