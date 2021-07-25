@@ -152,16 +152,11 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                             //QUI ESEGUO TUTTO
                             caricaPrenotazione();
                         }
-
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                         }
                     });
-
-                    //ATTIVO I DIVERSI BOTTONI
-
-                }
-
+                 }
             }
         });
     }
@@ -196,7 +191,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                     }
                 });
             }
-        } else if (tipo.compareTo("TERMINATA") == 0) {
+        }if (tipo.compareTo("TERMINATA") == 0) {
             if (prenotazione.isPagata()) {
                 boolean occupato = false;
                 for (Inquilino inquilino : listaInquilini) {
