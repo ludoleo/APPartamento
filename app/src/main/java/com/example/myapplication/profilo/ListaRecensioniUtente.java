@@ -760,6 +760,7 @@ public class ListaRecensioniUtente extends AppCompatActivity {
                     Proprietario pro = proprietariDaRecensire.get(i);
                     Log.i(TAG,"sono qua "+pro.getEmail());
                     itemsProprietario[i] = new ListaRecensioniUtente.CustomItemOggetto();
+                    Log.i(TAG,"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+mappaProprietarioInquilini.get(pro.getIdUtente()).getIdInquilino());
                     itemsProprietario[i].recensore = mappaProprietarioInquilini.get(pro.getIdUtente()).getIdInquilino();
                     itemsProprietario[i].nome= pro.getNome();
                     itemsProprietario[i].recensito= pro.getIdUtente();

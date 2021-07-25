@@ -48,7 +48,10 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
     //Autentificazione
     FirebaseUser user;
     FirebaseAuth mAuth;
+
     Proprietario utente;
+
+    String idProprietario = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,8 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
         myRef = database.getReference();
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+
+        idProprietario = getIntent().getExtras().getString("idRecensito");
 
         // Rating Bar per settare il rating
         rb_disponibilita.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -99,6 +104,24 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
                 mediaRecensione.setText(String.format("%.2f" ,valutazioneMedia));
             }
         });
+
+        myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot proData : snapshot.getChildren()){
+                    Proprietario proprietarioTemp = proData.getValue(Proprietario.class);
+                    if(proprietarioTemp.getIdUtente().compareTo(idProprietario)==0){
+                        utente = proprietarioTemp;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     public void nuovaRecProp(View view) {
@@ -113,7 +136,7 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
         }
         // recensore e recensito
         String recensore = getIntent().getExtras().getString("idRecensore");
-        String recensito = getIntent().getExtras().getString("idRecensito");
+        String recensito = idProprietario;
 
         RecensioneProprietario recensioneProp = new RecensioneProprietario(data, descrizioneRec,valoreDisponibilita,valoreFlessibilita,valoreGenerale,valutazioneMedia,recensore,recensito);
         //PUSH
@@ -127,30 +150,11 @@ public class NuovaRecensioneProprietario extends AppCompatActivity {
 
     private void aggiornoDatiProprietario(String idProprietario) {
 
+    int numeroRec = utente.getNumRec()+1;
+    double valutazioneMediaAggiornata = ((utente.getValutazione()*utente.getNumRec())+valutazioneMedia)/numeroRec ;
+    myRef.child("Utenti").child("Proprietari").child(idProprietario).child("numRec").setValue(numeroRec);
+    myRef.child("Utenti").child("Proprietari").child(idProprietario).child("valutazione").setValue(valutazioneMediaAggiornata);
 
-        myRef.child("Utenti").child("Proprietari").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for(DataSnapshot proData : snapshot.getChildren()){
-                    Proprietario proprietarioTemp = proData.getValue(Proprietario.class);
-                    if(proprietarioTemp.getIdUtente().compareTo(idProprietario)==0){
-                        utente = proprietarioTemp;
-                    }
-                }
-
-                int numeroRec = utente.getNumRec()+1;
-                double valutazioneMediaAggiornata = ((utente.getValutazione()*utente.getNumRec())+valutazioneMedia)/numeroRec ;
-                DatabaseReference dr = database.getReference();
-                dr.child("Utenti").child("Proprietari").child(idProprietario).child("numRec").setValue(numeroRec);
-                dr.child("Utenti").child("Proprietari").child(idProprietario).child("valutazione").setValue(valutazioneMediaAggiornata);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     private void pulisciCampi() {
