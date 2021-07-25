@@ -13,35 +13,22 @@
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/nomeBolletta"
         android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:textColor="@color/rosso_scuro"
         android:textSize="24sp" />
 
     <ImageView
         android:id="@+id/bolletta"
         android:layout_width="match_parent"
         android:layout_height="289dp"
+        android:layout_margin="8dp"
         android:contentDescription="@string/cambiaImmagine"
+        android:padding="5dp"
         app:srcCompat="@drawable/ic_outline_insert_photo_24" />
-
-    <Button
-        android:id="@+id/bottone_aggiungi_bolletta"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/aggiungiBolletta" />
-
-    <Button
-        android:id="@+id/seleziona_bolletta"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/inserisciImmagine" />
-
-    <Button
-        android:id="@+id/bollette_presenti"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/visulizzaBollette" />
 
 </LinearLayout>

@@ -57,46 +57,5 @@
         android:hint="Zona"
         android:inputType="textPersonName" />
 
-    <Button
-        android:id="@+id/btnInsert"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ValutazioneNota"
-        android:layout_margin="20dp"
-        android:layout_marginTop="30dp"
-        android:text="Inserire Nuova Nota" />
-
-    <Button
-        android:id="@+id/btnUpdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnInsert"
-        android:layout_margin="10dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="Update Nuova Nota" />
-
-    <Button
-        android:id="@+id/btnDelete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnUpdate"
-        android:layout_margin="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Eliminare Nota" />
-
-    <Button
-        android:id="@+id/btnView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnDelete"
-        android:layout_margin="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Visualizzare Nota" />
-
 
 </RelativeLayout>

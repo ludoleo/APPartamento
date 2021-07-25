@@ -18,6 +18,7 @@ public class EditBolletta extends AppCompatActivity {
     ImageView image;
     int SelectId;
     String SelectName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +36,6 @@ public class EditBolletta extends AppCompatActivity {
 
         }
         edit_text.setText(SelectName);
-
-
 
     }
 }

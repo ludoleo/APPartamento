@@ -12,7 +12,9 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:text="@string/etichetta9"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:text="Funzionalità aggiuntive"
         android:textAllCaps="true"
         android:textColor="@color/rosso_scuro"
         android:textSize="18sp" />
@@ -20,47 +22,54 @@
     <Button
         android:id="@+id/infopersonali"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:text="@string/Bottone3" />
-
-    <Button
-        android:id="@+id/mod_prof_qrcode"
-        android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:text="QR CODE" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:text="@string/etichetta10"
-        android:textAllCaps="true"
-        android:textColor="@color/rosso_scuro"
-        android:textSize="18sp" />
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:drawableLeft="@drawable/ic_outline_settings_24"
+        android:padding="5dp"
+        android:text="@string/Bottone3"
+        android:textColor="@color/teal_700"
+        app:backgroundTint="#00C0C0C0" />
 
     <Button
         android:id="@+id/bolletteID"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:text="BOLLETTE" />
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:drawableLeft="@drawable/ic_outline_payments_24"
+        android:padding="5dp"
+        android:text="Gestione bollette"
+        android:textColor="@color/rosso_mattone"
+        app:backgroundTint="@color/no_color" />
 
     <Button
         android:id="@+id/VediNV"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:text="NOTE SULLE VISITE" />
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:drawableLeft="@drawable/ic_outline_edit_note_24"
+        android:padding="5dp"
+        android:text="NOTE SULLE VISITE"
+        android:textColor="@color/rosso_mattone"
+        app:backgroundTint="@color/no_color" />
 
     <Button
         android:id="@+id/buttonContratti"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:drawableLeft="@drawable/ic_outline_content_paste_24"
         android:onClick="vaiAiContratti"
-        android:text="Contratti standard" />
+        android:padding="5dp"
+        android:text="Contratti standard"
+        android:textColor="@color/rosso_mattone"
+        app:backgroundTint="@color/no_color" />
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="match_parent"
         android:layout_height="42dp"
+        android:layout_marginTop="15dp"
+        android:padding="5dp"
         android:text="@string/etichetta11"
         android:textAllCaps="true"
         android:textColor="@color/rosso_scuro"
@@ -69,7 +78,12 @@
     <Button
         android:id="@+id/assistenza"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
-        android:text="@string/Bottone7" />
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:drawableLeft="@drawable/ic_outline_help_center_24"
+        android:padding="5dp"
+        android:text="@string/Bottone7"
+        android:textColor="@color/rosso_mattone"
+        app:backgroundTint="@color/no_color" />
 
 </LinearLayout>

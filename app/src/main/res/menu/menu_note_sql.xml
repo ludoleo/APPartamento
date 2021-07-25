@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/inserire_nota"
+        android:title="Inserire nuova nota"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/aggiorna_nota"
+        android:title="Aggiorna nota"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/elimina_nota"
+        android:title="Elimina nota"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/visualizza_note"
+        android:title="Visualizza note"
+        app:showAsAction="never" />
+
+</menu>

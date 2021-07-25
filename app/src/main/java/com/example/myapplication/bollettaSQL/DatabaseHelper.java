@@ -16,16 +16,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE "+Table_Name+"(ID INTEGER PRIMARY KEY AUTOINCREMENT,NAME TEXT, newimage blob)");
-
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + Table_Name);
         onCreate(db);
-
     }
+
     public boolean addData(String nome, byte[] img)   {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -39,20 +37,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else {
             return true;
         }
-
     }
+
     public Cursor getdata(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query ="Select * from " + Table_Name;
         Cursor data = db.rawQuery(query,null);
         return data;
     }
+
     public Cursor getItemId(String name){
         SQLiteDatabase db = this.getWritableDatabase();
         String query ="Select * from " + Table_Name + " Where name " + "='" + name +"'" ;
         Cursor data = db.rawQuery(query,null);
         return data;
-
-
-    }
+        }
     }
