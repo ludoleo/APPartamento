@@ -2,12 +2,16 @@ package com.example.myapplication.profilo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 
 import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -58,6 +62,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.example.myapplication.notifiche.App.CHANNEL_ID;
+
 public class ProfiloStudente extends AppCompatActivity {
 
     private static final String TAG = "Profilo Studente";
@@ -89,6 +95,7 @@ public class ProfiloStudente extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
 
+    int idNotifica = 0;
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -435,6 +442,7 @@ public class ProfiloStudente extends AppCompatActivity {
                 return true;}
         return false;
     }
+
 }
 
 

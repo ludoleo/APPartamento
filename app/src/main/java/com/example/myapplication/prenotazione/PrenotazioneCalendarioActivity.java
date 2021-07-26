@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.media.RingtoneManager;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Prenotazione;
 import com.example.myapplication.home.Home;
+import com.example.myapplication.messaggi.ChatActivity;
 import com.example.myapplication.profilo.ProfiloAnnuncio;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -133,7 +136,7 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
                     String key = preAdd.getKey();
                     myRef.child("Prenotazioni").child(key).child("id").setValue(key);
 
-                    inviaNotifica();
+                    inviaNotificaPrenotazioneEffettuata();
                     Intent intent = new Intent(PrenotazioneCalendarioActivity.this, Home.class);
                     startActivity(intent);
                 }else{
@@ -226,7 +229,37 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
                     }
                 });
     }
-    //aggiungere il controllo su nuovo token
+
+    private void inviaNotificaPrenotazioneEffettuata() {
+
+        Intent i= new Intent(PrenotazioneCalendarioActivity.this, ChatActivity.class);
+        PendingIntent pi=PendingIntent.getActivity(this, 0, i, 0);
+
+        String CHANNEL_ID="my_channel_id";
+        String channel_name="channel_name";
+        String channel_description="channel_description";
+
+        NotificationManager notificationManager = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            notificationManager = getSystemService(NotificationManager.class);
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                    channel_name,
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(channel_description);
+            notificationManager.createNotificationChannel(channel);
+        }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(android.R.drawable.star_on)
+                .setContentTitle("Prenotazione presso "+idAnnuncio+ " effettuata!")
+                .setContentText("Clicca qui per chattare con il proprietario")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .setContentIntent(pi);
+        notificationManager.notify(0, builder.build());
+    }
 
 
 }

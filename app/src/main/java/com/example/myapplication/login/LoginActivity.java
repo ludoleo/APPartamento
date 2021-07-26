@@ -494,6 +494,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void inviaNotifica(String matricola, String nome, String cognome) {
+
         Log.i(TAG,"Ho inviato la notifica");
         // per aprire l'applicazione al click sulla notifica
         Intent intent = new Intent(this, Home.class);

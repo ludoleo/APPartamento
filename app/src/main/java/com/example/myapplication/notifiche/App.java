@@ -25,7 +25,7 @@ public class App extends Application {
             String descrizione = getString(R.string.channel_description);
             int importanza = NotificationManager.IMPORTANCE_HIGH;
 
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,nome, importanza);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, nome, importanza);
             channel.setDescription(descrizione);
 
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
