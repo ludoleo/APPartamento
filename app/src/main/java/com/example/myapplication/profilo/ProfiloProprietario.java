@@ -111,20 +111,20 @@ public class ProfiloProprietario extends AppCompatActivity {
         immagineProp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                            == PackageManager.PERMISSION_DENIED){
-                        // permission not granted
-                        String [] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                        // show popup for runtime permission
-                        requestPermissions(permission,PERMISSION_CODE);
-                    }
-                    else { // permission alredy granted
+                if (isUser()) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                                == PackageManager.PERMISSION_DENIED) {
+                            // permission not granted
+                            String[] permission = {Manifest.permission.READ_EXTERNAL_STORAGE};
+                            // show popup for runtime permission
+                            requestPermissions(permission, PERMISSION_CODE);
+                        } else { // permission alredy granted
+                            CambiaImmagine();
+                        }
+                    } else { // system os is less then Marshmallow
                         CambiaImmagine();
                     }
-                }
-                else { // system os is less then Marshmallow
-                    CambiaImmagine();
                 }
             }
         });
