@@ -19,7 +19,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.prenotazione.PrenotazioneCalendarioActivity;
 
 import static com.example.myapplication.notifiche.App.CHANNEL_ID;
-import static com.example.myapplication.notifiche.MyService.ACTION_MESSAGE_BROADCAST;
+//import static com.example.myapplication.notifiche.MyService.ACTION_MESSAGE_BROADCAST;
 
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
@@ -27,6 +27,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     private static final String TAG = "AlarmBroadcast" ;
     private int notificationId = 0;
     Context context;
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -37,19 +38,20 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         if(ACTION_ALARM.equals(intent.getAction())) {
             Toast.makeText(context, ACTION_ALARM, Toast.LENGTH_LONG).show();
             Log.i(TAG,"Alarm "+ACTION_ALARM);
-            sendNotification();
+           // sendNotification();
         } else if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             Toast.makeText(context, "Boot completed ", Toast.LENGTH_LONG).show();
             Log.i(TAG,"Boot completed "+ACTION_ALARM);
 
             long millis =Long.parseLong(sharedPreferences.getString("millis",""));
-            setAlarm(millis);
+            //setAlarm(millis);
         }
 
 
     }
 
 
+    /*
     private void setAlarm(long millis) {
 
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
@@ -107,4 +109,6 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
+
+     */
 }

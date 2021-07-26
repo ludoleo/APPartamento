@@ -67,6 +67,7 @@ public class DownloadFiles extends AppCompatActivity {
         DownloadManager downloadManager = (DownloadManager) context.
                 getSystemService(Context.DOWNLOAD_SERVICE);
         Uri uri = Uri.parse(url);
+
         DownloadManager.Request request = new DownloadManager.Request(uri);
 
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);

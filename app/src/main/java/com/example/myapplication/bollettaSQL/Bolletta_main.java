@@ -103,6 +103,7 @@ public class Bolletta_main extends Activity {
             byte [] bollettaImage = bolletta.getImage();
             Bitmap bitmap = BitmapFactory.decodeByteArray(bollettaImage,0,bollettaImage.length);
             holder.Imageview1.setImageBitmap(bitmap);
+            /*
             row.setOnClickListener(new AdapterView.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -130,10 +131,8 @@ public class Bolletta_main extends Activity {
                     }
 
                 }
-            });
+            });*/
             return row;
-
-
         }
     }
 }

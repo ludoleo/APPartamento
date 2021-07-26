@@ -1,8 +1,10 @@
 package com.example.myapplication.login;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,8 +14,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.myapplication.R;
+import com.example.myapplication.home.Home;
 import com.example.myapplication.profilo.ProfiloProprietario;
 import com.example.myapplication.profilo.ProfiloStudente;
 import com.example.myapplication.registrazione.RegistrationActivity;
@@ -47,10 +52,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import static com.example.myapplication.notifiche.App.CHANNEL_ID;
+
 public class LoginActivity extends AppCompatActivity {
 
-
-    //TODO aggiungere il getToken()
 
     private static final String TAG = "LoginActivity";
     private static final int RC_SIGN_IN = 1 ;
@@ -70,6 +75,9 @@ public class LoginActivity extends AppCompatActivity {
     // accesso con Google
     GoogleSignInClient mGoogleSignInClient;
     SignInButton button;
+
+    // per incrementare id Notifica
+    int idNotifica = 0;
 
     //Facebook
     LoginButton loginButton;
@@ -218,6 +226,7 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUIGiaRegistrato(FirebaseUser user) {
 
         getToken();
+        inviaNotifica("nome", "cognome", "id");
         Log.i(TAG, "Connesso utente già registrato con us e pw "+user.getEmail());
         String idUtente = user.getUid();
 
@@ -483,4 +492,52 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private void inviaNotifica(String matricola, String nome, String cognome) {
+        Log.i(TAG,"Ho inviato la notifica");
+        // per aprire l'applicazione al click sulla notifica
+        Intent intent = new Intent(this, Home.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            // versioni successive alla 26
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                    .setContentTitle(matricola)
+                    .setContentText("Creato lo studente "+nome + " "+cognome)
+                    .setContentIntent(pendingIntent)
+                   // .setAutoCancel(true)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            //notificationManager.notify(0, builder.build()); // sovrascrivo la notifica
+
+            // se non voglio sovrascrivere la notifica, scrivo:
+            notificationManager.notify(idNotifica, builder.build());
+            Log.i(TAG,"Ho inviato la notifica 2 "+builder);
+            idNotifica++;
+
+        }else{
+            // parte per versioni precedenti la 26
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                    .setContentTitle(matricola)
+                    .setContentText("Creato lo studente "+nome + " "+cognome)
+                    .setContentIntent(pendingIntent)
+                   // .setAutoCancel(true)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            //notificationManager.notify(0, builder.build()); // sovrascrivo la notifica
+
+            // se non voglio sovrascrivere la notifica, scrivo:
+            notificationManager.notify(idNotifica, builder.build());
+            Log.i(TAG,"oppure ho inviato la notifica 2");
+
+            idNotifica++;
+        }
+    }
+
+
 }

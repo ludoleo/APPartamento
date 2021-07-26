@@ -20,7 +20,7 @@
 
     <item
         android:id="@+id/modifica_profilo_studente"
-        android:title="Modifica Profilo"
+        android:title="Funzionalità aggiuntive"
         app:showAsAction="never" />
 
 
