@@ -27,29 +27,39 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.sendbird.calls.SendBirdCall;
 
+import static com.example.myapplication.notifiche.App.CHANNEL_ID;
+
 public class MyService extends FirebaseMessagingService {
 
     private static final String TAG = "MYSERVICE";
+    /*
     //SERVE?????
     public static final String ACTION_MESSAGE_BROADCAST = MyService.class.getName() + "MessageBroadcast";
     private static final String CHANNEL_ID = "channel1";
 
-    int idNotifica = 0;
+
     public static final Integer NOTIFICATION_REQUESTCODE=101;
 
+
+     */
     public MyService() {
     }
-
+    int idNotifica = 0;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
+
+        /*
         String inviato = remoteMessage.getData().get("sended");
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if(firebaseUser != null && inviato.equals(firebaseUser.getUid()) ) {
             inviaNotifica(remoteMessage);
         }
+
+         */
+        // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
             creaNotifica(remoteMessage.getData().toString());
@@ -64,6 +74,7 @@ public class MyService extends FirebaseMessagingService {
     // Also if you intend on generating your own notifications as a result of a received FCM
     // message, here is where that should be initiated. See sendNotification method below.
 
+    /*
     @Override
     public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
@@ -74,6 +85,8 @@ public class MyService extends FirebaseMessagingService {
             updateToken(refreshToken);
             }
         }
+
+
 
     private void updateToken(String refreshToken) {
 
@@ -118,6 +131,10 @@ public class MyService extends FirebaseMessagingService {
         notificationManager.notify(i,builder.build());
     }
 
+     */
+
+
+    /*
     private void creaNotifica(String testo) {
         //prendi codice da esempio complesso
 
@@ -153,13 +170,18 @@ public class MyService extends FirebaseMessagingService {
         idNotifica++;
     }
 
-    public void inviaNotificaDispositivo(String titolo, String body, Context context){
+
+     */
+
+    public void creaNotifica(String titolo){
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)
                 .setContentTitle(titolo)
-                .setContentText(body);
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+                .setContentText("Testo");
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(0,builder.build());
     }
+    
+
 }

@@ -58,9 +58,9 @@
     <string name="fb_login_protocol_scheme" translatable="false">fb513976396407275</string>
     <string name="channel_name" translatable="false">APPartamento_channel</string>
     <string name="channel_description">Descrizione canale</string>
-    <string name="assistenza1">Centro Assistenza APPartamento non esistare a contattarci per qualsiasi problema</string>
+    <string name="assistenza1">Centro Assistenza UNIaffitto non esistare a contattarci per qualsiasi problema</string>
     <string name="assistenza2">Per eventuali problemi puoi contattarci al nostro indirizzo
-        e-mail :  appartamento@gmail.com </string>
+        e-mail :  uniaffitto@gmail.com </string>
     <string name="case1">Le tue case</string>
     <string name="aggiungiCasa">Aggiungi nuova casa</string>
     <string name="Prenotazioni1">Prenotazioni</string>
