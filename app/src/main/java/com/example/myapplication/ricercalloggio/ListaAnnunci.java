@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -26,6 +27,8 @@ import com.example.myapplication.classi.Casa;
 import com.example.myapplication.profilo.ProfiloAnnuncio;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,29 +53,55 @@ public class ListaAnnunci extends AppCompatActivity {
     //Database
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    private FirebaseAuth mAuth;
+    private FirebaseUser user;
+
     ListView listView;
     Switch switchOrdina;
+    Button bottoneMappa;
+    TextView scegliAnnunci;
 
+    private String idUtente = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_annunci);
+        if(getIntent().getExtras()!=null) {
+            idUtente = getIntent().getExtras().getString("idProprietario");
+        }
+        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
+        myRef = database.getReference();
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+
         switchOrdina = (Switch) findViewById(R.id.switch1);
-        switchOrdina.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                aggiorna();
-            }
-        });
+        bottoneMappa = (Button) findViewById(R.id.bottone_vedi_mappa);
+        scegliAnnunci = (TextView) findViewById(R.id.id_scegli_annunci);
+
+        if(isUser()){
+
+            switchOrdina.setVisibility(View.GONE);
+            bottoneMappa.setVisibility(View.GONE);
+            scegliAnnunci.setVisibility(View.GONE);
+
+        }else {
+
+            switchOrdina.setVisibility(View.VISIBLE);
+            bottoneMappa.setVisibility(View.VISIBLE);
+            scegliAnnunci.setVisibility(View.VISIBLE);
+
+            switchOrdina.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    aggiorna();
+                }
+            });
+        }
 
         initUI();
     }
 
     private void initUI() {
-
-        //collego il db
-        database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
-        myRef = database.getReference();
 
         listaAnnunci = new LinkedList<>();
         listaCasa = new LinkedList<>();
@@ -98,9 +127,12 @@ public class ListaAnnunci extends AppCompatActivity {
                     listaCasa.add(c);
                     Log.i(TAG," CASA "+ c+" listaCasa "+listaCasa.toString());
                 }
+                if(isUser()){
+                    selezionaAnnunciProprietario();
+                }else{
+                    selezionaAnnunci();
+                }
 
-
-                selezionaAnnunci();
             }
 
             @Override
@@ -109,7 +141,16 @@ public class ListaAnnunci extends AppCompatActivity {
             }
         });
 
+    }
 
+    private void selezionaAnnunciProprietario() {
+        annunciPubblicati = new LinkedList<>();
+            for(Annuncio ann : listaAnnunci){
+               if(ann.getIdProprietario().compareTo(idUtente)==0){
+                        annunciPubblicati.add(ann);
+                }
+            }
+        aggiorna();
     }
 
     private void selezionaAnnunci() {
@@ -232,6 +273,12 @@ public class ListaAnnunci extends AppCompatActivity {
         public TextView prezzoCasaView;
     }
 
-    //todo aggiungere il click sull'annuncio in modo tale che se studente è loggato può prenotare la casa
+    public boolean isUser(){
+        if(user!=null){
+            if(user.getUid().compareTo(idUtente)==0)
+                return true;}
+        return false;
+    }
+
 }
 

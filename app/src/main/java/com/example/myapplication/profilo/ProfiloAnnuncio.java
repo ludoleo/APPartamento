@@ -71,6 +71,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     private FirebaseAuth mAuth;
     //Storage
     private StorageReference storageReference;
+    private String idUtente = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -227,6 +228,7 @@ public class ProfiloAnnuncio extends AppCompatActivity {
                     if (a.getIdAnnuncio().compareTo(idAnnuncio) == 0)
                         annuncio = a;
                 }
+                idUtente = annuncio.getIdProprietario();
                 riferimentoCasa();
 
             }
@@ -324,8 +326,9 @@ public class ProfiloAnnuncio extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_profilo, menu);
+            MenuInflater menuInflater = getMenuInflater();
+            menuInflater.inflate(R.menu.menu_profilo, menu);
+
         return true;
     }
 
@@ -357,6 +360,12 @@ public class ProfiloAnnuncio extends AppCompatActivity {
         intent.putExtra("nomeCasa", casa.getNomeCasa());
         startActivity(intent);
 
+    }
+    public boolean isUser(){
+        if(user!=null){
+            if(user.getUid().compareTo(idUtente)==0)
+                return true;}
+        return false;
     }
 }
 

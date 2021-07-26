@@ -51,8 +51,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -120,7 +122,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
 
     private Casa casa;
     private Proprietario proprietario;
-    private Inquilino inquilino;
+    private String idUtente = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,6 +203,7 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
                     if(i.getNomeCasa().compareTo(getIntent().getExtras().getString("nomeCasa"))==0){
                         casa=i;
                         //POPOLO LISTA DI SERVIZI
+                        idUtente = casa.getProprietario();
                         String[] servizi = casa.getServizi().split("-");
                         arrayAdapter = new ArrayAdapter<String>(getBaseContext() , R.layout.row_item_list_hobby, servizi);
                         Log.i(TAG,"servizi "+casa.getServizi());
@@ -756,9 +759,9 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_profilo, menu);
-        return true;
+            MenuInflater menuInflater = getMenuInflater();
+            menuInflater.inflate(R.menu.menu_profilo, menu);
+            return true;
     }
 
     @Override
@@ -769,10 +772,6 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
             case R.id.home:
                 startActivity(new Intent(ProfiloCasa.this, Home.class));
                 return true;
-
-            case R.id.elimina_annuncio:
-                //TODO
-                myRef.child("Annunci").child("");
         }
 
         return false;
@@ -810,4 +809,11 @@ public class ProfiloCasa extends AppCompatActivity implements OnMapReadyCallback
         super.onPause();
         if(mapViewCasa!=null)
          mapViewCasa.onPause(); }
+
+    public boolean isUser(){
+        if(user!=null){
+            if(user.getUid().compareTo(idUtente)==0)
+                return true;}
+        return false;
+    }
 }

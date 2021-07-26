@@ -33,6 +33,7 @@ import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.classi.RecensioneProprietario;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.registrazione.InserimentoDatiCasa;
+import com.example.myapplication.ricercalloggio.ListaAnnunci;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -257,7 +258,6 @@ public class ProfiloProprietario extends AppCompatActivity {
         });
     }
 
-
     private void aggiorna() {
 
         listViewCase = (ListView) findViewById(R.id.lv_case_prop);
@@ -338,7 +338,6 @@ public class ProfiloProprietario extends AppCompatActivity {
     }
 
     private ProfiloProprietario.CustomItem[] createItems() {
-
 
         int size = listaCase.size();
 
@@ -452,6 +451,13 @@ public class ProfiloProprietario extends AppCompatActivity {
                 Intent rec = new Intent(ProfiloProprietario.this, ListaRecensioniUtente.class);
                 rec.putExtra("idProprietario", idUtente);
                 startActivity(rec);
+                return true;
+
+            case R.id.annunci_prop:
+
+                Intent prop = new Intent(ProfiloProprietario.this, ListaAnnunci.class);
+                prop.putExtra("idProprietario", idUtente);
+                startActivity(prop);
                 return true;
         }
         return false;

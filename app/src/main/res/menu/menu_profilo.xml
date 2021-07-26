@@ -7,9 +7,5 @@
         android:title="@string/home"
         app:showAsAction="never" />
 
-    <item
-        android:id="@+id/elimina_annuncio"
-        android:title="Elimina annuncio"
-        app:showAsAction="never" />
 
 </menu>

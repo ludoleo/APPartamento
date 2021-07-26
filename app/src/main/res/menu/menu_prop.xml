@@ -18,5 +18,10 @@
         android:title="Recensioni"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/annunci_prop"
+        android:title="I miei annunci"
+        app:showAsAction="never" />
+
 
 </menu>
