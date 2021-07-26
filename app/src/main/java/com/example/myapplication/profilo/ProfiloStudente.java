@@ -121,6 +121,7 @@ public class ProfiloStudente extends AppCompatActivity {
         immagineStudente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(isUser()){
                 // check runtime permission
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                     if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -138,7 +139,8 @@ public class ProfiloStudente extends AppCompatActivity {
                     CambiaImmagine();
                     }
                 }
-            });
+            }
+        });
             //INIZIALIZZO LE TEXTVIEW E LISTVIEW
             text_nome = (TextView) findViewById(R.id.text_nome);
             text_cognome = (TextView) findViewById(R.id.text_cognome);
