@@ -21,8 +21,14 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Prenotazione;
+import com.example.myapplication.classi.Proprietario;
 import com.example.myapplication.home.Home;
 import com.example.myapplication.messaggi.ChatActivity;
+import com.example.myapplication.notifiche.APIService;
+import com.example.myapplication.notifiche.Client;
+import com.example.myapplication.notifiche.DatiNotifica;
+import com.example.myapplication.notifiche.NotificationSender;
+import com.example.myapplication.notifiche.Risposta;
 import com.example.myapplication.profilo.ProfiloAnnuncio;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,6 +45,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PrenotazioneCalendarioActivity extends AppCompatActivity {
 
@@ -64,6 +74,9 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
     private String emailUtente2="";
     private String fasciaOraria="";
 
+    private APIService apiService;
+
+    private Proprietario proprietario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +94,7 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         idNotifica=0;
         //Listener
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
         date = calendarView.getDate();
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -261,5 +275,25 @@ public class PrenotazioneCalendarioActivity extends AppCompatActivity {
         notificationManager.notify(0, builder.build());
     }
 
+
+    public void sendNotifications(String usertoken, String title, String message) {
+        DatiNotifica data = new DatiNotifica(title, message);
+        NotificationSender sender = new NotificationSender(data, usertoken);
+        apiService.sendNotifcation(sender).enqueue(new Callback<Risposta>() {
+            @Override
+            public void onResponse(Call<Risposta> call, Response<Risposta> response) {
+                if (response.code() == 200) {
+                    if (response.body().success != 1) {
+                        Toast.makeText(PrenotazioneCalendarioActivity.this, "Failed ", Toast.LENGTH_LONG);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Risposta> call, Throwable t) {
+
+            }
+        });
+    }
 
 }

@@ -2,16 +2,10 @@ package com.example.myapplication.profilo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 
 import android.Manifest;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -38,7 +32,11 @@ import com.example.myapplication.classi.Inquilino;
 import com.example.myapplication.classi.RecensioneStudente;
 import com.example.myapplication.classi.Studente;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.notifiche.MyService;
+import com.example.myapplication.notifiche.APIService;
+import com.example.myapplication.notifiche.Client;
+import com.example.myapplication.notifiche.DatiNotifica;
+import com.example.myapplication.notifiche.NotificationSender;
+import com.example.myapplication.notifiche.Risposta;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,7 +60,9 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.example.myapplication.notifiche.App.CHANNEL_ID;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProfiloStudente extends AppCompatActivity {
 
@@ -94,7 +94,10 @@ public class ProfiloStudente extends AppCompatActivity {
     private StorageReference storageReference;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+    //SERVIZIO API PER IL CANALE
+    private APIService apiService;
 
+    String token = "";
     int idNotifica = 0;
 
     @Override
@@ -107,6 +110,8 @@ public class ProfiloStudente extends AppCompatActivity {
         user = mAuth.getCurrentUser();
         myRef = database.getReference();
         immagineStudente = findViewById(R.id.immagineProfiloStud);
+
+        apiService = Client.getClient("https://fcm.googleapis.com/fcm/send/").create(APIService.class);
 
         //PRENDO L'ID_UTENTE
         idUtente = getIntent().getExtras().getString("idStudente");
@@ -201,6 +206,20 @@ public class ProfiloStudente extends AppCompatActivity {
                                 if(inqui.getStudente().compareTo(studente.getEmail())==0)
                                     inquiUser.add(inqui);
                             }
+                            //PRENDO IL TOKEN
+                            DatabaseReference dr = database.getReference();
+                            dr.child("Token").child(idUtente).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshotT) {
+                                        token = snapshotT.getValue(String.class);
+                                        Log.i(TAG,"Il token e "+token);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                             //PREPARO LE RECENSIONI
                             initListViewRecensioni();
                         }
@@ -425,11 +444,12 @@ public class ProfiloStudente extends AppCompatActivity {
     public void rimuoviInquilino(View view) {
         Date data = new Date();
         long longData = data.getTime();
-        myRef.child("Inquilini").child(id_inquilino).child("dataFine").setValue(longData);
+        //myRef.child("Inquilini").child(id_inquilino).child("dataFine").setValue(longData);
         DatabaseReference dr = database.getReference();
-        dr.child("Utenti").child("Studenti").child(idUtente).child("primaEsperienza").setValue("NO");
+        //dr.child("Utenti").child("Studenti").child(idUtente).child("primaEsperienza").setValue("NO");
+        sendNotifications(token, "Spero sia stata una bella esperienza", "Ciao "+studente.getNome()+",\nSe vuoi puoi lasciare una recensione della tua esperienza!");
         Intent i = new Intent(this, Home.class);
-        startActivity(i);
+        //startActivity(i);
     }
     public void profiloCasa(View view) {
         Intent i = new Intent (this, ProfiloCasa.class);
@@ -441,6 +461,27 @@ public class ProfiloStudente extends AppCompatActivity {
             if(user.getUid().compareTo(getIntent().getExtras().getString("idStudente"))==0)
                 return true;}
         return false;
+    }
+
+    public void sendNotifications(String usertoken, String title, String message) {
+        DatiNotifica data = new DatiNotifica(title, message);
+        NotificationSender sender = new NotificationSender(data, usertoken);
+        apiService.sendNotifcation(sender).enqueue(new Callback<Risposta>() {
+            @Override
+            public void onResponse(Call<Risposta> call, Response<Risposta> response) {
+                if (response.code() == 200) {
+
+                    if (response.body().success != 1) {
+                        Toast.makeText(ProfiloStudente.this, "Failed ", Toast.LENGTH_LONG);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Risposta> call, Throwable t) {
+
+            }
+        });
     }
 
 }

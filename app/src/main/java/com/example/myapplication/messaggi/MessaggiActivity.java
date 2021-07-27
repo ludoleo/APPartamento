@@ -276,6 +276,7 @@ public class MessaggiActivity extends AppCompatActivity {
         */
     }
 
+    /*
     private void inviaNotifica(String receiver, String email, String message) {
 
         DatabaseReference reference = myRef.child("Token");
@@ -299,7 +300,7 @@ public class MessaggiActivity extends AppCompatActivity {
         });
 
     }
-
+*/
     public void leggiMessaggio(String myId, String userID, String imageURL) {
 
         mChat = new ArrayList<>();
