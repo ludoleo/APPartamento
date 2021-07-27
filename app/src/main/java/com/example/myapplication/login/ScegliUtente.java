@@ -34,6 +34,7 @@ public class ScegliUtente extends AppCompatActivity {
     }
 
     private void initUi() {
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         idUtente = getIntent().getExtras().getString("idUtente");
         database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
