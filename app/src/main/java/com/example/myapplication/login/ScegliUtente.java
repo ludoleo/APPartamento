@@ -21,10 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 public class ScegliUtente extends AppCompatActivity {
 
     private static final String TAG = "Scegli utente";
-    FirebaseUser user;
-    String idUtente;
-    public DatabaseReference myRef;
-    public FirebaseDatabase database;
+    private FirebaseUser user;
+    private String idUtente;
+    private DatabaseReference myRef;
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +47,6 @@ public class ScegliUtente extends AppCompatActivity {
     private void controlloUtente(FirebaseUser user) {
 
         String idUtente = user.getUid();
-
-        // TODO controllare se utente registrato è proprietario o studente (COME?)
 
         myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
 

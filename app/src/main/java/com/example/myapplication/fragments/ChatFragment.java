@@ -35,9 +35,9 @@ public class ChatFragment extends Fragment {
     private UserAdapter userAdapter;
     private List<Utente> mUtenti;
 
-    FirebaseUser firebaseUser;
-    DatabaseReference reference;
-    boolean flag;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference reference;
+    private boolean flag;
 
     private List<String> usersList;
 
@@ -89,17 +89,7 @@ public class ChatFragment extends Fragment {
 
             }
         });
-
-        //molti dubbi su questo metodo!!!!!!!!
-        updateToken(FirebaseMessaging.getInstance().getToken().toString());
-
         return view;
-    }
-
-    private void updateToken(String token) {
-        reference.child("Token");
-        Token token1 = new Token(token);
-        reference.child("Token").child(firebaseUser.getUid()).setValue(token);
     }
 
 
