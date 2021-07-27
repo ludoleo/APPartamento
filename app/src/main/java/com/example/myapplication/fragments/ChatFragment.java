@@ -90,18 +90,8 @@ public class ChatFragment extends Fragment {
             }
         });
 
-        //molti dubbi su questo metodo!!!!!!!!
-        updateToken(FirebaseMessaging.getInstance().getToken().toString());
-
         return view;
     }
-
-    private void updateToken(String token) {
-        reference.child("Token");
-        Token token1 = new Token(token);
-        reference.child("Token").child(firebaseUser.getUid()).setValue(token);
-    }
-
 
     private void leggiChat() {
 

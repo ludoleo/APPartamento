@@ -110,8 +110,6 @@ public class LoginActivity extends AppCompatActivity {
 
         getMyPreferences();
 
-        //mAuth.signOut();
-
         //google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("94958735722-aeavbmn0qdg3km79en383vd6a1798bam.apps.googleusercontent.com")
@@ -146,9 +144,6 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d(TAG, "facebook:onError", error);
             }
         });
-
-
-
     }
 
     public void login(View view) {
@@ -165,20 +160,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-            updateUI(currentUser);
-
-        }
-    }
-
-     */
-
-    // TODO controllare bene questo metodo
 
     private void updateUI(FirebaseUser currentUser) {
 
@@ -219,22 +200,16 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-    }
+     }
 
 
 //questo metodo viene usato solo quando si fa l'accesso con username o password
     private void updateUIGiaRegistrato(FirebaseUser user) {
 
         getToken();
-        inviaNotifica("nome", "cognome", "id");
         Log.i(TAG, "Connesso utente già registrato con us e pw "+user.getEmail());
         String idUtente = user.getUid();
 
-        // TODO controllare se utente registrato è proprietario o studente (COME?)
-
-        //problema!!!!!!!
-
-       // myRef.child("Utenti").child("Studenti").child(idUtente);
         myRef.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener(){
 
             @Override
@@ -398,7 +373,6 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            //updateUI(null);
                         }
                     }
                 });
@@ -492,53 +466,5 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
-    private void inviaNotifica(String matricola, String nome, String cognome) {
-
-        Log.i(TAG,"Ho inviato la notifica");
-        // per aprire l'applicazione al click sulla notifica
-        Intent intent = new Intent(this, Home.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            // versioni successive alla 26
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-                    .setContentTitle(matricola)
-                    .setContentText("Creato lo studente "+nome + " "+cognome)
-                    .setContentIntent(pendingIntent)
-                   // .setAutoCancel(true)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH);
-
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            //notificationManager.notify(0, builder.build()); // sovrascrivo la notifica
-
-            // se non voglio sovrascrivere la notifica, scrivo:
-            notificationManager.notify(idNotifica, builder.build());
-            Log.i(TAG,"Ho inviato la notifica 2 "+builder);
-            idNotifica++;
-
-        }else{
-            // parte per versioni precedenti la 26
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-                    .setContentTitle(matricola)
-                    .setContentText("Creato lo studente "+nome + " "+cognome)
-                    .setContentIntent(pendingIntent)
-                   // .setAutoCancel(true)
-                    .setPriority(NotificationCompat.PRIORITY_HIGH);
-
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-            //notificationManager.notify(0, builder.build()); // sovrascrivo la notifica
-
-            // se non voglio sovrascrivere la notifica, scrivo:
-            notificationManager.notify(idNotifica, builder.build());
-            Log.i(TAG,"oppure ho inviato la notifica 2");
-
-            idNotifica++;
-        }
-    }
-
 
 }

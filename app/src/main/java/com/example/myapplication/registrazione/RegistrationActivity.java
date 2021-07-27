@@ -37,7 +37,6 @@ public class RegistrationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     private FirebaseDatabase database;
-   // private DatabaseReference myRef;
     String idU;
 
 
@@ -50,7 +49,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
         //2) iniziaizzo l'istanza di firebase
         mAuth = FirebaseAuth.getInstance();
-
         initUI();
     }
 
@@ -61,9 +59,6 @@ public class RegistrationActivity extends AppCompatActivity {
         confermaPassword = (EditText) findViewById(R.id.et_confermaPassword);
 
         isProprietario = (CheckBox) findViewById(R.id.isProprietario);
-
-       //database = FirebaseDatabase.getInstance("https://appartamento-81c2d-default-rtdb.europe-west1.firebasedatabase.app/");
-        //myRef = database.getReference();
 
     }
 
@@ -77,9 +72,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
         Log.i(TAG, "Informazioni inserite sono:"+" "+emailutente+" "+passwordUtente+" "+confermaPasswordUtente);
 
-
-        //TODO inserire controllo email, se già presente
-
         if (!emailValida(emailutente)) {
             Toast.makeText(this, "Inserire un email valida", Toast.LENGTH_SHORT).show();
             return;
@@ -91,8 +83,6 @@ public class RegistrationActivity extends AppCompatActivity {
         else
             createFirebaseUser(emailutente,passwordUtente);
 
-            // aggiungoUtenteAdb(emailutente);
-
     }
 
     @Override
@@ -102,8 +92,7 @@ public class RegistrationActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         Log.i(TAG,"Entro in start, id utente è "+ mAuth.getUid());
         if(currentUser != null){
-         // updateUI(currentUser.getEmail());
-            //updateUI();
+
         }
     }
 
@@ -127,18 +116,6 @@ public class RegistrationActivity extends AppCompatActivity {
         }
     }
 
-    /*
-    private void updateUI2(FirebaseUser currentUser) {
-
-        Log.i(TAG, "Connesso utente "+currentUser);
-
-        Intent intent = new Intent(RegistrationActivity.this, InserimentoDatiStudente.class);
-        startActivity(intent);
-
-    }
-
-     */
-
     private void createFirebaseUser(String email, String password) {
 
 
@@ -154,7 +131,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
                             FirebaseUser user = mAuth.getCurrentUser();
                             idU = user.getUid();
-                            //setNome(user, email);
                             updateUI(email);
 
                         } else {
@@ -162,33 +138,11 @@ public class RegistrationActivity extends AppCompatActivity {
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(RegistrationActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            //updateUI();
-                        }
-                    }
-                });
-
-
-        //dopo la registrazione si passa all'inserimento dei dati
-
-    }
-
-
-    private void setNome(FirebaseUser user, String email) {
-
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(email)
-                .build();
-
-        user.updateProfile(profileUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()) {
-                            Log.i(TAG, "User profile updated with email: "+email);
                         }
                     }
                 });
     }
+
 
     private boolean passwordValida(String passwordUtente1, String confermaPasswordUtente2) {
         //verifico che le password siano uguali e abbiano lunghezza di almeno 6 caratteri
