@@ -16,19 +16,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
-import com.example.myapplication.home.Home;
-import com.example.myapplication.notifiche.MyService;
-import com.example.myapplication.profilo.ListaRecensioniUtente;
-import com.example.myapplication.profilo.ModificaProfilo;
-import com.example.myapplication.profilo.ProfiloStudente;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;

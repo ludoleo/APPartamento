@@ -2,60 +2,31 @@ package com.example.myapplication.notifiche;
 
 public class DatiNotifica {
 
-    private String utente;
-    private int icona;
-    private String body;
-    private String titolo;
-    private String inviata;
+    private String Title;
+    private String Message;
 
-    public DatiNotifica(String utente, int icona, String body, String titolo, String inviata) {
-        this.utente = utente;
-        this.icona = icona;
-        this.body = body;
-        this.titolo = titolo;
-        this.inviata = inviata;
+    public DatiNotifica(String title, String message) {
+        Title = title;
+        Message = message;
     }
 
     public DatiNotifica() {
     }
 
-    public String getUtente() {
-        return utente;
+    public String getTitle() {
+        return Title;
     }
 
-    public void setUtente(String utente) {
-        this.utente = utente;
+    public void setTitle(String title) {
+        Title = title;
     }
 
-    public int getIcona() {
-        return icona;
+    public String getMessage() {
+        return Message;
     }
 
-    public void setIcona(int icona) {
-        this.icona = icona;
+    public void setMessage(String message) {
+        Message = message;
     }
 
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public String getTitolo() {
-        return titolo;
-    }
-
-    public void setTitolo(String titolo) {
-        this.titolo = titolo;
-    }
-
-    public String getInviata() {
-        return inviata;
-    }
-
-    public void setInviata(String inviata) {
-        this.inviata = inviata;
-    }
 }

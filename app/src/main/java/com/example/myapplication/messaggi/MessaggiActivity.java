@@ -24,16 +24,12 @@ import com.example.myapplication.classi.Studente;
 import com.example.myapplication.classi.Utente;
 import com.example.myapplication.fragments.MessageAdapter;
 import com.example.myapplication.home.Home;
-import com.example.myapplication.notifiche.DatiNotifica;
-import com.example.myapplication.notifiche.Mittente;
-import com.example.myapplication.notifiche.Token;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -276,6 +272,7 @@ public class MessaggiActivity extends AppCompatActivity {
         */
     }
 
+    /*
     private void inviaNotifica(String receiver, String email, String message) {
 
         DatabaseReference reference = myRef.child("Token");
@@ -299,7 +296,7 @@ public class MessaggiActivity extends AppCompatActivity {
         });
 
     }
-
+*/
     public void leggiMessaggio(String myId, String userID, String imageURL) {
 
         mChat = new ArrayList<>();
