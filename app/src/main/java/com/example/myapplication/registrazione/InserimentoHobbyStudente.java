@@ -67,7 +67,7 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
         return true;
     }
 
-    @SuppressLint("LongLogTag")
+
     public void selezionaElementi(View view) {
 
         String itemSelected="";
@@ -79,8 +79,6 @@ public class InserimentoHobbyStudente extends AppCompatActivity {
         }
 
         itemSelected = itemSelected.substring(0,itemSelected.length()-1);
-        Log.i(TAG, ""+itemSelected);
-        Log.i(TAG, ""+idUtente);
         myRef.child("Utenti").child("Studenti").child(idUtente).
                 child("hobby").setValue(itemSelected);
 

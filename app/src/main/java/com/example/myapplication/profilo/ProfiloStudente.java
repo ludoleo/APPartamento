@@ -463,27 +463,6 @@ public class ProfiloStudente extends AppCompatActivity {
         return false;
     }
 
-    public void sendNotifications(String usertoken, String title, String message) {
-        DatiNotifica data = new DatiNotifica(title, message);
-        NotificationSender sender = new NotificationSender(data, usertoken);
-        apiService.sendNotifcation(sender).enqueue(new Callback<Risposta>() {
-            @Override
-            public void onResponse(Call<Risposta> call, Response<Risposta> response) {
-                if (response.code() == 200) {
-
-                    if (response.body().success != 1) {
-                        Toast.makeText(ProfiloStudente.this, "Failed ", Toast.LENGTH_LONG);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Risposta> call, Throwable t) {
-
-            }
-        });
-    }
-
 }
 
 
