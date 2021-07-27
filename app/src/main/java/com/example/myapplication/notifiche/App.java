@@ -23,7 +23,7 @@ public class App extends Application {
             // se ho versione sup a 26, creo il canale
             CharSequence nome = getString(R.string.channel_name);
             String descrizione = getString(R.string.channel_description);
-            int importanza = NotificationManager.IMPORTANCE_HIGH;
+            int importanza = NotificationManager.IMPORTANCE_DEFAULT;
 
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, nome, importanza);
             channel.setDescription(descrizione);

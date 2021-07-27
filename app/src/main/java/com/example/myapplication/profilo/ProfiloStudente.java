@@ -111,7 +111,7 @@ public class ProfiloStudente extends AppCompatActivity {
         myRef = database.getReference();
         immagineStudente = findViewById(R.id.immagineProfiloStud);
 
-        apiService = Client.getClient("https://fcm.googleapis.com/fcm/send/").create(APIService.class);
+        apiService = Client.getClient("https://fcm.googleapis.com/").create(APIService.class);
 
         //PRENDO L'ID_UTENTE
         idUtente = getIntent().getExtras().getString("idStudente");
@@ -444,12 +444,12 @@ public class ProfiloStudente extends AppCompatActivity {
     public void rimuoviInquilino(View view) {
         Date data = new Date();
         long longData = data.getTime();
-        //myRef.child("Inquilini").child(id_inquilino).child("dataFine").setValue(longData);
+        myRef.child("Inquilini").child(id_inquilino).child("dataFine").setValue(longData);
         DatabaseReference dr = database.getReference();
-        //dr.child("Utenti").child("Studenti").child(idUtente).child("primaEsperienza").setValue("NO");
-        sendNotifications(token, "Spero sia stata una bella esperienza", "Ciao "+studente.getNome()+",\nSe vuoi puoi lasciare una recensione della tua esperienza!");
+        dr.child("Utenti").child("Studenti").child(idUtente).child("primaEsperienza").setValue("NO");
+        //sendNotifications(token, "Spero sia stata una bella esperienza", "Ciao "+studente.getNome()+",\nSe vuoi puoi lasciare una recensione della tua esperienza!");
         Intent i = new Intent(this, Home.class);
-        //startActivity(i);
+        startActivity(i);
     }
     public void profiloCasa(View view) {
         Intent i = new Intent (this, ProfiloCasa.class);

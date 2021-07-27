@@ -44,20 +44,17 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
             Log.i(TAG,"Boot completed "+ACTION_ALARM);
 
             long millis =Long.parseLong(sharedPreferences.getString("millis",""));
-            //setAlarm(millis);
+            setAlarm(millis);
         }
-
 
     }
 
-
-    /*
     private void setAlarm(long millis) {
 
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
         intent.setAction(ACTION_ALARM);
 
-        //TODO aggiungere activity che manda allarm
+
         //PendingIntent alarmIntent = MapsActivity.getAlarmIntent(); esempio
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0,intent,0);
 
@@ -85,7 +82,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
         // create intent that will be broadcast.
-        // TODO CONTROLLARE ACTIVITY PER INTENT
+
         Intent resultIntent = new Intent(context, PrenotazioneCalendarioActivity.class);
         resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -110,5 +107,5 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     }
 
 
-     */
+
 }

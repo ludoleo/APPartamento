@@ -3,6 +3,7 @@ package com.example.myapplication.notifiche;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -13,16 +14,17 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.firebase.messaging.FirebaseMessagingService;
 
+import static com.example.myapplication.notifiche.App.CHANNEL_ID;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+    private static final String TAG = "Messaging";
+
     String title,message;
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        String CHANNEL_ID="my_channel_id";
-        String channel_name="channel_name";
-        String channel_description="channel_description";
-
+        Log.d(TAG, "From: " + remoteMessage.getFrom());
         title=remoteMessage.getData().get("Title");
         message=remoteMessage.getNotification().getBody();
 
@@ -32,11 +34,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
-                    channel_name,
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription(channel_description);
-            notificationManager.createNotificationChannel(channel);
         }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_baseline_notifications_24)

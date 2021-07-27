@@ -222,7 +222,6 @@ public class ListaAnnunci extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                //TODO prendo l'id della casa che ho cliccato vado ad aggiungi annuncio, pushando con l'intent l'id
                 CustomItem annuncio = (CustomItem) adapterView.getItemAtPosition(pos);
                 String nomeCasa = annuncio.nomeCasa;
                 vaiInAnnuncio(nomeCasa);
@@ -233,7 +232,6 @@ public class ListaAnnunci extends AppCompatActivity {
     private void vaiInAnnuncio(String casa) {
         Intent intent = new Intent(this, ProfiloAnnuncio.class);
         Log.i(TAG,"VADO A CASA "+casa);
-        //TODO cosa mi conviene passare, idAnnuncio
         intent.putExtra("idAnnuncio", casa);
         startActivity(intent);
     }

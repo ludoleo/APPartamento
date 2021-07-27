@@ -14,9 +14,6 @@ import android.view.ViewGroup;
 
 import com.example.myapplication.R;
 import com.example.myapplication.classi.Chat;
-import com.example.myapplication.classi.Proprietario;
-import com.example.myapplication.classi.Studente;
-import com.example.myapplication.notifiche.Token;
 import com.example.myapplication.classi.Utente;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,9 +44,6 @@ public class ChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        //TODO non mostra nulla
-        Log.i(TAG,"PASSO DA QUI 1");
 
         View view = inflater.inflate(R.layout.fragment_chat,container, false);
 
@@ -112,7 +106,6 @@ public class ChatFragment extends Fragment {
     private void leggiChat() {
 
         mUtenti = new ArrayList<>();
-        //TODO scorrere e prendere l'utente loggato che può essere proprietario o studente aggiungi flag
 
         reference.child("Utenti").child("Studenti").addValueEventListener(new ValueEventListener() {
             @Override
