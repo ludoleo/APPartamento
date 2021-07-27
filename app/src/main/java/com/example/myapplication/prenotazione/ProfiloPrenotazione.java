@@ -152,11 +152,12 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                             //QUI ESEGUO TUTTO
                             caricaPrenotazione();
                         }
+
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                         }
                     });
-                 }
+                }
             }
         });
     }
@@ -191,7 +192,8 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                     }
                 });
             }
-        }if (tipo.compareTo("TERMINATA") == 0) {
+        }
+        if (tipo.compareTo("TERMINATA") == 0) {
             if (prenotazione.isPagata()) {
                 boolean occupato = false;
                 for (Inquilino inquilino : listaInquilini) {
@@ -295,7 +297,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                         CalendarContract.Calendars.ACCOUNT_NAME,
                         CalendarContract.Calendars.ACCOUNT_TYPE};
 
-        /*
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -306,8 +308,6 @@ public class ProfiloPrenotazione extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-
-         */
         Cursor cursor =
                 getContentResolver().
                         query(CalendarContract.Calendars.CONTENT_URI,
@@ -317,7 +317,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                                 null);
 
 
-        Date d = new Date( prenotazione.getDataPrenotazione());
+        Date d = new Date(prenotazione.getDataPrenotazione());
         Calendar c = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"), Locale.ITALY);
         c.setTime(d);
         int anno = c.get(Calendar.YEAR);
@@ -326,17 +326,17 @@ public class ProfiloPrenotazione extends AppCompatActivity {
 
         String orario = prenotazione.getOrario();
         int ora = 0;
-        if(orario.compareTo("8:00-10:00")==0)
+        if (orario.compareTo("8:00-10:00") == 0)
             ora = 8;
-        else if(orario.compareTo("10:00-12:00")==0)
+        else if (orario.compareTo("10:00-12:00") == 0)
             ora = 10;
-        else if(orario.compareTo("12:00-14:00")==0)
+        else if (orario.compareTo("12:00-14:00") == 0)
             ora = 12;
-        else if(orario.compareTo("14:00-16:00")==0)
+        else if (orario.compareTo("14:00-16:00") == 0)
             ora = 14;
-        else if(orario.compareTo("16:00-18:00")==0)
+        else if (orario.compareTo("16:00-18:00") == 0)
             ora = 16;
-        else if(orario.compareTo("18:00-20:00")==0)
+        else if (orario.compareTo("18:00-20:00") == 0)
             ora = 18;
 
         //AGGIUNGERE I PARAMETRI
@@ -347,12 +347,15 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         long dtstart = cal.getTimeInMillis();
         ContentValues values = new ContentValues();
         values.put(CalendarContract.Events.DTSTART, dtstart);
-        values.put(CalendarContract.Events.DTEND, dtstart+2*3600*1000); // durata di due ore
+        values.put(CalendarContract.Events.DTEND, dtstart + 2 * 3600 * 1000); // durata di due ore
         values.put(CalendarContract.Events.TITLE, "Appuntamento casa");
         values.put(CalendarContract.Events.CALENDAR_ID, id);
         values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
-        Uri uri = getContentResolver().insert(CalendarContract.Events.CONTENT_URI, values);
 
+        Uri uri = getContentResolver().insert(CalendarContract.Events.CONTENT_URI, values);
+        cal.set(Calendar.HOUR, ora-1);
+        cal.set(Calendar.MINUTE, 30);
+        setAlarm(cal);
         Intent i = new Intent(this, Home.class);
         startActivity(i);
 
@@ -411,14 +414,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
     }
 
     public void promuoviInquilino(View view) {
-        //CREO UN NUOVO INQUILINO
-        /*
-            necessario E-Mail-studente
-            riferimento alla casa
-            riferimento alla data di inizio
-         */
-        //SE MI TROVO IN QUESTO METODO SONO IL PROPRIETARIO
-        //CANCELLO la prenotazione
+
         DatabaseReference ref = database.getReference();
         ref.child("Prenotazioni").child(id).removeValue();
 
@@ -457,23 +453,16 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         });
     }
 
-    public void setAlarm(View view) {
+    public void setAlarm(Calendar cal) {
         Intent intentToFire = new Intent(getApplicationContext() , AlarmBroadcastReceiver.class);
         intentToFire.setAction(AlarmBroadcastReceiver.ACTION_ALARM);
         PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), 0 , intentToFire , 0);
 
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         //in millis va settato prima dell'orario della prenotazione confermata
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        //vanno creati gli elementi int di ora minuti e giorno della prenotazione e passati nel set()
-        calendar.set(Calendar.DAY_OF_MONTH, 20);
-        calendar.set(Calendar.MINUTE, 30);
-        //calendar.set();
-        alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), alarmIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(), alarmIntent);
         //se devo cancellare un alarm uso alarmManager.cancel(alarmIntent);
-        salvaInSharedPreferences(Long.toString(calendar.getTimeInMillis()));
+        salvaInSharedPreferences(Long.toString(cal.getTimeInMillis()));
 
     }
 

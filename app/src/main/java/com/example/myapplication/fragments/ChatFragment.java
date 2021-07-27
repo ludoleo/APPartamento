@@ -35,9 +35,9 @@ public class ChatFragment extends Fragment {
     private UserAdapter userAdapter;
     private List<Utente> mUtenti;
 
-    FirebaseUser firebaseUser;
-    DatabaseReference reference;
-    boolean flag;
+    private FirebaseUser firebaseUser;
+    private DatabaseReference reference;
+    private boolean flag;
 
     private List<String> usersList;
 
@@ -92,6 +92,7 @@ public class ChatFragment extends Fragment {
 
         return view;
     }
+
 
     private void leggiChat() {
 

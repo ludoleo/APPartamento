@@ -49,10 +49,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
             setAlarm(millis);
         }
 
-
     }
-
-
 
     private void setAlarm(long millis) {
 
@@ -102,9 +99,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     private void sendBroadcastMessage() {
         Intent intent = new Intent(ACTION_MESSAGE_BROADCAST);
         intent.putExtra("time", "fromBroadcast");
-
         Log.i("BroadcastSender","ok");
-
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 }

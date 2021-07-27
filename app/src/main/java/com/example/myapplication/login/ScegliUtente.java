@@ -21,10 +21,10 @@ import com.google.firebase.database.ValueEventListener;
 public class ScegliUtente extends AppCompatActivity {
 
     private static final String TAG = "Scegli utente";
-    FirebaseUser user;
-    String idUtente;
-    public DatabaseReference myRef;
-    public FirebaseDatabase database;
+    private FirebaseUser user;
+    private String idUtente;
+    private DatabaseReference myRef;
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
