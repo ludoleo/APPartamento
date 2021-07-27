@@ -17,9 +17,10 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.myapplication.R;
 import com.example.myapplication.prenotazione.PrenotazioneCalendarioActivity;
+import com.example.myapplication.prenotazione.ProfiloPrenotazione;
 
 import static com.example.myapplication.notifiche.App.CHANNEL_ID;
-//import static com.example.myapplication.notifiche.MyService.ACTION_MESSAGE_BROADCAST;
+import static com.example.myapplication.notifiche.MyService.ACTION_MESSAGE_BROADCAST;
 
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
@@ -38,30 +39,28 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         if(ACTION_ALARM.equals(intent.getAction())) {
             Toast.makeText(context, ACTION_ALARM, Toast.LENGTH_LONG).show();
             Log.i(TAG,"Alarm "+ACTION_ALARM);
-           // sendNotification();
+            sendNotification();
         } else if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
             Toast.makeText(context, "Boot completed ", Toast.LENGTH_LONG).show();
             Log.i(TAG,"Boot completed "+ACTION_ALARM);
 
             long millis =Long.parseLong(sharedPreferences.getString("millis",""));
-            //setAlarm(millis);
+            setAlarm(millis);
         }
 
 
     }
 
 
-    /*
+
     private void setAlarm(long millis) {
 
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
         intent.setAction(ACTION_ALARM);
 
         //TODO aggiungere activity che manda allarm
-        //PendingIntent alarmIntent = MapsActivity.getAlarmIntent(); esempio
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0,intent,0);
 
-        // AlarmManager alarmManager = MapsActivity.getAlarmManager(); esempio
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP,millis,alarmIntent);
     }
@@ -84,7 +83,6 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
-        // create intent that will be broadcast.
         // TODO CONTROLLARE ACTIVITY PER INTENT
         Intent resultIntent = new Intent(context, PrenotazioneCalendarioActivity.class);
         resultIntent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -108,7 +106,4 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
-
-
-     */
 }

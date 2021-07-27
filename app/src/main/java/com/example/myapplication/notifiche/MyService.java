@@ -32,8 +32,7 @@ import static com.example.myapplication.notifiche.App.CHANNEL_ID;
 public class MyService extends FirebaseMessagingService {
 
     private static final String TAG = "MYSERVICE";
-    /*
-    //SERVE?????
+
     public static final String ACTION_MESSAGE_BROADCAST = MyService.class.getName() + "MessageBroadcast";
     private static final String CHANNEL_ID = "channel1";
 
@@ -41,7 +40,6 @@ public class MyService extends FirebaseMessagingService {
     public static final Integer NOTIFICATION_REQUESTCODE=101;
 
 
-     */
     public MyService() {
     }
     int idNotifica = 0;

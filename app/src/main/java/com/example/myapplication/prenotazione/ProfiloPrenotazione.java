@@ -1,7 +1,6 @@
 package com.example.myapplication.prenotazione;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -11,6 +10,7 @@ import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -295,6 +295,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
                         CalendarContract.Calendars.ACCOUNT_NAME,
                         CalendarContract.Calendars.ACCOUNT_TYPE};
 
+        /*
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -305,6 +306,8 @@ public class ProfiloPrenotazione extends AppCompatActivity {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
+
+         */
         Cursor cursor =
                 getContentResolver().
                         query(CalendarContract.Calendars.CONTENT_URI,
@@ -348,10 +351,7 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         values.put(CalendarContract.Events.TITLE, "Appuntamento casa");
         values.put(CalendarContract.Events.CALENDAR_ID, id);
         values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getDisplayName());
-        Uri uri =
-                getContentResolver().
-                        insert(CalendarContract.Events.CONTENT_URI, values);
-
+        Uri uri = getContentResolver().insert(CalendarContract.Events.CONTENT_URI, values);
 
         Intent i = new Intent(this, Home.class);
         startActivity(i);
@@ -457,8 +457,6 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         });
     }
 
-    //crea l'alarm che ricorda la prenotazione confermata----------------------
-
     public void setAlarm(View view) {
         Intent intentToFire = new Intent(getApplicationContext() , AlarmBroadcastReceiver.class);
         intentToFire.setAction(AlarmBroadcastReceiver.ACTION_ALARM);
@@ -475,6 +473,15 @@ public class ProfiloPrenotazione extends AppCompatActivity {
         //calendar.set();
         alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), alarmIntent);
         //se devo cancellare un alarm uso alarmManager.cancel(alarmIntent);
+        salvaInSharedPreferences(Long.toString(calendar.getTimeInMillis()));
 
+    }
+
+    private void salvaInSharedPreferences(String timeInMillis) {
+        SharedPreferences sharedPreferences = getSharedPreferences("com.example.alarms", MODE_PRIVATE);
+        Log.i(TAG, timeInMillis);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("millis", timeInMillis);
+        editor.commit();
     }
 }
