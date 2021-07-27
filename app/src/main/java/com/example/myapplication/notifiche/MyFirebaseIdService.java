@@ -9,6 +9,9 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 
 public class MyFirebaseIdService extends FirebaseMessagingService {
 
+    public static final String ACTION_MESSAGE_BROADCAST = MyFirebaseIdService.class.getName() + "MessageBroadcast";
+
+
     @Override
     public void onNewToken(String s)
     {
@@ -21,7 +24,6 @@ public class MyFirebaseIdService extends FirebaseMessagingService {
     }
     private void updateToken(String refreshToken){
         FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-        Token token1= new Token(refreshToken);
-        FirebaseDatabase.getInstance().getReference("Tokens").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(token1);
+        FirebaseDatabase.getInstance().getReference("Tokens").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(refreshToken);
     }
 }

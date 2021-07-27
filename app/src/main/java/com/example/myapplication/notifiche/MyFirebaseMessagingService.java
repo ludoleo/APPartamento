@@ -18,6 +18,7 @@ import static com.example.myapplication.notifiche.App.CHANNEL_ID;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "Messaging";
+    public static final String ACTION_MESSAGE_BROADCAST = MyFirebaseIdService.class.getName() + "MessageBroadcast";
 
     String title,message;
     @Override

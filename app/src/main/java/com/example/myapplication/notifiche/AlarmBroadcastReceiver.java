@@ -20,11 +20,12 @@ import com.example.myapplication.prenotazione.PrenotazioneCalendarioActivity;
 import com.example.myapplication.prenotazione.ProfiloPrenotazione;
 
 import static com.example.myapplication.notifiche.App.CHANNEL_ID;
-import static com.example.myapplication.notifiche.MyService.ACTION_MESSAGE_BROADCAST;
+import static com.example.myapplication.notifiche.MyFirebaseIdService.ACTION_MESSAGE_BROADCAST;
 
 public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
     public static final String ACTION_ALARM = "com.example.myapplication.ACTION_ALARMS";
+
     private static final String TAG = "AlarmBroadcast" ;
     private int notificationId = 0;
     Context context;
