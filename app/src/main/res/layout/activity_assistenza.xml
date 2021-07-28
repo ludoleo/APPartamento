@@ -10,20 +10,6 @@
 
 
     <TextView
-        android:id="@+id/googleVisita"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:drawableLeft="@drawable/ic_baseline_link_24"
-        android:padding="5dp"
-        android:text="It is now possible to create a new meet by going to this url: http://meet.google.com/  "
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/videoView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/videoView"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/assistenza1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

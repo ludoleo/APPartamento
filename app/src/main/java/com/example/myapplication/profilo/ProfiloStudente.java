@@ -98,7 +98,6 @@ public class ProfiloStudente extends AppCompatActivity {
     private APIService apiService;
 
     String token = "";
-    int idNotifica = 0;
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {

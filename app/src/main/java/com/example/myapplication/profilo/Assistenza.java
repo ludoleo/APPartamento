@@ -22,9 +22,6 @@ public class Assistenza extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assistenza);
 
-        TextView GoogleMeet = (TextView) findViewById(R.id.googleVisita);
-
-         Linkify.addLinks(GoogleMeet,Linkify.WEB_URLS);
 
         //linkificazione
         TextView assistenza1 = (TextView) findViewById(R.id.assistenza1);

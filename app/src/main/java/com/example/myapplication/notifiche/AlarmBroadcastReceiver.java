@@ -56,7 +56,6 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
         Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
         intent.setAction(ACTION_ALARM);
 
-        //TODO aggiungere activity che manda allarm
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0,intent,0);
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

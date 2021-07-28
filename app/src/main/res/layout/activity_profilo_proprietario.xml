@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,7 +11,10 @@
     android:verticalScrollbarPosition="right"
     tools:context=".profilo.ProfiloProprietario">
 
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -99,13 +102,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"></ListView>
 
-            <Button
-                android:id="@+id/aggiungiCasa"
-                android:layout_width="222dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:onClick="aggiungiNuovaCasa"
-                android:text="@string/aggiungiCasa" />
+
 
             <View
                 android:id="@+id/divider5"
@@ -116,6 +113,14 @@
                 android:layout_marginBottom="10dp"
                 android:background="@color/rosso_scuro"
                 android:padding="5dp" />
+
+            <Button
+                android:id="@+id/aggiungiCasa"
+                android:layout_width="222dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="aggiungiNuovaCasa"
+                android:text="@string/aggiungiCasa" />
 
             <TextView
                 android:id="@+id/tv_recensioni"
@@ -133,6 +138,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"></ListView>
 
-
         </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
